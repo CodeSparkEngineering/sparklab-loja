@@ -613,21 +613,25 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 
 /* ─── Responsive ─── */
 @media (max-width: 900px) {
+  .hero { min-height: auto; }
   .hero__layout {
     grid-template-columns: 1fr;
-    padding: 88px 24px 36px;
-    gap: 30px;
+    padding: 72px 24px 36px;
+    gap: 18px;
+    align-content: start;
   }
-  .hero__right { order: -1; }
-  .hero3d { max-width: 320px; }
+  .hero__right { order: -1; margin-top: -8px; }
+  .hero3d { max-width: 300px; }
   .hero__tag { display: none; }
   .hero__h1 { font-size: clamp(40px, 10vw, 64px); }
 }
 
 @media (max-width: 640px) {
+  .hero { min-height: auto; }
+  .hero__layout { padding-top: 64px; gap: 14px; }
   .hero__stats { gap: 16px; padding: 16px 18px; }
   .hero__stat-num { font-size: 22px; }
-  .hero3d { max-width: 270px; }
+  .hero3d { max-width: 250px; }
 }
 
 /* ─────────────────────────────────────────────────────────
