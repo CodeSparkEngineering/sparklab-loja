@@ -1833,10 +1833,34 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   .cmt-card { padding: 40px 24px 30px; }
   .tl-item { grid-template-columns: 1fr; gap: 16px; padding: 32px 0; }
   .tl-num { flex-direction: row; align-items: center; gap: 16px; }
+
+  /* Catálogo: carrossel horizontal por seção (poupa altura de tela) */
+  .cat-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* sangra até as bordas pra mostrar que há mais ao lado */
+    margin: 0 -20px;
+    padding: 4px 20px 10px;
+    scroll-padding-left: 20px;
+  }
+  .cat-grid::-webkit-scrollbar { display: none; }
+  .cat-card {
+    flex: 0 0 clamp(150px, 44vw, 190px);
+    scroll-snap-align: start;
+  }
+  .cat-card__desc { display: none; }
+  .cat-card__body { padding: 12px 13px 14px; }
+  .cat-card__name { font-size: 13.5px; margin-bottom: 8px; }
+  .cat-card__foot { padding-top: 10px; }
+  .cat-card__price { font-size: 17px; }
 }
 
 @media (max-width: 480px) {
-  .cat-grid { grid-template-columns: 1fr; }
   .cat-card__icon { font-size: 44px; }
 }
 
