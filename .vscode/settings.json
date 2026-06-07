@@ -1,0 +1,6 @@
+{
+  "// Tailwind v4": "Silencia o aviso 'Unknown at rule @theme/@tailwind/@apply' do linter de CSS nativo do editor (essas regras são válidas no Tailwind v4).",
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore"
+}
