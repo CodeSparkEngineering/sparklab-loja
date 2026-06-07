@@ -43,3 +43,5 @@ next-env.d.ts
 # Agent / tooling (fora do site)
 /.agent/
 /.claude/
+
+.vercel

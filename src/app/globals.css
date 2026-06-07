@@ -554,6 +554,16 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   height: 100%;
   border-radius: var(--radius-lg);
 }
+/* halo quente atrás do objeto 3D para destacar no fundo escuro */
+.hero3d::before {
+  content: '';
+  position: absolute;
+  inset: -8%;
+  background: radial-gradient(circle at 50% 50%, var(--orange-glow), transparent 62%);
+  filter: blur(24px);
+  z-index: -1;
+  pointer-events: none;
+}
 
 /* ─── Bottom ticker ─── */
 .hero__ticker {
@@ -605,11 +615,11 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 @media (max-width: 900px) {
   .hero__layout {
     grid-template-columns: 1fr;
-    padding: 90px 24px 40px;
-    gap: 48px;
+    padding: 88px 24px 36px;
+    gap: 30px;
   }
   .hero__right { order: 2; }
-  .hero3d { max-width: 360px; }
+  .hero3d { max-width: 340px; }
   .hero__tag { display: none; }
   .hero__h1 { font-size: clamp(40px, 10vw, 64px); }
 }
@@ -617,7 +627,7 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 @media (max-width: 640px) {
   .hero__stats { gap: 16px; padding: 16px 18px; }
   .hero__stat-num { font-size: 22px; }
-  .hero3d { max-width: 300px; }
+  .hero3d { max-width: 270px; }
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -1807,8 +1817,10 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   .container { padding: 0 20px; }
   .grid--3 { grid-template-columns: 1fr; }
   .hero__h1 { font-size: clamp(44px, 12vw, 64px); }
-  .hero__stats { flex-direction: column; gap: 20px; }
-  .hero__stat-divider { width: 36px; height: 1px; }
+  /* stats em linha, ocupando a largura toda (3 colunas equilibradas) */
+  .hero__stats { width: 100%; justify-content: space-between; gap: 8px; }
+  .hero__stat { flex: 1; }
+  .hero__stat-divider { width: 1px; height: 30px; }
   .cta { padding: 80px 0; }
   .cta__banner { padding: 40px 24px; }
   .footer__cols { grid-template-columns: 1fr 1fr; gap: 32px; }

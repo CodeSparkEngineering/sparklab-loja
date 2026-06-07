@@ -45,7 +45,7 @@ export const PRODUCTS: Product[] = [
       '/images/porta-latas-monster-1.jpg',
       '/images/porta-latas-monster-4.jpg',
       '/images/porta-latas-monster-5.jpg',
-      '/images/porta-latas-monster-custom-name.jpg'
+      '/images/porta-latas-monster-6.jpg'
     ],
     customizations: [
       {
@@ -64,6 +64,31 @@ export const PRODUCTS: Product[] = [
   { id: 'chaveiro-gym', name: 'Porta-Chaves Peso de Ginásio', desc: 'Porta-chaves em formato de disco de 20kg impresso em 3D. O presente ideal para quem não falta a um treino!', price: 3, tag: 'Porta-Chaves', tone: 'slate', icon: '🏋️', images: ['/images/chaveiro-gym.jpg'] },
   { id: 'chaveiro-hexagono', name: 'Porta-Chaves Hexágono Fidget', desc: 'Porta-chaves interativo impresso em filamento bicolor metalizado. Divertido para mexer!', price: 3, tag: 'Porta-Chaves', tone: 'indigo', icon: '🔑', images: ['/images/chaveiro-hexagono.jpg'] },
   { id: 'chaveiro-capivara', name: 'Porta-Chaves Capivara Articulada', desc: 'O animal mais adorável da internet, agora em porta-chaves! Impresso com filamento bicolor para um efeito incrível e é totalmente articulado.', price: 3, tag: 'Porta-Chaves', tone: 'purple', icon: '🐾', images: ['/images/chaveiro-capivara-1.jpg', '/images/chaveiro-capivara-2.jpg', '/images/chaveiro-capivara-3.jpg'] },
+  { id: 'chaveiro-polvo', name: 'Porta-Chaves Polvo Articulado (Brasil)', desc: 'Porta-chaves de um polvo verde totalmente articulado com a temática do Brasil. Divertido, mexe os tentáculos e é impresso em 3D!', price: 3, tag: 'Porta-Chaves', tone: 'green', icon: '🐙', images: ['/images/chaveiro-polvo-1.png', '/images/chaveiro-polvo-2.png', '/images/chaveiro-polvo-3.png', '/images/chaveiro-polvo-4.png'] },
+  {
+    id: 'porta-latas-benfica',
+    name: 'Porta-Latas Benfica',
+    desc: 'O porta-latas térmico ideal para os verdadeiros adeptos! Impresso em 3D com as cores e a mística do Glorioso. Totalmente personalizável com o teu nome.',
+    price: 15,
+    tag: 'Acessório',
+    tone: 'red',
+    icon: '🦅',
+    images: ['/images/porta-latas-benfica-1.jpg', '/images/porta-latas-benfica-2.jpg', '/images/porta-latas-benfica-3.jpg'],
+    customizations: [
+      {
+        id: 'nome_frontal',
+        label: 'Nome frontal (ex: ISRAEL)',
+        type: 'text',
+        maxLength: 15
+      },
+      {
+        id: 'nome_pega',
+        label: 'Nome na pega (ex: ISRAEL VIEIRA)',
+        type: 'text',
+        maxLength: 20
+      }
+    ]
+  },
 ];
 
 export const PRODUCT_TAGS = ['Todos', ...Array.from(new Set(PRODUCTS.map((p) => p.tag)))];
