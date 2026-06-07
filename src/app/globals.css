@@ -618,8 +618,8 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
     padding: 88px 24px 36px;
     gap: 30px;
   }
-  .hero__right { order: 2; }
-  .hero3d { max-width: 340px; }
+  .hero__right { order: -1; }
+  .hero3d { max-width: 320px; }
   .hero__tag { display: none; }
   .hero__h1 { font-size: clamp(40px, 10vw, 64px); }
 }

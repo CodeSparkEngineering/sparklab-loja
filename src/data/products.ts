@@ -69,7 +69,7 @@ export const PRODUCTS: Product[] = [
     id: 'porta-latas-benfica',
     name: 'Porta-Latas Benfica',
     desc: 'O porta-latas térmico ideal para os verdadeiros adeptos! Impresso em 3D com as cores e a mística do Glorioso. Totalmente personalizável com o teu nome.',
-    price: 15,
+    price: 20,
     tag: 'Acessório',
     tone: 'red',
     icon: '🦅',
