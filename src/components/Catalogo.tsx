@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PRODUCTS, PRODUCT_TAGS, formatEUR } from '@/data/products';
@@ -54,24 +54,64 @@ export default function Catalogo() {
                     <h3 className="text-lg md:text-xl font-bold uppercase tracking-wider text-white/90">{tag}</h3>
                     <div className="h-[1px] flex-1 bg-white/10" />
                   </div>
-                  <div className="cat-grid">
+                  <CarouselRow>
                     {groupProducts.map((p) => (
                       <ProductCard key={p.id} p={p} add={add} />
                     ))}
-                  </div>
+                  </CarouselRow>
                 </div>
               );
             })}
           </div>
         ) : (
-          <div className="cat-grid mt-8">
+          <CarouselRow className="mt-8">
             {filtered.map((p) => (
               <ProductCard key={p.id} p={p} add={add} />
             ))}
-          </div>
+          </CarouselRow>
         )}
       </div>
     </section>
+  );
+}
+
+function CarouselRow({
+  children,
+  className = '',
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const scrollByDir = (dir: number) => {
+    const el = ref.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
+  };
+
+  return (
+    <div className={`cat-row ${className}`}>
+      <button
+        type="button"
+        className="cat-row__nav cat-row__nav--prev"
+        aria-label="Ver anteriores"
+        onClick={() => scrollByDir(-1)}
+      >
+        ‹
+      </button>
+      <div className="cat-grid" ref={ref}>
+        {children}
+      </div>
+      <button
+        type="button"
+        className="cat-row__nav cat-row__nav--next"
+        aria-label="Ver mais"
+        onClick={() => scrollByDir(1)}
+      >
+        ›
+      </button>
+    </div>
   );
 }
 

@@ -1127,10 +1127,56 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   box-shadow: 0 4px 16px rgba(249,115,22,.4), inset 0 1px 0 rgba(255,255,255,.2);
 }
 
+/* Linha de produtos: carrossel horizontal (desktop + mobile) */
+.cat-row {
+  position: relative;
+}
 .cat-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  /* respiro vertical pra não cortar o lift no hover e a sombra */
+  padding: 14px 2px 18px;
+  scroll-padding-left: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(249,115,22,.45) rgba(255,255,255,.06);
+}
+.cat-grid::-webkit-scrollbar { height: 8px; }
+.cat-grid::-webkit-scrollbar-track { background: rgba(255,255,255,.05); border-radius: 999px; }
+.cat-grid::-webkit-scrollbar-thumb { background: rgba(249,115,22,.45); border-radius: 999px; }
+.cat-grid::-webkit-scrollbar-thumb:hover { background: rgba(249,115,22,.7); }
+.cat-card {
+  flex: 0 0 clamp(220px, 23%, 270px);
+  scroll-snap-align: start;
+}
+
+/* Setas de navegação (só desktop / mouse) */
+.cat-row__nav {
+  display: none;
+  position: absolute;
+  top: calc(50% - 8px);
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  align-items: center; justify-content: center;
+  font-size: 26px; line-height: 1; padding-bottom: 4px;
+  color: var(--ink);
+  background: rgba(17,17,22,.92);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 8px 24px -8px rgba(0,0,0,.8);
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, transform .15s ease, opacity .2s ease;
+}
+.cat-row__nav:hover { background: rgba(249,115,22,.9); border-color: var(--orange); }
+.cat-row__nav:active { transform: translateY(-50%) scale(.92); }
+.cat-row__nav--prev { left: -10px; }
+.cat-row__nav--next { right: -10px; }
+@media (hover: hover) and (pointer: fine) {
+  .cat-row__nav { display: flex; }
 }
 
 .cat-card {
@@ -1748,10 +1794,6 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 /* ─────────────────────────────────────────────────────────
    RESPONSIVE
 ───────────────────────────────────────────────────────── */
-@media (max-width: 1024px) {
-  .cat-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
 @media (max-width: 960px) {
   /* Mobile Menu Styles */
   .nav__desktop-cta { display: none; }
@@ -1811,7 +1853,6 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 }
 
 @media (max-width: 768px) {
-  .cat-grid { grid-template-columns: repeat(2, 1fr); }
   .quote-form { grid-template-columns: 1fr; }
   .qf__row { flex-direction: column; gap: 0; }
   .cmt-perks { grid-template-columns: 1fr; }
