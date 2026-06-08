@@ -4,8 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 import { CardStack, type CardStackItem } from '@/components/ui/card-stack';
 import { PRODUCTS } from '@/data/products';
 
-// Produtos em destaque = apenas mascotes e o bananão.
-const items: CardStackItem[] = PRODUCTS.filter((p) => p.images?.[0] && p.id.startsWith('miniatura')).map((p) => ({
+// Produtos em destaque ("Os mais pedidos") = mascotes/bananão + Porta-Latas
+// Monster e Benfica.
+const DESTAQUE_IDS = ['porta-latas-monster', 'porta-latas-benfica'];
+const items: CardStackItem[] = PRODUCTS.filter(
+  (p) => p.images?.[0] && (p.id.startsWith('miniatura') || DESTAQUE_IDS.includes(p.id)),
+).map((p) => ({
   id: p.id,
   title: p.name,
   description: p.desc,
