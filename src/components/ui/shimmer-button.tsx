@@ -24,7 +24,7 @@ export function ShimmerButton({
 }: ShimmerButtonProps) {
   return (
     <button
-      className={`group relative z-0 flex cursor-pointer items-center justify-center overflow-hidden whitespace-nowrap border border-white/10 px-8 py-4 text-white font-medium shadow-[0_0_20px_rgba(255,107,0,0.2)] transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,107,0,0.4)] [background:var(--bg)] [border-radius:var(--radius)] ${className}`}
+      className={`group relative z-0 flex cursor-none items-center justify-center overflow-hidden whitespace-nowrap border border-white/10 px-8 py-4 text-white font-medium shadow-[0_0_20px_rgba(255,107,0,0.2)] transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,107,0,0.4)] [background:var(--bg)] [border-radius:var(--radius)] ${className}`}
       style={
         {
           "--spread": "90deg",
