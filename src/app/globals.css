@@ -1412,50 +1412,59 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 .cta { padding: 120px 0; }
 .cta__banner {
   position: relative;
-  background: linear-gradient(145deg, #111118, #0a0a10);
-  color: var(--ink);
+  /* Banner LARANJA vibrante — contraste total com o formulário escuro */
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 45%, #ea580c 100%);
+  color: #1a0d04;
   padding: 80px 72px;
-  border: 1px solid var(--line-strong);
+  border: none;
   border-radius: var(--radius-xl);
   display: grid; grid-template-columns: 1.4fr .6fr; gap: 56px; align-items: center;
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 30px 80px -30px rgba(249,115,22,.55);
 }
 .cta__banner::before {
   content: '';
   position: absolute; inset: 0;
   background:
-    radial-gradient(700px 350px at 100% 0%, rgba(249,115,22,.18), transparent 55%),
-    radial-gradient(500px 300px at 0% 100%, rgba(59,130,246,.1), transparent 55%);
+    radial-gradient(600px 320px at 100% 0%, rgba(255,255,255,.28), transparent 55%),
+    radial-gradient(500px 300px at 0% 100%, rgba(0,0,0,.12), transparent 55%);
   pointer-events: none;
 }
-/* Decorative large number */
+/* Número decorativo grande */
 .cta__banner::after {
   content: '3D';
   position: absolute;
   right: -20px; bottom: -40px;
   font-family: var(--f-head);
   font-size: 240px; font-weight: 900;
-  color: rgba(249,115,22,.04);
+  color: rgba(26,13,4,.07);
   letter-spacing: -0.06em;
   pointer-events: none;
   user-select: none;
   line-height: 1;
 }
 .cta__banner > * { position: relative; z-index: 1; }
-.cta__text .h2 { color: var(--ink); }
-.cta__text p { margin: 18px 0 0; color: var(--ink-dim); max-width: 480px; }
+.cta__text .h2 { color: #1a0d04; }
+.cta__text p { margin: 18px 0 0; color: rgba(26,13,4,.78); max-width: 480px; }
+.cta__text .eyebrow--orange { color: #1a0d04; }
+.cta__text .eyebrow--orange .dot { background: #1a0d04; box-shadow: 0 0 6px rgba(26,13,4,.5); }
 .cta__actions { display: flex; flex-direction: column; gap: 12px; }
 .cta__actions .btn { width: 100%; padding: 16px 22px; font-size: 15px; }
-.cta__actions .btn--whatsapp { background: #fff; color: #111; }
-.cta__actions .btn--outline-light {
-  border: 1px solid rgba(240,240,242,.2);
-  color: var(--ink);
-  background: rgba(255,255,255,.03);
+/* Botão primário escuro sobre o laranja (vai pro catálogo) */
+.cta__actions .btn--dark {
+  background: #14140f; color: #fff;
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,.6);
 }
-.cta__actions .btn--outline-light:hover {
-  background: rgba(255,255,255,.08);
-  border-color: rgba(240,240,242,.4);
+.cta__actions .btn--dark:hover { background: #000; transform: translateY(-2px); }
+/* WhatsApp secundário: contorno escuro sobre o laranja */
+.cta__actions .btn--outline-dark {
+  border: 1.5px solid rgba(26,13,4,.45);
+  color: #1a0d04;
+  background: transparent;
+}
+.cta__actions .btn--outline-dark:hover {
+  background: rgba(26,13,4,.08);
+  border-color: rgba(26,13,4,.7);
 }
 
 /* ─────────────────────────────────────────────────────────
