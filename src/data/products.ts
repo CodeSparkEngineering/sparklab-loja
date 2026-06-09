@@ -89,6 +89,10 @@ export const PRODUCTS: Product[] = [
       }
     ]
   },
+  { id: 'chaveiro-menino', name: 'Porta-Chaves Menino Brasil', desc: 'Porta-chaves de menino com a camisola 10 do Brasil. Impresso em 3D com várias cores!', price: 4, tag: 'Porta-Chaves', tone: 'yellow', icon: '👦', images: ['/images/chaveiro-menino.jpg'] },
+  { id: 'chaveiro-taca', name: 'Porta-Chaves Taça do Mundo', desc: 'Porta-chaves em formato de Taça do Mundo impressa em 3D. Leva a glória para todo o lado!', price: 3, tag: 'Porta-Chaves', tone: 'yellow', icon: '🏆', images: ['/images/chaveiro-taca.jpg'] },
+  { id: 'chaveiro-camisa-ronaldo', name: 'Porta-Chaves Camisola Ronaldo', desc: 'Porta-chaves com a mítica camisola 7 de Portugal. Para os verdadeiros fãs!', price: 3, tag: 'Porta-Chaves', tone: 'red', icon: '👕', images: ['/images/chaveiro-camisa-ronaldo.jpg'] },
+  { id: 'chaveiro-spinner-brasil', name: 'Porta-Chaves Spinner Brasil', desc: 'Porta-chaves interativo com a bandeira do Brasil que gira! Divertido e perfeito para aliviar o stress.', price: 3, tag: 'Porta-Chaves', tone: 'green', icon: '🌀', images: ['/images/chaveiro-spinner-brasil.jpg'] },
 ];
 
 export const PRODUCT_TAGS = ['Todos', ...Array.from(new Set(PRODUCTS.map((p) => p.tag)))];
