@@ -1668,7 +1668,7 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 .quote-form__list svg { color: var(--orange); flex-shrink: 0; }
 
 /* ─────────────────────────────────────────────────────────
-   COMUNIDADE (Discord)
+   ARQUIVOS STL (pedido via WhatsApp)
 ───────────────────────────────────────────────────────── */
 .comunidade-section { padding: 100px 0; }
 .cmt-head {
@@ -1692,7 +1692,7 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   position: absolute; top: -130px; left: 50%;
   transform: translateX(-50%);
   width: 520px; height: 260px;
-  background: radial-gradient(circle, rgba(88,101,242,.5) 0%, transparent 62%);
+  background: radial-gradient(circle, rgba(249,115,22,.45) 0%, transparent 62%);
   pointer-events: none;
   filter: blur(24px);
 }
@@ -1700,9 +1700,9 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   position: relative;
   display: inline-flex; align-items: center; justify-content: center;
   width: 76px; height: 76px; margin: 0 auto 28px;
-  background: linear-gradient(135deg, #5865f2, #4752c4);
+  background: linear-gradient(135deg, #fb923c, #ea580c);
   color: #fff; border-radius: 20px;
-  box-shadow: 0 16px 32px -8px rgba(88,101,242,.65);
+  box-shadow: 0 16px 32px -8px rgba(249,115,22,.6);
 }
 .cmt-perks {
   position: relative; list-style: none; padding: 0;
@@ -1749,15 +1749,15 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   position: relative;
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   width: 100%; padding: 16px 24px;
-  background: linear-gradient(135deg, #5865f2, #4752c4);
+  background: linear-gradient(135deg, #25d366, #128c7e);
   color: #fff; border-radius: 14px;
   font-family: var(--f-head); font-weight: 600; font-size: 15px;
-  box-shadow: 0 14px 32px -10px rgba(88,101,242,.75);
+  box-shadow: 0 14px 32px -10px rgba(37,211,102,.6);
   transition: transform .25s var(--ease-spring), box-shadow .25s ease;
 }
 .cmt-cta:hover {
   transform: translateY(-3px);
-  box-shadow: 0 20px 40px -8px rgba(88,101,242,.9);
+  box-shadow: 0 20px 40px -8px rgba(37,211,102,.8);
 }
 .cmt-foot {
   position: relative; margin: 18px 0 0;

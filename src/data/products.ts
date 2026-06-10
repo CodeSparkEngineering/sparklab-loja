@@ -101,19 +101,6 @@ export const PRODUCTS: Product[] = [
   { id: 'chaveiro-taca', name: 'Porta-Chaves Taça do Mundo', desc: 'Porta-chaves em formato de Taça do Mundo impressa em 3D. Leva a glória para todo o lado!', price: 3, tag: 'Porta-Chaves', tone: 'yellow', icon: '🏆', images: ['/images/chaveiro-taca.jpg'] },
   { id: 'chaveiro-camisa-ronaldo', name: 'Porta-Chaves Camisola Ronaldo', desc: 'Porta-chaves com a mítica camisola 7 de Portugal. Para os verdadeiros fãs!', price: 3, tag: 'Porta-Chaves', tone: 'red', icon: '👕', images: ['/images/chaveiro-camisa-ronaldo.jpg'] },
   { id: 'chaveiro-spinner-brasil', name: 'Porta-Chaves Spinner Brasil', desc: 'Porta-chaves interativo com a bandeira do Brasil que gira! Divertido e perfeito para aliviar o stress.', price: 3, tag: 'Porta-Chaves', tone: 'green', icon: '🌀', images: ['/images/chaveiro-spinner-brasil.jpg'] },
-  // ── Arquivos digitais (STL) — entrega por download após pagamento ──
-  {
-    id: 'stl-polvo-articulado',
-    name: 'STL — Polvo Articulado',
-    desc: 'Arquivo STL do polvo articulado para imprimires em casa. Pronto para impressão (sem suportes). Download imediato após o pagamento. Licença de uso pessoal.',
-    price: 2,
-    tag: 'Arquivo STL',
-    tone: 'green',
-    icon: '🐙',
-    images: ['/images/chaveiro-polvo-1.jpg', '/images/chaveiro-polvo-2.jpg'],
-    digital: true,
-    stl: { file: 'polvo-articulado.stl', downloadName: 'SparkLab-Polvo-Articulado.stl' },
-  },
 ];
 
 export const PRODUCT_TAGS = ['Todos', ...Array.from(new Set(PRODUCTS.map((p) => p.tag)))];

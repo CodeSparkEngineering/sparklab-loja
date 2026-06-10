@@ -49,56 +49,28 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
               <p>{product.desc}</p>
             </div>
 
-            {/* Especificações — diferentes para digital (STL) vs físico */}
-            {product.digital ? (
-              <div className="bg-white/5 rounded-2xl p-6 border border-white/10 mb-8">
-                <h3 className="text-lg font-medium text-white mb-4">Arquivo digital</h3>
-                <ul className="space-y-3 text-sm text-zinc-400">
-                  <li className="flex justify-between">
-                    <span>Formato</span>
-                    <span className="text-white">.STL</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Entrega</span>
-                    <span className="text-white">Download imediato após pagamento</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Suportes</span>
-                    <span className="text-white">Não precisa</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Licença</span>
-                    <span className="text-white">Uso pessoal</span>
-                  </li>
-                </ul>
-                <p className="text-xs text-zinc-500 mt-4 leading-relaxed">
-                  Produto digital — não há envio físico. Após o pagamento, o link
-                  de download aparece na hora e também vai para o teu email.
-                </p>
-              </div>
-            ) : (
-              <div className="bg-white/5 rounded-2xl p-6 border border-white/10 mb-8">
-                <h3 className="text-lg font-medium text-white mb-4">Especificações</h3>
-                <ul className="space-y-3 text-sm text-zinc-400">
-                  <li className="flex justify-between">
-                    <span>Material Base</span>
-                    <span className="text-white">PLA Premium (Bambu Lab)</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Resolução de Camada</span>
-                    <span className="text-white">0.16 mm - 0.20 mm</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Acabamento</span>
-                    <span className="text-white">Padrão Texturizado PEI</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Impressora</span>
-                    <span className="text-white">Bambu Lab P1S</span>
-                  </li>
-                </ul>
-              </div>
-            )}
+            {/* Specifications (Example/Mock) */}
+            <div className="bg-white/5 rounded-2xl p-6 border border-white/10 mb-8">
+              <h3 className="text-lg font-medium text-white mb-4">Especificações</h3>
+              <ul className="space-y-3 text-sm text-zinc-400">
+                <li className="flex justify-between">
+                  <span>Material Base</span>
+                  <span className="text-white">PLA Premium (Bambu Lab)</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>Resolução de Camada</span>
+                  <span className="text-white">0.16 mm - 0.20 mm</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>Acabamento</span>
+                  <span className="text-white">Padrão Texturizado PEI</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>Impressora</span>
+                  <span className="text-white">Bambu Lab P1S</span>
+                </li>
+              </ul>
+            </div>
 
             <AddToCartForm product={product} />
           </div>
