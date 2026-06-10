@@ -37,10 +37,15 @@ export async function POST(request: NextRequest) {
 
   // Monta os line_items a partir do catálogo do SERVIDOR (preço autoritativo).
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+  let hasPhysical = false;
+  let hasDigital = false;
   for (const line of incoming) {
     const product = getProductById(String(line?.id));
     const qty = Math.max(1, Math.min(99, Math.floor(Number(line?.qty) || 0)));
     if (!product || qty < 1) continue;
+
+    if (product.digital) hasDigital = true;
+    else hasPhysical = true;
 
     let customText = '';
     if (line.customizations && Object.keys(line.customizations).length > 0) {
@@ -81,10 +86,22 @@ export async function POST(request: NextRequest) {
     const isFreeShipping = subtotalCents >= 4000; // 40€
 
     const stripe = getStripe();
-    const session = await stripe.checkout.sessions.create({
+
+    // Itens físicos exigem envio + endereço. Se o carrinho é SÓ digital (STL),
+    // não há envio nem endereço — entrega é por download na página de sucesso.
+    const params: Stripe.Checkout.SessionCreateParams = {
       mode: 'payment',
       line_items: lineItems,
-      shipping_options: [
+      billing_address_collection: 'auto',
+      phone_number_collection: { enabled: hasPhysical },
+      success_url: `${origin}/sucesso?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/?checkout=cancelado#catalogo`,
+      metadata: { has_digital: String(hasDigital), has_physical: String(hasPhysical) },
+    };
+
+    if (hasPhysical) {
+      params.shipping_address_collection = { allowed_countries: SHIPPING_COUNTRIES };
+      params.shipping_options = [
         {
           shipping_rate_data: {
             type: 'fixed_amount',
@@ -99,15 +116,10 @@ export async function POST(request: NextRequest) {
             },
           },
         },
-      ],
-      // Coleta de dados do cliente:
-      billing_address_collection: 'auto',
-      shipping_address_collection: { allowed_countries: SHIPPING_COUNTRIES },
-      phone_number_collection: { enabled: true },
-      // (email é coletado automaticamente pelo Stripe Checkout)
-      success_url: `${origin}/sucesso?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/?checkout=cancelado#catalogo`,
-    });
+      ];
+    }
+
+    const session = await stripe.checkout.sessions.create(params);
 
     return NextResponse.json({ url: session.url });
   } catch (err) {

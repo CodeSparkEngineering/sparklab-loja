@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Stripe from 'stripe';
 import ClearCartOnMount from '@/components/ClearCartOnMount';
-import { formatEUR } from '@/data/products';
+import { formatEUR, getProductById, type Product } from '@/data/products';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -14,11 +14,32 @@ async function getSession(sessionId: string) {
   try {
     const stripe = new Stripe(key);
     return await stripe.checkout.sessions.retrieve(sessionId, {
-      expand: ['line_items'],
+      expand: ['line_items.data.price.product'],
     });
   } catch {
     return null;
   }
+}
+
+/** Extrai os produtos digitais (STL) comprados nesta sessão. */
+function getDigitalProducts(session: Stripe.Checkout.Session | null): Product[] {
+  if (!session) return [];
+  const result: Product[] = [];
+  const seen = new Set<string>();
+  for (const item of session.line_items?.data ?? []) {
+    const prod = item.price?.product;
+    const metaId =
+      prod && typeof prod === 'object' && 'metadata' in prod
+        ? prod.metadata?.product_id
+        : undefined;
+    if (!metaId || seen.has(metaId)) continue;
+    const product = getProductById(metaId);
+    if (product?.digital && product.stl) {
+      seen.add(metaId);
+      result.push(product);
+    }
+  }
+  return result;
 }
 
 export default async function SucessoPage({
@@ -33,6 +54,8 @@ export default async function SucessoPage({
     session?.customer_details?.email ?? session?.customer_email ?? null;
   const total =
     typeof session?.amount_total === 'number' ? session.amount_total / 100 : null;
+  const digitalProducts = paid ? getDigitalProducts(session) : [];
+  const hasPhysical = session?.metadata?.has_physical === 'true';
 
   return (
     <main className="order">
@@ -57,13 +80,45 @@ export default async function SucessoPage({
           <>
             <h1 className="order__title">Pagamento confirmado!</h1>
             <p className="order__text">
-              Obrigado pela sua compra. Recebemos o seu pedido e vamos começar
-              a produção. {email ? <>Enviámos a confirmação para <strong>{email}</strong>.</> : null}
+              Obrigado pela sua compra.{' '}
+              {hasPhysical
+                ? 'Recebemos o seu pedido e vamos começar a produção. '
+                : digitalProducts.length > 0
+                  ? 'Os teus arquivos estão prontos para download abaixo. '
+                  : ''}
+              {email ? <>Enviámos a confirmação para <strong>{email}</strong>.</> : null}
             </p>
             {total !== null && (
               <p className="order__total">
                 Total pago: <strong>{formatEUR(total)}</strong>
               </p>
+            )}
+
+            {digitalProducts.length > 0 && session_id && (
+              <div className="order__downloads">
+                <h2 className="order__downloads-title">
+                  Os teus arquivos STL
+                </h2>
+                <ul className="order__downloads-list">
+                  {digitalProducts.map((p) => (
+                    <li key={p.id} className="order__download">
+                      <span className="order__download-name">
+                        <span aria-hidden="true">📦</span> {p.name}
+                      </span>
+                      <a
+                        className="btn btn--primary btn--sm"
+                        href={`/api/download?session_id=${encodeURIComponent(session_id)}&product_id=${encodeURIComponent(p.id)}`}
+                      >
+                        Baixar .STL
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <p className="order__downloads-note">
+                  Guarda os arquivos em local seguro. Podes voltar a esta página
+                  pelo link no teu email para baixar de novo.
+                </p>
+              </div>
             )}
           </>
         ) : (
