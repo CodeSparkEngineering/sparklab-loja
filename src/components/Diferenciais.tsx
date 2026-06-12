@@ -5,8 +5,8 @@ function SpoolIcon() {
   return (
     <svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true">
       <circle cx="20" cy="20" r="17" fill="#f97316" opacity="0.16" />
-      <circle cx="20" cy="20" r="16" fill="none" stroke="#fb923c" stroke-width="2" />
-      <circle cx="20" cy="20" r="11.5" fill="none" stroke="#f97316" stroke-width="4.5" />
+      <circle cx="20" cy="20" r="16" fill="none" stroke="#fb923c" strokeWidth="2" />
+      <circle cx="20" cy="20" r="11.5" fill="none" stroke="#f97316" strokeWidth="4.5" />
       <circle cx="20" cy="20" r="6" fill="#fdba74" />
       <circle cx="20" cy="20" r="2.4" fill="#7c2d12" />
     </svg>
