@@ -56,7 +56,7 @@ export default function Header() {
           <Link href="/#catalogo"     onClick={handleSmoothScroll}>Catálogo</Link>
           <Link href="/#como-funciona" onClick={handleSmoothScroll}>Como funciona</Link>
           <Link href="/#orcamento"   onClick={handleSmoothScroll}>Orçamento</Link>
-          <Link href="/#comunidade"  onClick={handleSmoothScroll}>Arquivos STL</Link>
+          <Link href="/#comunidade"  onClick={handleSmoothScroll}>Ficheiros STL</Link>
           <Link href="/#faq"         onClick={handleSmoothScroll}>FAQ</Link>
           
           <Link

@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Termos e Condições',
-  description: 'Condições de compra, envio e utilização dos produtos e arquivos da SparkLab.',
+  description: 'Condições de compra, envio e utilização dos produtos e ficheiros da SparkLab.',
 };
 
 export default function TermosPage() {
@@ -48,9 +48,9 @@ export default function TermosPage() {
             para ti. Por isso, salvo defeito, não estão sujeitas ao direito de livre devolução.
           </p>
 
-          <h2 className="text-xl font-semibold text-white mt-8">4. Arquivos STL</h2>
+          <h2 className="text-xl font-semibold text-white mt-8">4. Ficheiros STL</h2>
           <p>
-            A venda de arquivos STL é feita sob encomenda através do WhatsApp. Os arquivos são
+            A venda de ficheiros STL é feita sob encomenda através do WhatsApp. Os ficheiros são
             licenciados para <strong>uso pessoal</strong>. Não é permitido revender, redistribuir
             nem partilhar o ficheiro com terceiros.
           </p>

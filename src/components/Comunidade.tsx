@@ -9,7 +9,7 @@ const PERKS = [
   { icon: '⚡', title: 'Envio rápido', desc: 'Recebes o ficheiro no chat' },
 ];
 
-const WHATSAPP_MSG = 'Olá! Tenho interesse nos arquivos STL das vossas peças. 🐙';
+const WHATSAPP_MSG = 'Olá! Tenho interesse nos ficheiros STL das vossas peças. 🐙';
 
 export default function Comunidade() {
   const handleContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -22,7 +22,7 @@ export default function Comunidade() {
       <div className="container">
         <div className="cmt-head">
           <span className="eyebrow eyebrow--orange">
-            <span className="dot"></span> Arquivos 3D
+            <span className="dot"></span> Ficheiros 3D
           </span>
           <h2 className="h2">Queres os nossos ficheiros STL?</h2>
           <p className="cmt-sub">

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { getWhatsAppLink } from '@/utils/whatsapp';
 
 const MATERIALS = [
-  { value: 'Não tenho certeza — me ajudem', label: 'Não tenho certeza', hint: 'Recomendamos pra você' },
+  { value: 'Não tenho a certeza — ajudem-me', label: 'Não tenho a certeza', hint: 'Recomendamos para ti' },
   { value: 'PLA (decorativo)', label: 'PLA', hint: 'Decorativo · fácil acabamento' },
   { value: 'PETG (resistente)', label: 'PETG', hint: 'Resistente · uso geral' },
   { value: 'ABS (técnico)', label: 'ABS', hint: 'Técnico · alta temperatura' },
@@ -48,7 +48,7 @@ export default function Orcamento() {
     const phone = (formData.get('phone') as string || '').trim();
 
     if (!name || !phone) {
-      alert('Por favor, preencha nome e WhatsApp para seguirmos.');
+      alert('Por favor, preenche o nome e o WhatsApp para continuarmos.');
       return;
     }
 
@@ -66,8 +66,8 @@ export default function Orcamento() {
     ];
 
     if (desc) parts.push(`*Descrição:* ${desc}`);
-    if (fileData) parts.push(``, `Vou anexar o arquivo *${fileData.name}* aqui no chat em seguida.`);
-    else parts.push(``, `Ainda não tenho arquivo 3D — preciso de ajuda com modelagem.`);
+    if (fileData) parts.push(``, `Vou anexar o ficheiro *${fileData.name}* aqui no chat de seguida.`);
+    else parts.push(``, `Ainda não tenho ficheiro 3D — preciso de ajuda com a modelação.`);
 
     window.open(getWhatsAppLink(parts.join('\n')), '_blank', 'noopener');
   };
@@ -77,13 +77,13 @@ export default function Orcamento() {
       <div className="container">
         <div className="section__head reveal">
           <span className="eyebrow eyebrow--olive"><span className="dot dot--olive"></span> Orçamento rápido</span>
-          <h2 className="h2">Tem um arquivo?<br />Receba um orçamento hoje.</h2>
+          <h2 className="h2">Tens um ficheiro?<br />Recebe um orçamento hoje.</h2>
         </div>
 
         <form className="quote-form reveal" id="quote-form" noValidate onSubmit={handleSubmit}>
           <div className="quote-form__aside">
             <h3>Como funciona</h3>
-            <p>Preencha o formulário e anexe seu arquivo. Respondemos em até 2 horas úteis no WhatsApp com prazo e valor.</p>
+            <p>Preenche o formulário e anexa o teu ficheiro. Respondemos em até 2 horas úteis no WhatsApp com o prazo e o valor.</p>
             <ul className="quote-form__list">
               <li>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
@@ -91,7 +91,7 @@ export default function Orcamento() {
               </li>
               <li>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                Sem arquivo? Descreva a ideia — nossa equipe modela.
+                Sem ficheiro? Descreve a ideia — a nossa equipa trata da modelação.
               </li>
               <li>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
@@ -165,11 +165,11 @@ export default function Orcamento() {
             </div>
 
             <div className="qf__field">
-              <label htmlFor="qf-file">Arquivo 3D (opcional)</label>
+              <label htmlFor="qf-file">Ficheiro 3D (opcional)</label>
               <label className={`qf__file ${fileData ? 'qf__file--has' : ''}`} id="qf-file-label" htmlFor="qf-file">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                 <span id="qf-file-text">
-                  {fileData ? `✓ ${fileData.name} ${(fileData.size / 1024 / 1024).toFixed(2)} MB` : 'Clique para anexar STL, OBJ, 3MF ou STEP'}
+                  {fileData ? `✓ ${fileData.name} ${(fileData.size / 1024 / 1024).toFixed(2)} MB` : 'Clica para anexar STL, OBJ, 3MF ou STEP'}
                 </span>
                 <input id="qf-file" name="file" type="file" accept=".stl,.obj,.3mf,.step,.stp" onChange={handleFileChange} />
               </label>

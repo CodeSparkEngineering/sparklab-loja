@@ -5,9 +5,9 @@ import * as THREE from 'three';
 
 /**
  * Objeto 3D do hero: uma malha (icosaedro) em wireframe laranja que se
- * deforma organicamente com ruído (parece um modelo 3D sendo esculpido) e
- * reage suavemente ao movimento do mouse. Renderiza dentro do seu container
- * (não ocupa a tela toda). Tudo roda só no cliente, dentro do useEffect.
+ * deforma organicamente com ruído (parece um modelo 3D a ser esculpido) e
+ * reage suavemente ao movimento do rato. Renderiza dentro do seu contentor
+ * (não ocupa o ecrã todo). Tudo corre só no cliente, dentro do useEffect.
  */
 export default function Hero3D() {
   const mountRef = useRef<HTMLDivElement>(null);

@@ -7,7 +7,7 @@ export default function ComoFunciona() {
             <span className="dot" /> Como funciona
           </span>
           <h2 className="h2">
-            Três passos entre uma ideia<br />e a peça na sua mão.
+            Três passos entre uma ideia<br />e a peça na tua mão.
           </h2>
         </div>
 
@@ -18,9 +18,9 @@ export default function ComoFunciona() {
               <div className="tl-num__circle">01</div>
             </div>
             <div className="tl-body">
-              <h3>Escolha ou envie o seu ficheiro</h3>
+              <h3>Escolhe ou envia o teu ficheiro</h3>
               <p>
-                Selecione uma peça do catálogo ou envie o seu próprio arquivo
+                Seleciona uma peça do catálogo ou envia o teu próprio ficheiro
                 STL / OBJ para um orçamento rápido. Sem complicações.
               </p>
               <div className="tl-art">
@@ -56,9 +56,9 @@ export default function ComoFunciona() {
               <div className="tl-num__circle">02</div>
             </div>
             <div className="tl-body">
-              <h3>Personalize ao detalhe</h3>
+              <h3>Personaliza ao detalhe</h3>
               <p>
-                Defina cor, material, tamanho e acabamento. A nossa equipa
+                Define a cor, material, tamanho e acabamento. A nossa equipa
                 confirma todos os detalhes antes de imprimir — sem surpresas.
               </p>
               <div className="tl-art">
@@ -80,8 +80,8 @@ export default function ComoFunciona() {
             <div className="tl-body">
               <h3>Receba em 48h, em Portugal</h3>
               <p>
-                Produzimos, embalamos e despachamos para todo o país. Acompanhe
-                o estado em tempo real até à porta da sua casa.
+                Produzimos, embalamos e despachamos para todo o país. Acompanha
+                o estado em tempo real até à porta da tua casa.
               </p>
               <div className="tl-art">
                 <span className="art-badge">

@@ -57,7 +57,7 @@ export default async function SucessoPage({
           <>
             <h1 className="order__title">Pagamento confirmado!</h1>
             <p className="order__text">
-              Obrigado pela sua compra. Recebemos o seu pedido e vamos começar
+              Obrigado pela tua compra. Recebemos o teu pedido e vamos começar
               a produção. {email ? <>Enviámos a confirmação para <strong>{email}</strong>.</> : null}
             </p>
             {total !== null && (
@@ -68,10 +68,10 @@ export default async function SucessoPage({
           </>
         ) : (
           <>
-            <h1 className="order__title">A processar o seu pedido</h1>
+            <h1 className="order__title">A processar o teu pedido</h1>
             <p className="order__text">
-              Se você concluiu o pagamento, ele pode levar alguns instantes a
-              confirmar. Qualquer dúvida, fale connosco.
+              Se concluíste o pagamento, ele pode levar alguns instantes a
+              confirmar. Qualquer dúvida, fala connosco.
             </p>
           </>
         )}

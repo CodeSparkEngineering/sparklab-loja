@@ -5,36 +5,36 @@ import { Accordion, AccordionItem } from "./ui/accordion";
 
 const faqs = [
   {
-    q: "Quais materiais e cores vocês trabalham?",
-    a: "Trabalhamos exclusivamente com filamentos oficiais da Bambu Lab (PLA, PETG, ABS, TPU, ASA, PC, entre outros) em nossas impressoras Bambu Lab P1S. Temos diversas cores em estoque — cores especiais são confirmadas no orçamento.",
+    q: "Com que materiais e cores trabalham?",
+    a: "Trabalhamos exclusivamente com filamentos oficiais da Bambu Lab (PLA, PETG, ABS, TPU, ASA, PC, entre outros) nas nossas impressoras Bambu Lab P1S. Temos várias cores em stock — cores especiais são confirmadas no orçamento.",
   },
   {
-    q: "Posso enviar meu próprio arquivo 3D?",
-    a: "Sim. Aceitamos STL, OBJ, 3MF e STEP. Se o arquivo tiver algum problema de malha, avisamos antes de imprimir e, em geral, fazemos a correção sem custo.",
+    q: "Posso enviar o meu próprio ficheiro 3D?",
+    a: "Sim. Aceitamos STL, OBJ, 3MF e STEP. Se o ficheiro tiver algum problema de malha, avisamos antes de imprimir e, regra geral, corrigimos sem custo.",
   },
   {
-    q: "Não tenho o modelo 3D — vocês modelam?",
-    a: "Modelamos sim. Envie fotos, medidas ou um desenho — orçamos modelagem + impressão juntos. O valor da modelagem é cobrado uma única vez; reimpressões futuras são só do material.",
+    q: "Não tenho o modelo 3D — fazem a modelação?",
+    a: "Fazemos, sim. Envia fotos, medidas ou um desenho — orçamos a modelação + impressão em conjunto. O valor da modelação é cobrado uma única vez; reimpressões futuras pagam só o material.",
   },
   {
     q: "Qual o prazo de produção e entrega?",
-    a: "Peças do catálogo: saem em até 48h. Personalizadas: 2 a 5 dias úteis, conforme tamanho e acabamento. O prazo de entrega depende do CEP — estimamos no orçamento.",
+    a: "Peças do catálogo: saem em até 48h. Personalizadas: 2 a 5 dias úteis, conforme o tamanho e o acabamento. O prazo de entrega depende do código postal — estimamos no orçamento.",
   },
   {
     q: "Qual o tamanho máximo de peça?",
-    a: "Imprimimos peças únicas até 30×30×35 cm. Peças maiores são feitas em partes modulares com encaixes quase invisíveis — dá pra montar projetos grandes sem perder a estética.",
+    a: "Imprimimos peças únicas até 30×30×35 cm. Peças maiores são feitas em partes modulares com encaixes quase invisíveis — dá para montar projetos grandes sem perder a estética.",
   },
   {
     q: "Como funciona o pagamento?",
-    a: "Aceitamos Pix, cartão em até 6x sem juros e boleto. Para encomendas acima de R$ 300, trabalhamos com 50% no início e 50% antes do envio.",
+    a: "O pagamento é feito de forma segura por cartão (Visa, Mastercard) através da Stripe, no momento da encomenda. Para encomendas de maior volume, podemos combinar 50% no início e 50% antes do envio.",
   },
   {
-    q: "Vocês fazem acabamento (lixa, pintura, montagem)?",
-    a: "Sim — oferecemos lixamento, primer, pintura em spray ou aerografia e montagem para peças que vêm em partes. Cada acabamento é orçado separadamente.",
+    q: "Fazem acabamento (lixagem, pintura, montagem)?",
+    a: "Sim — oferecemos lixagem, primário, pintura à pistola ou aerógrafo e montagem para peças que vêm em partes. Cada acabamento é orçado à parte.",
   },
   {
     q: "Atendem empresas e grandes volumes?",
-    a: "Sim. Temos preços escalonados para lotes a partir de 10 peças e nota fiscal para empresas. Fale com a gente pelo WhatsApp informando projeto e volume previsto.",
+    a: "Sim. Temos preços escalonados para lotes a partir de 10 peças e fatura para empresas. Fala connosco pelo WhatsApp a indicar o projeto e o volume previsto.",
   },
 ];
 
@@ -46,7 +46,7 @@ export default function FAQ() {
       <div className="container">
         <div className="section__head reveal" style={{ textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
           <span className="eyebrow"><span className="dot"></span> Perguntas frequentes</span>
-          <h2 className="h2">Tudo que você quer saber<br />antes de pedir.</h2>
+          <h2 className="h2">Tudo o que precisas de saber<br />antes de encomendar.</h2>
         </div>
 
         <div className="mt-12 reveal">

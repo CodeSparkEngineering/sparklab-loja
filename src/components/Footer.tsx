@@ -32,7 +32,7 @@ export default function Footer() {
             <ul>
               <li><a href="/#catalogo">Catálogo</a></li>
               <li><a href="/#orcamento">Sob encomenda</a></li>
-              <li><a href="/#comunidade">Arquivos STL</a></li>
+              <li><a href="/#comunidade">Ficheiros STL</a></li>
               <li><a href="/#como-funciona">Como funciona</a></li>
             </ul>
           </div>
@@ -42,7 +42,7 @@ export default function Footer() {
               <li><a href="#" onClick={handleContact}>WhatsApp</a></li>
               <li><a href="/#orcamento">Orçamento</a></li>
               <li><a href="/#faq">Perguntas frequentes</a></li>
-              <li><a href="/#comunidade">Arquivos STL</a></li>
+              <li><a href="/#comunidade">Ficheiros STL</a></li>
             </ul>
           </div>
           <div>

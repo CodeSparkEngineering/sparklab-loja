@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     "impressão 3D Portugal",
     "miniaturas 3D",
     "porta-chaves 3D",
-    "arquivos STL",
+    "ficheiros STL",
     "peças sob encomenda",
     "SparkLab",
   ],

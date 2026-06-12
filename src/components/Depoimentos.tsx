@@ -26,8 +26,8 @@ export default function Depoimentos() {
           <figure className="quote reveal">
             <div className="stars">★★★★★</div>
             <blockquote>
-              <p>Precisava de uma peça de reposição que o fabricante não vendia mais.
-              Mandei o desenho, em dois dias estava funcionando como nova.</p>
+              <p>Precisava de uma peça de substituição que o fabricante já não vendia.
+              Enviei o desenho e, em dois dias, estava a funcionar como nova.</p>
             </blockquote>
             <figcaption>
               <div className="avatar" style={{ background: '#6a9bcc' }}>R</div>
@@ -42,7 +42,7 @@ export default function Depoimentos() {
             <div className="stars">★★★★★</div>
             <blockquote>
               <p>A luminária com foto da minha filha ficou linda. Atendimento no WhatsApp
-              foi atencioso e me ajudaram a escolher a melhor imagem.</p>
+              foi atencioso e ajudaram-me a escolher a melhor imagem.</p>
             </blockquote>
             <figcaption>
               <div className="avatar" style={{ background: '#788c5d' }}>C</div>
