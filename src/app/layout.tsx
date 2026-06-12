@@ -17,9 +17,40 @@ const lora = Lora({
   weight: ["400", "500", "600"],
 });
 
+const SITE_URL = "https://sparklab-loja.vercel.app";
+const SITE_DESC =
+  "Miniaturas, porta-chaves, acessórios e peças sob encomenda impressas em 3D com acabamento profissional. Encomenda online com entrega para todo o Portugal.";
+
 export const metadata: Metadata = {
-  title: "SparkLab — Impressão 3D sob encomenda",
-  description: "Protótipos, miniaturas, peças técnicas e objetos decorativos impressos com acabamento profissional e entrega para todo o Brasil.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "SparkLab — Impressão 3D sob encomenda em Portugal",
+    template: "%s · SparkLab",
+  },
+  description: SITE_DESC,
+  keywords: [
+    "impressão 3D",
+    "impressão 3D Portugal",
+    "miniaturas 3D",
+    "porta-chaves 3D",
+    "arquivos STL",
+    "peças sob encomenda",
+    "SparkLab",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "pt_PT",
+    url: SITE_URL,
+    siteName: "SparkLab",
+    title: "SparkLab — Impressão 3D sob encomenda em Portugal",
+    description: SITE_DESC,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SparkLab — Impressão 3D sob encomenda em Portugal",
+    description: SITE_DESC,
+  },
   icons: {
     icon: "/logo.jpg",
     apple: "/logo.jpg",
@@ -33,7 +64,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="pt-BR"
+      lang="pt-PT"
       className={`${poppins.variable} ${lora.variable} h-full antialiased`}
       suppressHydrationWarning
     >
