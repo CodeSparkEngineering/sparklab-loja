@@ -2,6 +2,7 @@
 
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
+import FaixaConfianca from '@/components/FaixaConfianca';
 import Destaques from '@/components/Destaques';
 import Diferenciais from '@/components/Diferenciais';
 import Catalogo from '@/components/Catalogo';
@@ -19,6 +20,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <FaixaConfianca />
         <Destaques />
         <Diferenciais />
         <Catalogo />
