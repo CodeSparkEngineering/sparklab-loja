@@ -6,7 +6,7 @@ import { Accordion, AccordionItem } from "./ui/accordion";
 const faqs = [
   {
     q: "Com que materiais e cores trabalham?",
-    a: "Trabalhamos exclusivamente com filamentos oficiais da Bambu Lab (PLA, PETG, ABS, TPU, ASA, PC, entre outros) nas nossas impressoras Bambu Lab P1S. Temos várias cores em stock — cores especiais são confirmadas no orçamento.",
+    a: "Trabalhamos exclusivamente com filamentos oficiais da Bambu Lab — PLA, PETG, ABS, ASA, TPU e PC — nas nossas impressoras Bambu Lab P1S. Temos várias cores em stock; cores especiais são confirmadas no orçamento.",
   },
   {
     q: "Posso enviar o meu próprio ficheiro 3D?",

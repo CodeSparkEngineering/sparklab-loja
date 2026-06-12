@@ -51,7 +51,7 @@ export default function Diferenciais() {
               <SpoolIcon />
             </div>
             <h3>Materiais oficiais Bambu Lab</h3>
-            <p>Utilizamos exclusivamente impressoras Bambu Lab P1S e os seus filamentos oficiais (PLA, PETG, ABS, TPU, ASA, PC) para o melhor acabamento e precisão.</p>
+            <p>Utilizamos exclusivamente impressoras Bambu Lab P1S e os seus filamentos oficiais (PLA, PETG, ABS, ASA, TPU e PC) para o melhor acabamento e precisão.</p>
           </article>
 
           <article className="card card--feature reveal" style={{ transitionDelay: '0.1s' }}>

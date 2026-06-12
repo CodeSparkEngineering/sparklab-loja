@@ -76,7 +76,7 @@ export default function Hero() {
       {/* Bottom ticker using 21st.dev Marquee */}
       <div className="hero__ticker border-y border-white/5 bg-white/5 py-4" aria-hidden="true">
         <Marquee className="[--duration:30s] [--gap:3rem]">
-          {['PLA', 'PETG', 'ABS', 'TPU', 'ASA', 'PETG-CF', 'PA', 'PC', 'Bambu Lab', 'PVA', 'Resina 8K', 'SLA'].map((m, i) => (
+          {['PLA', 'PETG', 'ABS', 'ASA', 'TPU', 'PC'].map((m, i) => (
             <span key={i} className="flex items-center gap-3 text-sm font-medium tracking-wider text-muted-foreground uppercase whitespace-nowrap">
               <span className="w-1.5 h-1.5 rounded-full bg-orange-500/80" /> {m}
             </span>

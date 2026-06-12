@@ -8,8 +8,9 @@ const MATERIALS = [
   { value: 'PLA (decorativo)', label: 'PLA', hint: 'Decorativo · fácil acabamento' },
   { value: 'PETG (resistente)', label: 'PETG', hint: 'Resistente · uso geral' },
   { value: 'ABS (técnico)', label: 'ABS', hint: 'Técnico · alta temperatura' },
+  { value: 'ASA (exterior)', label: 'ASA', hint: 'Resistência UV · exterior' },
   { value: 'TPU (flexível)', label: 'TPU', hint: 'Flexível · borrachoso' },
-  { value: 'ASA', label: 'ASA', hint: 'Resistência UV · externo' },
+  { value: 'PC (policarbonato)', label: 'PC', hint: 'Alta resistência · técnico' },
 ];
 
 export default function Orcamento() {
