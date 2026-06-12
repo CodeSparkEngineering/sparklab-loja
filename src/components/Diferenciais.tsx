@@ -20,8 +20,8 @@ export default function Diferenciais() {
             <div className="card__icon card__icon--blue w-16 h-16 flex items-center justify-center shadow-lg transform transition-transform hover:scale-110 overflow-hidden bg-white/5 border border-white/10 rounded-xl">
               <img src="/images/delivery-box.png" alt="Entrega rápida" className="w-full h-full object-contain p-1" />
             </div>
-            <h3>Entrega em 48h</h3>
-            <p>Peças do catálogo saem no mesmo dia. Encomendas personalizadas em até 2 dias úteis para todo o país.</p>
+            <h3>Entrega em todo o Portugal</h3>
+            <p>Produzimos com cuidado e despachamos via CTT registado para todo o país, com embalagem segura e seguimento da encomenda.</p>
           </article>
 
           <article className="card card--feature reveal" style={{ transitionDelay: '0.2s' }}>
@@ -29,7 +29,7 @@ export default function Diferenciais() {
               <img src="/images/pro-finish.png" alt="Acabamento profissional" className="w-full h-full object-contain p-1" />
             </div>
             <h3>Acabamento profissional</h3>
-            <p>Lixamento, pintura e montagem inclusos sob pedido. Sua peça chega pronta para exibir ou usar.</p>
+            <p>Lixagem, pintura e montagem incluídos sob pedido. A tua peça chega pronta para exibir ou usar.</p>
           </article>
         </div>
       </div>

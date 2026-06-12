@@ -78,17 +78,17 @@ export default function ComoFunciona() {
               <div className="tl-num__circle">03</div>
             </div>
             <div className="tl-body">
-              <h3>Receba em 48h, em Portugal</h3>
+              <h3>Recebe em casa, em todo o Portugal</h3>
               <p>
-                Produzimos, embalamos e despachamos para todo o país. Acompanha
-                o estado em tempo real até à porta da tua casa.
+                Produzimos, embalamos e despachamos via CTT para todo o país,
+                com embalagem segura — até à porta da tua casa.
               </p>
               <div className="tl-art">
                 <span className="art-badge">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 10H3M16 2l5 8-5 8M8 2L3 10l5 8" />
                   </svg>
-                  48h express
+                  Envio CTT registado
                 </span>
                 <span className="art-badge" style={{ background: 'rgba(59,130,246,.08)', borderColor: 'rgba(59,130,246,.2)', color: 'var(--blue)' }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

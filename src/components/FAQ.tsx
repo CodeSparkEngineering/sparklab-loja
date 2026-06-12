@@ -18,7 +18,7 @@ const faqs = [
   },
   {
     q: "Qual o prazo de produção e entrega?",
-    a: "Peças do catálogo: saem em até 48h. Personalizadas: 2 a 5 dias úteis, conforme o tamanho e o acabamento. O prazo de entrega depende do código postal — estimamos no orçamento.",
+    a: "As peças do catálogo costumam estar prontas em poucos dias úteis; as personalizadas variam conforme o tamanho e o acabamento. Confirmamos sempre o prazo estimado no orçamento, antes de avançar — sem promessas que não possamos cumprir.",
   },
   {
     q: "Qual o tamanho máximo de peça?",

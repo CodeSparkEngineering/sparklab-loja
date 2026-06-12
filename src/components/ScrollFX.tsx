@@ -131,6 +131,13 @@ export default function ScrollFX() {
       });
     }
 
+    // Rede de segurança: se o observer não disparar para alguma secção
+    // (scroll muito rápido, browser estranho, etc.), revela tudo após 2,5s
+    // para nunca ficar uma secção invisível/preta no ecrã.
+    const revealFailsafe = setTimeout(() => {
+      reveals.forEach(el => el.classList.add('fx-anim', 'is-visible'));
+    }, 2500);
+
     // ─── 3. Counter Animation ─────────────────────────────────────────
     const counters = Array.from(document.querySelectorAll<HTMLElement>('[data-counter]'));
 
@@ -239,6 +246,7 @@ export default function ScrollFX() {
     return () => {
       cancelAnimationFrame(rafCursor);
       if (rafReveal) cancelAnimationFrame(rafReveal);
+      clearTimeout(revealFailsafe);
       ioReveal?.disconnect();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseover', onDocMouseOver);

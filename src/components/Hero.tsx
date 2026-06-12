@@ -56,13 +56,8 @@ export default function Hero() {
 
           <div className="hero__stats">
             <div className="hero__stat">
-              <span className="hero__stat-num">+<span data-counter="1200">1200</span></span>
+              <span className="hero__stat-num">+<span data-counter="150">150</span></span>
               <span className="hero__stat-label">peças entregues</span>
-            </div>
-            <div className="hero__stat-divider" aria-hidden="true" />
-            <div className="hero__stat">
-              <span className="hero__stat-num"><span data-counter="48">48</span>h</span>
-              <span className="hero__stat-label">prazo médio</span>
             </div>
             <div className="hero__stat-divider" aria-hidden="true" />
             <div className="hero__stat">
