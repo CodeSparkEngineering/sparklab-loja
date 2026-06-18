@@ -160,6 +160,15 @@ export default function Hero3D() {
     };
     window.addEventListener('pointermove', onPointer, { passive: true });
 
+    // Reatividade ao scroll: 0 no topo, ~1 ao rolar uma altura de ecrã.
+    // Alimenta rotação/escala/deformação extra para um efeito "scrollytelling".
+    let scrollT = 0;
+    const onScroll = () => {
+      scrollT = Math.min(window.scrollY / (window.innerHeight || 1), 1);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
     // Resize com base no container.
     const resize = () => {
       width = mount.clientWidth || 1;
@@ -174,6 +183,7 @@ export default function Hero3D() {
     let frame = 0;
     const start = performance.now();
     let amp = 0;
+    let scrollEased = 0;
 
     // Pausa a renderização quando fora da tela ou com a aba oculta (poupa
     // bateria/CPU, importante no mobile).
@@ -185,15 +195,23 @@ export default function Hero3D() {
       const t = (performance.now() - start) / 1000;
       material.uniforms.uTime.value = t;
 
-      // fade-in da deformação
-      amp += (1 - amp) * 0.02;
-      material.uniforms.uAmp.value = amp;
+      // scroll suavizado (lerp) para não saltar
+      scrollEased += (scrollT - scrollEased) * 0.06;
 
-      // rotação automática + tilt do mouse (lerp)
+      // fade-in da deformação + intensifica conforme o scroll
+      amp += (1 - amp) * 0.02;
+      material.uniforms.uAmp.value = amp + scrollEased * 0.7;
+
+      // rotação automática + tilt do mouse (lerp) + giro extra no scroll
       current.x += (target.x - current.x) * 0.05;
       current.y += (target.y - current.y) * 0.05;
-      mesh.rotation.x = current.x;
-      mesh.rotation.y = t * 0.15 + current.y;
+      mesh.rotation.x = current.x + scrollEased * 0.7;
+      mesh.rotation.y = t * 0.15 + current.y + scrollEased * Math.PI;
+
+      // leve zoom-in e halo a desvanecer ao rolar
+      const s = 1 + scrollEased * 0.14;
+      mesh.scale.set(s, s, s);
+      glowMaterial.opacity = 0.5 * (1 - scrollEased * 0.4);
 
       renderer.render(scene, camera);
       frame = requestAnimationFrame(animate);
@@ -241,6 +259,7 @@ export default function Hero3D() {
     return () => {
       stopLoop();
       window.removeEventListener('pointermove', onPointer);
+      window.removeEventListener('scroll', onScroll);
       document.removeEventListener('visibilitychange', onVisibility);
       vis.disconnect();
       ro.disconnect();
