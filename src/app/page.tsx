@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import FaixaConfianca from '@/components/FaixaConfianca';
 import Destaques from '@/components/Destaques';
+import Jornada from '@/components/Jornada';
 import Diferenciais from '@/components/Diferenciais';
 import Catalogo from '@/components/Catalogo';
 import ComoFunciona from '@/components/ComoFunciona';
@@ -22,6 +23,7 @@ export default function Home() {
         <Hero />
         <FaixaConfianca />
         <Destaques />
+        <Jornada />
         <Diferenciais />
         <Catalogo />
         <ComoFunciona />
