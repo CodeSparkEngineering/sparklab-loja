@@ -304,6 +304,14 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   box-shadow: var(--shadow-orange);
 }
 
+/* Confirmação "✓ Adicionado" — estado verde temporário */
+.btn--added {
+  background: #16a34a;
+  color: #fff;
+  box-shadow: 0 2px 0 rgba(0,0,0,.15);
+}
+.btn--added:hover { background: #15803d; }
+
 .btn--ghost {
   color: var(--ink);
   border: 1px solid var(--line-strong);
@@ -2155,6 +2163,23 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   border-top: 1px solid var(--line);
   padding: 20px 24px calc(20px + env(safe-area-inset-bottom));
   display: flex; flex-direction: column; gap: 10px;
+}
+.cart__ship{
+  background: rgba(132,204,22,.07);
+  border: 1px solid rgba(132,204,22,.22);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.cart__ship-text{ margin: 0 0 9px; font-size: 13px; color: var(--ink-dim); line-height: 1.4; }
+.cart__ship-text strong{ color: var(--ink); font-weight: 700; }
+.cart__ship-text span{ color: #a3e635; font-weight: 600; }
+.cart__ship-text--done{ color: #a3e635; }
+.cart__ship-bar{ height: 6px; border-radius: 999px; background: rgba(255,255,255,.1); overflow: hidden; }
+.cart__ship-bar span{
+  display: block; height: 100%;
+  background: linear-gradient(90deg, #65a30d, #a3e635);
+  border-radius: 999px;
+  transition: width .45s var(--ease-cine);
 }
 .cart__subtotal{
   display: flex; align-items: baseline; justify-content: space-between;

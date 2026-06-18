@@ -7,6 +7,7 @@ import type { Product } from '@/data/products';
 export default function AddToCartForm({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);
   const [customizations, setCustomizations] = useState<Record<string, string>>({});
+  const [added, setAdded] = useState(false);
   const { add } = useCart();
 
   const handleMinus = () => setQuantity(q => Math.max(1, q - 1));
@@ -14,6 +15,8 @@ export default function AddToCartForm({ product }: { product: Product }) {
 
   const handleAdd = () => {
     add(product.id, quantity, customizations);
+    setAdded(true);
+    window.setTimeout(() => setAdded(false), 1800);
   };
 
   const handleCustomizationChange = (id: string, value: string) => {
@@ -64,12 +67,12 @@ export default function AddToCartForm({ product }: { product: Product }) {
         </div>
       </div>
       
-      <button 
-        type="button" 
+      <button
+        type="button"
         onClick={handleAdd}
-        className="btn btn--primary w-full max-w-md mt-4 text-lg py-4"
+        className={`btn w-full max-w-md mt-4 text-lg py-4 transition-colors ${added ? 'btn--added' : 'btn--primary'}`}
       >
-        Adicionar ao meu carrinho 🛒
+        {added ? '✓ Adicionado ao carrinho!' : 'Adicionar ao meu carrinho 🛒'}
       </button>
     </div>
   );

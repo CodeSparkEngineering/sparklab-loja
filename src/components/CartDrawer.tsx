@@ -10,6 +10,11 @@ export default function CartDrawer() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Incentivo de envio grátis (limite de 40€ — igual ao do checkout).
+  const FREE_SHIP = 40;
+  const shipRemaining = Math.max(0, FREE_SHIP - subtotal);
+  const shipProgress = Math.min(1, subtotal / FREE_SHIP);
+
   // Fecha com ESC e trava o scroll do body quando aberto.
   useEffect(() => {
     if (!isOpen) return;
@@ -156,6 +161,21 @@ export default function CartDrawer() {
             </ul>
 
             <footer className="cart__foot">
+              <div className="cart__ship">
+                {shipRemaining > 0 ? (
+                  <p className="cart__ship-text">
+                    Faltam <strong>{formatEUR(shipRemaining)}</strong> para teres <span>envio grátis</span> 🚚
+                  </p>
+                ) : (
+                  <p className="cart__ship-text cart__ship-text--done">
+                    🎉 Boa! Tens <strong>envio grátis</strong>.
+                  </p>
+                )}
+                <div className="cart__ship-bar">
+                  <span style={{ width: `${shipProgress * 100}%` }} />
+                </div>
+              </div>
+
               {error && <p className="cart__error">{error}</p>}
               <div className="cart__subtotal">
                 <span>Subtotal</span>

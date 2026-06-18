@@ -41,9 +41,20 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
             </div>
             
             <h1 className="h2 mb-4">{product.name}</h1>
-            <p className="text-3xl font-medium text-white mb-6">
+            <p className="text-3xl font-medium text-white mb-5">
               {formatEUR(product.price)}
             </p>
+
+            {/* Selos informativos */}
+            <div className="flex flex-wrap gap-2 mb-7">
+              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">🇵🇹 Feito em Portugal</span>
+              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">📦 Envio CTT registado</span>
+              {product.customizations && product.customizations.length > 0 ? (
+                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-300 bg-orange-500/10 border border-orange-500/25 rounded-full px-3 py-1.5">🛠️ Personalizável</span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">🧾 Feito por encomenda</span>
+              )}
+            </div>
 
             <div className="prose prose-invert prose-lg text-zinc-400 mb-8">
               <p>{product.desc}</p>
@@ -69,6 +80,17 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
                   <span>Impressora</span>
                   <span className="text-white">Bambu Lab P1S</span>
                 </li>
+              </ul>
+            </div>
+
+            {/* Produção & entrega — honesto, sem prazos garantidos */}
+            <div className="bg-white/5 rounded-2xl p-6 border border-white/10 mb-8">
+              <h3 className="text-lg font-medium text-white mb-4">Produção &amp; entrega</h3>
+              <ul className="space-y-3 text-sm text-zinc-400">
+                <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Impresso por nós, sob encomenda, na Bambu Lab P1S.</li>
+                <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Envio CTT registado para todo o Portugal, com seguimento.</li>
+                <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Envio grátis em encomendas a partir de 40€.</li>
+                <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Dúvidas? Confirmamos prazo e detalhes no WhatsApp.</li>
               </ul>
             </div>
 
