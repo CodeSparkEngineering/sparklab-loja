@@ -103,7 +103,8 @@ export default function ScrollFX() {
     }
     for (const arr of groups.values()) {
       arr.forEach((el, i) => {
-        el.style.transitionDelay = `${Math.min(i * 100, 300)}ms`;
+        // cascata mais cinematográfica entre irmãos
+        el.style.transitionDelay = `${Math.min(i * 130, 520)}ms`;
       });
     }
 

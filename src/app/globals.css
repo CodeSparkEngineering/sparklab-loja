@@ -1542,26 +1542,42 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 /* ─────────────────────────────────────────────────────────
    REVEAL ANIMATIONS
 ───────────────────────────────────────────────────────── */
+/* Easing cinematográfico (ease-out "expo" — desaceleração suave de cinema) */
+:root { --ease-cine: cubic-bezier(0.16, 1, 0.3, 1); }
+
 .reveal { opacity: 1; }
 .reveal.fx-hide {
   opacity: 0;
-  transform: translateY(48px) scale(.98);
+  transform: translateY(60px) scale(.955);
+  filter: blur(12px);
 }
 .reveal.fx-anim {
   transition:
-    opacity .85s var(--ease-spring),
-    transform .9s var(--ease-spring);
-  will-change: opacity, transform;
+    opacity 1s var(--ease-cine),
+    transform 1.15s var(--ease-cine),
+    filter 1s var(--ease-cine);
+  will-change: opacity, transform, filter;
 }
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+  filter: blur(0);
 }
 
-/* Stagger variations */
-.reveal-left.fx-hide  { transform: translateX(-40px); }
-.reveal-right.fx-hide { transform: translateX(40px); }
-.reveal-scale.fx-hide { transform: scale(.92); opacity: 0; }
+/* Variações direcionais (entradas vindas dos lados / com zoom) */
+.reveal-left.fx-hide  { transform: translateX(-60px) scale(.97); filter: blur(12px); }
+.reveal-right.fx-hide { transform: translateX(60px) scale(.97); filter: blur(12px); }
+.reveal-scale.fx-hide { transform: scale(.88); opacity: 0; filter: blur(12px); }
+
+/* No telemóvel tira-se o blur (poupa GPU e evita jank) */
+@media (max-width: 768px) {
+  .reveal.fx-hide,
+  .reveal-left.fx-hide,
+  .reveal-right.fx-hide,
+  .reveal-scale.fx-hide { filter: none; }
+  .reveal.fx-anim { transition-duration: .8s, .9s, .9s; }
+  .reveal.is-visible { filter: none; }
+}
 
 /* ─────────────────────────────────────────────────────────
    HERO SCROLL-DRIVEN ANIMATIONS
