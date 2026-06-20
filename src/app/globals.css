@@ -1777,6 +1777,42 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 .cmt-head .eyebrow { justify-content: center; }
 .cmt-head .h2 { margin-bottom: 14px; }
 .cmt-sub { margin: 0; color: var(--ink-dim); font-size: 17px; line-height: 1.5; }
+
+/* Cartão limpo (tema claro) para a CTA dos ficheiros STL */
+.stl-card {
+  max-width: 480px;
+  margin: 36px auto 0;
+  background: var(--bg-card);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-xl);
+  padding: 36px 36px 30px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+.stl-card__points {
+  list-style: none; margin: 0 auto 26px; padding: 0;
+  display: inline-flex; flex-direction: column; gap: 14px; text-align: left;
+}
+.stl-card__points li {
+  display: flex; align-items: center; gap: 11px;
+  color: var(--ink); font-size: 15.5px; font-weight: 500;
+}
+.stl-card__points li svg { color: var(--olive); flex-shrink: 0; }
+.stl-card__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 15px 24px;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: #fff; border-radius: 14px;
+  font-family: var(--f-head); font-weight: 600; font-size: 15px;
+  box-shadow: 0 12px 28px -12px rgba(37,211,102,.55);
+  transition: transform .2s var(--ease-out), box-shadow .2s ease;
+}
+.stl-card__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px -12px rgba(37,211,102,.7);
+}
+.stl-card__foot { margin: 15px 0 0; font-size: 12.5px; color: var(--ink-dim); }
+
 .cmt-card {
   position: relative;
   max-width: 560px; margin: 0 auto;
