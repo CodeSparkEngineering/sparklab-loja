@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Hero3D from './Hero3D';
-import { Marquee } from './ui/marquee';
 
 export default function Hero() {
   return (
@@ -66,15 +65,15 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bottom ticker using 21st.dev Marquee */}
-      <div className="hero__ticker border-y border-stone-200 bg-stone-100 py-4" aria-hidden="true">
-        <Marquee className="[--duration:30s] [--gap:3rem]">
-          {['PLA', 'PETG', 'ABS', 'ASA', 'TPU', 'PC'].map((m, i) => (
-            <span key={i} className="flex items-center gap-3 text-sm font-medium tracking-wider text-stone-600 uppercase whitespace-nowrap">
+      {/* Materiais (linha fixa, sem repetição) */}
+      <div className="hero__ticker border-y border-stone-200 dark:border-white/5 bg-stone-100 dark:bg-white/5 py-4" aria-hidden="true">
+        <div className="container flex flex-wrap items-center justify-center sm:justify-between gap-x-7 gap-y-3">
+          {['PLA', 'PETG', 'ABS', 'ASA', 'TPU', 'PC'].map((m) => (
+            <span key={m} className="flex items-center gap-2.5 text-sm font-medium tracking-wider text-stone-600 dark:text-stone-300 uppercase whitespace-nowrap">
               <span className="w-1.5 h-1.5 rounded-full bg-orange-500/80" /> {m}
             </span>
           ))}
-        </Marquee>
+        </div>
       </div>
     </section>
   );
