@@ -56,9 +56,12 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="container footer__base">
-        <small>© 2026 SparkLab. Feito com cuidado, camada por camada.</small>
-        <small><a href="/privacidade">Privacidade</a> · <a href="/termos">Termos</a></small>
+      <div className="container footer__base" style={{ flexDirection: 'column', gap: '8px', textAlign: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
+          <small>© 2026 SparkLab. Feito com cuidado, camada por camada.</small>
+          <small style={{ opacity: 0.7 }}>Última atualização: Junho de 2026 · Verificado por SparkLab Maker</small>
+          <small><a href="/privacidade">Privacidade</a> · <a href="/termos">Termos</a></small>
+        </div>
       </div>
     </footer>
   );

@@ -8,15 +8,15 @@ export default function ProductGallery({ images, alt }: { images: string[], alt:
 
   if (!images || images.length === 0) {
     return (
-      <div className="aspect-square bg-white/5 rounded-2xl flex items-center justify-center border border-white/10">
-        <span className="text-zinc-500">Sem imagem</span>
+      <div className="aspect-square bg-stone-100 rounded-2xl flex items-center justify-center border border-stone-200">
+        <span className="text-stone-400">Sem imagem</span>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="aspect-square relative rounded-2xl overflow-hidden border border-white/10 bg-black/40">
+      <div className="aspect-square relative rounded-2xl overflow-hidden border border-stone-200 bg-stone-100">
         <Image
           src={images[activeImage]}
           alt={`${alt} - Imagem ${activeImage + 1}`}

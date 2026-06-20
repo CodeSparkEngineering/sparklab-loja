@@ -208,11 +208,11 @@ export function CardStack<T extends CardStackItem>({
       >
         {/* background wash / spotlight (unique feel) */}
         <div
-          className="pointer-events-none absolute inset-x-0 top-6 mx-auto h-48 w-[70%] rounded-full bg-black/5 blur-3xl dark:bg-white/5"
+          className="pointer-events-none absolute inset-x-0 top-6 mx-auto h-48 w-[70%] rounded-full bg-stone-100 dark:bg-stone-900 blur-3xl"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-40 w-[76%] rounded-full bg-black/10 blur-3xl dark:bg-black/30"
+          className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-40 w-[76%] rounded-full bg-stone-200 dark:bg-black/50 blur-3xl"
           aria-hidden="true"
         />
 
@@ -272,11 +272,9 @@ export function CardStack<T extends CardStackItem>({
                 <motion.div
                   key={item.id}
                   className={cn(
-                    "absolute bottom-0 rounded-2xl border-4 border-black/10 dark:border-white/10 overflow-hidden shadow-xl",
+                    "absolute bottom-0 rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 overflow-hidden shadow-md",
                     "will-change-transform select-none",
-                    // cursor-none: deixa o cursor personalizado do site (bola laranja)
-                    // assumir — senão aparece o cursor do sistema POR CIMA (cursor duplo)
-                    "cursor-none",
+                    isActive ? "cursor-pointer" : "cursor-pointer"
                   )}
                   style={{
                     width: cardWidth,
@@ -313,7 +311,13 @@ export function CardStack<T extends CardStackItem>({
                   }}
                   // translateZ via style transform (kept stable w/ motion values above)
                   // We apply translateZ by using a CSS transform in a child wrapper.
-                  onClick={() => setActive(i)}
+                  onClick={() => {
+                    if (isActive && item.href) {
+                      window.location.href = item.href;
+                    } else {
+                      setActive(i);
+                    }
+                  }}
                   {...dragProps}
                 >
                   <div
@@ -384,7 +388,7 @@ function DefaultFanCard({ item }: { item: CardStackItem; active: boolean }) {
           <img
             src={item.imageSrc}
             alt={item.title}
-            className="h-full w-full object-contain bg-black/40"
+            className="h-full w-full object-contain bg-stone-100 dark:bg-black/40"
             draggable={false}
             loading="eager"
           />
@@ -396,15 +400,15 @@ function DefaultFanCard({ item }: { item: CardStackItem; active: boolean }) {
       </div>
 
       {/* subtle gradient overlay at bottom for text readability */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white dark:from-black/80 via-white/70 dark:via-black/40 to-transparent" />
 
       {/* content */}
       <div className="relative z-10 flex h-full flex-col justify-end p-5">
-        <div className="truncate text-lg font-semibold text-white">
+        <div className="truncate text-lg font-semibold text-stone-900 dark:text-stone-100">
           {item.title}
         </div>
         {item.description ? (
-          <div className="mt-1 line-clamp-2 text-sm text-white/80">
+          <div className="mt-1 line-clamp-2 text-sm text-stone-600 dark:text-stone-400">
             {item.description}
           </div>
         ) : null}

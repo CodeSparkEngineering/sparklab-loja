@@ -20,8 +20,8 @@ export default function Catalogo() {
       <div className="container">
         <div className="section__head section__head--row reveal">
           <div>
-            <span className="eyebrow eyebrow--olive"><span className="dot dot--olive"></span> A nossa coleção</span>
-            <h2 className="h2">Peças incríveis,<br />prontas para ti.</h2>
+            <span className="eyebrow--hand" style={{ color: 'var(--olive)' }}>a nossa coleção</span>
+            <h2 className="h2">Peças incríveis,<br />prontas para <span className="hand-underline">ti</span>.</h2>
           </div>
           <p className="section__desc">
             Descobre os nossos designs mais adorados. Escolhe as tuas
@@ -51,8 +51,8 @@ export default function Catalogo() {
               return (
                 <div key={tag} className="reveal">
                   <div className="flex items-center gap-4 mb-4 md:mb-6">
-                    <h3 className="text-lg md:text-xl font-bold uppercase tracking-wider text-white/90">{tag}</h3>
-                    <div className="h-[1px] flex-1 bg-white/10" />
+                    <h3 className="text-lg md:text-xl font-bold uppercase tracking-wider text-stone-800">{tag}</h3>
+                    <div className="h-[1px] flex-1 bg-stone-200" />
                   </div>
                   <CarouselRow>
                     {groupProducts.map((p) => (

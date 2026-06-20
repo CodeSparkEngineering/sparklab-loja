@@ -1,25 +1,47 @@
 import type { Metadata } from "next";
-import { Poppins, Lora } from "next/font/google";
+import { Quicksand, Caveat } from "next/font/google";
 import "./globals.css";
 import ScrollFX from "@/components/ScrollFX";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/CartDrawer";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const quicksand = Quicksand({
+  variable: "--font-quicksand",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
-const lora = Lora({
-  variable: "--font-lora",
+const caveat = Caveat({
+  variable: "--font-caveat",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const SITE_URL = "https://sparklab-loja.vercel.app";
 const SITE_DESC =
   "Miniaturas, porta-chaves, acessórios e peças sob encomenda impressas em 3D com acabamento profissional. Encomenda online com entrega para todo o Portugal.";
+
+const schemaMarkup = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "SparkLab",
+  "alternateName": "SparkLab 3D",
+  "description": SITE_DESC,
+  "url": SITE_URL,
+  "logo": `${SITE_URL}/logo.jpg`,
+  "image": `${SITE_URL}/logo.jpg`,
+  "priceRange": "€-€€",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "PT",
+    "addressRegion": "Portugal"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Portugal"
+  }
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -65,16 +87,22 @@ export default function RootLayout({
   return (
     <html
       lang="pt-PT"
-      className={`${poppins.variable} ${lora.variable} h-full antialiased`}
+      className={`${quicksand.variable} ${caveat.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <CartProvider>
-          <div className="scroll-progress" aria-hidden="true" />
-          <ScrollFX />
-          {children}
-          <CartDrawer />
-        </CartProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <CartProvider>
+            <div className="scroll-progress" aria-hidden="true" />
+            <ScrollFX />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+            />
+            {children}
+            <CartDrawer />
+          </CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

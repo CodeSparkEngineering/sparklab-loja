@@ -8,6 +8,7 @@ import Diferenciais from '@/components/Diferenciais';
 import Catalogo from '@/components/Catalogo';
 import ComoFunciona from '@/components/ComoFunciona';
 import Orcamento from '@/components/Orcamento';
+import AOficina from '@/components/AOficina';
 import Depoimentos from '@/components/Depoimentos';
 import Comunidade from '@/components/Comunidade';
 import FAQ from '@/components/FAQ';
@@ -26,6 +27,7 @@ export default function Home() {
         <Catalogo />
         <ComoFunciona />
         <Orcamento />
+        <AOficina />
         <Depoimentos />
         <Comunidade />
         <FAQ />

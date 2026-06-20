@@ -47,9 +47,7 @@ export default function Destaques() {
           className="section__head reveal"
           style={{ textAlign: 'center', maxWidth: 640, marginInline: 'auto' }}
         >
-          <span className="eyebrow eyebrow--orange">
-            <span className="dot" /> Destaques
-          </span>
+          <span className="eyebrow--hand" style={{ color: 'var(--orange)' }}>destaques</span>
           <h2 className="h2">Os mais pedidos.</h2>
           <p className="section__desc" style={{ marginInline: 'auto' }}>
             Arraste os cards, use as setas ou toque para explorar nossas peças

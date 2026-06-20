@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: "Qual o tamanho máximo de peça?",
-    a: "Imprimimos peças únicas até 30×30×35 cm. Peças maiores são feitas em partes modulares com encaixes quase invisíveis — dá para montar projetos grandes sem perder a estética.",
+    a: "Imprimimos peças únicas até 25,6 × 25,6 × 25,6 cm (o volume da Bambu Lab P1S). Peças maiores são feitas em partes modulares com encaixes quase invisíveis — dá para montar projetos grandes sem perder a estética.",
   },
   {
     q: "Como funciona o pagamento?",
@@ -38,15 +38,31 @@ const faqs = [
   },
 ];
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a,
+    },
+  })),
+};
+
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0); // Keep first open by default
 
   return (
     <section className="section" id="faq">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="container">
-        <div className="section__head reveal" style={{ textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
-          <span className="eyebrow"><span className="dot"></span> Perguntas frequentes</span>
-          <h2 className="h2">Tudo o que precisas de saber<br />antes de encomendar.</h2>
+        <div className="mb-12" style={{ textAlign: 'center', maxWidth: '600px', marginInline: 'auto' }}>
+          <h2 className="text-3xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 tracking-tight">Ainda tens dúvidas sobre como trabalhamos?</h2>
         </div>
 
         <div className="mt-12 reveal">

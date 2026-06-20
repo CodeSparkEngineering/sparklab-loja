@@ -114,8 +114,8 @@ export default function CartDrawer() {
                         {Object.entries(customizations).map(([key, value]) => {
                           const optionDef = product.customizations?.find(c => c.id === key);
                           return (
-                            <span key={key} className="text-xs text-zinc-500">
-                              <span className="font-medium text-zinc-400">{optionDef?.label || key}:</span> {value}
+                            <span key={key} className="text-xs text-stone-500">
+                              <span className="font-medium text-stone-700">{optionDef?.label || key}:</span> {value}
                             </span>
                           );
                         })}

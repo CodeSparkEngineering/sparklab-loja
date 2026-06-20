@@ -20,10 +20,10 @@ export function AccordionItem({
   onClick: () => void;
 }) {
   return (
-    <div className="border border-white/10 bg-white/5 rounded-2xl overflow-hidden transition-colors hover:border-white/20">
+    <div className="border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/50 rounded-2xl overflow-hidden shadow-sm transition-colors hover:border-orange-300 dark:hover:border-orange-500/50">
       <button
         onClick={onClick}
-        className="flex w-full items-center justify-between px-6 py-5 text-left text-lg font-medium text-foreground transition-colors hover:bg-white/5"
+        className="flex w-full items-center justify-between px-6 py-5 text-left text-lg font-medium text-stone-800 dark:text-stone-200 transition-colors hover:bg-stone-50 dark:hover:bg-stone-800/50"
       >
         <span className="pr-8">{question}</span>
         <motion.div
@@ -43,7 +43,7 @@ export function AccordionItem({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="px-6 pb-6 pt-0 text-muted-foreground leading-relaxed">
+            <div className="px-6 pb-5 text-stone-600 dark:text-stone-400 leading-relaxed">
               {answer}
             </div>
           </motion.div>

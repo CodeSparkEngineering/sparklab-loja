@@ -3,11 +3,9 @@ export default function ComoFunciona() {
     <section className="section section--alt" id="como-funciona">
       <div className="container">
         <div className="section__head reveal">
-          <span className="eyebrow eyebrow--orange">
-            <span className="dot" /> Como funciona
-          </span>
+          <span className="eyebrow--hand" style={{ color: 'var(--orange)' }}>como funcionamos</span>
           <h2 className="h2">
-            Três passos entre uma ideia<br />e a peça na tua mão.
+            O percurso da tua ideia<br />até à tua <span className="hand-underline">porta</span>.
           </h2>
         </div>
 
@@ -18,10 +16,10 @@ export default function ComoFunciona() {
               <div className="tl-num__circle">01</div>
             </div>
             <div className="tl-body">
-              <h3>Escolhe ou envia o teu ficheiro</h3>
+              <h3>Mostra-nos a tua ideia (ou o teu modelo 3D)</h3>
               <p>
-                Seleciona uma peça do catálogo ou envia o teu próprio ficheiro
-                STL / OBJ para um orçamento rápido. Sem complicações.
+                Viste algo na nossa montra que gostaste? Ou tens um ficheiro 3D
+                (.stl ou .obj) guardado à espera de ganhar vida? Envia-nos e nós damos uma olhadela rápida para avaliar.
               </p>
               <div className="tl-art">
                 <span className="art-file">
@@ -56,10 +54,10 @@ export default function ComoFunciona() {
               <div className="tl-num__circle">02</div>
             </div>
             <div className="tl-body">
-              <h3>Personaliza ao detalhe</h3>
+              <h3>Afinamos os detalhes contigo</h3>
               <p>
-                Define a cor, material, tamanho e acabamento. A nossa equipa
-                confirma todos os detalhes antes de imprimir — sem surpresas.
+                Cor, tamanho, material, tipo de acabamento. Falamos de tudo tranquilamente
+                (pelo WhatsApp ou e-mail) para que a peça fique exatamente como imaginaste. Zero surpresas no orçamento.
               </p>
               <div className="tl-art">
                 <span className="art-swatch" style={{ background: '#d97757' }} title="Laranja" />
@@ -78,10 +76,10 @@ export default function ComoFunciona() {
               <div className="tl-num__circle">03</div>
             </div>
             <div className="tl-body">
-              <h3>Recebe em casa, em todo o Portugal</h3>
+              <h3>A impressora trabalha, e nós enviamos</h3>
               <p>
-                Produzimos, embalamos e despachamos via CTT para todo o país,
-                com embalagem segura — até à porta da tua casa.
+                Assim que a impressão termina e fazemos os últimos retoques à mão,
+                preparamos um embrulho à prova de bala. Depois, é só esperares pelo carteiro na tua morada.
               </p>
               <div className="tl-art">
                 <span className="art-badge">
@@ -94,7 +92,7 @@ export default function ComoFunciona() {
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                   </svg>
-                  Embalagem segura
+                  Caixa segura
                 </span>
               </div>
             </div>

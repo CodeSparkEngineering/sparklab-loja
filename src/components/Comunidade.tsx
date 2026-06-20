@@ -21,13 +21,10 @@ export default function Comunidade() {
     <section className="section comunidade-section" id="comunidade">
       <div className="container">
         <div className="cmt-head">
-          <span className="eyebrow eyebrow--orange">
-            <span className="dot"></span> Ficheiros 3D
-          </span>
-          <h2 className="h2">Queres os nossos ficheiros STL?</h2>
+          <span className="eyebrow--hand" style={{ color: 'var(--orange)' }}>ficheiros 3D</span>
+          <h2 className="h2">Gostavas de imprimir as nossas peças em casa?</h2>
           <p className="cmt-sub">
-            Vendemos os STL das nossas peças sob encomenda. Fala connosco no
-            WhatsApp e enviamos o ficheiro e o preço na hora.
+            Se já tens a tua própria impressora a ganhar pó, podes comprar os nossos modelos originais (.STL). Fala connosco e partilhamos a paixão.
           </p>
         </div>
 

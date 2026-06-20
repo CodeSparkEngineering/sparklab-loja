@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 
 import AnnouncementBar from './AnnouncementBar';
+import { ThemeToggle } from './ThemeToggle';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -69,7 +70,8 @@ export default function Header() {
         </nav>
 
         {/* Right-side actions */}
-        <div className="nav__actions">
+        <div className="nav__actions" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <ThemeToggle />
         {/* Cart button */}
         <button
           type="button"

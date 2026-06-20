@@ -13,13 +13,33 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
     notFound();
   }
 
+  const SITE_URL = 'https://sparklab-loja.vercel.app';
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.name,
+    "image": product.images ? product.images.map((img) => `${SITE_URL}${img}`) : [],
+    "description": product.desc,
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "EUR",
+      "price": product.price,
+      "availability": "https://schema.org/PreOrder",
+      "url": `${SITE_URL}/produto/${product.id}`
+    }
+  };
+
   return (
     <main className="min-h-screen pt-32 pb-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
       <div className="container max-w-6xl mx-auto px-4">
         {/* Breadcrumb / Back button */}
         <Link 
           href="/#catalogo" 
-          className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
           Voltar ao Catálogo
@@ -41,52 +61,52 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
             </div>
             
             <h1 className="h2 mb-4">{product.name}</h1>
-            <p className="text-3xl font-medium text-white mb-5">
+            <p className="text-3xl font-medium text-stone-900 dark:text-stone-100 mb-5">
               {formatEUR(product.price)}
             </p>
 
             {/* Selos informativos */}
             <div className="flex flex-wrap gap-2 mb-7">
-              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">🇵🇹 Feito em Portugal</span>
-              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">📦 Envio CTT registado</span>
+              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-600 dark:text-zinc-300 bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-white/10 rounded-full px-3 py-1.5">🇵🇹 Feito em Portugal</span>
+              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-600 dark:text-zinc-300 bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-white/10 rounded-full px-3 py-1.5">📦 Envio CTT registado</span>
               {product.customizations && product.customizations.length > 0 ? (
-                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-300 bg-orange-500/10 border border-orange-500/25 rounded-full px-3 py-1.5">🛠️ Personalizável</span>
+                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-600 dark:text-orange-300 bg-orange-100 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/25 rounded-full px-3 py-1.5">🛠️ Personalizável</span>
               ) : (
-                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">🧾 Feito por encomenda</span>
+                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-600 dark:text-zinc-300 bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-white/10 rounded-full px-3 py-1.5">🧾 Feito por encomenda</span>
               )}
             </div>
 
-            <div className="prose prose-invert prose-lg text-zinc-400 mb-8">
+            <div className="prose prose-lg text-stone-600 dark:text-zinc-400 mb-8">
               <p>{product.desc}</p>
             </div>
 
             {/* Specifications (Example/Mock) */}
-            <div className="bg-white/5 rounded-2xl p-6 border border-white/10 mb-8">
-              <h3 className="text-lg font-medium text-white mb-4">Especificações</h3>
-              <ul className="space-y-3 text-sm text-zinc-400">
-                <li className="flex justify-between">
-                  <span>Material Base</span>
-                  <span className="text-white">PLA Premium (Bambu Lab)</span>
-                </li>
-                <li className="flex justify-between">
-                  <span>Resolução de Camada</span>
-                  <span className="text-white">0.16 mm - 0.20 mm</span>
-                </li>
-                <li className="flex justify-between">
-                  <span>Acabamento</span>
-                  <span className="text-white">Padrão Texturizado PEI</span>
-                </li>
-                <li className="flex justify-between">
-                  <span>Impressora</span>
-                  <span className="text-white">Bambu Lab P1S</span>
-                </li>
+            <div className="bg-stone-50 dark:bg-white/5 rounded-2xl p-6 border border-stone-200 dark:border-white/10 mb-8">
+              <h3 className="text-lg font-medium text-stone-900 dark:text-stone-100 mb-4">Especificações</h3>
+              <ul className="space-y-3 text-sm text-stone-600 dark:text-zinc-400">
+                <div className="flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-stone-300 dark:bg-zinc-600" />
+                  <span className="text-stone-800 dark:text-stone-200">PLA Premium (Bambu Lab)</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-stone-300 dark:bg-zinc-600" />
+                  <span className="text-stone-800 dark:text-stone-200">0.16 mm - 0.20 mm</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-stone-300 dark:bg-zinc-600" />
+                  <span className="text-stone-800 dark:text-stone-200">Padrão Texturizado PEI</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-stone-300 dark:bg-zinc-600" />
+                  <span className="text-stone-800 dark:text-stone-200">Bambu Lab P1S</span>
+                </div>
               </ul>
             </div>
 
             {/* Produção & entrega — honesto, sem prazos garantidos */}
-            <div className="bg-white/5 rounded-2xl p-6 border border-white/10 mb-8">
-              <h3 className="text-lg font-medium text-white mb-4">Produção &amp; entrega</h3>
-              <ul className="space-y-3 text-sm text-zinc-400">
+            <div className="bg-stone-50 dark:bg-white/5 rounded-2xl p-6 border border-stone-200 dark:border-white/10 mb-8">
+              <h3 className="text-lg font-medium text-stone-900 dark:text-stone-100 mb-4">Produção &amp; entrega</h3>
+              <ul className="space-y-3 text-sm text-stone-600 dark:text-zinc-400">
                 <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Impresso por nós, sob encomenda, na Bambu Lab P1S.</li>
                 <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Envio CTT registado para todo o Portugal, com seguimento.</li>
                 <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Envio grátis em encomendas a partir de 40€.</li>

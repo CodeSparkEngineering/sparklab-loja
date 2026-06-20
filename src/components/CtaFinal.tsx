@@ -13,9 +13,9 @@ export default function CtaFinal() {
       <div className="container">
         <div className="cta__banner reveal">
           <div className="cta__text">
-            <span className="eyebrow eyebrow--orange"><span className="dot"></span> A nossa loja</span>
-            <h2 className="h2">Prefere algo já pronto?<br />Leva pra casa hoje.</h2>
-            <p>Peças impressas, embaladas e prontas a enviar para todo Portugal. Escolhe a tua no catálogo — sem espera de produção.</p>
+            <span className="eyebrow--hand" style={{ color: '#1a0d04' }}>catálogo local</span>
+            <h2 className="h2">Preferes não esperar?<br />Espreita o que já temos.</h2>
+            <p>Temos peças que já desenhámos e testámos até à exaustão. Prontas a serem tuas com um clique.</p>
           </div>
           <div className="cta__actions">
             <a href="#catalogo" className="btn btn--dark">
