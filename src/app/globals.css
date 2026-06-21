@@ -1967,7 +1967,17 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 @media (max-width: 960px) {
   /* Mobile Menu Styles */
   .nav__desktop-cta { display: none; }
-  
+
+  /* IMPORTANTE: sem backdrop-filter no header em mobile. Caso contrário, ele
+     cria um "containing block" e o menu fixo (.nav__links/.nav__overlay) fica
+     posicionado relativo ao header (68px) em vez do ecrã — defeito de posição
+     no iOS. Header com fundo sólido legível. */
+  .nav {
+    background: var(--bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .nav__toggle {
     display: flex; flex-direction: column; justify-content: center; gap: 5px;
     width: 44px; height: 44px; padding: 10px;
@@ -1983,8 +1993,10 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 
   .nav__links {
     position: fixed; top: 0; right: 0; bottom: 0; width: 280px; max-width: 80vw;
-    background: rgba(14, 14, 20, .95); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    height: 100dvh;
+    background: var(--bg-card);
     border-left: 1px solid var(--line-strong);
+    box-shadow: -20px 0 50px -20px rgba(0,0,0,.25);
     flex-direction: column; align-items: flex-start; justify-content: center; gap: 32px;
     padding: 80px 40px; z-index: 100;
     transform: translateX(100%); transition: transform .4s var(--ease-spring);
