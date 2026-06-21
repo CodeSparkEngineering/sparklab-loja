@@ -42,7 +42,7 @@ export default function Footer() {
               <li><a href="#" onClick={handleContact}>WhatsApp</a></li>
               <li><a href="/#orcamento">Orçamento</a></li>
               <li><a href="/#faq">Perguntas frequentes</a></li>
-              <li><a href="/#comunidade">Ficheiros STL</a></li>
+              <li><a href="/termos">Termos e condições</a></li>
             </ul>
           </div>
           <div>
