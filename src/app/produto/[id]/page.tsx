@@ -1,9 +1,42 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getProductById, formatEUR } from '@/data/products';
 import ProductGallery from '@/components/ProductGallery';
 import AddToCartForm from '@/components/AddToCartForm';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+
+const SITE_URL = 'https://sparklab-loja.vercel.app';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const product = getProductById(id);
+  if (!product) return { title: 'Produto não encontrado' };
+
+  const img = product.images?.[0] ? `${SITE_URL}${product.images[0]}` : undefined;
+  return {
+    title: product.name,
+    description: product.desc,
+    alternates: { canonical: `/produto/${product.id}` },
+    openGraph: {
+      type: 'website',
+      title: `${product.name} · SparkLab`,
+      description: product.desc,
+      url: `${SITE_URL}/produto/${product.id}`,
+      ...(img ? { images: [{ url: img, alt: product.name }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: product.name,
+      description: product.desc,
+      ...(img ? { images: [img] } : {}),
+    },
+  };
+}
 
 export default async function ProdutoPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -13,7 +46,6 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
     notFound();
   }
 
-  const SITE_URL = 'https://sparklab-loja.vercel.app';
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",

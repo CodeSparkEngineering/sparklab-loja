@@ -62,6 +62,17 @@ export default function Footer() {
           <small style={{ opacity: 0.7 }}>Última atualização: Junho de 2026 · Verificado por SparkLab Maker</small>
           <small><a href="/privacidade">Privacidade</a> · <a href="/termos">Termos</a></small>
         </div>
+        <small style={{ opacity: 0.7 }}>
+          Site desenvolvido por{' '}
+          <a
+            href="https://www.codesparkengineering.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--orange)', fontWeight: 600 }}
+          >
+            CodeSpark Engineering
+          </a>
+        </small>
       </div>
     </footer>
   );
