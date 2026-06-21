@@ -1,5 +1,3 @@
-// Usamos emojis para um toque mais humano e artesanal!
-
 export default function Diferenciais() {
   return (
     <section className="section" id="diferenciais">
@@ -11,25 +9,19 @@ export default function Diferenciais() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <article className="card reveal p-8 flex flex-col gap-4">
-            <div className="w-16 h-16 flex items-center justify-center bg-orange-100 dark:bg-orange-900/30 rounded-2xl text-4xl shadow-sm transform transition-transform hover:-rotate-6 hover:scale-110">
-              🧵
-            </div>
+            <img src="/images/diferenciais-filamento.jpg" alt="Filamento dourado e extrusora Bambu Lab" className="w-full h-44 object-cover rounded-2xl shadow-sm" loading="lazy" />
             <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100">O padrão de ouro Bambu Lab</h3>
             <p className="text-stone-600 dark:text-stone-400 leading-relaxed">Trabalhamos exclusivamente com as máquinas P1S. Cada filamento é escolhido a dedo para que a tua peça tenha resistência e aquele acabamento perfeito.</p>
           </article>
 
           <article className="card reveal p-8 flex flex-col gap-4" style={{ transitionDelay: '0.1s' }}>
-            <div className="w-16 h-16 flex items-center justify-center bg-blue-100 dark:bg-blue-900/30 rounded-2xl text-4xl shadow-sm transform transition-transform hover:rotate-6 hover:scale-110">
-              📦
-            </div>
+            <img src="/images/diferenciais-envio.jpg" alt="Peças impressas em 3D embaladas à mão numa caixa" className="w-full h-44 object-cover rounded-2xl shadow-sm" loading="lazy" />
             <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100">Enviamos de nós para ti</h3>
             <p className="text-stone-600 dark:text-stone-400 leading-relaxed">Embalamos tudo à mão, com muito plástico bolha e carinho. Despachamos via CTT registado para que chegue até ti impecável, em qualquer ponto do país.</p>
           </article>
 
           <article className="card reveal p-8 flex flex-col gap-4" style={{ transitionDelay: '0.2s' }}>
-            <div className="w-16 h-16 flex items-center justify-center bg-lime-100 dark:bg-lime-900/30 rounded-2xl text-4xl shadow-sm transform transition-transform hover:-rotate-6 hover:scale-110">
-              ✨
-            </div>
+            <img src="/images/diferenciais-acabamento.jpg" alt="Peça impressa em 3D lixada e pintada à mão numa bancada de acabamento" className="w-full h-44 object-cover rounded-2xl shadow-sm" loading="lazy" />
             <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100">Não é só "Carregar no Botão"</h3>
             <p className="text-stone-600 dark:text-stone-400 leading-relaxed">Lixamos, pintamos e montamos se precisares. Não deixamos pontas soltas. A tua peça chega-te pronta para exibir ou usar, com todo o mimo.</p>
           </article>
