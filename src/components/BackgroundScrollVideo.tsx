@@ -128,6 +128,7 @@ export default function BackgroundScrollVideo({
       <video
         ref={videoRef}
         src={src}
+        poster="/videos/hero-poster.jpg"
         muted
         playsInline
         preload="auto"
