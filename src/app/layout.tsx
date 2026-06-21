@@ -101,4 +101,11 @@ export default function RootLayout({
               type="application/ld+json"
               dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
             />
- 
+            {children}
+            <CartDrawer />
+          </CartProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}

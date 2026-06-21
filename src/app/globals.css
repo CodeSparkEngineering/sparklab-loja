@@ -2347,4 +2347,23 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 
 @media (max-width: 480px){
   .order__card{ padding: 36px 24px; }
-  .order__download{
+  .order__download{ flex-direction: column; align-items: stretch; text-align: center; }
+}
+
+/* ─────────────────────────────────────────────────────────
+   MOBILE — ajustes finos com as mudanças (3D, carrinho, nav)
+───────────────────────────────────────────────────────── */
+@media (max-width: 600px){
+  /* Carrinho ocupa a tela toda e itens compactam sem quebrar */
+  .cart__panel{ width: 100%; }
+  .cart__item{ grid-template-columns: 54px 1fr auto; gap: 10px; padding: 10px; }
+  .cart__thumb{ width: 54px; height: 54px; }
+  .cart__head{ padding: 18px 18px; }
+  .cart__foot{ padding: 16px 18px calc(16px + env(safe-area-inset-bottom)); }
+}
+
+/* Em telas de toque o objeto 3D não recebe hover — mantém só a rotação
+   automática (a interação por mouse é ignorada). */
+@media (hover: none){
+  .nav__cart:hover{ transform: none; }
+}
