@@ -101,6 +101,12 @@ export const PRODUCTS: Product[] = [
   { id: 'chaveiro-taca', name: 'Porta-Chaves Taça do Mundo', desc: 'Porta-chaves em formato de Taça do Mundo impressa em 3D. Leva a glória para todo o lado!', price: 3, tag: 'Porta-Chaves', tone: 'yellow', icon: '🏆', images: ['/images/chaveiro-taca.jpg'] },
   { id: 'chaveiro-camisa-ronaldo', name: 'Porta-Chaves Camisola Ronaldo', desc: 'Porta-chaves com a mítica camisola 7 de Portugal. Para os verdadeiros fãs!', price: 3, tag: 'Porta-Chaves', tone: 'red', icon: '👕', images: ['/images/chaveiro-camisa-ronaldo.jpg'] },
   { id: 'chaveiro-spinner-brasil', name: 'Porta-Chaves Spinner Brasil', desc: 'Porta-chaves interativo com a bandeira do Brasil que gira! Divertido e perfeito para aliviar o stress.', price: 3, tag: 'Porta-Chaves', tone: 'green', icon: '🌀', images: ['/images/chaveiro-spinner-brasil.jpg'] },
+  // ── Canecas (seleções e clubes) — placeholders com emoji até haver fotos ──
+  { id: 'caneca-portugal', name: 'Caneca Seleção Portugal', desc: 'Caneca com a temática da Seleção de Portugal. O presente ideal para os adeptos das Quinas.', price: 20, tag: 'Canecas', tone: 'red', icon: '☕' },
+  { id: 'caneca-brasil', name: 'Caneca Seleção Brasil', desc: 'Caneca com a temática da Seleção do Brasil. Perfeita para os fãs da Canarinha.', price: 20, tag: 'Canecas', tone: 'yellow', icon: '☕' },
+  { id: 'caneca-benfica', name: 'Caneca Benfica', desc: 'Caneca com as cores e a mística do Glorioso. Para os verdadeiros adeptos do Benfica.', price: 20, tag: 'Canecas', tone: 'red', icon: '☕' },
+  { id: 'caneca-porto', name: 'Caneca FC Porto', desc: 'Caneca azul e branca para os adeptos do FC Porto. Um presente cheio de paixão portista.', price: 20, tag: 'Canecas', tone: 'blue', icon: '☕' },
+  { id: 'caneca-sporting', name: 'Caneca Sporting CP', desc: 'Caneca verde e branca para os adeptos do Sporting. O presente certo para os leoninos.', price: 20, tag: 'Canecas', tone: 'olive', icon: '☕' },
 ];
 
 export const PRODUCT_TAGS = ['Todos', ...Array.from(new Set(PRODUCTS.map((p) => p.tag)))];
