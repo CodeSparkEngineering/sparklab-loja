@@ -1,11 +1,10 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import Hero3D from './Hero3D';
 
 export default function Hero() {
   return (
-    <section className="hero" id="hero">
+    <section className="hero relative" id="hero">
       <div className="hero__glow" aria-hidden="true" />
 
       <div className="hero__layout">
@@ -17,7 +16,7 @@ export default function Hero() {
             </span>
           </div>
 
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -59,10 +58,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── RIGHT: objeto 3D interativo ── */}
-        <div className="hero__right" aria-hidden="true">
-          <Hero3D />
-        </div>
+        {/* ── RIGHT: vazio — o vídeo de fundo fixo (BackgroundScrollVideo)
+              aparece atrás de todo o site, incluindo aqui. ── */}
+        <div className="hero__right" aria-hidden="true" />
       </div>
 
       {/* Materiais (linha fixa, sem repetição) */}
@@ -78,4 +76,3 @@ export default function Hero() {
     </section>
   );
 }
-

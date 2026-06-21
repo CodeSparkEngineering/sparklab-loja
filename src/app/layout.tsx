@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Quicksand, Caveat } from "next/font/google";
 import "./globals.css";
 import ScrollFX from "@/components/ScrollFX";
+import BackgroundScrollVideo from "@/components/BackgroundScrollVideo";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/CartDrawer";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -93,17 +94,11 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <CartProvider>
+            <BackgroundScrollVideo src="/videos/hero.mp4" />
             <div className="scroll-progress" aria-hidden="true" />
             <ScrollFX />
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
             />
-            {children}
-            <CartDrawer />
-          </CartProvider>
-        </ThemeProvider>
-      </body>
-    </html>
-  );
-}
+ 
