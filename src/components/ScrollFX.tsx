@@ -13,6 +13,21 @@ import { useEffect } from 'react';
  */
 export default function ScrollFX() {
   useEffect(() => {
+    // Abrir sempre no TOPO: impede o browser de restaurar a última posição
+    // de scroll (que mandava o utilizador para o fundo da página). Se houver
+    // âncora no URL (ex.: #catalogo), rola até essa secção.
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    const hash = window.location.hash;
+    if (hash && hash.length > 1) {
+      const el = document.querySelector(hash);
+      if (el) requestAnimationFrame(() => el.scrollIntoView());
+      else window.scrollTo(0, 0);
+    } else {
+      window.scrollTo(0, 0);
+    }
+
     const supportsSDA =
       typeof CSS !== 'undefined' &&
       typeof CSS.supports === 'function' &&
