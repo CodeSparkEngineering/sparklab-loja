@@ -55,11 +55,11 @@ export default async function SucessoPage({
 
         {paid ? (
           <>
-            <h1 className="order__title">Obrigado por confiares em nós! 🧡</h1>
+            <h1 className="order__title">Pagamento confirmado</h1>
             <p className="order__text">
-              Já recebemos o teu pedido e vamos imprimir a tua peça com todo o
-              cuidado, na nossa Bambu Lab P1S. Depois embalamos tudo à mão — com
-              muito plástico bolha e carinho — antes de seguir para ti.{' '}
+              Obrigado pela tua compra. Vamos iniciar a produção da tua
+              encomenda na nossa Bambu Lab P1S e enviá-la com embalagem segura,
+              via CTT registado.{' '}
               {email ? <>Enviámos a confirmação para <strong>{email}</strong>.</> : null}
             </p>
             {total !== null && (

@@ -29,7 +29,7 @@ export default function AOficina() {
               </figure>
             </div>
             <p className="text-center mt-6 text-xl text-stone-600 dark:text-stone-400" style={{ fontFamily: 'var(--f-accent)' }}>
-              Os fundadores da SparkLab — feito à mão, peça a peça 🛠️
+              Os fundadores da SparkLab — produção local, em Portugal
             </p>
           </div>
 

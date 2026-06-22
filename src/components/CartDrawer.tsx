@@ -81,7 +81,7 @@ export default function CartDrawer() {
         {items.length === 0 ? (
           <div className="cart__empty">
             <span className="cart__empty-icon" aria-hidden="true">🛒</span>
-            <p>O teu carrinho ainda está vazio. Vamos enchê-lo de coisas fixes?</p>
+            <p>O teu carrinho está vazio. Explora o catálogo para começar.</p>
             <button type="button" className="btn btn--ghost btn--sm" onClick={closeCart}>
               Explorar a loja
             </button>
@@ -181,7 +181,7 @@ export default function CartDrawer() {
                 <span>Subtotal</span>
                 <strong>{formatEUR(subtotal)}</strong>
               </div>
-              <p className="cart__note">Portes calculados no checkout · embalamos tudo com plástico bolha e carinho 📦</p>
+              <p className="cart__note">Portes calculados no checkout. Envio via CTT registado, com seguimento.</p>
               <button
                 type="button"
                 className="btn btn--primary cart__checkout"

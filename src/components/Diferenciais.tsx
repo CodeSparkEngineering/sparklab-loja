@@ -17,7 +17,7 @@ export default function Diferenciais() {
           <article className="card reveal p-8 flex flex-col gap-4" style={{ transitionDelay: '0.1s' }}>
             <img src="/images/diferenciais-envio.jpg" alt="Peças impressas em 3D embaladas à mão numa caixa" className="w-full h-44 object-cover rounded-2xl shadow-sm" loading="lazy" />
             <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100">Enviamos de nós para ti</h3>
-            <p className="text-stone-600 dark:text-stone-400 leading-relaxed">Embalamos tudo à mão, com muito plástico bolha e carinho. Despachamos via CTT registado para que chegue até ti impecável, em qualquer ponto do país.</p>
+            <p className="text-stone-600 dark:text-stone-400 leading-relaxed">Embalagem segura e cuidada. Despachamos via CTT registado, com seguimento, para que chegue impecável a qualquer ponto do país.</p>
           </article>
 
           <article className="card reveal p-8 flex flex-col gap-4" style={{ transitionDelay: '0.2s' }}>
