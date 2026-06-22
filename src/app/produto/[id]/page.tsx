@@ -140,7 +140,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
               <h3 className="text-lg font-medium text-stone-900 dark:text-stone-100 mb-4">Produção &amp; entrega</h3>
               <ul className="space-y-3 text-sm text-stone-600 dark:text-zinc-400">
                 <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Impresso por nós, sob encomenda, na Bambu Lab P1S.</li>
-                <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Envio CTT registado para todo o Portugal, com seguimento.</li>
+                <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Embalado à mão, com plástico bolha e carinho, e enviado via CTT registado.</li>
                 <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Envio grátis em encomendas a partir de 40€.</li>
                 <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Dúvidas? Confirmamos prazo e detalhes no WhatsApp.</li>
               </ul>

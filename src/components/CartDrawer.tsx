@@ -181,7 +181,7 @@ export default function CartDrawer() {
                 <span>Subtotal</span>
                 <strong>{formatEUR(subtotal)}</strong>
               </div>
-              <p className="cart__note">Portes e impostos calculados no checkout.</p>
+              <p className="cart__note">Portes calculados no checkout · embalamos tudo com plástico bolha e carinho 📦</p>
               <button
                 type="button"
                 className="btn btn--primary cart__checkout"
