@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next';
 import { PRODUCTS } from '@/data/products';
-
-const SITE_URL = 'https://sparklab-loja.vercel.app';
+import { SITE_URL } from '@/data/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const productEntries = PRODUCTS.map((p) => ({

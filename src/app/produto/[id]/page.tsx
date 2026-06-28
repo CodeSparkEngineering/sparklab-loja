@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getProductById, formatEUR } from '@/data/products';
+import { SITE_URL } from '@/data/site';
 import ProductGallery from '@/components/ProductGallery';
 import AddToCartForm from '@/components/AddToCartForm';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-
-const SITE_URL = 'https://sparklab-loja.vercel.app';
 
 export async function generateMetadata({
   params,
@@ -52,12 +51,37 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
     "name": product.name,
     "image": product.images ? product.images.map((img) => `${SITE_URL}${img}`) : [],
     "description": product.desc,
+    "brand": {
+      "@type": "Brand",
+      "name": "SparkLab"
+    },
+    "category": product.tag,
     "offers": {
       "@type": "Offer",
       "priceCurrency": "EUR",
       "price": product.price,
-      "availability": "https://schema.org/PreOrder",
-      "url": `${SITE_URL}/produto/${product.id}`
+      "availability": "https://schema.org/InStock",
+      "url": `${SITE_URL}/produto/${product.id}`,
+      "seller": {
+        "@type": "Organization",
+        "name": "SparkLab"
+      },
+      "shippingDetails": {
+        "@type": "OfferShippingDetails",
+        "shippingDestination": {
+          "@type": "DefinedRegion",
+          "addressCountry": "PT"
+        },
+        "deliveryTime": {
+          "@type": "ShippingDeliveryTime",
+          "businessDays": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+          },
+          "handlingTime": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 3, "unitCode": "d" },
+          "transitTime": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 3, "unitCode": "d" }
+        }
+      }
     }
   };
 
@@ -101,6 +125,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
             <div className="flex flex-wrap gap-2 mb-7">
               <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-600 dark:text-zinc-300 bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-white/10 rounded-full px-3 py-1.5">🇵🇹 Feito em Portugal</span>
               <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-600 dark:text-zinc-300 bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-white/10 rounded-full px-3 py-1.5">📦 Envio CTT registado</span>
+              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-700/50 rounded-full px-3 py-1.5">🏷️ Desconto de Atacado (10+ un.)</span>
               {product.customizations && product.customizations.length > 0 ? (
                 <span className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-600 dark:text-orange-300 bg-orange-100 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/25 rounded-full px-3 py-1.5">🛠️ Personalizável</span>
               ) : (
@@ -142,6 +167,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
                 <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Impresso por nós, sob encomenda, na Bambu Lab P1S.</li>
                 <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Embalagem segura e envio via CTT registado para todo o Portugal, com seguimento.</li>
                 <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Envio grátis em encomendas a partir de 40€.</li>
+                <li className="flex gap-2.5"><span className="text-amber-500 mt-0.5">•</span> <strong>Descontos exclusivos</strong> para compras no atacado (a partir de 10 unidades). Entre em contato!</li>
                 <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Dúvidas? Confirmamos prazo e detalhes no WhatsApp.</li>
               </ul>
             </div>

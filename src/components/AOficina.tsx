@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function AOficina() {
   return (
     <section id="a-oficina" className="py-24 bg-stone-50 dark:bg-transparent relative overflow-hidden">
@@ -10,7 +12,7 @@ export default function AOficina() {
               {/* Israel */}
               <figure className="bg-white dark:bg-[#1a1816] p-3 pb-4 shadow-2xl rounded-sm border border-stone-100 dark:border-white/5 rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
                 <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-stone-200 dark:bg-stone-800">
-                  <img src="/images/fundador-israel.jpg" alt="Israel Vieira, co-fundador da SparkLab" className="w-full h-full object-cover" loading="lazy" />
+                  <Image src="/images/fundador-israel.jpg" alt="Israel Vieira, co-fundador da SparkLab" fill className="object-cover" sizes="(max-width: 768px) 50vw, 25vw" />
                 </div>
                 <figcaption className="text-center mt-3">
                   <span className="block font-bold text-stone-900 dark:text-stone-100" style={{ fontFamily: 'var(--f-head)' }}>Israel Vieira</span>
@@ -20,7 +22,7 @@ export default function AOficina() {
               {/* Pamela */}
               <figure className="bg-white dark:bg-[#1a1816] p-3 pb-4 shadow-2xl rounded-sm border border-stone-100 dark:border-white/5 rotate-[2deg] hover:rotate-0 transition-transform duration-500">
                 <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-stone-200 dark:bg-stone-800">
-                  <img src="/images/fundador-pamela.jpg" alt="Pamela Falk, co-fundadora da SparkLab" className="w-full h-full object-cover" loading="lazy" />
+                  <Image src="/images/fundador-pamela.jpg" alt="Pamela Falk, co-fundadora da SparkLab" fill className="object-cover" sizes="(max-width: 768px) 50vw, 25vw" />
                 </div>
                 <figcaption className="text-center mt-3">
                   <span className="block font-bold text-stone-900 dark:text-stone-100" style={{ fontFamily: 'var(--f-head)' }}>Pamela Falk</span>

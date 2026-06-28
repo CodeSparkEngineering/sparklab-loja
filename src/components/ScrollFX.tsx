@@ -15,18 +15,7 @@ export default function ScrollFX() {
   useEffect(() => {
     // Abrir sempre no TOPO: impede o browser de restaurar a última posição
     // de scroll (que mandava o utilizador para o fundo da página). Se houver
-    // âncora no URL (ex.: #catalogo), rola até essa secção.
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
-    const hash = window.location.hash;
-    if (hash && hash.length > 1) {
-      const el = document.querySelector(hash);
-      if (el) requestAnimationFrame(() => el.scrollIntoView());
-      else window.scrollTo(0, 0);
-    } else {
-      window.scrollTo(0, 0);
-    }
+    // Deixamos o Next.js e o browser lidarem nativamente com a restauração de scroll.
 
     const supportsSDA =
       typeof CSS !== 'undefined' &&
@@ -34,74 +23,82 @@ export default function ScrollFX() {
       CSS.supports('animation-timeline: scroll()');
 
     // ─── 1. Custom Cursor ─────────────────────────────────────────────
-    const cursor    = document.createElement('div');
-    const cursorDot = document.createElement('div');
-    cursor.className    = 'cursor';
-    cursorDot.className = 'cursor-dot';
+    // Skip custom cursor on touch/mobile devices — saves DOM nodes, listener, and RAF loop
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
 
-    // Start off-screen until first mouse move
-    cursor.style.opacity    = '0';
-    cursorDot.style.opacity = '0';
-
-    document.body.appendChild(cursor);
-    document.body.appendChild(cursorDot);
-
-    // Half-sizes for centering (updated if hover changes size)
-    const RING = 18; // half of 36px
-    const DOT  = 3;  // half of 6px
-
-    let mouseX = -200, mouseY = -200;
-    let ringX  = -200, ringY  = -200;
+    let cursor: HTMLDivElement | null = null;
+    let cursorDot: HTMLDivElement | null = null;
     let rafCursor = 0;
-    let cursorVisible = false;
 
-    const onMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+    if (!isTouch) {
+      cursor    = document.createElement('div');
+      cursorDot = document.createElement('div');
+      cursor.className    = 'cursor';
+      cursorDot.className = 'cursor-dot';
 
-      // Dot follows instantly — centered with translate
-      cursorDot.style.transform = `translate(${mouseX - DOT}px, ${mouseY - DOT}px)`;
+      // Start off-screen until first mouse move
+      cursor.style.opacity    = '0';
+      cursorDot.style.opacity = '0';
 
-      // Reveal on first move
-      if (!cursorVisible) {
-        cursorVisible = true;
-        cursor.style.opacity    = '1';
-        cursorDot.style.opacity = '1';
-        ringX = mouseX;
-        ringY = mouseY;
-      }
-    };
+      document.body.appendChild(cursor);
+      document.body.appendChild(cursorDot);
 
-    const animateCursor = () => {
-      // Outer ring lags with lerp
-      ringX += (mouseX - ringX) * 0.18;
-      ringY += (mouseY - ringY) * 0.18;
-      cursor.style.transform = `translate(${ringX - RING}px, ${ringY - RING}px)`;
-      rafCursor = requestAnimationFrame(animateCursor);
-    };
-    animateCursor();
+      // Half-sizes for centering (updated if hover changes size)
+      const RING = 18; // half of 36px
+      const DOT  = 3;  // half of 6px
 
-    document.addEventListener('mousemove', onMouseMove, { passive: true });
+      let mouseX = -200, mouseY = -200;
+      let ringX  = -200, ringY  = -200;
+      let cursorVisible = false;
 
-    // Hover effect — use event delegation for dynamic elements
-    const addHover    = () => cursor.classList.add('cursor--hover');
-    const removeHover = () => cursor.classList.remove('cursor--hover');
+      const onMouseMove = (e: MouseEvent) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
 
-    const onDocMouseOver = (e: MouseEvent) => {
-      const el = (e.target as HTMLElement).closest('a, button, [role="button"], input, textarea, select, label, .cat-pill, .faq__q');
-      if (el) addHover();
-    };
-    const onDocMouseOut = (e: MouseEvent) => {
-      const el = (e.target as HTMLElement).closest('a, button, [role="button"], input, textarea, select, label, .cat-pill, .faq__q');
-      if (el) removeHover();
-    };
+        // Dot follows instantly — centered with translate
+        cursorDot!.style.transform = `translate(${mouseX - DOT}px, ${mouseY - DOT}px)`;
 
-    document.addEventListener('mouseover', onDocMouseOver, { passive: true });
-    document.addEventListener('mouseout',  onDocMouseOut,  { passive: true });
+        // Reveal on first move
+        if (!cursorVisible) {
+          cursorVisible = true;
+          cursor!.style.opacity    = '1';
+          cursorDot!.style.opacity = '1';
+          ringX = mouseX;
+          ringY = mouseY;
+        }
+      };
 
-    // Hide cursor when leaving window
-    document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; cursorDot.style.opacity = '0'; });
-    document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; cursorDot.style.opacity = '1'; });
+      const animateCursor = () => {
+        // Outer ring lags with lerp
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        cursor!.style.transform = `translate(${ringX - RING}px, ${ringY - RING}px)`;
+        rafCursor = requestAnimationFrame(animateCursor);
+      };
+      animateCursor();
+
+      document.addEventListener('mousemove', onMouseMove, { passive: true });
+
+      // Hover effect — use event delegation for dynamic elements
+      const addHover    = () => cursor!.classList.add('cursor--hover');
+      const removeHover = () => cursor!.classList.remove('cursor--hover');
+
+      const onDocMouseOver = (e: MouseEvent) => {
+        const el = (e.target as HTMLElement).closest('a, button, [role="button"], input, textarea, select, label, .cat-pill, .faq__q');
+        if (el) addHover();
+      };
+      const onDocMouseOut = (e: MouseEvent) => {
+        const el = (e.target as HTMLElement).closest('a, button, [role="button"], input, textarea, select, label, .cat-pill, .faq__q');
+        if (el) removeHover();
+      };
+
+      document.addEventListener('mouseover', onDocMouseOver, { passive: true });
+      document.addEventListener('mouseout',  onDocMouseOut,  { passive: true });
+
+      // Hide cursor when leaving window
+      document.addEventListener('mouseleave', () => { cursor!.style.opacity = '0'; cursorDot!.style.opacity = '0'; });
+      document.addEventListener('mouseenter', () => { cursor!.style.opacity = '1'; cursorDot!.style.opacity = '1'; });
+    }
 
     // ─── 2. Section Reveal ────────────────────────────────────────────
     const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
@@ -260,17 +257,14 @@ export default function ScrollFX() {
 
     // ─── Cleanup ──────────────────────────────────────────────────────
     return () => {
-      cancelAnimationFrame(rafCursor);
+      if (rafCursor) cancelAnimationFrame(rafCursor);
       if (rafReveal) cancelAnimationFrame(rafReveal);
       clearTimeout(revealFailsafe);
       ioReveal?.disconnect();
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseover', onDocMouseOver);
-      document.removeEventListener('mouseout',  onDocMouseOut);
       window.removeEventListener('scroll', updateNav);
       removeParallax();
-      cursor.remove();
-      cursorDot.remove();
+      cursor?.remove();
+      cursorDot?.remove();
     };
   }, []);
 

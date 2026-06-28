@@ -3,7 +3,6 @@
 // IMPORTANTE: o preço autoritativo vem daqui no servidor — nunca confie
 // no preço enviado pelo cliente.
 
-export type ProductTone = 'orange' | 'blue' | 'olive' | 'sand';
 
 export type CustomizationOption = {
   id: string;

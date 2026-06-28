@@ -6,6 +6,7 @@ import BackgroundScrollVideo from "@/components/BackgroundScrollVideo";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/CartDrawer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { SITE_URL, SITE_DESC } from "@/data/site";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -19,9 +20,6 @@ const caveat = Caveat({
   weight: ["400", "500", "600", "700"],
 });
 
-const SITE_URL = "https://sparklab-loja.vercel.app";
-const SITE_DESC =
-  "Miniaturas, porta-chaves, acessórios e peças sob encomenda impressas em 3D com acabamento profissional. Encomenda online com entrega para todo o Portugal.";
 
 const schemaMarkup = {
   "@context": "https://schema.org",

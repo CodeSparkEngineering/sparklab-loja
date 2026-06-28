@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { getWhatsAppLink } from '@/utils/whatsapp';
 
 export default function Footer() {
@@ -13,7 +14,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <div className="footer__brand">
-          <a href="/" className="logo">
+          <Link href="/" className="logo">
             <Image
               src="/logo.jpg"
               alt="SparkLab"
@@ -22,7 +23,7 @@ export default function Footer() {
               className="logo__mark"
             />
             <span>Spark<em>Lab</em></span>
-          </a>
+          </Link>
           <p className="footer__tag">SparkLab — impressão 3D sob encomenda, com acabamento que impressiona.</p>
         </div>
 
@@ -30,19 +31,19 @@ export default function Footer() {
           <div>
             <h4>Loja</h4>
             <ul>
-              <li><a href="/#catalogo">Catálogo</a></li>
-              <li><a href="/#orcamento">Sob encomenda</a></li>
-              <li><a href="/#comunidade">Ficheiros STL</a></li>
-              <li><a href="/#como-funciona">Como funciona</a></li>
+              <li><Link href="/#catalogo">Catálogo</Link></li>
+              <li><Link href="/#orcamento">Sob encomenda</Link></li>
+              <li><Link href="/#comunidade">Ficheiros STL</Link></li>
+              <li><Link href="/#como-funciona">Como funciona</Link></li>
             </ul>
           </div>
           <div>
             <h4>Atendimento</h4>
             <ul>
               <li><a href="#" onClick={handleContact}>WhatsApp</a></li>
-              <li><a href="/#orcamento">Orçamento</a></li>
-              <li><a href="/#faq">Perguntas frequentes</a></li>
-              <li><a href="/termos">Termos e condições</a></li>
+              <li><Link href="/#orcamento">Orçamento</Link></li>
+              <li><Link href="/#faq">Perguntas frequentes</Link></li>
+              <li><Link href="/termos">Termos e condições</Link></li>
             </ul>
           </div>
           <div>
@@ -60,7 +61,7 @@ export default function Footer() {
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
           <small>© 2026 SparkLab. Feito com cuidado, camada por camada.</small>
           <small style={{ opacity: 0.7 }}>Última atualização: Junho de 2026 · Verificado por SparkLab Maker</small>
-          <small><a href="/privacidade">Privacidade</a> · <a href="/termos">Termos</a></small>
+          <small><Link href="/privacidade">Privacidade</Link> · <Link href="/termos">Termos</Link></small>
         </div>
         <small style={{ opacity: 0.7 }}>
           Site desenvolvido por{' '}

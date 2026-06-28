@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next';
-
-const SITE_URL = 'https://sparklab-loja.vercel.app';
+import { SITE_URL } from '@/data/site';
 
 export default function robots(): MetadataRoute.Robots {
   return {
