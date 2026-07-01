@@ -97,6 +97,11 @@ html {
   overflow-x: clip;
 }
 
+/* Âncoras (#orcamento, #catalogo, …) param abaixo do header sticky (68px)
+   em vez de ficarem escondidas atrás dele — vale para scroll nativo e
+   para navegação com hash vinda de outra página. */
+section[id] { scroll-margin-top: 80px; }
+
 body {
   margin: 0;
   font-family: var(--f-body);

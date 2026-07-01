@@ -23,15 +23,23 @@ export default function Header() {
   }, [mobileMenuOpen]);
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const targetId = e.currentTarget.getAttribute('href');
-    if (!targetId || targetId.length <= 1 || !targetId.startsWith('#')) return;
+    const href = e.currentTarget.getAttribute('href');
+    if (!href) return;
 
-    const el = document.querySelector(targetId);
+    // Aceita tanto "#id" como "/#id". Sem hash → deixa o Link navegar normalmente.
+    const hashIndex = href.indexOf('#');
+    if (hashIndex === -1) return;
+    const id = href.slice(hashIndex + 1);
+    if (!id) return;
+
+    // Alvo não está nesta página (ex.: vindo de outra rota) → deixa o Link navegar.
+    const el = document.getElementById(id);
     if (!el) return;
 
+    // Faz sempre o scroll (mesmo que o hash já seja este), com offset do header sticky.
     e.preventDefault();
     setMobileMenuOpen(false); // Close menu on click
-    const top = el.getBoundingClientRect().top + window.scrollY - 68;
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
     window.scrollTo({ top, behavior: 'smooth' });
   };
 
