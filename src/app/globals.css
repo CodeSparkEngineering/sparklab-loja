@@ -505,6 +505,24 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   gap: 0;
 }
 
+/* Scrim legível atrás do texto — garante contraste sobre o vídeo de fundo
+   (frames claros ou escuros) sem sujar o lado direito. Theme-aware via --bg;
+   como é filho do text-block, desvanece junto com o texto no scroll. */
+.hero__text-block { position: relative; }
+.hero__text-block::before {
+  content: '';
+  position: absolute;
+  inset: -48px -96px -40px -60px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 92% at 22% 46%,
+    color-mix(in srgb, var(--bg) 84%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 52%, transparent) 46%,
+    transparent 76%
+  );
+}
+
 /* Badge / eyebrow — handwritten style */
 .hero__eyebrow { margin-bottom: 28px; }
 
@@ -550,10 +568,11 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 /* Description */
 .hero__desc {
   font-size: 16px;
-  color: var(--ink-dim);
+  color: var(--ink);
   line-height: 1.7;
   max-width: 440px;
   margin: 0 0 36px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .12);
 }
 
 /* CTA row */

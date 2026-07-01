@@ -7,6 +7,7 @@ import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/CartDrawer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE_URL, SITE_DESC } from "@/data/site";
+import { Analytics } from "@vercel/analytics/next";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -103,6 +104,7 @@ export default function RootLayout({
             <CartDrawer />
           </CartProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
