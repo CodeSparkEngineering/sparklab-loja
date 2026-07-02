@@ -13,6 +13,7 @@ const L = {
     madeToOrder: 'Sob encomenda',
     stl: 'Ficheiros STL',
     how: 'Como funciona',
+    guides: 'Guias de impressão 3D',
     support: 'Atendimento',
     quote: 'Orçamento',
     faq: 'Perguntas frequentes',
@@ -32,6 +33,7 @@ const L = {
     madeToOrder: 'Made to order',
     stl: 'STL files',
     how: 'How it works',
+    guides: '3D printing guides',
     support: 'Support',
     quote: 'Get a quote',
     faq: 'FAQ',
@@ -80,6 +82,7 @@ export default function Footer() {
               <li><Link href="/#orcamento">{t.madeToOrder}</Link></li>
               <li><Link href="/#comunidade">{t.stl}</Link></li>
               <li><Link href="/#como-funciona">{t.how}</Link></li>
+              <li><Link href="/guias">{t.guides}</Link></li>
             </ul>
           </div>
           <div>

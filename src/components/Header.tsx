@@ -15,6 +15,7 @@ const L = {
     how: 'Como funciona',
     quote: 'Orçamento',
     stl: 'Ficheiros STL',
+    guides: 'Guias',
     faq: 'FAQ',
     cta: 'Fazer orçamento',
     nav: 'Navegação principal',
@@ -27,6 +28,7 @@ const L = {
     how: 'How it works',
     quote: 'Get a quote',
     stl: 'STL files',
+    guides: 'Guides',
     faq: 'FAQ',
     cta: 'Get a quote',
     nav: 'Main navigation',
@@ -125,6 +127,7 @@ export default function Header() {
           <Link href="/#como-funciona" onClick={handleSmoothScroll}>{t.how}</Link>
           <Link href="/#orcamento"   onClick={handleSmoothScroll}>{t.quote}</Link>
           <Link href="/#comunidade"  onClick={handleSmoothScroll}>{t.stl}</Link>
+          <Link href="/guias">{t.guides}</Link>
           <Link href="/#faq"         onClick={handleSmoothScroll}>{t.faq}</Link>
 
           <Link
