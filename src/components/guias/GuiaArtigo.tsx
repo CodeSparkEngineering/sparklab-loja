@@ -1,23 +1,68 @@
+'use client';
+
 /**
- * Componentes partilhados dos artigos /guias (Server Components).
- * Cada page.mdx usa: <GuiaTopo slug="..." /> no início e <GuiaCta /> no fim.
+ * Componentes partilhados dos artigos /guias (bilíngues PT/EN).
+ * Cada page.mdx usa:
+ *   <GuiaTopo slug="..." />           no início
+ *   <GuiaLang lang="pt"> … </GuiaLang> conteúdo português
+ *   <GuiaLang lang="en"> … </GuiaLang> conteúdo inglês
+ *   <GuiaRodape slug="..." />         no fim
+ *
+ * Os JSON-LD ficam sempre em PT (o SEO canónico do site é português) e são
+ * emitidos no SSR — componentes client também renderizam no servidor.
  */
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft } from 'lucide-react';
-import { getGuiaBySlug, guiasRecentes } from '@/data/guias';
+import { getGuiaBySlug, guiasRecentes, gTitle } from '@/data/guias';
 import { SITE_URL } from '@/data/site';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
+import { useLang, type Lang } from '@/i18n/LanguageContext';
 
-function formatDatePt(iso: string): string {
-  return new Intl.DateTimeFormat('pt-PT', { dateStyle: 'long' }).format(
+const L = {
+  pt: {
+    all: 'Todos os guias',
+    minutes: (n: number) => `${n} min de leitura`,
+    shareText: 'Achaste útil? Partilha com um amigo.',
+    shareBtn: 'Partilhar no WhatsApp',
+    ctaTitle: 'Tens uma peça em mente?',
+    ctaText:
+      'Envia o ficheiro (ou só a ideia) e recebe um orçamento sem compromisso — respondemos em até 2 horas úteis no WhatsApp.',
+    ctaBtn: 'Pedir orçamento grátis',
+    related: 'Lê também',
+    dateLocale: 'pt-PT',
+  },
+  en: {
+    all: 'All guides',
+    minutes: (n: number) => `${n} min read`,
+    shareText: 'Found this useful? Share it with a friend.',
+    shareBtn: 'Share on WhatsApp',
+    ctaTitle: 'Got a piece in mind?',
+    ctaText:
+      "Send us the file (or just the idea) and get a quote with no strings attached — we reply within 2 business hours on WhatsApp.",
+    ctaBtn: 'Get a free quote',
+    related: 'Read next',
+    dateLocale: 'en-GB',
+  },
+} as const;
+
+function formatDate(iso: string, locale: string): string {
+  return new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(
     new Date(`${iso}T12:00:00Z`)
   );
 }
 
-/** Breadcrumb + meta do artigo + JSON-LD (Article e BreadcrumbList). */
+/** Mostra os filhos apenas quando o idioma ativo corresponde. */
+export function GuiaLang({ lang, children }: { lang: Lang; children: React.ReactNode }) {
+  const { lang: current } = useLang();
+  return current === lang ? <>{children}</> : null;
+}
+
+/** Breadcrumb + meta do artigo + JSON-LD (Article e BreadcrumbList, em PT). */
 export function GuiaTopo({ slug }: { slug: string }) {
+  const { lang } = useLang();
+  const t = L[lang];
   const guia = getGuiaBySlug(slug);
   if (!guia) return null;
 
@@ -60,12 +105,12 @@ export function GuiaTopo({ slug }: { slug: string }) {
         className="inline-flex items-center gap-2 text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 transition-colors mb-8 text-sm font-medium"
       >
         <ArrowLeft className="w-4 h-4" />
-        Todos os guias
+        {t.all}
       </Link>
       <div className="flex items-center gap-3 text-sm text-stone-500 dark:text-stone-400 mb-4">
-        <span>{formatDatePt(guia.dateModified ?? guia.datePublished)}</span>
+        <span>{formatDate(guia.dateModified ?? guia.datePublished, t.dateLocale)}</span>
         <span aria-hidden="true">·</span>
-        <span>{guia.minutes} min de leitura</span>
+        <span>{t.minutes(guia.minutes)}</span>
         <span aria-hidden="true">·</span>
         <span className="inline-flex items-center gap-1.5 text-orange-600 dark:text-orange-400 font-medium">
           SparkLab
@@ -78,14 +123,15 @@ export function GuiaTopo({ slug }: { slug: string }) {
 /**
  * Rodapé completo do artigo: partilha no WhatsApp + CTA de orçamento +
  * "Lê também" (registry-driven — artigos futuros aparecem sozinhos).
- * Uso no page.mdx:  <GuiaRodape slug="..." />
  */
 export function GuiaRodape({ slug }: { slug: string }) {
+  const { lang } = useLang();
+  const t = L[lang];
   const guia = getGuiaBySlug(slug);
   const relacionados = guiasRecentes().filter((g) => g.slug !== slug).slice(0, 2);
 
   const shareText = guia
-    ? `${guia.title}\n${SITE_URL}/guias/${guia.slug}`
+    ? `${gTitle(guia, lang)}\n${SITE_URL}/guias/${guia.slug}`
     : `${SITE_URL}/guias`;
   const shareHref = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
 
@@ -94,7 +140,7 @@ export function GuiaRodape({ slug }: { slug: string }) {
       {/* Partilha — em Portugal, partilhar É o WhatsApp */}
       <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-50 dark:bg-white/5 px-6 py-5">
         <p className="text-stone-700 dark:text-stone-300 font-medium m-0">
-          Achaste útil? Partilha com um amigo.
+          {t.shareText}
         </p>
         <a
           href={shareHref}
@@ -103,16 +149,16 @@ export function GuiaRodape({ slug }: { slug: string }) {
           className="inline-flex items-center gap-2 rounded-full bg-[#25D366] hover:bg-[#1fbd5a] text-white font-semibold text-sm px-5 py-2.5 transition-colors shrink-0"
         >
           <WhatsAppIcon size={18} />
-          Partilhar no WhatsApp
+          {t.shareBtn}
         </a>
       </div>
 
       <GuiaCta />
 
       {relacionados.length > 0 && (
-        <section className="mt-12" aria-label="Artigos relacionados">
+        <section className="mt-12" aria-label={t.related}>
           <h2 className="text-xl font-bold text-stone-900 dark:text-stone-100 mb-5">
-            Lê também
+            {t.related}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {relacionados.map((g) => (
@@ -130,10 +176,10 @@ export function GuiaRodape({ slug }: { slug: string }) {
                 )}
                 <div>
                   <span className="block font-bold text-stone-900 dark:text-stone-100 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors leading-snug">
-                    {g.title}
+                    {gTitle(g, lang)}
                   </span>
                   <span className="text-sm text-stone-500 dark:text-stone-400">
-                    {g.minutes} min de leitura
+                    {t.minutes(g.minutes)}
                   </span>
                 </div>
               </Link>
@@ -147,17 +193,19 @@ export function GuiaRodape({ slug }: { slug: string }) {
 
 /** CTA no fim de cada artigo → formulário de orçamento. */
 export function GuiaCta() {
+  const { lang } = useLang();
+  const t = L[lang];
+
   return (
     <aside className="mt-12 rounded-3xl border border-orange-200 dark:border-orange-500/25 bg-orange-50 dark:bg-orange-500/10 p-8 text-center">
       <h2 className="text-2xl font-bold text-stone-900 dark:text-stone-100 mb-2">
-        Tens uma peça em mente?
+        {t.ctaTitle}
       </h2>
       <p className="text-stone-600 dark:text-stone-400 mb-6 max-w-md mx-auto">
-        Envia o ficheiro (ou só a ideia) e recebe um orçamento sem compromisso —
-        respondemos em até 2 horas úteis no WhatsApp.
+        {t.ctaText}
       </p>
       <Link href="/#orcamento" className="btn btn--primary">
-        Pedir orçamento grátis
+        {t.ctaBtn}
       </Link>
     </aside>
   );

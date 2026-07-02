@@ -7,7 +7,11 @@
 export type Guia = {
   slug: string;
   title: string;
+  /** Tradução inglesa do título (toggle PT/EN do site). */
+  titleEn?: string;
   description: string;
+  /** Tradução inglesa da descrição (toggle PT/EN do site). */
+  descriptionEn?: string;
   /** ISO yyyy-mm-dd */
   datePublished: string;
   dateModified?: string;
@@ -17,12 +21,23 @@ export type Guia = {
   image?: string;
 };
 
+export function gTitle(g: Guia, lang: 'pt' | 'en'): string {
+  return lang === 'en' && g.titleEn ? g.titleEn : g.title;
+}
+
+export function gDesc(g: Guia, lang: 'pt' | 'en'): string {
+  return lang === 'en' && g.descriptionEn ? g.descriptionEn : g.description;
+}
+
 export const GUIAS: Guia[] = [
   {
     slug: 'quanto-custa-impressao-3d-portugal',
     title: 'Quanto custa uma impressão 3D em Portugal?',
+    titleEn: 'How much does 3D printing cost in Portugal?',
     description:
       'O que determina o preço de uma peça impressa em 3D — material, tempo de máquina, acabamento e modelação — com exemplos reais de preços do nosso catálogo.',
+    descriptionEn:
+      'What determines the price of a 3D-printed piece — material, machine time, finishing and modeling — with real price examples from our catalog.',
     datePublished: '2026-07-01',
     minutes: 6,
     emoji: '💶',
@@ -31,8 +46,11 @@ export const GUIAS: Guia[] = [
   {
     slug: 'pla-petg-abs-asa-tpu-pc-qual-escolher',
     title: 'PLA, PETG, ABS, ASA, TPU ou PC: que material escolher?',
+    titleEn: 'PLA, PETG, ABS, ASA, TPU or PC: which material to choose?',
     description:
       'Guia prático dos 6 materiais com que imprimimos: para que serve cada um, resistência, comportamento ao sol e ao calor, e qual escolher para a tua peça.',
+    descriptionEn:
+      'A practical guide to the 6 materials we print with: what each one is for, strength, behavior in sun and heat, and which to pick for your piece.',
     datePublished: '2026-07-01',
     minutes: 7,
     emoji: '🧵',

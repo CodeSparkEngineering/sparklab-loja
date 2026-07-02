@@ -1,4 +1,4 @@
-import { GuiaTopo, GuiaRodape } from '@/components/guias/GuiaArtigo';
+import { GuiaTopo, GuiaRodape, GuiaLang } from '@/components/guias/GuiaArtigo';
 import { guiaMetadata } from '@/data/guias';
 
 export const metadata = guiaMetadata('pla-petg-abs-asa-tpu-pc-qual-escolher');
@@ -6,6 +6,8 @@ export const metadata = guiaMetadata('pla-petg-abs-asa-tpu-pc-qual-escolher');
 <main className="min-h-screen pt-16 pb-24">
 <article className="container max-w-3xl mx-auto px-4">
 <GuiaTopo slug="pla-petg-abs-asa-tpu-pc-qual-escolher" />
+
+<GuiaLang lang="pt">
 
 # PLA, PETG, ABS, ASA, TPU ou PC: que material escolher?
 
@@ -61,6 +63,66 @@ O material mais forte que imprimimos: rigidez extrema e resistência a temperatu
 5. **Precisa de dobrar?** → TPU
 
 Na dúvida, manda-nos uma foto do sítio onde a peça vai viver — em 2 minutos dizemos-te o material certo.
+
+</GuiaLang>
+<GuiaLang lang="en">
+
+# PLA, PETG, ABS, ASA, TPU or PC: which material to choose?
+
+![3D printing materials comparison](/images/3d_materials_guide.webp)
+
+We work exclusively with official Bambu Lab filaments on our P1S printers — and these are the six materials we print with. Each one has its own personality. This guide tells you, without unnecessary jargon, **which one fits your piece**.
+
+> Shortcut: if you're not sure, pick "I'm not sure" on the [quote form](/#orcamento) and we'll recommend one. It's literally the first option on the form.
+
+## Quick comparison
+
+| Material | Best for | Strength | Sun/outdoor | Relative price |
+| --- | --- | --- | --- | --- |
+| **PLA** | Decoration, figures, prototypes | Good stiffness, weak to heat | ❌ Warps in the sun | € (the cheapest) |
+| **PETG** | General-purpose functional parts | Tough and slightly flexible | ⚠️ Acceptable | €€ |
+| **ABS** | Technical parts, high temperature | Very impact-resistant | ⚠️ Yellows under UV | €€ |
+| **ASA** | Outdoors: mounts, garden, automotive | Like ABS | ✅ Excellent (UV-proof) | €€€ |
+| **TPU** | Flexible parts: gaskets, guards, cases | Rubbery, nearly indestructible | ✅ Good | €€€ |
+| **PC** | Demanding engineering parts | The strongest of the list | ✅ Good | €€€€ |
+
+## PLA — the king of decorative
+
+The material we print our catalog figures, keychains and collectibles with. It prints with fantastic detail, has the widest color range (including dual-color and metallic) and is **biodegradable under industrial conditions**.
+
+**Honest limit:** don't leave it in a car under the sun or near heat sources — it starts softening around 55–60 °C.
+
+## PETG — the reliable workhorse
+
+The perfect middle ground: almost as easy to print as PLA, but it takes more heat, more impact and some flexing without breaking. It's what we recommend for most **functional parts**: brackets, hooks, appliance replacement parts, garage organizers.
+
+## ABS — the technical classic
+
+Impact- and heat-resistant (up to ~95 °C), sands and paints well. It's the material of car interior parts and technical enclosures. Printing it well requires an **enclosed chamber** — exactly why we use the Bambu Lab P1S, which has one built in.
+
+## ASA — the ABS that lives outside
+
+Everything ABS does, but with **real UV resistance**: it doesn't yellow or degrade in the sun. If your piece will live outdoors — antenna mount, garden part, motorcycle accessory — ASA is the right call.
+
+## TPU — the flexible one
+
+A rubbery filament that bends, stretches and springs back. Perfect for **gaskets, non-slip feet, guards, cases and impact-absorbing parts**. It's nearly impossible to break.
+
+## PC (polycarbonate) — the tank
+
+The strongest material we print: extreme stiffness and heat resistance up to ~110 °C. For **engineering parts under real load** — gears, structural mounts, tools. It's not cheap, but when you need it, nothing else will do.
+
+## Rule of thumb (the one we use in the workshop)
+
+1. **Is it decorative, indoors?** → PLA
+2. **Will it be used, squeezed, carry weight?** → PETG
+3. **Will it see sun or live outdoors?** → ASA
+4. **Will it get hotter than 90 °C or take serious abuse?** → ABS or PC
+5. **Does it need to bend?** → TPU
+
+When in doubt, send us a photo of where the piece will live — we'll tell you the right material in 2 minutes.
+
+</GuiaLang>
 
 <GuiaRodape slug="pla-petg-abs-asa-tpu-pc-qual-escolher" />
 </article>

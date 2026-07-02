@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { guiasRecentes } from '@/data/guias';
+import { guiasRecentes, gTitle, gDesc } from '@/data/guias';
 import { useLang } from '@/i18n/LanguageContext';
 
 const L = {
@@ -11,14 +11,12 @@ const L = {
     desc: 'Respostas honestas às perguntas que nos fazem todos os dias — escritas por quem opera as impressoras.',
     minutes: (n: number) => `${n} min de leitura`,
     all: 'Ver todos os guias',
-    note: '(em português)',
   },
   en: {
     eyebrow: 'learn with us',
     desc: 'Honest answers to the questions we get every day — written by the people who run the printers.',
     minutes: (n: number) => `${n} min read`,
     all: 'See all guides',
-    note: '(in Portuguese)',
   },
 } as const;
 
@@ -38,7 +36,7 @@ export default function GuiasTeaser() {
             {lang === 'pt' ? (
               <h2 className="h2">Guias de <span className="hand-underline">impressão 3D</span></h2>
             ) : (
-              <h2 className="h2">3D printing <span className="hand-underline">guides</span> <small className="text-base font-normal text-stone-500">{t.note}</small></h2>
+              <h2 className="h2">3D printing <span className="hand-underline">guides</span></h2>
             )}
           </div>
           <p className="section__desc">{t.desc}</p>
@@ -66,10 +64,10 @@ export default function GuiasTeaser() {
               )}
               <div className="min-w-0">
                 <h3 className="text-lg md:text-xl font-bold text-stone-900 dark:text-stone-100 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors leading-snug mb-1">
-                  {g.title}
+                  {gTitle(g, lang)}
                 </h3>
                 <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed mb-2 line-clamp-2">
-                  {g.description}
+                  {gDesc(g, lang)}
                 </p>
                 <span className="text-sm text-stone-500 dark:text-stone-500">{t.minutes(g.minutes)}</span>
               </div>
