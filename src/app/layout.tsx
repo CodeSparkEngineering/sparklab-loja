@@ -147,7 +147,8 @@ export default function RootLayout({
           </CartProvider>
           </LanguageProvider>
         </ThemeProvider>
-        <Analytics />
+        {/* Só em produção — em dev o script /_vercel/insights não existe (404). */}
+        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   );
