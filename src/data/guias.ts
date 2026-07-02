@@ -56,6 +56,17 @@ export const GUIAS: Guia[] = [
     emoji: '🧵',
     image: '/images/3d_materials_guide.webp',
   },
+  {
+    slug: 'impressao-3d-refrigeracao-inteligencia-artificial',
+    title: 'Como a Impressão 3D está a salvar os Data Centers de IA',
+    titleEn: 'How 3D printing is saving AI data centers',
+    description: 'O boom da Inteligência Artificial trouxe um grande problema de aquecimento. A solução? Placas de cobre de refrigeração líquida impressas em 3D com geometrias complexas.',
+    descriptionEn: 'The AI boom brought a massive heat problem. The solution? Liquid-cooling copper cold plates 3D-printed with complex internal geometries.',
+    datePublished: '2026-07-02',
+    minutes: 5,
+    emoji: '🤖',
+    image: '/images/ai_cooling_3d.webp',
+  },
 ];
 
 export function getGuiaBySlug(slug: string): Guia | undefined {
