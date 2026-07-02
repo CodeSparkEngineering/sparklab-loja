@@ -27,7 +27,7 @@ const listSchema = {
 
 export default function GuiasPage() {
   return (
-    <main className="min-h-screen pt-16 pb-24">
+    <main className="min-h-screen pt-16 pb-24 bg-[var(--bg)]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(listSchema).replace(/</g, '\\u003c') }}

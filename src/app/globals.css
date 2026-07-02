@@ -2160,6 +2160,9 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 
 @media (max-width: 480px) {
   .cat-card__icon { font-size: 44px; }
+  /* Header apertado em telemóvel: mostrar só o ícone (o badge já traz o nome).
+     Evita que a pílula PT/EN se sobreponha ao wordmark "SparkLab". */
+  .logo span { display: none; }
 }
 
 /* ─────────────────────────────────────────────────────────

@@ -93,7 +93,9 @@ const components: MDXComponents = {
       alt={props.alt ?? ''}
       loading="lazy"
       decoding="async"
-      className="w-full h-auto rounded-2xl border border-stone-200 dark:border-white/10 my-6 shadow-sm"
+      // Imagem de capa dos artigos sempre em 16:9 (recorte central) — evita a
+      // imagem quadrada gigante e mantém todos os guias consistentes.
+      className="w-full aspect-[16/9] object-cover rounded-2xl border border-stone-200 dark:border-white/10 my-6 shadow-sm"
     />
   ),
 };
