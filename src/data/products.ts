@@ -10,6 +10,8 @@ export type CustomizationOption = {
   type: 'color' | 'text';
   options?: string[]; // Para type 'color'
   maxLength?: number; // Para type 'text'
+  /** true = o cliente TEM de preencher antes de adicionar ao carrinho. */
+  required?: boolean;
 };
 
 export type Product = {
@@ -86,13 +88,15 @@ export const PRODUCTS: Product[] = [
         id: 'nome_frontal',
         label: 'Nome frontal (ex: ISRAEL)',
         type: 'text',
-        maxLength: 15
+        maxLength: 15,
+        required: true
       },
       {
         id: 'nome_pega',
         label: 'Nome na pega (ex: ISRAEL VIEIRA)',
         type: 'text',
-        maxLength: 20
+        maxLength: 20,
+        required: true
       }
     ]
   },

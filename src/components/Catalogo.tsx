@@ -143,13 +143,21 @@ function ProductCard({ p, add }: { p: typeof PRODUCTS[0]; add: (id: string) => v
 
         <div className="cat-card__foot">
           <span className="cat-card__price">{formatEUR(p.price)}</span>
-          <button
-            type="button"
-            className="btn btn--sm btn--primary"
-            onClick={() => add(p.id)}
-          >
-            Eu quero!
-          </button>
+          {p.customizations && p.customizations.length > 0 ? (
+            // Produto personalizável: leva à página do produto para escolher
+            // nome/cor — adicionar direto criava encomendas sem personalização.
+            <Link href={`/produto/${p.id}`} className="btn btn--sm btn--primary">
+              Personalizar
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className="btn btn--sm btn--primary"
+              onClick={() => add(p.id)}
+            >
+              Eu quero!
+            </button>
+          )}
         </div>
       </div>
     </article>
