@@ -38,8 +38,8 @@ export async function POST(request: NextRequest) {
   // sessões de pagamento que redirecionam para um site externo).
   const ALLOWED_ORIGINS = new Set([
     SITE_URL,
-    'https://www.sparklab3d.pt',
     'https://sparklab3d.pt',
+    'https://sparklab-loja.vercel.app', // URL antiga da Vercel, ainda ativa
     ...(process.env.NODE_ENV !== 'production' ? [new URL(request.url).origin] : []),
   ]);
   const rawOrigin = request.headers.get('origin') ?? new URL(request.url).origin;

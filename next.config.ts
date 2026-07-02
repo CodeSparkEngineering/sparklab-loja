@@ -6,6 +6,20 @@ const nextConfig: NextConfig = {
   // cross-origin, o JS não carrega e a página fica invisível (tela preta).
   allowedDevOrigins: ["10.2.0.2"],
 
+  // Domínio canónico: redireciona o URL antigo da Vercel para o domínio
+  // próprio (evita conteúdo duplicado no Google). EXCLUI /api/* — o webhook
+  // da Stripe está registado no URL antigo e a Stripe não segue redirects.
+  async redirects() {
+    return [
+      {
+        source: "/:path((?!api/).*)",
+        has: [{ type: "host", value: "sparklab-loja.vercel.app" }],
+        destination: "https://www.sparklab3d.pt/:path",
+        permanent: true,
+      },
+    ];
+  },
+
   // Security headers em todas as respostas. HSTS já é enviado pela Vercel.
   async headers() {
     return [

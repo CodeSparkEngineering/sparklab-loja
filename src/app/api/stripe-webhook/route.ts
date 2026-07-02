@@ -19,7 +19,9 @@ export const dynamic = 'force-dynamic';
  *  - ORDER_EMAIL_FROM         (opcional; por omissão "SparkLab <onboarding@resend.dev>")
  *
  * No painel da Stripe: Developers → Webhooks → Add endpoint →
- *   URL: https://sparklab-loja.vercel.app/api/stripe-webhook
+ *   URL: https://www.sparklab3d.pt/api/stripe-webhook
+ *   (o URL antigo https://sparklab-loja.vercel.app/api/stripe-webhook
+ *   também continua a funcionar — /api/* está excluído do redirect)
  *   Evento: checkout.session.completed
  *   Copia o "Signing secret" para STRIPE_WEBHOOK_SECRET.
  */

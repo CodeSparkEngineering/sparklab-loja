@@ -78,7 +78,7 @@ export default function OpengraphImage() {
         {/* rodapé */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, fontSize: 26, color: '#f97316', fontWeight: 600 }}>
           <div style={{ display: 'flex', width: 12, height: 12, borderRadius: 6, background: '#f97316' }} />
-          sparklab-loja.vercel.app
+          www.sparklab3d.pt
         </div>
       </div>
     ),
