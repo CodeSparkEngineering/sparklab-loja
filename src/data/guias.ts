@@ -14,6 +14,7 @@ export type Guia = {
   /** tempo de leitura estimado, em minutos */
   minutes: number;
   emoji: string;
+  image?: string;
 };
 
 export const GUIAS: Guia[] = [
@@ -25,6 +26,7 @@ export const GUIAS: Guia[] = [
     datePublished: '2026-07-01',
     minutes: 6,
     emoji: '💶',
+    image: '/images/3d_cost_guide.webp',
   },
   {
     slug: 'pla-petg-abs-asa-tpu-pc-qual-escolher',
@@ -34,9 +36,50 @@ export const GUIAS: Guia[] = [
     datePublished: '2026-07-01',
     minutes: 7,
     emoji: '🧵',
+    image: '/images/3d_materials_guide.webp',
   },
 ];
 
 export function getGuiaBySlug(slug: string): Guia | undefined {
   return GUIAS.find((g) => g.slug === slug);
+}
+
+/** Guias ordenados do mais recente para o mais antigo. */
+export function guiasRecentes(limit?: number): Guia[] {
+  const sorted = [...GUIAS].sort((a, b) =>
+    (b.dateModified ?? b.datePublished).localeCompare(a.dateModified ?? a.datePublished)
+  );
+  return limit ? sorted.slice(0, limit) : sorted;
+}
+
+/**
+ * Metadata completa de um artigo a partir do registry — título, descrição,
+ * canonical e imagem própria na partilha (WhatsApp/Instagram/Twitter).
+ * Uso no page.mdx:  export const metadata = guiaMetadata('slug');
+ * (URLs relativos resolvem contra o metadataBase definido no root layout.)
+ */
+export function guiaMetadata(slug: string) {
+  const g = getGuiaBySlug(slug);
+  if (!g) return { title: 'Guia não encontrado' };
+
+  return {
+    title: g.title,
+    description: g.description,
+    alternates: { canonical: `/guias/${g.slug}` },
+    openGraph: {
+      type: 'article' as const,
+      title: `${g.title} · SparkLab`,
+      description: g.description,
+      url: `/guias/${g.slug}`,
+      publishedTime: g.datePublished,
+      modifiedTime: g.dateModified ?? g.datePublished,
+      ...(g.image ? { images: [{ url: g.image, alt: g.title }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title: g.title,
+      description: g.description,
+      ...(g.image ? { images: [g.image] } : {}),
+    },
+  };
 }

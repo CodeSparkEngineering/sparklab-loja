@@ -4,9 +4,11 @@
  */
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft } from 'lucide-react';
-import { getGuiaBySlug } from '@/data/guias';
+import { getGuiaBySlug, guiasRecentes } from '@/data/guias';
 import { SITE_URL } from '@/data/site';
+import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
 
 function formatDatePt(iso: string): string {
   return new Intl.DateTimeFormat('pt-PT', { dateStyle: 'long' }).format(
@@ -24,6 +26,7 @@ export function GuiaTopo({ slug }: { slug: string }) {
     '@type': 'Article',
     headline: guia.title,
     description: guia.description,
+    ...(guia.image ? { image: [`${SITE_URL}${guia.image}`] } : {}),
     datePublished: guia.datePublished,
     dateModified: guia.dateModified ?? guia.datePublished,
     inLanguage: 'pt-PT',
@@ -68,6 +71,76 @@ export function GuiaTopo({ slug }: { slug: string }) {
           SparkLab
         </span>
       </div>
+    </>
+  );
+}
+
+/**
+ * Rodapé completo do artigo: partilha no WhatsApp + CTA de orçamento +
+ * "Lê também" (registry-driven — artigos futuros aparecem sozinhos).
+ * Uso no page.mdx:  <GuiaRodape slug="..." />
+ */
+export function GuiaRodape({ slug }: { slug: string }) {
+  const guia = getGuiaBySlug(slug);
+  const relacionados = guiasRecentes().filter((g) => g.slug !== slug).slice(0, 2);
+
+  const shareText = guia
+    ? `${guia.title}\n${SITE_URL}/guias/${guia.slug}`
+    : `${SITE_URL}/guias`;
+  const shareHref = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+
+  return (
+    <>
+      {/* Partilha — em Portugal, partilhar É o WhatsApp */}
+      <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-50 dark:bg-white/5 px-6 py-5">
+        <p className="text-stone-700 dark:text-stone-300 font-medium m-0">
+          Achaste útil? Partilha com um amigo.
+        </p>
+        <a
+          href={shareHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full bg-[#25D366] hover:bg-[#1fbd5a] text-white font-semibold text-sm px-5 py-2.5 transition-colors shrink-0"
+        >
+          <WhatsAppIcon size={18} />
+          Partilhar no WhatsApp
+        </a>
+      </div>
+
+      <GuiaCta />
+
+      {relacionados.length > 0 && (
+        <section className="mt-12" aria-label="Artigos relacionados">
+          <h2 className="text-xl font-bold text-stone-900 dark:text-stone-100 mb-5">
+            Lê também
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {relacionados.map((g) => (
+              <Link
+                key={g.slug}
+                href={`/guias/${g.slug}`}
+                className="group card p-5 flex gap-4 items-center hover:border-orange-300 dark:hover:border-orange-500/40 transition-colors"
+              >
+                {g.image ? (
+                  <div className="relative w-20 h-20 shrink-0 rounded-lg overflow-hidden border border-stone-200 dark:border-stone-800">
+                    <Image src={g.image} alt="" fill className="object-cover" sizes="80px" />
+                  </div>
+                ) : (
+                  <span className="text-3xl shrink-0" aria-hidden="true">{g.emoji}</span>
+                )}
+                <div>
+                  <span className="block font-bold text-stone-900 dark:text-stone-100 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors leading-snug">
+                    {g.title}
+                  </span>
+                  <span className="text-sm text-stone-500 dark:text-stone-400">
+                    {g.minutes} min de leitura
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </>
   );
 }

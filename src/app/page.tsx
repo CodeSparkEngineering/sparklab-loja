@@ -10,6 +10,7 @@ import Orcamento from '@/components/Orcamento';
 import AOficina from '@/components/AOficina';
 import Depoimentos from '@/components/Depoimentos';
 import Comunidade from '@/components/Comunidade';
+import GuiasTeaser from '@/components/GuiasTeaser';
 import FAQ from '@/components/FAQ';
 import CtaFinal from '@/components/CtaFinal';
 import Footer from '@/components/Footer';
@@ -83,6 +84,7 @@ export default function Home() {
         <AOficina />
         <Depoimentos />
         <Comunidade />
+        <GuiasTeaser />
         <FAQ />
         <CtaFinal />
       </main>

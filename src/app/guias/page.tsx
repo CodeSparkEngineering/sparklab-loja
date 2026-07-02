@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { GUIAS } from '@/data/guias';
 import { SITE_URL } from '@/data/site';
 
@@ -57,10 +58,22 @@ export default function GuiasPage() {
             <Link
               key={g.slug}
               href={`/guias/${g.slug}`}
-              className="group card p-8 flex flex-col sm:flex-row gap-5 items-start hover:border-orange-300 dark:hover:border-orange-500/40 transition-colors"
+              className="group card p-8 flex flex-col sm:flex-row gap-6 items-start hover:border-orange-300 dark:hover:border-orange-500/40 transition-colors"
             >
-              <span className="text-4xl shrink-0" aria-hidden="true">{g.emoji}</span>
-              <div>
+              {g.image ? (
+                <div className="shrink-0 relative w-full sm:w-48 h-48 sm:h-32 rounded-lg overflow-hidden border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-900">
+                  <Image
+                    src={g.image}
+                    alt=""
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, 192px"
+                  />
+                </div>
+              ) : (
+                <span className="text-4xl shrink-0" aria-hidden="true">{g.emoji}</span>
+              )}
+              <div className="flex-1">
                 <h2 className="text-xl md:text-2xl font-bold text-stone-900 dark:text-stone-100 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors mb-2">
                   {g.title}
                 </h2>

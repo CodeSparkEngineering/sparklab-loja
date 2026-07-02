@@ -1,11 +1,7 @@
-import { GuiaTopo, GuiaCta } from '@/components/guias/GuiaArtigo';
+import { GuiaTopo, GuiaRodape } from '@/components/guias/GuiaArtigo';
+import { guiaMetadata } from '@/data/guias';
 
-export const metadata = {
-  title: 'Quanto custa uma impressão 3D em Portugal?',
-  description:
-    'O que determina o preço de uma peça impressa em 3D — material, tempo de máquina, acabamento e modelação — com exemplos reais de preços em euros.',
-  alternates: { canonical: '/guias/quanto-custa-impressao-3d-portugal' },
-};
+export const metadata = guiaMetadata('quanto-custa-impressao-3d-portugal');
 
 <main className="min-h-screen pt-16 pb-24">
 <article className="container max-w-3xl mx-auto px-4">
@@ -64,6 +60,6 @@ Enviamos para **todo o Portugal** (continente e ilhas) via CTT registado com seg
 
 Respondemos em até **2 horas úteis** no WhatsApp, com preço e prazo estimado. Sem promessas que não possamos cumprir — se algo for inviável de imprimir, dizemos-to antes de cobrarmos seja o que for.
 
-<GuiaCta />
+<GuiaRodape slug="quanto-custa-impressao-3d-portugal" />
 </article>
 </main>

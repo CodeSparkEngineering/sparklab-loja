@@ -1,11 +1,7 @@
-import { GuiaTopo, GuiaCta } from '@/components/guias/GuiaArtigo';
+import { GuiaTopo, GuiaRodape } from '@/components/guias/GuiaArtigo';
+import { guiaMetadata } from '@/data/guias';
 
-export const metadata = {
-  title: 'PLA, PETG, ABS, ASA, TPU ou PC: que material escolher?',
-  description:
-    'Guia prático dos 6 materiais de impressão 3D: para que serve cada um, resistência ao calor e ao sol, flexibilidade e qual escolher para a tua peça.',
-  alternates: { canonical: '/guias/pla-petg-abs-asa-tpu-pc-qual-escolher' },
-};
+export const metadata = guiaMetadata('pla-petg-abs-asa-tpu-pc-qual-escolher');
 
 <main className="min-h-screen pt-16 pb-24">
 <article className="container max-w-3xl mx-auto px-4">
@@ -66,6 +62,6 @@ O material mais forte que imprimimos: rigidez extrema e resistência a temperatu
 
 Na dúvida, manda-nos uma foto do sítio onde a peça vai viver — em 2 minutos dizemos-te o material certo.
 
-<GuiaCta />
+<GuiaRodape slug="pla-petg-abs-asa-tpu-pc-qual-escolher" />
 </article>
 </main>
