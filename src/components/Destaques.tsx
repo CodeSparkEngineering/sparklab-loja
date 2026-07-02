@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { CardStack, type CardStackItem } from '@/components/ui/card-stack';
-import { PRODUCTS } from '@/data/products';
+import { PRODUCTS, formatEUR } from '@/data/products';
 import { useLang, pName, pDesc, tagLabel } from '@/i18n/LanguageContext';
 
 // Produtos em destaque ("Os mais pedidos") = mascotes/bananão + Porta-Latas
@@ -16,12 +16,18 @@ const L = {
   pt: {
     eyebrow: 'destaques',
     title: 'Os mais pedidos.',
-    desc: 'Arraste os cards, use as setas ou toque para explorar nossas peças mais populares.',
+    desc: 'Arrasta as cartas, usa as setas ou toca para explorar as nossas peças mais populares.',
+    cta: 'Ver peça',
+    prev: 'Peça anterior',
+    next: 'Peça seguinte',
   },
   en: {
     eyebrow: 'featured',
     title: 'Customer favorites.',
     desc: 'Drag the cards, use the arrows or tap to explore our most popular pieces.',
+    cta: 'View piece',
+    prev: 'Previous piece',
+    next: 'Next piece',
   },
 } as const;
 
@@ -40,8 +46,10 @@ export default function Destaques() {
         imageSrc: p.images![0],
         tag: tagLabel(p.tag, lang),
         href: `/produto/${p.id}`,
+        price: formatEUR(p.price),
+        ctaLabel: t.cta,
       })),
-    [lang]
+    [lang, t.cta]
   );
 
   // Largura do card adaptada à largura disponível (responsivo no mobile).
@@ -81,11 +89,20 @@ export default function Destaques() {
             items={items}
             cardWidth={cardWidth}
             cardHeight={cardHeight}
+            /* Leque contido: 5 cartas, arco suave — as laterais espreitam
+               limpas em vez de se espalharem rodadas pelo ecrã. */
+            maxVisible={5}
+            spreadDeg={16}
+            overlap={0.68}
+            depthPx={90}
+            tiltXDeg={6}
             autoAdvance
-            intervalMs={2800}
+            intervalMs={3200}
             pauseOnHover
             loop
             showDots
+            prevLabel={t.prev}
+            nextLabel={t.next}
           />
         </div>
       </div>

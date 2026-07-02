@@ -1,9 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { SquareArrowOutUpRight } from "lucide-react";
-import Link from "next/link";
 
 function cn(...classes: Array<string | undefined | null | false>) {
   return classes.filter(Boolean).join(" ");
@@ -17,6 +16,8 @@ export type CardStackItem = {
   href?: string;
   ctaLabel?: string;
   tag?: string;
+  /** Preço já formatado (ex.: "20,00 €") — mostrado na carta ativa. */
+  price?: string;
 };
 
 export type CardStackProps<T extends CardStackItem> = {
@@ -61,6 +62,9 @@ export type CardStackProps<T extends CardStackItem> = {
   /** UI */
   showDots?: boolean;
   className?: string;
+  /** Labels de acessibilidade das setas (bilíngues via props). */
+  prevLabel?: string;
+  nextLabel?: string;
 
   /** Hooks */
   onChangeIndex?: (index: number, item: T) => void;
@@ -113,11 +117,14 @@ export function CardStack<T extends CardStackItem>({
 
   showDots = true,
   className,
+  prevLabel = "Anterior",
+  nextLabel = "Seguinte",
 
   onChangeIndex,
   renderCard,
 }: CardStackProps<T>) {
   const reduceMotion = useReducedMotion();
+  const router = useRouter();
   const len = items.length;
 
   const [active, setActive] = React.useState(() =>
@@ -190,8 +197,6 @@ export function CardStack<T extends CardStackItem>({
   ]);
 
   if (!len) return null;
-
-  const activeItem = items[active]!;
 
   return (
     <div
@@ -313,7 +318,7 @@ export function CardStack<T extends CardStackItem>({
                   // We apply translateZ by using a CSS transform in a child wrapper.
                   onClick={() => {
                     if (isActive && item.href) {
-                      window.location.href = item.href;
+                      router.push(item.href); // navegação SPA (sem full reload)
                     } else {
                       setActive(i);
                     }
@@ -340,9 +345,17 @@ export function CardStack<T extends CardStackItem>({
         </div>
       </div>
 
-      {/* Dots navigation centered at bottom */}
+      {/* Setas + dots centrados em baixo */}
       {showDots ? (
-        <div className="mt-6 flex items-center justify-center gap-3">
+        <div className="mt-6 flex items-center justify-center gap-4">
+          <button
+            type="button"
+            onClick={prev}
+            aria-label={prevLabel}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-300 dark:border-white/15 text-stone-600 dark:text-stone-300 hover:border-orange-400 hover:text-orange-500 transition-colors text-lg leading-none"
+          >
+            ‹
+          </button>
           <div className="flex items-center gap-2">
             {items.map((it, idx) => {
               const on = idx === active;
@@ -351,67 +364,107 @@ export function CardStack<T extends CardStackItem>({
                   key={it.id}
                   onClick={() => setActive(idx)}
                   className={cn(
-                    "h-2 w-2 rounded-full transition",
+                    "h-2 rounded-full transition-all",
                     on
-                      ? "bg-foreground"
-                      : "bg-foreground/30 hover:bg-foreground/50",
+                      ? "w-5 bg-orange-500"
+                      : "w-2 bg-foreground/30 hover:bg-foreground/50",
                   )}
-                  aria-label={`Go to ${it.title}`}
+                  aria-label={it.title}
+                  aria-current={on || undefined}
                 />
               );
             })}
           </div>
-          {activeItem.href ? (
-            <Link
-              href={activeItem.href}
-              target="_blank"
-              rel="noreferrer"
-              className="text-muted-foreground hover:text-foreground transition"
-              aria-label="Open link"
-            >
-              <SquareArrowOutUpRight className="h-4 w-4" />
-            </Link>
-          ) : null}
+          <button
+            type="button"
+            onClick={next}
+            aria-label={nextLabel}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-300 dark:border-white/15 text-stone-600 dark:text-stone-300 hover:border-orange-400 hover:text-orange-500 transition-colors text-lg leading-none"
+          >
+            ›
+          </button>
         </div>
       ) : null}
     </div>
   );
 }
 
-function DefaultFanCard({ item }: { item: CardStackItem; active: boolean }) {
+function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean }) {
   return (
     <div className="relative h-full w-full">
-      {/* image */}
+      {/* imagem: fundo em blur-cover preenche a carta (sem barras pretas)
+          e a foto inteira fica visível por cima em contain */}
       <div className="absolute inset-0">
         {item.imageSrc ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={item.imageSrc}
-            alt={item.title}
-            className="h-full w-full object-contain bg-stone-100 dark:bg-black/40"
-            draggable={false}
-            loading="eager"
-          />
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={item.imageSrc}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full object-cover blur-2xl scale-110 opacity-60 dark:opacity-40"
+              draggable={false}
+              loading="eager"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={item.imageSrc}
+              alt={item.title}
+              className="relative h-full w-full object-contain"
+              draggable={false}
+              loading="eager"
+            />
+          </>
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-secondary text-sm text-muted-foreground">
-            No image
+            Sem imagem
           </div>
         )}
       </div>
 
-      {/* subtle gradient overlay at bottom for text readability */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white dark:from-black/80 via-white/70 dark:via-black/40 to-transparent" />
+      {/* tag no canto (só na carta ativa) */}
+      {active && item.tag ? (
+        <span className="absolute left-4 top-4 z-10 rounded-full bg-white/85 dark:bg-black/60 backdrop-blur px-3 py-1 text-xs font-semibold text-stone-700 dark:text-stone-200">
+          {item.tag}
+        </span>
+      ) : null}
 
-      {/* content */}
-      <div className="relative z-10 flex h-full flex-col justify-end p-5">
-        <div className="truncate text-lg font-semibold text-stone-900 dark:text-stone-100">
-          {item.title}
-        </div>
-        {item.description ? (
-          <div className="mt-1 line-clamp-2 text-sm text-stone-600 dark:text-stone-400">
-            {item.description}
+      {/* gradiente + conteúdo: apenas na carta ativa — as laterais ficam
+          limpas (era o texto rodado que sujava o leque) */}
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-0 bg-gradient-to-t from-white via-white/60 dark:from-black/85 dark:via-black/35 to-transparent transition-opacity duration-300",
+          active ? "opacity-100" : "opacity-0",
+        )}
+      />
+      <div
+        className={cn(
+          "absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-3 p-5 transition-opacity duration-300",
+          active ? "opacity-100" : "opacity-0",
+        )}
+      >
+        <div className="min-w-0">
+          <div className="truncate text-lg font-bold text-stone-900 dark:text-stone-100">
+            {item.title}
           </div>
-        ) : null}
+          {item.description ? (
+            <div className="mt-0.5 line-clamp-2 text-sm text-stone-600 dark:text-stone-300">
+              {item.description}
+            </div>
+          ) : null}
+        </div>
+        <div className="flex shrink-0 flex-col items-end gap-2">
+          {item.price ? (
+            <span className="text-lg font-bold text-stone-900 dark:text-stone-100 whitespace-nowrap">
+              {item.price}
+            </span>
+          ) : null}
+          {item.ctaLabel ? (
+            <span className="rounded-full bg-orange-500 px-4 py-1.5 text-xs font-bold text-white whitespace-nowrap">
+              {item.ctaLabel}
+            </span>
+          ) : null}
+        </div>
       </div>
     </div>
   );
