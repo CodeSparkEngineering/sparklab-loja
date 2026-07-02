@@ -5,11 +5,11 @@ import { useLang } from '@/i18n/LanguageContext';
 const L = {
   pt: {
     ship: <>🚚 <span className="font-bold underline decoration-orange-300 underline-offset-2">Envio Grátis</span> a partir de 40€!</>,
-    bulk: <>📦 Preços especiais de <span className="font-bold underline decoration-orange-300 underline-offset-2">Atacado</span> a partir de 10 peças!</>,
+    bulk: <>📦 <span className="font-bold underline decoration-orange-300 underline-offset-2">Atacado: −15%</span> em 10+ unidades da mesma peça!</>,
   },
   en: {
     ship: <>🚚 <span className="font-bold underline decoration-orange-300 underline-offset-2">Free Shipping</span> on orders over €40!</>,
-    bulk: <>📦 Special <span className="font-bold underline decoration-orange-300 underline-offset-2">Wholesale</span> pricing from 10 pieces!</>,
+    bulk: <>📦 <span className="font-bold underline decoration-orange-300 underline-offset-2">Wholesale: −15%</span> on 10+ units of the same piece!</>,
   },
 } as const;
 

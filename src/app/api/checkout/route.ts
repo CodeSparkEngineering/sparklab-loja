@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import Stripe from 'stripe';
-import { getProductById } from '@/data/products';
+import { getProductById, unitPriceFor, WHOLESALE_MIN_QTY, WHOLESALE_DISCOUNT } from '@/data/products';
 import { SITE_URL } from '@/data/site';
 
 // Stripe usa APIs de Node (crypto), então força o runtime Node.
@@ -45,6 +45,16 @@ export async function POST(request: NextRequest) {
   const rawOrigin = request.headers.get('origin') ?? new URL(request.url).origin;
   const origin = ALLOWED_ORIGINS.has(rawOrigin) ? rawOrigin : SITE_URL;
 
+  // Atacado: soma as quantidades POR PRODUTO (variantes personalizadas do
+  // mesmo produto contam juntas) para decidir o desconto de 15% em 10+.
+  const qtyByProduct: Record<string, number> = {};
+  for (const line of incoming) {
+    const product = getProductById(String(line?.id));
+    const qty = Math.max(1, Math.min(99, Math.floor(Number(line?.qty) || 0)));
+    if (!product || qty < 1) continue;
+    qtyByProduct[product.id] = (qtyByProduct[product.id] ?? 0) + qty;
+  }
+
   // Monta os line_items a partir do catálogo do SERVIDOR (preço autoritativo).
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
   let hasPhysical = false;
@@ -79,14 +89,23 @@ export async function POST(request: NextRequest) {
         }).join(' | ');
     }
 
+    // 15% de atacado quando o total do MESMO produto (todas as variantes)
+    // atinge as 10 unidades — preço calculado sempre no servidor.
+    const totalOfProduct = qtyByProduct[product.id] ?? qty;
+    const unit = unitPriceFor(product.price, totalOfProduct);
+    const wholesaleText =
+      totalOfProduct >= WHOLESALE_MIN_QTY
+        ? `\nAtacado (${WHOLESALE_MIN_QTY}+ un.): −${Math.round(WHOLESALE_DISCOUNT * 100)}%`
+        : '';
+
     lineItems.push({
       quantity: qty,
       price_data: {
         currency: 'eur',
-        unit_amount: Math.round(product.price * 100), // EUR → cêntimos
+        unit_amount: Math.round(unit * 100), // EUR → cêntimos
         product_data: {
           name: product.name,
-          description: product.desc + customText,
+          description: product.desc + customText + wholesaleText,
           ...(product.images && product.images.length > 0 ? { images: [`${origin}${product.images[0]}`] } : {}),
           metadata: {
             ...customizations,

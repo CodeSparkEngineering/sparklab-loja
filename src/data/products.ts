@@ -132,3 +132,19 @@ export function getProductById(id: string): Product | undefined {
 export function formatEUR(value: number): string {
   return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(value);
 }
+
+/**
+ * Atacado: 10+ unidades da MESMA peça = 15% de desconto automático.
+ * Variantes personalizadas do mesmo produto (nomes diferentes) contam juntas
+ * — a eficiência de produção vem de imprimir a mesma peça em lote.
+ * Regra usada pelo servidor (checkout Stripe) E pelo carrinho (UI).
+ */
+export const WHOLESALE_MIN_QTY = 10;
+export const WHOLESALE_DISCOUNT = 0.15;
+
+/** Preço unitário efetivo dado o total de unidades do mesmo produto. */
+export function unitPriceFor(price: number, qtyOfSameProduct: number): number {
+  return qtyOfSameProduct >= WHOLESALE_MIN_QTY
+    ? price * (1 - WHOLESALE_DISCOUNT)
+    : price;
+}

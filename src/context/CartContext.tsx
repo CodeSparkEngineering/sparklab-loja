@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { PRODUCTS, getProductById, type Product } from '@/data/products';
+import { PRODUCTS, getProductById, unitPriceFor, WHOLESALE_MIN_QTY, type Product } from '@/data/products';
 
 export type CartLine = { 
   id: string; 
@@ -17,11 +17,15 @@ export type CartLine = {
   customizations?: Record<string, string>;
 };
 
-export type CartItem = { 
+export type CartItem = {
   id: string;
-  product: Product; 
+  product: Product;
   qty: number;
   customizations?: Record<string, string>;
+  /** Preço unitário efetivo (com desconto de atacado se 10+ do mesmo produto). */
+  unitPrice: number;
+  /** true quando o desconto de atacado (−15%) está aplicado a esta linha. */
+  wholesale: boolean;
 };
 
 type CartContextValue = {
@@ -117,11 +121,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const closeCart = useCallback(() => setIsOpen(false), []);
 
   const items = useMemo<CartItem[]>(() => {
+    // Atacado: 10+ unidades do MESMO produto (variantes contam juntas) = −15%.
+    const qtyByProduct: Record<string, number> = {};
+    for (const l of lines) {
+      qtyByProduct[l.productId] = (qtyByProduct[l.productId] ?? 0) + l.qty;
+    }
+
     const result: CartItem[] = [];
     for (const l of lines) {
       const product = getProductById(l.productId);
       if (product) {
-        result.push({ id: l.id, product, qty: l.qty, customizations: l.customizations });
+        const totalOfProduct = qtyByProduct[l.productId] ?? l.qty;
+        result.push({
+          id: l.id,
+          product,
+          qty: l.qty,
+          customizations: l.customizations,
+          unitPrice: unitPriceFor(product.price, totalOfProduct),
+          wholesale: totalOfProduct >= WHOLESALE_MIN_QTY,
+        });
       }
     }
     return result;
@@ -129,7 +147,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const count = useMemo(() => items.reduce((n, it) => n + it.qty, 0), [items]);
   const subtotal = useMemo(
-    () => items.reduce((sum, it) => sum + it.product.price * it.qty, 0),
+    () => items.reduce((sum, it) => sum + it.unitPrice * it.qty, 0),
     [items]
   );
 

@@ -19,6 +19,7 @@ const L = {
     shipRemaining: (v: string) => <>Faltam <strong>{v}</strong> para teres <span>envio grátis</span> 🚚</>,
     shipDone: <>🎉 Boa! Tens <strong>envio grátis</strong>.</>,
     subtotal: 'Subtotal',
+    wholesale: '−15% atacado',
     note: 'Portes calculados no checkout. Envio via CTT registado, com seguimento.',
     checkout: 'Avançar com a encomenda',
     checkoutLoading: 'A redirecionar…',
@@ -37,6 +38,7 @@ const L = {
     shipRemaining: (v: string) => <>You're <strong>{v}</strong> away from <span>free shipping</span> 🚚</>,
     shipDone: <>🎉 Nice! You've got <strong>free shipping</strong>.</>,
     subtotal: 'Subtotal',
+    wholesale: '−15% wholesale',
     note: 'Shipping calculated at checkout. Sent via registered CTT mail, with tracking.',
     checkout: 'Proceed to checkout',
     checkoutLoading: 'Redirecting…',
@@ -131,7 +133,7 @@ export default function CartDrawer() {
         ) : (
           <>
             <ul className="cart__list">
-              {items.map(({ id, product, qty, customizations }) => {
+              {items.map(({ id, product, qty, customizations, unitPrice, wholesale }) => {
                 const name = pName(product, lang);
                 return (
                 <li key={id} className="cart__item">
@@ -166,7 +168,19 @@ export default function CartDrawer() {
                       </div>
                     )}
 
-                    <span className="cart__item-price">{formatEUR(product.price)}</span>
+                    <span className="cart__item-price">
+                      {wholesale ? (
+                        <>
+                          <s className="opacity-60 mr-1.5">{formatEUR(product.price)}</s>
+                          {formatEUR(unitPrice)}
+                          <span className="ml-1.5 rounded-full bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400 text-[11px] font-bold px-2 py-0.5 whitespace-nowrap">
+                            {t.wholesale}
+                          </span>
+                        </>
+                      ) : (
+                        formatEUR(unitPrice)
+                      )}
+                    </span>
 
                     <div className="cart__qty">
                       <button
@@ -189,7 +203,7 @@ export default function CartDrawer() {
 
                   <div className="cart__item-right">
                     <span className="cart__item-line-total">
-                      {formatEUR(product.price * qty)}
+                      {formatEUR(unitPrice * qty)}
                     </span>
                     <button
                       type="button"

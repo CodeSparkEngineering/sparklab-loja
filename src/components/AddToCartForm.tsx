@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useCart } from '@/context/CartContext';
-import { formatEUR, type Product } from '@/data/products';
+import { formatEUR, unitPriceFor, WHOLESALE_MIN_QTY, type Product } from '@/data/products';
 import { useLang, pName, cLabel } from '@/i18n/LanguageContext';
 
 const L = {
@@ -14,6 +14,8 @@ const L = {
     qty: 'Quantidade:',
     qtyMinus: 'Diminuir quantidade',
     qtyPlus: 'Aumentar quantidade',
+    wholesaleApplied: (unit: string) => `${unit}/un. · −15% atacado aplicado 🎉`,
+    wholesaleHint: (n: number) => `Faltam ${n} un. para −15% de atacado`,
     add: 'Adicionar ao meu carrinho 🛒',
     addedLong: '✓ Adicionado ao carrinho!',
     addShort: 'Adicionar ao carrinho',
@@ -28,6 +30,8 @@ const L = {
     qty: 'Quantity:',
     qtyMinus: 'Decrease quantity',
     qtyPlus: 'Increase quantity',
+    wholesaleApplied: (unit: string) => `${unit}/unit · −15% wholesale applied 🎉`,
+    wholesaleHint: (n: number) => `${n} more unit${n > 1 ? 's' : ''} for the −15% wholesale discount`,
     add: 'Add to my cart 🛒',
     addedLong: '✓ Added to cart!',
     addShort: 'Add to cart',
@@ -148,13 +152,25 @@ export default function AddToCartForm({ product }: { product: Product }) {
         </div>
       )}
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 flex-wrap">
         <span className="text-sm uppercase tracking-widest text-stone-700 dark:text-zinc-300 font-semibold">{t.qty}</span>
         <div className="flex items-center border border-stone-200 dark:border-stone-800 rounded-full overflow-hidden bg-white dark:bg-stone-900 shadow-sm">
           <button type="button" onClick={handleMinus} aria-label={t.qtyMinus} className="px-4 py-1.5 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors text-xl font-medium w-12 text-center text-stone-800 dark:text-stone-200">-</button>
           <span className="font-semibold text-lg w-8 text-center text-stone-800 dark:text-stone-200" aria-live="polite">{quantity}</span>
           <button type="button" onClick={handlePlus} aria-label={t.qtyPlus} className="px-4 py-1.5 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors text-xl font-medium w-12 text-center text-stone-800 dark:text-stone-200">+</button>
         </div>
+        {/* Atacado: aplicado a partir de 10 un.; a partir de 7 mostra o incentivo */}
+        <span className="text-sm font-medium" aria-live="polite">
+          {quantity >= WHOLESALE_MIN_QTY ? (
+            <span className="text-green-600 dark:text-green-400">
+              {t.wholesaleApplied(formatEUR(unitPriceFor(product.price, quantity)))}
+            </span>
+          ) : quantity >= 7 ? (
+            <span className="text-amber-600 dark:text-amber-400">
+              {t.wholesaleHint(WHOLESALE_MIN_QTY - quantity)}
+            </span>
+          ) : null}
+        </span>
       </div>
 
       <button
@@ -181,7 +197,7 @@ export default function AddToCartForm({ product }: { product: Product }) {
         <div className="bg-white/95 dark:bg-stone-900/95 backdrop-blur border-t border-stone-200 dark:border-white/10 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] flex items-center gap-3">
           <div className="flex flex-col leading-tight min-w-0 shrink">
             <span className="text-[11px] uppercase tracking-wider text-stone-500 dark:text-zinc-400 truncate">{pName(product, lang)}</span>
-            <span className="text-lg font-bold text-stone-900 dark:text-stone-100 whitespace-nowrap">{formatEUR(product.price)}</span>
+            <span className="text-lg font-bold text-stone-900 dark:text-stone-100 whitespace-nowrap">{formatEUR(unitPriceFor(product.price, quantity))}</span>
           </div>
           <button
             type="button"

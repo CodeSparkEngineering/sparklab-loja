@@ -15,7 +15,8 @@
 - Equipment: Bambu Lab P1S (enclosed chamber). Max single-print volume: 256 × 256 × 256 mm (larger pieces are printed in modular parts).
 - Materials: PLA, PETG, ABS, ASA, TPU, PC (official Bambu Lab filaments).
 - Catalog prices: roughly €3 (keychains) to €30 (collectible figures); mugs/can holders €15–20. Custom work is quoted individually.
-- Shipping: registered CTT mail with tracking. Free shipping on orders over €40. Wholesale pricing from 10+ pieces.
+- Shipping: registered CTT mail with tracking. Free shipping on orders over €40.
+- Wholesale: automatic 15% discount on 10+ units of the same piece (customized variants count together), applied in the cart and at checkout. Larger volumes quoted individually; invoices for businesses.
 - Payments: Visa and Mastercard via Stripe (secure checkout, card data never touches our servers).
 - Custom quotes: send an STL/OBJ/3MF/STEP file (or just an idea — we also do 3D modeling) via the quote form; reply within ~2 business hours on WhatsApp.
 - STL files of our original designs can be purchased for personal use (delivered via WhatsApp).

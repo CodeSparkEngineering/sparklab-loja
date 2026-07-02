@@ -36,7 +36,7 @@ const FAQS = {
     },
     {
       q: "Atendem empresas e grandes volumes?",
-      a: "Sim. Temos preços escalonados para lotes a partir de 10 peças e fatura para empresas. Fala connosco pelo WhatsApp a indicar o projeto e o volume previsto.",
+      a: "Sim. 10 ou mais unidades da mesma peça têm 15% de desconto automático, aplicado no carrinho e no checkout. Para volumes maiores ou peças por encomenda, fala connosco pelo WhatsApp a indicar o projeto e o volume previsto — emitimos fatura para empresas.",
     },
   ],
   en: [
@@ -70,7 +70,7 @@ const FAQS = {
     },
     {
       q: "Do you work with businesses and large volumes?",
-      a: "Yes. We offer tiered pricing for batches of 10+ pieces and invoicing for businesses. Message us on WhatsApp with your project and expected volume.",
+      a: "Yes. 10 or more units of the same piece get an automatic 15% discount, applied in the cart and at checkout. For larger volumes or made-to-order pieces, message us on WhatsApp with your project and expected volume — we issue invoices for businesses.",
     },
   ],
 } as const;
