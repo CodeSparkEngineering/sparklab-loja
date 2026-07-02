@@ -28,6 +28,16 @@
 2. We fine-tune color, size, material and finish together over WhatsApp, with a clear quote.
 3. We print on the Bambu Lab P1S, review, pack and ship via registered CTT mail.
 
+## Guides (in-depth, citable answers)
+
+- [How much does 3D printing cost in Portugal?](https://www.sparklab3d.pt/guias/quanto-custa-impressao-3d-portugal):
+  the 4 price factors (material grams, machine time, finishing, one-time modeling fee),
+  real catalog prices (€3 keychains to €30 figures), saving tips, shipping.
+- [PLA, PETG, ABS, ASA, TPU or PC — which material to choose](https://www.sparklab3d.pt/guias/pla-petg-abs-asa-tpu-pc-qual-escolher):
+  comparison table of all 6 materials (strength, heat, UV/outdoor use, relative price)
+  and a rule of thumb: decorative→PLA, functional→PETG, outdoor→ASA, >90 °C or heavy load→ABS/PC, flexible→TPU.
+- [All guides](https://www.sparklab3d.pt/guias)
+
 ## Pages
 
 - [Home / catalog](https://www.sparklab3d.pt/): products, how it works, quote form, FAQ
