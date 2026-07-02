@@ -98,7 +98,7 @@ export default function RootLayout({
             <ScrollFX />
             <script
               type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup).replace(/</g, '\\u003c') }}
             />
             {children}
             <CartDrawer />

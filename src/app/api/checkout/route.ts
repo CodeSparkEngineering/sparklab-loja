@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import Stripe from 'stripe';
 import { getProductById } from '@/data/products';
+import { SITE_URL } from '@/data/site';
 
 // Stripe usa APIs de Node (crypto), então força o runtime Node.
 export const runtime = 'nodejs';
@@ -32,8 +33,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Carrinho vazio.' }, { status: 400 });
   }
 
-  const origin =
-    request.headers.get('origin') ?? new URL(request.url).origin;
+  // O header Origin é controlado pelo cliente — valida contra os domínios
+  // do site antes de o usar nos redirects do Stripe (evita que alguém crie
+  // sessões de pagamento que redirecionam para um site externo).
+  const ALLOWED_ORIGINS = new Set([
+    SITE_URL,
+    'https://www.sparklab3d.pt',
+    'https://sparklab3d.pt',
+    ...(process.env.NODE_ENV !== 'production' ? [new URL(request.url).origin] : []),
+  ]);
+  const rawOrigin = request.headers.get('origin') ?? new URL(request.url).origin;
+  const origin = ALLOWED_ORIGINS.has(rawOrigin) ? rawOrigin : SITE_URL;
 
   // Monta os line_items a partir do catálogo do SERVIDOR (preço autoritativo).
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
@@ -47,9 +57,22 @@ export async function POST(request: NextRequest) {
     if (product.digital) hasDigital = true;
     else hasPhysical = true;
 
+    // Só aceita chaves de personalização DEFINIDAS no produto (whitelist) e
+    // limita o tamanho dos valores — evita metadados arbitrários (que podiam
+    // até sobrepor o product_id) e o limite de 500 chars/valor da Stripe.
+    const customizations: Record<string, string> = {};
+    if (line.customizations && product.customizations?.length) {
+      for (const def of product.customizations) {
+        const val = line.customizations[def.id];
+        if (typeof val === 'string' && val.trim()) {
+          customizations[def.id] = val.trim().slice(0, 200);
+        }
+      }
+    }
+
     let customText = '';
-    if (line.customizations && Object.keys(line.customizations).length > 0) {
-      customText = '\nPersonalização: ' + Object.entries(line.customizations)
+    if (Object.keys(customizations).length > 0) {
+      customText = '\nPersonalização: ' + Object.entries(customizations)
         .map(([key, val]) => {
           const optionDef = product.customizations?.find(c => c.id === key);
           return `${optionDef?.label || key}: ${val}`;
@@ -65,9 +88,9 @@ export async function POST(request: NextRequest) {
           name: product.name,
           description: product.desc + customText,
           ...(product.images && product.images.length > 0 ? { images: [`${origin}${product.images[0]}`] } : {}),
-          metadata: { 
-            product_id: product.id,
-            ...line.customizations
+          metadata: {
+            ...customizations,
+            product_id: product.id, // por último: nunca pode ser sobreposto
           },
         },
       },
@@ -123,9 +146,12 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ url: session.url });
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : 'Erro ao criar a sessão de pagamento.';
-    console.error('[checkout] erro:', message);
-    return NextResponse.json({ error: message }, { status: 500 });
+    // Loga o detalhe no servidor, mas devolve mensagem genérica ao cliente
+    // (mensagens da Stripe podem expor detalhes internos da conta/config).
+    console.error('[checkout] erro:', err instanceof Error ? err.message : err);
+    return NextResponse.json(
+      { error: 'Erro ao criar a sessão de pagamento. Tenta novamente.' },
+      { status: 500 }
+    );
   }
 }

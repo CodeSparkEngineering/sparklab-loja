@@ -89,7 +89,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
     <main className="min-h-screen pt-32 pb-16">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema).replace(/</g, '\\u003c') }}
       />
       <div className="container max-w-6xl mx-auto px-4">
         {/* Breadcrumb / Back button */}

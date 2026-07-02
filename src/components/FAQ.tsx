@@ -58,7 +58,7 @@ export default function FAQ() {
     <section className="section" id="faq">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c') }}
       />
       <div className="container">
         <div className="mb-12" style={{ textAlign: 'center', maxWidth: '600px', marginInline: 'auto' }}>
