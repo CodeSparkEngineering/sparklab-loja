@@ -1,4 +1,8 @@
+'use client';
+
 // Marcas reais (logos a cores) em chips brancos — estilo "selo de confiança".
+
+import { useLang } from '@/i18n/LanguageContext';
 
 function VisaMark() {
   return (
@@ -45,21 +49,45 @@ function WhatsappMark() {
   );
 }
 
-const ITEMS = [
-  { badge: <><VisaMark /><MastercardMark /></>, title: 'Pagamento seguro', desc: 'Visa, Mastercard via Stripe', wide: true },
-  { badge: <CttMark />, title: 'Envio CTT registado', desc: 'Para todo o Portugal', wide: false },
-  { badge: <PortugalFlag />, title: 'Feito em Portugal', desc: 'Impresso à mão', wide: false },
-  { badge: <WhatsappMark />, title: 'Apoio direto', desc: 'Resposta rápida no WhatsApp', wide: false },
+const L = {
+  pt: {
+    aria: 'As nossas garantias',
+    items: [
+      { title: 'Pagamento seguro', desc: 'Visa, Mastercard via Stripe' },
+      { title: 'Envio CTT registado', desc: 'Para todo o Portugal' },
+      { title: 'Feito em Portugal', desc: 'Impresso à mão' },
+      { title: 'Apoio direto', desc: 'Resposta rápida no WhatsApp' },
+    ],
+  },
+  en: {
+    aria: 'Our guarantees',
+    items: [
+      { title: 'Secure payment', desc: 'Visa, Mastercard via Stripe' },
+      { title: 'Registered CTT shipping', desc: 'Anywhere in Portugal' },
+      { title: 'Made in Portugal', desc: 'Printed by hand' },
+      { title: 'Direct support', desc: 'Fast replies on WhatsApp' },
+    ],
+  },
+} as const;
+
+const BADGES = [
+  { badge: <><VisaMark /><MastercardMark /></>, wide: true },
+  { badge: <CttMark />, wide: false },
+  { badge: <PortugalFlag />, wide: false },
+  { badge: <WhatsappMark />, wide: false },
 ];
 
 export default function FaixaConfianca() {
+  const { lang } = useLang();
+  const t = L[lang];
+
   return (
-    <section className="trust" aria-label="As nossas garantias">
+    <section className="trust" aria-label={t.aria}>
       <div className="container trust__grid">
-        {ITEMS.map((it) => (
+        {t.items.map((it, i) => (
           <div key={it.title} className="trust__item">
-            <span className={`trust__badge ${it.wide ? 'trust__badge--wide' : ''}`}>
-              {it.badge}
+            <span className={`trust__badge ${BADGES[i].wide ? 'trust__badge--wide' : ''}`}>
+              {BADGES[i].badge}
             </span>
             <div className="trust__text">
               <strong>{it.title}</strong>

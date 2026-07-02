@@ -4,11 +4,53 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { formatEUR } from '@/data/products';
+import { useLang, pName, cLabel } from '@/i18n/LanguageContext';
+
+const L = {
+  pt: {
+    title: 'O teu carrinho',
+    close: 'Fechar carrinho',
+    emptyText: 'O teu carrinho está vazio. Explora o catálogo para começar.',
+    emptyCta: 'Explorar a loja',
+    qtyMinus: 'Diminuir quantidade',
+    qtyPlus: 'Aumentar quantidade',
+    removeItem: (name: string) => `Remover ${name}`,
+    remove: 'Remover',
+    shipRemaining: (v: string) => <>Faltam <strong>{v}</strong> para teres <span>envio grátis</span> 🚚</>,
+    shipDone: <>🎉 Boa! Tens <strong>envio grátis</strong>.</>,
+    subtotal: 'Subtotal',
+    note: 'Portes calculados no checkout. Envio via CTT registado, com seguimento.',
+    checkout: 'Avançar com a encomenda',
+    checkoutLoading: 'A redirecionar…',
+    errPayment: 'Não foi possível iniciar o pagamento.',
+    errUnknown: 'Erro inesperado.',
+  },
+  en: {
+    title: 'Your cart',
+    close: 'Close cart',
+    emptyText: 'Your cart is empty. Browse the catalog to get started.',
+    emptyCta: 'Browse the shop',
+    qtyMinus: 'Decrease quantity',
+    qtyPlus: 'Increase quantity',
+    removeItem: (name: string) => `Remove ${name}`,
+    remove: 'Remove',
+    shipRemaining: (v: string) => <>You're <strong>{v}</strong> away from <span>free shipping</span> 🚚</>,
+    shipDone: <>🎉 Nice! You've got <strong>free shipping</strong>.</>,
+    subtotal: 'Subtotal',
+    note: 'Shipping calculated at checkout. Sent via registered CTT mail, with tracking.',
+    checkout: 'Proceed to checkout',
+    checkoutLoading: 'Redirecting…',
+    errPayment: 'We could not start the payment.',
+    errUnknown: 'Unexpected error.',
+  },
+} as const;
 
 export default function CartDrawer() {
   const { items, count, subtotal, isOpen, closeCart, setQty, remove } = useCart();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { lang } = useLang();
+  const t = L[lang];
 
   // Incentivo de envio grátis (limite de 40€ — igual ao do checkout).
   const FREE_SHIP = 40;
@@ -43,11 +85,11 @@ export default function CartDrawer() {
       });
       const data = await res.json();
       if (!res.ok || !data.url) {
-        throw new Error(data.error || 'Não foi possível iniciar o pagamento.');
+        throw new Error(data.error || t.errPayment);
       }
       window.location.href = data.url; // redireciona para o Stripe Checkout
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro inesperado.');
+      setError(err instanceof Error ? err.message : t.errUnknown);
       setLoading(false);
     }
   };
@@ -60,17 +102,17 @@ export default function CartDrawer() {
         className="cart__panel"
         role="dialog"
         aria-modal="true"
-        aria-label="Carrinho de compras"
+        aria-label={t.title}
       >
         <header className="cart__head">
           <h2 className="cart__title">
-            O teu carrinho{count > 0 ? ` · ${count}` : ''}
+            {t.title}{count > 0 ? ` · ${count}` : ''}
           </h2>
           <button
             type="button"
             className="cart__close"
             onClick={closeCart}
-            aria-label="Fechar carrinho"
+            aria-label={t.close}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M18 6 6 18M6 6l12 12" />
@@ -81,21 +123,23 @@ export default function CartDrawer() {
         {items.length === 0 ? (
           <div className="cart__empty">
             <span className="cart__empty-icon" aria-hidden="true">🛒</span>
-            <p>O teu carrinho está vazio. Explora o catálogo para começar.</p>
+            <p>{t.emptyText}</p>
             <button type="button" className="btn btn--ghost btn--sm" onClick={closeCart}>
-              Explorar a loja
+              {t.emptyCta}
             </button>
           </div>
         ) : (
           <>
             <ul className="cart__list">
-              {items.map(({ id, product, qty, customizations }) => (
+              {items.map(({ id, product, qty, customizations }) => {
+                const name = pName(product, lang);
+                return (
                 <li key={id} className="cart__item">
                   <div className={`cart__thumb cart__thumb--${product.tone}`}>
                     {product.images && product.images.length > 0 ? (
                       <Image
                         src={product.images[0]}
-                        alt={product.name}
+                        alt={name}
                         fill
                         className="object-contain"
                         sizes="64px"
@@ -106,8 +150,8 @@ export default function CartDrawer() {
                   </div>
 
                   <div className="cart__item-body">
-                    <span className="cart__item-name">{product.name}</span>
-                    
+                    <span className="cart__item-name">{name}</span>
+
                     {/* Exibir opções de personalização se existirem */}
                     {customizations && Object.keys(customizations).length > 0 && (
                       <div className="flex flex-col gap-0.5 mt-1 mb-2">
@@ -115,7 +159,7 @@ export default function CartDrawer() {
                           const optionDef = product.customizations?.find(c => c.id === key);
                           return (
                             <span key={key} className="text-xs text-stone-500">
-                              <span className="font-medium text-stone-700">{optionDef?.label || key}:</span> {value}
+                              <span className="font-medium text-stone-700">{optionDef ? cLabel(optionDef, lang) : key}:</span> {value}
                             </span>
                           );
                         })}
@@ -127,7 +171,7 @@ export default function CartDrawer() {
                     <div className="cart__qty">
                       <button
                         type="button"
-                        aria-label="Diminuir quantidade"
+                        aria-label={t.qtyMinus}
                         onClick={() => setQty(id, qty - 1)}
                       >
                         −
@@ -135,7 +179,7 @@ export default function CartDrawer() {
                       <span>{qty}</span>
                       <button
                         type="button"
-                        aria-label="Aumentar quantidade"
+                        aria-label={t.qtyPlus}
                         onClick={() => setQty(id, qty + 1)}
                       >
                         +
@@ -151,24 +195,25 @@ export default function CartDrawer() {
                       type="button"
                       className="cart__remove"
                       onClick={() => remove(id)}
-                      aria-label={`Remover ${product.name}`}
+                      aria-label={t.removeItem(name)}
                     >
-                      Remover
+                      {t.remove}
                     </button>
                   </div>
                 </li>
-              ))}
+                );
+              })}
             </ul>
 
             <footer className="cart__foot">
               <div className="cart__ship">
                 {shipRemaining > 0 ? (
                   <p className="cart__ship-text">
-                    Faltam <strong>{formatEUR(shipRemaining)}</strong> para teres <span>envio grátis</span> 🚚
+                    {t.shipRemaining(formatEUR(shipRemaining))}
                   </p>
                 ) : (
                   <p className="cart__ship-text cart__ship-text--done">
-                    🎉 Boa! Tens <strong>envio grátis</strong>.
+                    {t.shipDone}
                   </p>
                 )}
                 <div className="cart__ship-bar">
@@ -176,19 +221,19 @@ export default function CartDrawer() {
                 </div>
               </div>
 
-              {error && <p className="cart__error">{error}</p>}
+              {error && <p className="cart__error" role="alert">{error}</p>}
               <div className="cart__subtotal">
-                <span>Subtotal</span>
+                <span>{t.subtotal}</span>
                 <strong>{formatEUR(subtotal)}</strong>
               </div>
-              <p className="cart__note">Portes calculados no checkout. Envio via CTT registado, com seguimento.</p>
+              <p className="cart__note">{t.note}</p>
               <button
                 type="button"
                 className="btn btn--primary cart__checkout"
                 onClick={handleCheckout}
                 disabled={loading}
               >
-                {loading ? 'A redirecionar…' : 'Avançar com a encomenda'}
+                {loading ? t.checkoutLoading : t.checkout}
               </button>
             </footer>
           </>

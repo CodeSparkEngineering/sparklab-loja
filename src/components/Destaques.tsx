@@ -1,26 +1,48 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { CardStack, type CardStackItem } from '@/components/ui/card-stack';
 import { PRODUCTS } from '@/data/products';
+import { useLang, pName, pDesc, tagLabel } from '@/i18n/LanguageContext';
 
 // Produtos em destaque ("Os mais pedidos") = mascotes/bananão + Porta-Latas
 // Monster e Benfica.
 const DESTAQUE_IDS = ['porta-latas-monster', 'porta-latas-benfica'];
-const items: CardStackItem[] = PRODUCTS.filter(
+const FEATURED = PRODUCTS.filter(
   (p) => p.images?.[0] && (p.id.startsWith('miniatura') || DESTAQUE_IDS.includes(p.id)),
-).map((p) => ({
-  id: p.id,
-  title: p.name,
-  description: p.desc,
-  imageSrc: p.images![0],
-  tag: p.tag,
-  href: `/produto/${p.id}`,
-}));
+);
+
+const L = {
+  pt: {
+    eyebrow: 'destaques',
+    title: 'Os mais pedidos.',
+    desc: 'Arraste os cards, use as setas ou toque para explorar nossas peças mais populares.',
+  },
+  en: {
+    eyebrow: 'featured',
+    title: 'Customer favorites.',
+    desc: 'Drag the cards, use the arrows or tap to explore our most popular pieces.',
+  },
+} as const;
 
 export default function Destaques() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [cardWidth, setCardWidth] = useState(440);
+  const { lang } = useLang();
+  const t = L[lang];
+
+  const items = useMemo<CardStackItem[]>(
+    () =>
+      FEATURED.map((p) => ({
+        id: p.id,
+        title: pName(p, lang),
+        description: pDesc(p, lang),
+        imageSrc: p.images![0],
+        tag: tagLabel(p.tag, lang),
+        href: `/produto/${p.id}`,
+      })),
+    [lang]
+  );
 
   // Largura do card adaptada à largura disponível (responsivo no mobile).
   useEffect(() => {
@@ -47,11 +69,10 @@ export default function Destaques() {
           className="section__head reveal"
           style={{ textAlign: 'center', maxWidth: 640, marginInline: 'auto' }}
         >
-          <span className="eyebrow--hand" style={{ color: 'var(--orange)' }}>destaques</span>
-          <h2 className="h2">Os mais pedidos.</h2>
+          <span className="eyebrow--hand" style={{ color: 'var(--orange)' }}>{t.eyebrow}</span>
+          <h2 className="h2">{t.title}</h2>
           <p className="section__desc" style={{ marginInline: 'auto' }}>
-            Arraste os cards, use as setas ou toque para explorar nossas peças
-            mais populares.
+            {t.desc}
           </p>
         </div>
 

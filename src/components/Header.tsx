@@ -4,13 +4,72 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
+import { useLang, type Lang } from '@/i18n/LanguageContext';
 
 import AnnouncementBar from './AnnouncementBar';
 import { ThemeToggle } from './ThemeToggle';
 
+const L = {
+  pt: {
+    catalog: 'Catálogo',
+    how: 'Como funciona',
+    quote: 'Orçamento',
+    stl: 'Ficheiros STL',
+    faq: 'FAQ',
+    cta: 'Fazer orçamento',
+    nav: 'Navegação principal',
+    openCart: (n: number) => `Abrir carrinho${n > 0 ? ` (${n} itens)` : ''}`,
+    toggleMenu: 'Alternar menu',
+    langLabel: 'Idioma',
+  },
+  en: {
+    catalog: 'Catalog',
+    how: 'How it works',
+    quote: 'Get a quote',
+    stl: 'STL files',
+    faq: 'FAQ',
+    cta: 'Get a quote',
+    nav: 'Main navigation',
+    openCart: (n: number) => `Open cart${n > 0 ? ` (${n} items)` : ''}`,
+    toggleMenu: 'Toggle menu',
+    langLabel: 'Language',
+  },
+} as const;
+
+function LangToggle() {
+  const { lang, setLang } = useLang();
+  const t = L[lang];
+  const opt = (l: Lang, label: string) => (
+    <button
+      type="button"
+      onClick={() => setLang(l)}
+      aria-pressed={lang === l}
+      className={`px-2 py-1 text-xs font-bold rounded-full transition-colors ${
+        lang === l
+          ? 'bg-orange-500 text-white'
+          : 'text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200'
+      }`}
+    >
+      {label}
+    </button>
+  );
+  return (
+    <div
+      className="flex items-center gap-0.5 p-1 rounded-full bg-stone-100 dark:bg-stone-800"
+      role="group"
+      aria-label={t.langLabel}
+    >
+      {opt('pt', 'PT')}
+      {opt('en', 'EN')}
+    </div>
+  );
+}
+
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { count, openCart } = useCart();
+  const { lang } = useLang();
+  const t = L[lang];
 
   // Prevent scrolling when mobile menu is open
   useEffect(() => {
@@ -61,31 +120,32 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className={`nav__links ${mobileMenuOpen ? 'nav__links--open' : ''}`} aria-label="Navegação principal">
-          <Link href="/#catalogo"     onClick={handleSmoothScroll}>Catálogo</Link>
-          <Link href="/#como-funciona" onClick={handleSmoothScroll}>Como funciona</Link>
-          <Link href="/#orcamento"   onClick={handleSmoothScroll}>Orçamento</Link>
-          <Link href="/#comunidade"  onClick={handleSmoothScroll}>Ficheiros STL</Link>
-          <Link href="/#faq"         onClick={handleSmoothScroll}>FAQ</Link>
-          
+        <nav className={`nav__links ${mobileMenuOpen ? 'nav__links--open' : ''}`} aria-label={t.nav}>
+          <Link href="/#catalogo"     onClick={handleSmoothScroll}>{t.catalog}</Link>
+          <Link href="/#como-funciona" onClick={handleSmoothScroll}>{t.how}</Link>
+          <Link href="/#orcamento"   onClick={handleSmoothScroll}>{t.quote}</Link>
+          <Link href="/#comunidade"  onClick={handleSmoothScroll}>{t.stl}</Link>
+          <Link href="/#faq"         onClick={handleSmoothScroll}>{t.faq}</Link>
+
           <Link
             href="/#orcamento"
             className="btn btn--sm btn--primary nav__mobile-cta"
             onClick={handleSmoothScroll}
           >
-            Fazer orçamento
+            {t.cta}
           </Link>
         </nav>
 
         {/* Right-side actions */}
         <div className="nav__actions" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <LangToggle />
         <ThemeToggle />
         {/* Cart button */}
         <button
           type="button"
           className="nav__cart"
           onClick={openCart}
-          aria-label={`Abrir carrinho${count > 0 ? ` (${count} itens)` : ''}`}
+          aria-label={t.openCart(count)}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <circle cx="9" cy="21" r="1" />
@@ -100,14 +160,15 @@ export default function Header() {
           className="btn btn--sm btn--primary nav__desktop-cta"
           onClick={handleSmoothScroll}
         >
-          Fazer orçamento
+          {t.cta}
         </Link>
 
         {/* Mobile Menu Toggle */}
-        <button 
+        <button
           className={`nav__toggle ${mobileMenuOpen ? 'nav__toggle--open' : ''}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Alternar menu"
+          aria-label={t.toggleMenu}
+          aria-expanded={mobileMenuOpen}
         >
           <span className="nav__toggle-line"></span>
           <span className="nav__toggle-line"></span>
@@ -115,9 +176,9 @@ export default function Header() {
         </button>
         </div>
       </div>
-      
+
       {/* Overlay for mobile menu */}
-      <div 
+      <div
         className={`nav__overlay ${mobileMenuOpen ? 'nav__overlay--open' : ''}`}
         onClick={() => setMobileMenuOpen(false)}
         aria-hidden="true"

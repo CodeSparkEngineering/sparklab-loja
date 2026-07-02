@@ -4,6 +4,7 @@ import "./globals.css";
 import ScrollFX from "@/components/ScrollFX";
 import BackgroundScrollVideo from "@/components/BackgroundScrollVideo";
 import { CartProvider } from "@/context/CartContext";
+import { LanguageProvider } from "@/i18n/LanguageContext";
 import CartDrawer from "@/components/CartDrawer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE_URL, SITE_DESC } from "@/data/site";
@@ -92,6 +93,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <LanguageProvider>
           <CartProvider>
             <BackgroundScrollVideo src="/videos/hero.mp4" />
             <div className="scroll-progress" aria-hidden="true" />
@@ -103,6 +105,7 @@ export default function RootLayout({
             {children}
             <CartDrawer />
           </CartProvider>
+          </LanguageProvider>
         </ThemeProvider>
         <Analytics />
       </body>

@@ -1,38 +1,83 @@
+'use client';
+
 import Image from 'next/image';
+import { useLang } from '@/i18n/LanguageContext';
+
+const L = {
+  pt: {
+    eyebrow: 'o nosso toque',
+    cards: [
+      {
+        img: '/images/diferenciais-filamento.jpg',
+        alt: 'Filamento dourado e extrusora Bambu Lab',
+        title: 'O padrão de ouro Bambu Lab',
+        text: 'Trabalhamos exclusivamente com as máquinas P1S. Cada filamento é escolhido a dedo para que a tua peça tenha resistência e aquele acabamento perfeito.',
+      },
+      {
+        img: '/images/diferenciais-envio.jpg',
+        alt: 'Peças impressas em 3D embaladas à mão numa caixa',
+        title: 'Enviamos de nós para ti',
+        text: 'Embalagem segura e cuidada. Despachamos via CTT registado, com seguimento, para que chegue impecável a qualquer ponto do país.',
+      },
+      {
+        img: '/images/diferenciais-acabamento.jpg',
+        alt: 'Peça impressa em 3D lixada e pintada à mão numa bancada de acabamento',
+        title: 'Não é só "Carregar no Botão"',
+        text: 'Lixamos, pintamos e montamos se precisares. Não deixamos pontas soltas. A tua peça chega-te pronta para exibir ou usar, com todo o mimo.',
+      },
+    ],
+  },
+  en: {
+    eyebrow: 'our touch',
+    cards: [
+      {
+        img: '/images/diferenciais-filamento.jpg',
+        alt: 'Golden filament and Bambu Lab extruder',
+        title: 'The Bambu Lab gold standard',
+        text: 'We work exclusively with P1S machines. Every filament is hand-picked so your piece gets strength and that flawless finish.',
+      },
+      {
+        img: '/images/diferenciais-envio.jpg',
+        alt: '3D printed pieces hand-packed in a box',
+        title: 'Shipped from us to you',
+        text: 'Careful, secure packaging. We dispatch via registered CTT mail, with tracking, so it arrives spotless anywhere in the country.',
+      },
+      {
+        img: '/images/diferenciais-acabamento.jpg',
+        alt: '3D printed piece sanded and hand-painted on a finishing bench',
+        title: 'Not just "pressing a button"',
+        text: "We sand, paint and assemble if you need it. No loose ends. Your piece arrives ready to display or use, made with care.",
+      },
+    ],
+  },
+} as const;
 
 export default function Diferenciais() {
+  const { lang } = useLang();
+  const t = L[lang];
+
   return (
     <section className="section" id="diferenciais">
       <div className="container">
         <div className="section__head reveal">
-          <span className="eyebrow--hand" style={{ color: 'var(--blue)' }}>o nosso toque</span>
-          <h2 className="text-3xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 tracking-tight">O cuidado artesanal que as <span className="text-orange-600">máquinas</span> não têm.</h2>
+          <span className="eyebrow--hand" style={{ color: 'var(--blue)' }}>{t.eyebrow}</span>
+          {lang === 'pt' ? (
+            <h2 className="text-3xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 tracking-tight">O cuidado artesanal que as <span className="text-orange-600">máquinas</span> não têm.</h2>
+          ) : (
+            <h2 className="text-3xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 tracking-tight">The handcrafted care <span className="text-orange-600">machines</span> don't have.</h2>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <article className="card reveal p-8 flex flex-col gap-4">
-            <div className="relative w-full h-44 rounded-2xl overflow-hidden shadow-sm">
-              <Image src="/images/diferenciais-filamento.jpg" alt="Filamento dourado e extrusora Bambu Lab" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-            </div>
-            <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100">O padrão de ouro Bambu Lab</h3>
-            <p className="text-stone-600 dark:text-stone-400 leading-relaxed">Trabalhamos exclusivamente com as máquinas P1S. Cada filamento é escolhido a dedo para que a tua peça tenha resistência e aquele acabamento perfeito.</p>
-          </article>
-
-          <article className="card reveal p-8 flex flex-col gap-4" style={{ transitionDelay: '0.1s' }}>
-            <div className="relative w-full h-44 rounded-2xl overflow-hidden shadow-sm">
-              <Image src="/images/diferenciais-envio.jpg" alt="Peças impressas em 3D embaladas à mão numa caixa" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-            </div>
-            <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100">Enviamos de nós para ti</h3>
-            <p className="text-stone-600 dark:text-stone-400 leading-relaxed">Embalagem segura e cuidada. Despachamos via CTT registado, com seguimento, para que chegue impecável a qualquer ponto do país.</p>
-          </article>
-
-          <article className="card reveal p-8 flex flex-col gap-4" style={{ transitionDelay: '0.2s' }}>
-            <div className="relative w-full h-44 rounded-2xl overflow-hidden shadow-sm">
-              <Image src="/images/diferenciais-acabamento.jpg" alt="Peça impressa em 3D lixada e pintada à mão numa bancada de acabamento" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-            </div>
-            <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100">Não é só "Carregar no Botão"</h3>
-            <p className="text-stone-600 dark:text-stone-400 leading-relaxed">Lixamos, pintamos e montamos se precisares. Não deixamos pontas soltas. A tua peça chega-te pronta para exibir ou usar, com todo o mimo.</p>
-          </article>
+          {t.cards.map((card, i) => (
+            <article key={card.title} className="card reveal p-8 flex flex-col gap-4" style={i > 0 ? { transitionDelay: `${i * 0.1}s` } : undefined}>
+              <div className="relative w-full h-44 rounded-2xl overflow-hidden shadow-sm">
+                <Image src={card.img} alt={card.alt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+              </div>
+              <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100">{card.title}</h3>
+              <p className="text-stone-600 dark:text-stone-400 leading-relaxed">{card.text}</p>
+            </article>
+          ))}
         </div>
       </div>
     </section>

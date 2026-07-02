@@ -1,11 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getProductById, formatEUR } from '@/data/products';
+import { getProductById } from '@/data/products';
 import { SITE_URL } from '@/data/site';
-import ProductGallery from '@/components/ProductGallery';
-import AddToCartForm from '@/components/AddToCartForm';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import ProductPageContent from '@/components/ProductPageContent';
 
 export async function generateMetadata({
   params,
@@ -91,91 +88,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema).replace(/</g, '\\u003c') }}
       />
-      <div className="container max-w-6xl mx-auto px-4">
-        {/* Breadcrumb / Back button */}
-        <Link 
-          href="/#catalogo" 
-          className="inline-flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors mb-8"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Voltar ao Catálogo
-        </Link>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
-          {/* Left Column: Image Gallery */}
-          <div>
-            <ProductGallery images={product.images || []} alt={product.name} />
-          </div>
-
-          {/* Right Column: Product Details */}
-          <div className="flex flex-col">
-            <div className="flex items-center gap-3 mb-4">
-              <span className={`eyebrow eyebrow--${product.tone} !mb-0`}>
-                <span className={`dot dot--${product.tone}`}></span>
-                {product.tag}
-              </span>
-            </div>
-            
-            <h1 className="h2 mb-4">{product.name}</h1>
-            <p className="text-3xl font-medium text-stone-900 dark:text-stone-100 mb-5">
-              {formatEUR(product.price)}
-            </p>
-
-            {/* Selos informativos */}
-            <div className="flex flex-wrap gap-2 mb-7">
-              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-600 dark:text-zinc-300 bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-white/10 rounded-full px-3 py-1.5">🇵🇹 Feito em Portugal</span>
-              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-600 dark:text-zinc-300 bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-white/10 rounded-full px-3 py-1.5">📦 Envio CTT registado</span>
-              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-700/50 rounded-full px-3 py-1.5">🏷️ Desconto de Atacado (10+ un.)</span>
-              {product.customizations && product.customizations.length > 0 ? (
-                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-600 dark:text-orange-300 bg-orange-100 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/25 rounded-full px-3 py-1.5">🛠️ Personalizável</span>
-              ) : (
-                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-600 dark:text-zinc-300 bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-white/10 rounded-full px-3 py-1.5">🧾 Feito por encomenda</span>
-              )}
-            </div>
-
-            <div className="prose prose-lg text-stone-600 dark:text-zinc-400 mb-8">
-              <p>{product.desc}</p>
-            </div>
-
-            {/* Specifications (Example/Mock) */}
-            <div className="bg-stone-50 dark:bg-white/5 rounded-2xl p-6 border border-stone-200 dark:border-white/10 mb-8">
-              <h3 className="text-lg font-medium text-stone-900 dark:text-stone-100 mb-4">Especificações</h3>
-              <ul className="space-y-3 text-sm text-stone-600 dark:text-zinc-400">
-                <div className="flex items-center gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-stone-300 dark:bg-zinc-600" />
-                  <span className="text-stone-800 dark:text-stone-200">PLA Premium (Bambu Lab)</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-stone-300 dark:bg-zinc-600" />
-                  <span className="text-stone-800 dark:text-stone-200">0.16 mm - 0.20 mm</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-stone-300 dark:bg-zinc-600" />
-                  <span className="text-stone-800 dark:text-stone-200">Padrão Texturizado PEI</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-stone-300 dark:bg-zinc-600" />
-                  <span className="text-stone-800 dark:text-stone-200">Bambu Lab P1S</span>
-                </div>
-              </ul>
-            </div>
-
-            {/* Produção & entrega — honesto, sem prazos garantidos */}
-            <div className="bg-stone-50 dark:bg-white/5 rounded-2xl p-6 border border-stone-200 dark:border-white/10 mb-8">
-              <h3 className="text-lg font-medium text-stone-900 dark:text-stone-100 mb-4">Produção &amp; entrega</h3>
-              <ul className="space-y-3 text-sm text-stone-600 dark:text-zinc-400">
-                <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Impresso por nós, sob encomenda, na Bambu Lab P1S.</li>
-                <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Embalagem segura e envio via CTT registado para todo o Portugal, com seguimento.</li>
-                <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Envio grátis em encomendas a partir de 40€.</li>
-                <li className="flex gap-2.5"><span className="text-amber-500 mt-0.5">•</span> <strong>Descontos exclusivos</strong> para compras no atacado (a partir de 10 unidades). Entre em contato!</li>
-                <li className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> Dúvidas? Confirmamos prazo e detalhes no WhatsApp.</li>
-              </ul>
-            </div>
-
-            <AddToCartForm product={product} />
-          </div>
-        </div>
-      </div>
+      <ProductPageContent product={product} />
     </main>
   );
 }

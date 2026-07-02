@@ -5,10 +5,32 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PRODUCTS, PRODUCT_TAGS, formatEUR } from '@/data/products';
 import { useCart } from '@/context/CartContext';
+import { useLang, pName, pDesc, tagLabel, type Lang } from '@/i18n/LanguageContext';
+
+const L = {
+  pt: {
+    eyebrow: 'a nossa coleção',
+    prev: 'Ver anteriores',
+    next: 'Ver mais',
+    want: 'Eu quero!',
+    customize: 'Personalizar',
+    descText: 'Descobre os nossos designs mais adorados. Escolhe as tuas cores favoritas ou desafia-nos a criar algo totalmente à tua medida.',
+  },
+  en: {
+    eyebrow: 'our collection',
+    prev: 'See previous',
+    next: 'See more',
+    want: 'I want it!',
+    customize: 'Customize',
+    descText: 'Discover our most loved designs. Pick your favorite colors or challenge us to create something entirely your own.',
+  },
+} as const;
 
 export default function Catalogo() {
   const [activeTag, setActiveTag] = useState('Todos');
   const { add } = useCart();
+  const { lang } = useLang();
+  const t = L[lang];
 
   const filtered =
     activeTag === 'Todos'
@@ -20,12 +42,15 @@ export default function Catalogo() {
       <div className="container">
         <div className="section__head section__head--row reveal">
           <div>
-            <span className="eyebrow--hand" style={{ color: 'var(--olive)' }}>a nossa coleção</span>
-            <h2 className="h2">Peças incríveis,<br />prontas para <span className="hand-underline">ti</span>.</h2>
+            <span className="eyebrow--hand" style={{ color: 'var(--olive)' }}>{t.eyebrow}</span>
+            {lang === 'pt' ? (
+              <h2 className="h2">Peças incríveis,<br />prontas para <span className="hand-underline">ti</span>.</h2>
+            ) : (
+              <h2 className="h2">Amazing pieces,<br />ready for <span className="hand-underline">you</span>.</h2>
+            )}
           </div>
           <p className="section__desc">
-            Descobre os nossos designs mais adorados. Escolhe as tuas
-            cores favoritas ou desafia-nos a criar algo totalmente à tua medida.
+            {t.descText}
           </p>
         </div>
 
@@ -37,26 +62,26 @@ export default function Catalogo() {
               className={`cat-pill ${activeTag === tag ? 'cat-pill--active' : ''}`}
               onClick={() => setActiveTag(tag)}
             >
-              {tag}
+              {tagLabel(tag, lang)}
             </button>
           ))}
         </div>
 
         {activeTag === 'Todos' ? (
           <div className="flex flex-col gap-10 md:gap-16 mt-6 md:mt-8">
-            {PRODUCT_TAGS.filter((t) => t !== 'Todos').map((tag) => {
+            {PRODUCT_TAGS.filter((t2) => t2 !== 'Todos').map((tag) => {
               const groupProducts = PRODUCTS.filter((p) => p.tag === tag);
               if (groupProducts.length === 0) return null;
 
               return (
                 <div key={tag} className="reveal">
                   <div className="flex items-center gap-4 mb-4 md:mb-6">
-                    <h3 className="text-lg md:text-xl font-bold uppercase tracking-wider text-stone-800">{tag}</h3>
+                    <h3 className="text-lg md:text-xl font-bold uppercase tracking-wider text-stone-800">{tagLabel(tag, lang)}</h3>
                     <div className="h-[1px] flex-1 bg-stone-200" />
                   </div>
-                  <CarouselRow>
+                  <CarouselRow prevLabel={t.prev} nextLabel={t.next}>
                     {groupProducts.map((p) => (
-                      <ProductCard key={p.id} p={p} add={add} />
+                      <ProductCard key={p.id} p={p} add={add} lang={lang} want={t.want} customize={t.customize} />
                     ))}
                   </CarouselRow>
                 </div>
@@ -64,9 +89,9 @@ export default function Catalogo() {
             })}
           </div>
         ) : (
-          <CarouselRow className="mt-8">
+          <CarouselRow className="mt-8" prevLabel={t.prev} nextLabel={t.next}>
             {filtered.map((p) => (
-              <ProductCard key={p.id} p={p} add={add} />
+              <ProductCard key={p.id} p={p} add={add} lang={lang} want={t.want} customize={t.customize} />
             ))}
           </CarouselRow>
         )}
@@ -78,9 +103,13 @@ export default function Catalogo() {
 function CarouselRow({
   children,
   className = '',
+  prevLabel,
+  nextLabel,
 }: {
   children: React.ReactNode;
   className?: string;
+  prevLabel: string;
+  nextLabel: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -95,7 +124,7 @@ function CarouselRow({
       <button
         type="button"
         className="cat-row__nav cat-row__nav--prev"
-        aria-label="Ver anteriores"
+        aria-label={prevLabel}
         onClick={() => scrollByDir(-1)}
       >
         ‹
@@ -106,7 +135,7 @@ function CarouselRow({
       <button
         type="button"
         className="cat-row__nav cat-row__nav--next"
-        aria-label="Ver mais"
+        aria-label={nextLabel}
         onClick={() => scrollByDir(1)}
       >
         ›
@@ -115,7 +144,20 @@ function CarouselRow({
   );
 }
 
-function ProductCard({ p, add }: { p: typeof PRODUCTS[0]; add: (id: string) => void }) {
+function ProductCard({
+  p,
+  add,
+  lang,
+  want,
+  customize,
+}: {
+  p: typeof PRODUCTS[0];
+  add: (id: string) => void;
+  lang: Lang;
+  want: string;
+  customize: string;
+}) {
+  const name = pName(p, lang);
   return (
     <article className="cat-card group">
       <Link href={`/produto/${p.id}`} className="block">
@@ -123,7 +165,7 @@ function ProductCard({ p, add }: { p: typeof PRODUCTS[0]; add: (id: string) => v
           {p.images?.[0] ? (
             <Image
               src={p.images[0]}
-              alt={p.name}
+              alt={name}
               fill
               className="object-contain transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.08] bg-black/40"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
@@ -131,15 +173,15 @@ function ProductCard({ p, add }: { p: typeof PRODUCTS[0]; add: (id: string) => v
           ) : (
             <span className="cat-card__icon">{p.icon}</span>
           )}
-          <span className="cat-card__tag z-10">{p.tag}</span>
+          <span className="cat-card__tag z-10">{tagLabel(p.tag, lang)}</span>
         </div>
       </Link>
 
       <div className="cat-card__body">
         <Link href={`/produto/${p.id}`} className="hover:text-orange-500 transition-colors">
-          <h3 className="cat-card__name">{p.name}</h3>
+          <h3 className="cat-card__name">{name}</h3>
         </Link>
-        <p className="cat-card__desc">{p.desc}</p>
+        <p className="cat-card__desc">{pDesc(p, lang)}</p>
 
         <div className="cat-card__foot">
           <span className="cat-card__price">{formatEUR(p.price)}</span>
@@ -147,7 +189,7 @@ function ProductCard({ p, add }: { p: typeof PRODUCTS[0]; add: (id: string) => v
             // Produto personalizável: leva à página do produto para escolher
             // nome/cor — adicionar direto criava encomendas sem personalização.
             <Link href={`/produto/${p.id}`} className="btn btn--sm btn--primary">
-              Personalizar
+              {customize}
             </Link>
           ) : (
             <button
@@ -155,7 +197,7 @@ function ProductCard({ p, add }: { p: typeof PRODUCTS[0]; add: (id: string) => v
               className="btn btn--sm btn--primary"
               onClick={() => add(p.id)}
             >
-              Eu quero!
+              {want}
             </button>
           )}
         </div>

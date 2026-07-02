@@ -3,6 +3,38 @@
 import { useEffect, useRef, useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { formatEUR, type Product } from '@/data/products';
+import { useLang, pName, cLabel } from '@/i18n/LanguageContext';
+
+const L = {
+  pt: {
+    chooseColor: 'Escolhe uma cor…',
+    placeholder: (max?: number) => `Ex: O teu nome${max ? ` (máx. ${max} letras)` : ''}`,
+    errColor: 'Escolhe uma cor para continuar.',
+    errText: 'Preenche este campo para continuar.',
+    qty: 'Quantidade:',
+    qtyMinus: 'Diminuir quantidade',
+    qtyPlus: 'Aumentar quantidade',
+    add: 'Adicionar ao meu carrinho 🛒',
+    addedLong: '✓ Adicionado ao carrinho!',
+    addShort: 'Adicionar ao carrinho',
+    addedShort: '✓ Adicionado!',
+    srAdded: 'Produto adicionado ao carrinho.',
+  },
+  en: {
+    chooseColor: 'Pick a color…',
+    placeholder: (max?: number) => `E.g. your name${max ? ` (max ${max} letters)` : ''}`,
+    errColor: 'Pick a color to continue.',
+    errText: 'Fill in this field to continue.',
+    qty: 'Quantity:',
+    qtyMinus: 'Decrease quantity',
+    qtyPlus: 'Increase quantity',
+    add: 'Add to my cart 🛒',
+    addedLong: '✓ Added to cart!',
+    addShort: 'Add to cart',
+    addedShort: '✓ Added!',
+    srAdded: 'Product added to cart.',
+  },
+} as const;
 
 export default function AddToCartForm({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);
@@ -10,6 +42,8 @@ export default function AddToCartForm({ product }: { product: Product }) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [added, setAdded] = useState(false);
   const { add } = useCart();
+  const { lang } = useLang();
+  const t = L[lang];
 
   // Refs dos campos de personalização (para focar o primeiro com erro)
   // e do CTA principal (para mostrar a barra fixa quando ele sai do ecrã).
@@ -39,10 +73,7 @@ export default function AddToCartForm({ product }: { product: Product }) {
     if (missing.length > 0) {
       const next: Record<string, string> = {};
       for (const opt of missing) {
-        next[opt.id] =
-          opt.type === 'color'
-            ? 'Escolhe uma cor para continuar.'
-            : 'Preenche este campo para continuar.';
+        next[opt.id] = opt.type === 'color' ? t.errColor : t.errText;
       }
       setErrors(next);
       fieldRefs.current[missing[0].id]?.focus();
@@ -73,7 +104,7 @@ export default function AddToCartForm({ product }: { product: Product }) {
           {product.customizations.map(opt => (
             <div key={opt.id} className="flex flex-col gap-2">
               <label htmlFor={opt.id} className="text-sm text-stone-700 dark:text-zinc-300 font-semibold">
-                {opt.label}
+                {cLabel(opt, lang)}
                 {opt.required && <span className="text-orange-500" aria-hidden="true"> *</span>}
               </label>
               {opt.type === 'color' && opt.options ? (
@@ -87,7 +118,7 @@ export default function AddToCartForm({ product }: { product: Product }) {
                   value={customizations[opt.id] || ''}
                   onChange={(e) => handleCustomizationChange(opt.id, e.target.value)}
                 >
-                  <option value="" disabled>Escolhe uma cor…</option>
+                  <option value="" disabled>{t.chooseColor}</option>
                   {opt.options.map(color => (
                     <option key={color} value={color}>{color}</option>
                   ))}
@@ -102,7 +133,7 @@ export default function AddToCartForm({ product }: { product: Product }) {
                   aria-invalid={errors[opt.id] ? true : undefined}
                   aria-describedby={errors[opt.id] ? `${opt.id}-erro` : undefined}
                   className={`bg-white dark:bg-stone-900 border rounded-lg px-4 py-3 text-stone-800 dark:text-stone-200 focus:outline-none focus:ring-1 placeholder-stone-400 dark:placeholder-stone-500 ${errors[opt.id] ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : 'border-stone-200 dark:border-stone-800 focus:border-orange-400 dark:focus:border-orange-500 focus:ring-orange-400 dark:focus:ring-orange-500'}`}
-                  placeholder={`Ex: O teu nome (máx. ${opt.maxLength} letras)`}
+                  placeholder={t.placeholder(opt.maxLength)}
                   value={customizations[opt.id] || ''}
                   onChange={(e) => handleCustomizationChange(opt.id, e.target.value)}
                 />
@@ -118,11 +149,11 @@ export default function AddToCartForm({ product }: { product: Product }) {
       )}
 
       <div className="flex items-center gap-4">
-        <span className="text-sm uppercase tracking-widest text-stone-700 dark:text-zinc-300 font-semibold">Quantidade:</span>
+        <span className="text-sm uppercase tracking-widest text-stone-700 dark:text-zinc-300 font-semibold">{t.qty}</span>
         <div className="flex items-center border border-stone-200 dark:border-stone-800 rounded-full overflow-hidden bg-white dark:bg-stone-900 shadow-sm">
-          <button type="button" onClick={handleMinus} aria-label="Diminuir quantidade" className="px-4 py-1.5 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors text-xl font-medium w-12 text-center text-stone-800 dark:text-stone-200">-</button>
+          <button type="button" onClick={handleMinus} aria-label={t.qtyMinus} className="px-4 py-1.5 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors text-xl font-medium w-12 text-center text-stone-800 dark:text-stone-200">-</button>
           <span className="font-semibold text-lg w-8 text-center text-stone-800 dark:text-stone-200" aria-live="polite">{quantity}</span>
-          <button type="button" onClick={handlePlus} aria-label="Aumentar quantidade" className="px-4 py-1.5 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors text-xl font-medium w-12 text-center text-stone-800 dark:text-stone-200">+</button>
+          <button type="button" onClick={handlePlus} aria-label={t.qtyPlus} className="px-4 py-1.5 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors text-xl font-medium w-12 text-center text-stone-800 dark:text-stone-200">+</button>
         </div>
       </div>
 
@@ -132,11 +163,11 @@ export default function AddToCartForm({ product }: { product: Product }) {
         onClick={handleAdd}
         className={`btn w-full max-w-md mt-4 text-lg py-4 transition-colors ${added ? 'btn--added' : 'btn--primary'}`}
       >
-        {added ? '✓ Adicionado ao carrinho!' : 'Adicionar ao meu carrinho 🛒'}
+        {added ? t.addedLong : t.add}
       </button>
       {/* Anúncio para leitores de ecrã quando o produto é adicionado */}
       <span className="sr-only" aria-live="polite">
-        {added ? 'Produto adicionado ao carrinho.' : ''}
+        {added ? t.srAdded : ''}
       </span>
 
       {/* Barra fixa (mobile/tablet): aparece quando o CTA principal sai do
@@ -149,7 +180,7 @@ export default function AddToCartForm({ product }: { product: Product }) {
       >
         <div className="bg-white/95 dark:bg-stone-900/95 backdrop-blur border-t border-stone-200 dark:border-white/10 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] flex items-center gap-3">
           <div className="flex flex-col leading-tight min-w-0 shrink">
-            <span className="text-[11px] uppercase tracking-wider text-stone-500 dark:text-zinc-400 truncate">{product.name}</span>
+            <span className="text-[11px] uppercase tracking-wider text-stone-500 dark:text-zinc-400 truncate">{pName(product, lang)}</span>
             <span className="text-lg font-bold text-stone-900 dark:text-stone-100 whitespace-nowrap">{formatEUR(product.price)}</span>
           </div>
           <button
@@ -158,7 +189,7 @@ export default function AddToCartForm({ product }: { product: Product }) {
             tabIndex={ctaVisible ? -1 : 0}
             className={`btn flex-1 py-3 ${added ? 'btn--added' : 'btn--primary'}`}
           >
-            {added ? '✓ Adicionado!' : 'Adicionar ao carrinho'}
+            {added ? t.addedShort : t.addShort}
           </button>
         </div>
       </div>
