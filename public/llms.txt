@@ -1,0 +1,36 @@
+# SparkLab — Impressão 3D sob encomenda em Portugal
+
+> SparkLab is a small 3D-printing workshop based in Portugal. We sell 3D-printed
+> collectibles, keychains, mugs/can holders and custom made-to-order parts, and we
+> offer a custom 3D printing + modeling service. Everything is printed in-house on
+> Bambu Lab P1S printers and shipped anywhere in Portugal via registered CTT mail.
+> Site content is in Portuguese (pt-PT) with an English toggle.
+
+## Key facts
+
+- Website: https://www.sparklab3d.pt
+- Country / service area: Portugal (mainland and islands). We ship only within Portugal.
+- Language: Portuguese (pt-PT); English available via on-site toggle.
+- Founders: Israel Vieira (dev) and Pamela Falk (3D maker). Local production, no mass manufacturing.
+- Equipment: Bambu Lab P1S (enclosed chamber). Max single-print volume: 256 × 256 × 256 mm (larger pieces are printed in modular parts).
+- Materials: PLA, PETG, ABS, ASA, TPU, PC (official Bambu Lab filaments).
+- Catalog prices: roughly €3 (keychains) to €30 (collectible figures); mugs/can holders €15–20. Custom work is quoted individually.
+- Shipping: registered CTT mail with tracking. Free shipping on orders over €40. Wholesale pricing from 10+ pieces.
+- Payments: Visa and Mastercard via Stripe (secure checkout, card data never touches our servers).
+- Custom quotes: send an STL/OBJ/3MF/STEP file (or just an idea — we also do 3D modeling) via the quote form; reply within ~2 business hours on WhatsApp.
+- STL files of our original designs can be purchased for personal use (delivered via WhatsApp).
+- Contact: WhatsApp +351 916 853 802 · https://wa.me/351916853802
+- Instagram: https://www.instagram.com/sparklabs.3d/
+
+## How ordering works
+
+1. Send your idea or 3D file (STL, OBJ, 3MF, STEP) — we assess print feasibility.
+2. We fine-tune color, size, material and finish together over WhatsApp, with a clear quote.
+3. We print on the Bambu Lab P1S, review, pack and ship via registered CTT mail.
+
+## Pages
+
+- [Home / catalog](https://www.sparklab3d.pt/): products, how it works, quote form, FAQ
+- [Quote form](https://www.sparklab3d.pt/#orcamento): upload a 3D file and get a quote
+- [FAQ](https://www.sparklab3d.pt/#faq): materials, deadlines, max size, payment, finishing, wholesale
+- [Terms](https://www.sparklab3d.pt/termos) · [Privacy](https://www.sparklab3d.pt/privacidade)

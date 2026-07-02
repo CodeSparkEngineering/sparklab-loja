@@ -8,6 +8,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
+    // Imagens do produto no sitemap → Google Imagens indexa o catálogo.
+    images: (p.images ?? []).map((img) => `${SITE_URL}${img}`),
   }));
 
   return [

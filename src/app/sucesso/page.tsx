@@ -1,9 +1,16 @@
+import type { Metadata } from 'next';
 import Stripe from 'stripe';
 import ClearCartOnMount from '@/components/ClearCartOnMount';
 import SucessoCard from './SucessoCard';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+
+// Página pós-checkout: nunca deve aparecer nos resultados de pesquisa.
+export const metadata: Metadata = {
+  title: 'Encomenda confirmada',
+  robots: { index: false, follow: false },
+};
 
 type SearchParams = Promise<{ session_id?: string }>;
 

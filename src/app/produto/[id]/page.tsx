@@ -46,6 +46,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
     "@context": "https://schema.org",
     "@type": "Product",
     "name": product.name,
+    "sku": product.id,
     "image": product.images ? product.images.map((img) => `${SITE_URL}${img}`) : [],
     "description": product.desc,
     "brand": {
@@ -53,11 +54,14 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
       "name": "SparkLab"
     },
     "category": product.tag,
+    "countryOfOrigin": { "@type": "Country", "name": "PT" },
+    "material": "PLA",
     "offers": {
       "@type": "Offer",
       "priceCurrency": "EUR",
       "price": product.price,
       "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
       "url": `${SITE_URL}/produto/${product.id}`,
       "seller": {
         "@type": "Organization",
@@ -82,11 +86,26 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
     }
   };
 
+  // Breadcrumb estruturado: ajuda o Google a mostrar o caminho nos resultados.
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Início", "item": `${SITE_URL}/` },
+      { "@type": "ListItem", "position": 2, "name": "Catálogo", "item": `${SITE_URL}/#catalogo` },
+      { "@type": "ListItem", "position": 3, "name": product.name, "item": `${SITE_URL}/produto/${product.id}` }
+    ]
+  };
+
   return (
     <main className="min-h-screen pt-32 pb-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema).replace(/</g, '\\u003c') }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }}
       />
       <ProductPageContent product={product} />
     </main>

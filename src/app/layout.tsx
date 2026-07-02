@@ -25,14 +25,33 @@ const caveat = Caveat({
 
 const schemaMarkup = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": ["LocalBusiness", "OnlineStore"],
+  "@id": `${SITE_URL}/#business`,
   "name": "SparkLab",
   "alternateName": "SparkLab 3D",
   "description": SITE_DESC,
+  "slogan": "Impressão 3D sob encomenda, com acabamento que impressiona.",
   "url": SITE_URL,
   "logo": `${SITE_URL}/logo.jpg`,
   "image": `${SITE_URL}/logo.jpg`,
+  "telephone": "+351916853802",
   "priceRange": "€-€€",
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Visa, Mastercard (Stripe)",
+  "sameAs": [
+    "https://www.instagram.com/sparklabs.3d/"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "telephone": "+351916853802",
+    "availableLanguage": ["Portuguese", "English"],
+    "url": "https://wa.me/351916853802"
+  },
+  "founder": [
+    { "@type": "Person", "name": "Israel Vieira" },
+    { "@type": "Person", "name": "Pamela Falk" }
+  ],
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "PT",
@@ -41,7 +60,24 @@ const schemaMarkup = {
   "areaServed": {
     "@type": "Country",
     "name": "Portugal"
-  }
+  },
+  "knowsAbout": [
+    "Impressão 3D FDM",
+    "Modelação 3D",
+    "PLA, PETG, ABS, ASA, TPU, PC",
+    "Bambu Lab P1S",
+    "Peças personalizadas sob encomenda"
+  ]
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  "name": "SparkLab",
+  "url": SITE_URL,
+  "inLanguage": "pt-PT",
+  "publisher": { "@id": `${SITE_URL}/#business` }
 };
 
 export const metadata: Metadata = {
@@ -101,6 +137,10 @@ export default function RootLayout({
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup).replace(/</g, '\\u003c') }}
+            />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema).replace(/</g, '\\u003c') }}
             />
             {children}
             <CartDrawer />

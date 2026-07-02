@@ -1,5 +1,11 @@
+import type { Metadata } from 'next';
 import { CardStack, type CardStackItem } from '@/components/ui/card-stack';
 import { PRODUCTS } from '@/data/products';
+
+// Página interna de pré-visualização de componentes — fora dos motores de busca.
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 // Usa os produtos do catálogo que têm imagem.
 const items: CardStackItem[] = PRODUCTS.filter((p) => p.images?.[0]).map((p) => ({
