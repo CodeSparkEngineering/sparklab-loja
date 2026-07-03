@@ -152,23 +152,23 @@ export default function PrivacidadeContent() {
   const t = L[lang];
 
   return (
-    <main className="min-h-screen pt-32 pb-20">
+    <main className="min-h-screen pt-32 pb-20 bg-[var(--bg)]">
       <div className="container max-w-3xl mx-auto px-4">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
           {t.back}
         </Link>
 
-        <h1 className="h2 mb-2 text-stone-900">{t.title}</h1>
-        <p className="text-sm text-stone-600 mb-10">{t.updated}</p>
+        <h1 className="h2 mb-2 text-stone-900 dark:text-stone-100">{t.title}</h1>
+        <p className="text-sm text-stone-600 dark:text-stone-400 mb-10">{t.updated}</p>
 
-        <div className="prose max-w-none text-stone-600 leading-relaxed space-y-6">
+        <div className="prose max-w-none text-stone-600 dark:text-stone-300 leading-relaxed space-y-6">
           <p>{t.intro}</p>
 
-          <h2 className="text-xl font-semibold text-stone-900 mt-8">{t.s1Title}</h2>
+          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s1Title}</h2>
           <ul className="list-disc pl-6 space-y-1">
             <li>{t.d1}</li>
             <li>{t.d2}</li>
@@ -176,10 +176,10 @@ export default function PrivacidadeContent() {
             <li>{t.d4}</li>
           </ul>
 
-          <h2 className="text-xl font-semibold text-stone-900 mt-8">{t.s2Title}</h2>
+          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s2Title}</h2>
           <p>{t.s2}</p>
 
-          <h2 className="text-xl font-semibold text-stone-900 mt-8">{t.s3Title}</h2>
+          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s3Title}</h2>
           <p>{t.s3Intro}</p>
           <ul className="list-disc pl-6 space-y-1">
             <li>{t.p1}</li>
@@ -187,23 +187,23 @@ export default function PrivacidadeContent() {
           </ul>
           <p>{t.s3Outro}</p>
 
-          <h2 className="text-xl font-semibold text-stone-900 mt-8">{t.s4Title}</h2>
+          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s4Title}</h2>
           <p>{t.s4}</p>
 
-          <h2 className="text-xl font-semibold text-stone-900 mt-8">{t.s5Title}</h2>
+          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s5Title}</h2>
           <p>
             {t.contactText}{' '}
-            <a href="https://wa.me/351916853802" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:underline">
+            <a href="https://wa.me/351916853802" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
               {t.contactLink}
             </a>.
           </p>
 
-          <p className="text-sm text-zinc-500 mt-10 border-t border-white/10 pt-6">
+          <p className="text-sm text-stone-500 dark:text-zinc-500 mt-10 border-t border-stone-200 dark:border-white/10 pt-6">
             {t.disclaimer}
           </p>
 
           {lang === 'en' && (
-            <p className="text-sm text-zinc-500 italic">
+            <p className="text-sm text-stone-500 dark:text-zinc-500 italic">
               This translation is provided for convenience. In case of any discrepancy, the
               Portuguese version prevails.
             </p>
