@@ -6,6 +6,7 @@ import BackgroundScrollVideo from "@/components/BackgroundScrollVideo";
 import { CartProvider } from "@/context/CartContext";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import CartDrawer from "@/components/CartDrawer";
+import BackToTop from "@/components/BackToTop";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE_URL, SITE_DESC } from "@/data/site";
 import { Analytics } from "@vercel/analytics/next";
@@ -144,6 +145,7 @@ export default function RootLayout({
             />
             {children}
             <CartDrawer />
+            <BackToTop />
           </CartProvider>
           </LanguageProvider>
         </ThemeProvider>
