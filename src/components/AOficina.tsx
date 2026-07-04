@@ -9,7 +9,7 @@ const L = {
     roleIsrael: 'Co-fundador · Dev (certificado Google)',
     altPamela: 'Pamela Falk, co-fundadora da SparkLab',
     rolePamela: 'Co-fundadora · 3D Maker',
-    caption: 'Os fundadores da SparkLab — produção local, em Portugal',
+    caption: 'Produção local e feita à mão, aqui em Portugal',
     title: 'Por trás das máquinas.',
     p1: 'Esquece as fábricas gigantes e os produtos feitos em massa na China. A SparkLab é, na sua essência, uma pequena oficina sediada em Portugal, nascida da paixão pura pela impressão 3D e pela criação.',
     p2: 'Cada peça que sai daqui não é apenas "impressa". É desenhada, preparada camada a camada com as configurações ideais, impressa na nossa Bambu Lab P1S, limpa, embalada à mão e levada aos correios com todo o cuidado.',
@@ -26,7 +26,7 @@ const L = {
     roleIsrael: 'Co-founder · Dev (Google certified)',
     altPamela: 'Pamela Falk, SparkLab co-founder',
     rolePamela: 'Co-founder · 3D Maker',
-    caption: "SparkLab's founders — local production, in Portugal",
+    caption: 'Local production, handmade here in Portugal',
     title: 'Behind the machines.',
     p1: "Forget giant factories and mass-produced goods from China. SparkLab is, at its heart, a small workshop based in Portugal, born from a pure passion for 3D printing and making things.",
     p2: `Every piece that leaves here isn't just "printed". It's designed, prepared layer by layer with the ideal settings, printed on our Bambu Lab P1S, cleaned, hand-packed and taken to the post office with the utmost care.`,
@@ -49,27 +49,17 @@ export default function AOficina() {
       <div className="container relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
 
-          {/* Coluna das Fotos — os dois fundadores */}
+          {/* Coluna da Foto — Israel (a foto da Pamela foi removida "pra já") */}
           <div className="w-full lg:w-1/2">
-            <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-md mx-auto lg:max-w-none">
+            <div className="max-w-xs mx-auto">
               {/* Israel */}
               <figure className="bg-white dark:bg-[#1a1816] p-3 pb-4 shadow-2xl rounded-sm border border-stone-100 dark:border-white/5 rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
                 <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-stone-200 dark:bg-stone-800">
-                  <Image src="/images/fundador-israel.jpg" alt={t.altIsrael} fill className="object-cover" sizes="(max-width: 768px) 50vw, 25vw" />
+                  <Image src="/images/fundador-israel.jpg" alt={t.altIsrael} fill className="object-cover" sizes="(max-width: 768px) 60vw, 320px" />
                 </div>
                 <figcaption className="text-center mt-3">
                   <span className="block font-bold text-stone-900 dark:text-stone-100" style={{ fontFamily: 'var(--f-head)' }}>Israel Vieira</span>
                   <span className="block text-xs text-stone-500 dark:text-stone-400">{t.roleIsrael}</span>
-                </figcaption>
-              </figure>
-              {/* Pamela */}
-              <figure className="bg-white dark:bg-[#1a1816] p-3 pb-4 shadow-2xl rounded-sm border border-stone-100 dark:border-white/5 rotate-[2deg] hover:rotate-0 transition-transform duration-500">
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-stone-200 dark:bg-stone-800">
-                  <Image src="/images/fundador-pamela.jpg" alt={t.altPamela} fill className="object-cover" sizes="(max-width: 768px) 50vw, 25vw" />
-                </div>
-                <figcaption className="text-center mt-3">
-                  <span className="block font-bold text-stone-900 dark:text-stone-100" style={{ fontFamily: 'var(--f-head)' }}>Pamela Falk</span>
-                  <span className="block text-xs text-stone-500 dark:text-stone-400">{t.rolePamela}</span>
                 </figcaption>
               </figure>
             </div>
