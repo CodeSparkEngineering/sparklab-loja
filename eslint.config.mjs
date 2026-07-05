@@ -5,6 +5,14 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  // Scripts Node.js avulsos (CommonJS): permitem require() — não fazem parte
+  // do bundle da app, por isso a regra de import ESM não se aplica.
+  {
+    files: ["fetch-spool*.js"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
