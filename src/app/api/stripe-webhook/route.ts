@@ -62,7 +62,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ received: true });
     }
 
-    await sendOrderEmail(session);
+    // Um email para nós (aviso de encomenda) e outro para o cliente (obrigado).
+    // allSettled: se um falhar, o outro segue à mesma; a venda já aconteceu.
+    await Promise.allSettled([sendOrderEmail(session), sendCustomerEmail(session)]);
   } catch (err) {
     console.error('[stripe-webhook] erro ao processar encomenda:', err);
     // Devolve 200 na mesma: a venda já aconteceu, não queremos repetições infinitas.
@@ -100,34 +102,7 @@ async function sendOrderEmail(session: Stripe.Checkout.Session) {
     (session.collected_information?.shipping_details as ShipLike | undefined) ??
     null;
 
-  const rows = (session.line_items?.data ?? [])
-    .map((item) => {
-      const prod = item.price?.product;
-      const meta =
-        prod && typeof prod === 'object' && 'metadata' in prod ? prod.metadata ?? {} : {};
-      const productId = meta.product_id;
-      const product = productId ? getProductById(productId) : undefined;
-
-      const customs = Object.entries(meta)
-        .filter(([k]) => k !== 'product_id')
-        .map(([k, v]) => {
-          const label = product?.customizations?.find((o) => o.id === k)?.label || k;
-          return `<div style="color:#b45309"><strong>${esc(label)}:</strong> ${esc(String(v))}</div>`;
-        })
-        .join('');
-
-      return `
-        <tr>
-          <td style="padding:10px 0;border-bottom:1px solid #eee">
-            <strong>${esc(item.description ?? product?.name ?? 'Produto')}</strong> × ${item.quantity ?? 1}
-            ${customs ? `<div style="margin-top:4px;font-size:14px">${customs}</div>` : ''}
-          </td>
-          <td style="padding:10px 0;border-bottom:1px solid #eee;text-align:right;white-space:nowrap">
-            ${formatEUR((item.amount_total ?? 0) / 100)}
-          </td>
-        </tr>`;
-    })
-    .join('');
+  const rows = orderRowsHtml(session);
 
   const addr = ship?.address;
   const addrHtml = addr
@@ -181,6 +156,124 @@ async function sendOrderEmail(session: Stripe.Checkout.Session) {
   if (!res.ok) {
     const body = await res.text();
     console.error('[stripe-webhook] Resend falhou:', res.status, body);
+  }
+}
+
+// Linhas da encomenda (produto + personalização + subtotal) — partilhado pelos
+// dois emails (o de aviso ao vendedor e o de agradecimento ao cliente).
+function orderRowsHtml(session: Stripe.Checkout.Session): string {
+  return (session.line_items?.data ?? [])
+    .map((item) => {
+      const prod = item.price?.product;
+      const meta =
+        prod && typeof prod === 'object' && 'metadata' in prod ? prod.metadata ?? {} : {};
+      const productId = meta.product_id;
+      const product = productId ? getProductById(productId) : undefined;
+
+      const customs = Object.entries(meta)
+        .filter(([k]) => k !== 'product_id')
+        .map(([k, v]) => {
+          const label = product?.customizations?.find((o) => o.id === k)?.label || k;
+          return `<div style="color:#b45309"><strong>${esc(label)}:</strong> ${esc(String(v))}</div>`;
+        })
+        .join('');
+
+      return `
+        <tr>
+          <td style="padding:10px 0;border-bottom:1px solid #eee">
+            <strong>${esc(item.description ?? product?.name ?? 'Produto')}</strong> × ${item.quantity ?? 1}
+            ${customs ? `<div style="margin-top:4px;font-size:14px">${customs}</div>` : ''}
+          </td>
+          <td style="padding:10px 0;border-bottom:1px solid #eee;text-align:right;white-space:nowrap">
+            ${formatEUR((item.amount_total ?? 0) / 100)}
+          </td>
+        </tr>`;
+    })
+    .join('');
+}
+
+// Email de agradecimento AO CLIENTE (no idioma escolhido no site, via metadata).
+// Só precisa da RESEND_API_KEY e do email do cliente (independente do email de
+// aviso ao vendedor). Para boa entrega, verificar o domínio sparklab3d.pt no Resend.
+async function sendCustomerEmail(session: Stripe.Checkout.Session) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const to = session.customer_details?.email;
+  const from = process.env.ORDER_EMAIL_FROM || 'SparkLab <onboarding@resend.dev>';
+  if (!apiKey || !to) return;
+
+  const lang: 'pt' | 'en' = session.metadata?.lang === 'en' ? 'en' : 'pt';
+  const total = typeof session.amount_total === 'number' ? session.amount_total / 100 : 0;
+  const firstName = session.customer_details?.name?.trim().split(/\s+/)[0];
+  const rows = orderRowsHtml(session);
+  const wa = 'https://wa.me/351916853802';
+
+  const T = {
+    pt: {
+      subject: 'Obrigado pela tua encomenda! 🧡 — SparkLab',
+      hi: `Olá${firstName ? ' ' + esc(firstName) : ''}, obrigado! 🧡`,
+      intro: 'Recebemos a tua encomenda e o pagamento está confirmado. Aqui fica o resumo:',
+      totalLabel: 'Total pago',
+      nextTitle: 'O que acontece a seguir',
+      steps: [
+        'Começamos a produzir a(s) tua(s) peça(s) na nossa Bambu Lab P1S.',
+        'Avisamos-te no WhatsApp com o prazo e o número de seguimento.',
+        'Enviamos via CTT registado para a tua morada, com tracking.',
+      ],
+      waLine: 'Alguma dúvida sobre a tua encomenda?',
+      waBtn: 'Falar no WhatsApp',
+      foot: 'SparkLab · Impressão 3D sob encomenda, em Portugal',
+    },
+    en: {
+      subject: 'Thank you for your order! 🧡 — SparkLab',
+      hi: `Hi${firstName ? ' ' + esc(firstName) : ''}, thank you! 🧡`,
+      intro: 'We received your order and your payment is confirmed. Here is the summary:',
+      totalLabel: 'Total paid',
+      nextTitle: 'What happens next',
+      steps: [
+        'We start producing your piece(s) on our Bambu Lab P1S.',
+        'We keep you posted on WhatsApp with the timeline and tracking number.',
+        'We ship via registered CTT mail to your address, with tracking.',
+      ],
+      waLine: 'Any questions about your order?',
+      waBtn: 'Chat on WhatsApp',
+      foot: 'SparkLab · Made-to-order 3D printing, in Portugal',
+    },
+  }[lang];
+
+  const html = `
+  <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#1c1917">
+    <h2 style="color:#ea580c;margin:0 0 6px">${T.hi}</h2>
+    <p style="color:#57534e;margin:0 0 18px">${T.intro}</p>
+
+    <table style="width:100%;border-collapse:collapse;margin-bottom:6px">${rows}</table>
+    <p style="text-align:right;margin:0 0 24px;font-size:16px"><strong>${T.totalLabel}: ${formatEUR(total)}</strong></p>
+
+    <h3 style="margin:0 0 8px">${T.nextTitle}</h3>
+    <ol style="margin:0 0 24px;padding-left:20px;color:#44403c;line-height:1.7">
+      ${T.steps.map((s) => `<li>${esc(s)}</li>`).join('')}
+    </ol>
+
+    <p style="margin:0 0 10px;color:#57534e">${T.waLine}</p>
+    <a href="${wa}" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;font-weight:bold;padding:11px 22px;border-radius:999px">${T.waBtn}</a>
+
+    <p style="color:#a8a29e;font-size:12px;margin-top:30px">${T.foot}</p>
+  </div>`;
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from,
+      to: [to],
+      subject: T.subject,
+      html,
+      reply_to: process.env.ORDER_EMAIL_TO || undefined, // respostas do cliente vão para nós
+    }),
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    console.error('[stripe-webhook] Resend (cliente) falhou:', res.status, body);
   }
 }
 

@@ -8,6 +8,23 @@ export const runtime = 'nodejs';
 
 type IncomingLine = { id: string; qty: number; customizations?: Record<string, string> };
 
+// Mensagens mostradas NA página de checkout da Stripe (custom_text). Bilingue —
+// o idioma vem do site (o cliente escolheu PT/EN) e também fixa o locale.
+const CHECKOUT_TEXT = {
+  pt: {
+    submit:
+      'Peças personalizadas e por encomenda são produzidas após o pagamento — confirmamos o prazo contigo no WhatsApp (+351 916 853 802).',
+    shipping:
+      'Enviamos para todo o Portugal via CTT registado, com seguimento. Grátis a partir de 40€.',
+  },
+  en: {
+    submit:
+      'Personalized and made-to-order pieces are produced after payment — we confirm the timeline with you on WhatsApp (+351 916 853 802).',
+    shipping:
+      'We ship anywhere in Portugal via registered CTT mail, with tracking. Free over €40.',
+  },
+} as const;
+
 function getStripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) {
@@ -21,13 +38,14 @@ const SHIPPING_COUNTRIES: Stripe.Checkout.SessionCreateParams.ShippingAddressCol
   ['PT'];
 
 export async function POST(request: NextRequest) {
-  let body: { items?: IncomingLine[] };
+  let body: { items?: IncomingLine[]; lang?: string };
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: 'Corpo inválido.' }, { status: 400 });
   }
 
+  const lang: 'pt' | 'en' = body.lang === 'en' ? 'en' : 'pt';
   const incoming = Array.isArray(body.items) ? body.items : [];
   if (incoming.length === 0) {
     return NextResponse.json({ error: 'Carrinho vazio.' }, { status: 400 });
@@ -129,19 +147,29 @@ export async function POST(request: NextRequest) {
 
     const stripe = getStripe();
 
+    // Mensagens na página de checkout (no idioma do site). A de envio só se
+    // aplica quando há recolha de morada (itens físicos) — adicionada abaixo.
+    const customText: Stripe.Checkout.SessionCreateParams.CustomText = {
+      submit: { message: CHECKOUT_TEXT[lang].submit },
+    };
+
     // Itens físicos exigem envio + endereço. Se o carrinho é SÓ digital (STL),
     // não há envio nem endereço — entrega é por download na página de sucesso.
     const params: Stripe.Checkout.SessionCreateParams = {
       mode: 'payment',
       line_items: lineItems,
+      locale: lang, // fixa o checkout no idioma escolhido no site (pt/en)
       billing_address_collection: 'auto',
       phone_number_collection: { enabled: hasPhysical },
+      invoice_creation: { enabled: true }, // gera fatura em PDF (útil p/ atacado/empresas)
+      custom_text: customText,
       success_url: `${origin}/sucesso?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/?checkout=cancelado#catalogo`,
-      metadata: { has_digital: String(hasDigital), has_physical: String(hasPhysical) },
+      metadata: { has_digital: String(hasDigital), has_physical: String(hasPhysical), lang },
     };
 
     if (hasPhysical) {
+      customText.shipping_address = { message: CHECKOUT_TEXT[lang].shipping };
       params.shipping_address_collection = { allowed_countries: SHIPPING_COUNTRIES };
       params.shipping_options = [
         {
