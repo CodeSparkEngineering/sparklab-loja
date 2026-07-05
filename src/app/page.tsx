@@ -1,18 +1,18 @@
 import Header from '@/components/Header';
-import Hero from '@/components/Hero';
+import Hero from '@/components/sections/Hero';
 import { SITE_URL } from '@/data/site';
-import FaixaConfianca from '@/components/FaixaConfianca';
-import Destaques from '@/components/Destaques';
-import Diferenciais from '@/components/Diferenciais';
-import Catalogo from '@/components/Catalogo';
-import ComoFunciona from '@/components/ComoFunciona';
-import Orcamento from '@/components/Orcamento';
-import AOficina from '@/components/AOficina';
-import Depoimentos from '@/components/Depoimentos';
-import Comunidade from '@/components/Comunidade';
-import GuiasTeaser from '@/components/GuiasTeaser';
-import FAQ from '@/components/FAQ';
-import CtaFinal from '@/components/CtaFinal';
+import FaixaConfianca from '@/components/sections/FaixaConfianca';
+import Destaques from '@/components/sections/Destaques';
+import Diferenciais from '@/components/sections/Diferenciais';
+import Catalogo from '@/components/sections/Catalogo';
+import ComoFunciona from '@/components/sections/ComoFunciona';
+import Orcamento from '@/components/sections/Orcamento';
+import AOficina from '@/components/sections/AOficina';
+import Depoimentos from '@/components/sections/Depoimentos';
+import Comunidade from '@/components/sections/Comunidade';
+import GuiasTeaser from '@/components/sections/GuiasTeaser';
+import FAQ from '@/components/sections/FAQ';
+import CtaFinal from '@/components/sections/CtaFinal';
 import Footer from '@/components/Footer';
 
 // AEO: processo de encomenda em passos estruturados — permite a motores de

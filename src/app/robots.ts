@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next';
 import { SITE_URL } from '@/data/site';
 
-// /showcase é uma página interna de pré-visualização; /sucesso é pós-checkout.
-const HIDDEN = ['/api/', '/sucesso', '/showcase'];
+// /sucesso é pós-checkout — não deve ser indexada.
+const HIDDEN = ['/api/', '/sucesso'];
 
 export default function robots(): MetadataRoute.Robots {
   return {

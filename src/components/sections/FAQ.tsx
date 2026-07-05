@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Accordion, AccordionItem } from "./ui/accordion";
+import { Accordion, AccordionItem } from "@/components/ui/accordion";
 import { useLang } from "@/i18n/LanguageContext";
 
 const FAQS = {
