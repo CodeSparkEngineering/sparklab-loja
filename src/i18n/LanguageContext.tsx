@@ -36,6 +36,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   // Restaura a preferência guardada (só no cliente, pós-hidratação).
   useEffect(() => {
     try {
+      // Hidratação SSR-safe: só o cliente tem localStorage; ler no render daria
+      // hydration mismatch. O setState-em-effect é intencional e correto aqui.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (window.localStorage.getItem(STORAGE_KEY) === 'en') setLangState('en');
     } catch {
       /* storage indisponível — segue em PT */

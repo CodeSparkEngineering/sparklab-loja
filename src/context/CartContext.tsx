@@ -73,8 +73,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    // Hidratação do carrinho a partir do localStorage (indisponível no SSR):
+    // padrão correto, feito só após o mount. setState-em-effect é intencional.
+    /* eslint-disable react-hooks/set-state-in-effect */
     setLines(readStorage());
     setHydrated(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   useEffect(() => {

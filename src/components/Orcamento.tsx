@@ -105,6 +105,9 @@ export default function Orcamento() {
     if (!inCurrent) {
       const other = MATERIALS[lang === 'pt' ? 'en' : 'pt'];
       const idx = other.findIndex((m) => m.value === material);
+      // Sincroniza o material selecionado ao trocar de idioma (listas PT/EN
+      // diferem). Ajuste pontual de estado — intencional.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMaterial(materials[idx >= 0 ? idx : 0].value);
     }
   }, [lang, material, materials]);

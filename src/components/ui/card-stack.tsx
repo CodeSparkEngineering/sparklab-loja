@@ -134,6 +134,9 @@ export function CardStack<T extends CardStackItem>({
 
   // keep active in bounds if items change
   React.useEffect(() => {
+    // Mantém o índice ativo dentro dos limites quando o nº de itens muda —
+    // ajuste pontual de estado, intencional.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setActive((a) => wrapIndex(a, len));
   }, [len]);
 
