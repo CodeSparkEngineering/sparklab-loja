@@ -64,7 +64,7 @@ export default function Diferenciais() {
           {lang === 'pt' ? (
             <h2 className="text-3xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 tracking-tight">O cuidado artesanal que as <span className="text-orange-600">máquinas</span> não têm.</h2>
           ) : (
-            <h2 className="text-3xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 tracking-tight">The handcrafted care <span className="text-orange-600">machines</span> don't have.</h2>
+            <h2 className="text-3xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 tracking-tight">The handcrafted care <span className="text-orange-600">machines</span> don&apos;t have.</h2>
           )}
         </div>
 

@@ -134,7 +134,7 @@ export default function ComoFunciona() {
           {lang === 'pt' ? (
             <h2 className="h2">O percurso da tua ideia<br />até à tua <span className="hand-underline">porta</span>.</h2>
           ) : (
-            <h2 className="h2">Your idea's journey<br />to your <span className="hand-underline">door</span>.</h2>
+            <h2 className="h2">Your idea&apos;s journey<br />to your <span className="hand-underline">door</span>.</h2>
           )}
         </div>
 

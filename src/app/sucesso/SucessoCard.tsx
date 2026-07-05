@@ -24,9 +24,9 @@ const L = {
     okTitle: 'Payment confirmed',
     okText: (email: string | null) => (
       <>
-        Thank you for your purchase. We'll start producing your order on our
+        Thank you for your purchase. We&apos;ll start producing your order on our
         Bambu Lab P1S and ship it safely packed via registered CTT mail.{' '}
-        {email ? <>We've sent a confirmation to <strong>{email}</strong>.</> : null}
+        {email ? <>We&apos;ve sent a confirmation to <strong>{email}</strong>.</> : null}
       </>
     ),
     total: 'Total paid:',
