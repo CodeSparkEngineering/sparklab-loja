@@ -1,4 +1,5 @@
 import { GuiaTopo, GuiaRodape, GuiaLang } from '@/components/guias/GuiaArtigo';
+import { GuiaFAQ } from '@/components/guias/GuiaFAQ';
 import { guiaMetadata } from '@/data/guias';
 
 export const metadata = guiaMetadata('impressao-3d-pecas-funcionais-2026');
@@ -89,6 +90,21 @@ Quick rule (more detail in the [materials guide](/guias/pla-petg-abs-asa-tpu-pc-
 3D printing in 2026 isn't "the future" — it's the present, and it solves real, everyday problems. From the decorative piece to the part you actually need: **if it can be printed, we print it** — here in Portugal, made by us.
 
 </GuiaLang>
+
+<GuiaFAQ
+  pt={[
+    { q: "A impressão 3D serve para peças que se usam a sério?", a: "Sim. Com o material e a impressora certos, a impressão 3D FDM produz peças funcionais que aguentam o uso real — engrenagens, suportes, adaptadores e peças de substituição. O segredo está em escolher o material adequado e afinar bem as definições." },
+    { q: "Consigo uma peça de substituição que já não se vende?", a: "Sim — é um dos nossos serviços mais pedidos. Envia uma foto ou as medidas da peça partida (um botão, uma engrenagem, uma tampa, um suporte) e nós modelamos e imprimimos no material certo." },
+    { q: "Que material devo escolher para uma peça funcional?", a: "Regra rápida: uso interior e pouca carga → PLA ou PETG; uso geral → PETG; exterior ou exposição ao sol → ASA; calor ou carga elevada → ABS ou PC; peça flexível → TPU. Ajudamos-te a escolher conforme a função da peça." },
+    { q: "Preciso de saber modelar em 3D para encomendar?", a: "Não. Envia a peça partida, um ficheiro 3D, ou apenas a ideia com fotos e medidas — tratamos da modelação e da impressão. Não precisas de comprar impressora nem de aprender software." },
+  ]}
+  en={[
+    { q: "Is 3D printing good for parts you actually use?", a: "Yes. With the right material and printer, FDM 3D printing makes functional parts that hold up to real use — gears, brackets, adapters and replacement parts. The secret is choosing the right material and fine-tuning the settings." },
+    { q: "Can I get a replacement part that's no longer sold?", a: "Yes — it's one of our most requested services. Send a photo or the measurements of the broken part (a knob, a gear, a lid, a bracket) and we model it and print it in the right material." },
+    { q: "Which material should I choose for a functional part?", a: "Quick rule: indoor, light load → PLA or PETG; general use → PETG; outdoor or sun exposure → ASA; heat or heavy load → ABS or PC; flexible part → TPU. We help you choose based on what the part does." },
+    { q: "Do I need to know 3D modeling to order?", a: "No. Send the broken part, a 3D file, or just the idea with photos and measurements — we handle the modeling and the printing. You don't need to buy a printer or learn any software." },
+  ]}
+/>
 
 <GuiaRodape slug="impressao-3d-pecas-funcionais-2026" />
 </article>

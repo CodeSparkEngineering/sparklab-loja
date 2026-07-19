@@ -1,4 +1,5 @@
 import { GuiaTopo, GuiaRodape, GuiaLang } from '@/components/guias/GuiaArtigo';
+import { GuiaFAQ } from '@/components/guias/GuiaFAQ';
 import { guiaMetadata } from '@/data/guias';
 
 export const metadata = guiaMetadata('quanto-custa-impressao-3d-portugal');
@@ -119,6 +120,21 @@ We ship **anywhere in Portugal** (mainland and islands) via registered CTT mail 
 We reply within **2 business hours** on WhatsApp, with price and estimated timeline. No promises we can't keep — if something isn't printable, we tell you before charging anything.
 
 </GuiaLang>
+
+<GuiaFAQ
+  pt={[
+    { q: "Quanto custa imprimir uma peça em 3D em Portugal?", a: "Depende do tamanho, do material e do tempo de impressão. No nosso catálogo, peças pequenas começam em poucos euros; peças maiores ou em materiais técnicos custam mais. Enviamos sempre um orçamento fechado antes de imprimir, sem surpresas." },
+    { q: "O que faz o preço de uma impressão 3D subir?", a: "Os três fatores principais são a quantidade de material, o tempo de máquina (peças maiores ou mais detalhadas demoram mais) e o acabamento (lixagem, pintura, montagem). A modelação 3D, quando não tens o ficheiro, é cobrada uma única vez." },
+    { q: "É mais barato imprimir várias peças iguais?", a: "Sim. A partir de 10 unidades da mesma peça aplicamos 15% de desconto automático no carrinho e no checkout. Para volumes maiores, fala connosco para um preço à medida." },
+    { q: "A modelação 3D está incluída no preço?", a: "Se enviares o ficheiro pronto (STL, OBJ, 3MF ou STEP) não há custo de modelação. Se só tens uma foto, medidas ou uma ideia, orçamos a modelação à parte — é paga uma só vez e as reimpressões futuras pagam apenas o material." },
+  ]}
+  en={[
+    { q: "How much does it cost to 3D print a part in Portugal?", a: "It depends on the size, the material and the print time. In our catalog, small pieces start at a few euros; larger pieces or technical materials cost more. We always send a fixed quote before printing, with no surprises." },
+    { q: "What makes a 3D print more expensive?", a: "The three main factors are the amount of material, machine time (larger or more detailed pieces take longer) and finishing (sanding, painting, assembly). 3D modeling, when you don't have the file, is charged only once." },
+    { q: "Is it cheaper to print several identical parts?", a: "Yes. From 10 units of the same piece we apply an automatic 15% discount in the cart and at checkout. For larger volumes, message us for a custom price." },
+    { q: "Is 3D modeling included in the price?", a: "If you send a ready file (STL, OBJ, 3MF or STEP) there's no modeling cost. If you only have a photo, measurements or an idea, we quote the modeling separately — it's paid only once, and future reprints only pay for the material." },
+  ]}
+/>
 
 <GuiaRodape slug="quanto-custa-impressao-3d-portugal" />
 </article>

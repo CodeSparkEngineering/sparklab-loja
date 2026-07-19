@@ -9,6 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(`${g.dateModified ?? g.datePublished}T12:00:00Z`),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
+    // Imagem de capa do guia no sitemap → Google Imagens indexa os artigos.
+    ...(g.image ? { images: [`${SITE_URL}${g.image}`] } : {}),
   }));
   const productEntries = PRODUCTS.map((p) => ({
     url: `${SITE_URL}/produto/${p.id}`,

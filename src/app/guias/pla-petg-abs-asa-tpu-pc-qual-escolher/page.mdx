@@ -1,4 +1,5 @@
 import { GuiaTopo, GuiaRodape, GuiaLang } from '@/components/guias/GuiaArtigo';
+import { GuiaFAQ } from '@/components/guias/GuiaFAQ';
 import { guiaMetadata } from '@/data/guias';
 
 export const metadata = guiaMetadata('pla-petg-abs-asa-tpu-pc-qual-escolher');
@@ -123,6 +124,21 @@ The strongest material we print: extreme stiffness and heat resistance up to ~11
 When in doubt, send us a photo of where the piece will live — we'll tell you the right material in 2 minutes.
 
 </GuiaLang>
+
+<GuiaFAQ
+  pt={[
+    { q: "Qual o melhor material para uma peça que vai apanhar sol?", a: "ASA. Foi feito para exterior — resiste aos raios UV e ao calor sem amarelecer nem ficar quebradiço, ao contrário do PLA. É a escolha certa para peças de jardim, suportes exteriores ou de automóvel." },
+    { q: "Que material aguenta calor sem deformar?", a: "Para calor moderado, PETG. Para temperaturas altas ou carga mecânica (perto de motores, no carro, ao sol forte), ABS ou PC. O PLA amolece a partir dos ~55 °C, por isso não serve para peças expostas ao calor." },
+    { q: "Qual a diferença entre PLA e PETG?", a: "O PLA é rígido, fácil de imprimir e ótimo para decoração e protótipos. O PETG é mais resistente ao impacto, ao calor e à humidade — melhor para peças funcionais do dia a dia. Na dúvida para uma peça que se usa, escolhe PETG." },
+    { q: "Preciso de uma peça flexível — que material usam?", a: "TPU. É um material emborrachado que dobra e volta à forma — ideal para capas, vedantes, tampões, pés antiderrapantes e peças que precisam de amortecer." },
+  ]}
+  en={[
+    { q: "What's the best material for a part that will sit in the sun?", a: "ASA. It's made for outdoors — it resists UV and heat without yellowing or becoming brittle, unlike PLA. It's the right choice for garden pieces, outdoor mounts or car parts." },
+    { q: "Which material handles heat without warping?", a: "For moderate heat, PETG. For high temperatures or mechanical load (near motors, in the car, strong sun), ABS or PC. PLA softens from around 55 °C, so it isn't suitable for parts exposed to heat." },
+    { q: "What's the difference between PLA and PETG?", a: "PLA is rigid, easy to print and great for decoration and prototypes. PETG is more resistant to impact, heat and moisture — better for everyday functional parts. When in doubt for a part you'll use, choose PETG." },
+    { q: "I need a flexible part — which material do you use?", a: "TPU. It's a rubber-like material that bends and springs back — ideal for cases, seals, plugs, non-slip feet and parts that need to cushion." },
+  ]}
+/>
 
 <GuiaRodape slug="pla-petg-abs-asa-tpu-pc-qual-escolher" />
 </article>

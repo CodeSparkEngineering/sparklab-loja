@@ -1,4 +1,5 @@
 import { GuiaTopo, GuiaRodape, GuiaLang } from '@/components/guias/GuiaArtigo';
+import { GuiaFAQ } from '@/components/guias/GuiaFAQ';
 import { guiaMetadata } from '@/data/guias';
 
 export const metadata = guiaMetadata('impressao-3d-refrigeracao-inteligencia-artificial');
@@ -77,6 +78,21 @@ Today it's liquid cooling for AI servers. Tomorrow, this same optimized-design p
 **3D printing is no longer just for prototypes — it's the technology enabling the next generation of supercomputers.**
 
 </GuiaLang>
+
+<GuiaFAQ
+  pt={[
+    { q: "A SparkLab imprime peças em metal?", a: "Não. Nós imprimimos em plástico (FDM) com materiais técnicos como PETG, ABS, ASA e PC. A impressão de metal usada nos data centers de IA é uma tecnologia industrial diferente (fusão de pó metálico), com máquinas de centenas de milhares de euros." },
+    { q: "Porque é que a impressão 3D é usada para refrigerar chips de IA?", a: "Porque permite geometrias internas impossíveis de maquinar — canais que seguem o formato exato do chip e maximizam a troca de calor. Isso torna a refrigeração muito mais eficiente, algo essencial com o calor gerado pelos processadores de IA." },
+    { q: "Posso imprimir peças de refrigeração em 3D?", a: "Em plástico, sim — condutas de ar, suportes de ventoinhas, defletores e organizadores de cabos. Já os blocos de refrigeração líquida em cobre exigem impressão metálica industrial, que é outra tecnologia." },
+    { q: "Que peças a SparkLab faz para computadores e eletrónica?", a: "Suportes, caixas, painéis, adaptadores, organizadores de cabos e peças de substituição em plástico resistente. Envia a ideia ou a peça partida e tratamos do resto." },
+  ]}
+  en={[
+    { q: "Does SparkLab print metal parts?", a: "No. We print in plastic (FDM) with technical materials like PETG, ABS, ASA and PC. The metal printing used in AI data centers is a different, industrial technology (metal powder fusion), with machines that cost hundreds of thousands of euros." },
+    { q: "Why is 3D printing used to cool AI chips?", a: "Because it allows internal geometries impossible to machine — channels that follow the exact shape of the chip and maximize heat exchange. That makes cooling far more efficient, which is essential given the heat AI processors generate." },
+    { q: "Can I 3D print cooling parts?", a: "In plastic, yes — air ducts, fan mounts, deflectors and cable organizers. Copper liquid-cooling cold plates, however, require industrial metal printing, which is a different technology." },
+    { q: "What parts does SparkLab make for computers and electronics?", a: "Mounts, cases, panels, adapters, cable organizers and replacement parts in durable plastic. Send the idea or the broken part and we handle the rest." },
+  ]}
+/>
 
 <GuiaRodape slug="impressao-3d-refrigeracao-inteligencia-artificial" />
 </article>
