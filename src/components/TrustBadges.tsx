@@ -1,0 +1,111 @@
+'use client';
+
+import { ShieldCheck, Printer } from 'lucide-react';
+import { useLang } from '@/i18n/LanguageContext';
+
+const L = {
+  pt: {
+    aria: 'Confiança e qualidade',
+    secure: 'Pagamento 100% seguro',
+    secureSub: 'Processado por',
+    quality: 'Máquinas e filamento profissionais',
+    qualitySub: 'Impresso com equipamento oficial',
+  },
+  en: {
+    aria: 'Trust and quality',
+    secure: '100% secure payment',
+    secureSub: 'Processed by',
+    quality: 'Professional printers and filament',
+    qualitySub: 'Printed with official equipment',
+  },
+} as const;
+
+/** Marca Stripe (símbolo oficial + nome), na cor de marca #635BFF. */
+function StripeMark() {
+  return (
+    <span className="inline-flex items-center gap-1 font-bold" style={{ color: '#635BFF' }}>
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="#635BFF" aria-hidden="true">
+        <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305z" />
+      </svg>
+      Stripe
+    </span>
+  );
+}
+
+/** Visa — wordmark simples na cor de marca. */
+function VisaMark() {
+  return (
+    <span
+      aria-label="Visa"
+      className="text-[13px] font-bold italic leading-none tracking-tight"
+      style={{ color: '#1434CB', fontFamily: 'Arial, sans-serif' }}
+    >
+      VISA
+    </span>
+  );
+}
+
+/** Mastercard — dois círculos oficiais. */
+function MastercardMark() {
+  return (
+    <svg viewBox="0 0 32 20" width="26" height="16" aria-label="Mastercard">
+      <circle cx="13" cy="10" r="7" fill="#EB001B" />
+      <circle cx="19" cy="10" r="7" fill="#F79E1B" />
+      <path d="M16 4.6a7 7 0 0 0 0 10.8 7 7 0 0 0 0-10.8z" fill="#FF5F00" />
+    </svg>
+  );
+}
+
+/** Marca Bambu Lab (glifo + nome), na cor de marca verde. */
+function BambuMark() {
+  return (
+    <span className="inline-flex items-center gap-1 font-bold" style={{ color: '#00AE42' }}>
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#00AE42" strokeWidth="2.4" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="4" />
+        <path d="M8 8h8v8H8z" fill="#00AE42" stroke="none" />
+      </svg>
+      Bambu Lab
+    </span>
+  );
+}
+
+export default function TrustBadges() {
+  const { lang } = useLang();
+  const t = L[lang];
+
+  return (
+    <section
+      aria-label={t.aria}
+      className="border-t border-stone-200/70 dark:border-white/10"
+    >
+      <div className="container mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-14">
+        {/* Pagamento seguro — Stripe */}
+        <div className="flex items-center gap-3">
+          <ShieldCheck className="h-8 w-8 shrink-0 text-green-600 dark:text-green-500" aria-hidden="true" />
+          <div className="flex flex-col gap-0.5">
+            <span className="text-sm font-semibold text-stone-700 dark:text-stone-200">{t.secure}</span>
+            <span className="flex items-center gap-2 text-xs text-stone-500 dark:text-stone-400">
+              {t.secureSub} <StripeMark />
+              <span className="mx-0.5 h-3 w-px bg-stone-300 dark:bg-white/15" aria-hidden="true" />
+              <VisaMark />
+              <MastercardMark />
+            </span>
+          </div>
+        </div>
+
+        <div className="hidden sm:block h-10 w-px bg-stone-200 dark:bg-white/10" aria-hidden="true" />
+
+        {/* Equipamento — Bambu Lab */}
+        <div className="flex items-center gap-3">
+          <Printer className="h-8 w-8 shrink-0 text-stone-600 dark:text-stone-300" aria-hidden="true" />
+          <div className="flex flex-col gap-0.5">
+            <span className="text-sm font-semibold text-stone-700 dark:text-stone-200">{t.quality}</span>
+            <span className="flex items-center gap-2 text-xs text-stone-500 dark:text-stone-400">
+              {t.qualitySub} <BambuMark />
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

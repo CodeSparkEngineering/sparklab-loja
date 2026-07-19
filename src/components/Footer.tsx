@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getWhatsAppLink } from '@/utils/whatsapp';
 import { useLang } from '@/i18n/LanguageContext';
+import TrustBadges from '@/components/TrustBadges';
 
 const L = {
   pt: {
@@ -120,6 +121,9 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      <TrustBadges />
+
       <div className="container footer__base" style={{ flexDirection: 'column', gap: '8px', textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
           <small>{t.copyright}</small>
