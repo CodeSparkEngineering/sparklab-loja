@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { formatEUR } from '@/data/products';
 import { useLang, pName, cLabel } from '@/i18n/LanguageContext';
+import { StripeMark } from '@/components/brand-marks';
 
 const L = {
   pt: {
@@ -23,7 +24,7 @@ const L = {
     note: 'Portes calculados no checkout. Envio via CTT registado, com seguimento.',
     checkout: 'Avançar com a encomenda',
     checkoutLoading: 'A redirecionar…',
-    securePay: 'Pagamento seguro via Stripe',
+    securePay: 'Pagamento seguro via',
     errPayment: 'Não foi possível iniciar o pagamento. Tenta de novo — se continuar, fala connosco no WhatsApp.',
     errUnknown: 'Algo correu mal. Tenta de novo ou fala connosco no WhatsApp.',
   },
@@ -43,7 +44,7 @@ const L = {
     note: 'Shipping calculated at checkout. Sent via registered CTT mail, with tracking.',
     checkout: 'Proceed to checkout',
     checkoutLoading: 'Redirecting…',
-    securePay: 'Secure payment via Stripe',
+    securePay: 'Secure payment via',
     errPayment: 'We couldn\'t start the payment. Please try again — if it persists, message us on WhatsApp.',
     errUnknown: 'Something went wrong. Please try again or message us on WhatsApp.',
   },
@@ -252,12 +253,12 @@ export default function CartDrawer() {
               >
                 {loading ? t.checkoutLoading : t.checkout}
               </button>
-              <p className="cart__secure" aria-label={t.securePay}>
+              <p className="cart__secure">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <rect x="3" y="11" width="18" height="11" rx="2" />
                   <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
-                {t.securePay}
+                {t.securePay} <StripeMark />
               </p>
             </footer>
           </>
