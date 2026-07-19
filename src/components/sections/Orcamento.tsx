@@ -96,6 +96,7 @@ export default function Orcamento() {
   const [fileData, setFileData] = useState<{ name: string; size: number } | null>(null);
   const [material, setMaterial] = useState<string>(MATERIALS.pt[0].value);
   const [open, setOpen] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
   const selectRef = useRef<HTMLDivElement>(null);
 
   // Se o idioma muda e o material selecionado é o default do outro idioma,
@@ -137,12 +138,14 @@ export default function Orcamento() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setFormError(null);
     const formData = new FormData(e.currentTarget);
     const name = (formData.get('name') as string || '').trim();
     const phone = (formData.get('phone') as string || '').trim();
 
     if (!name || !phone) {
-      alert(t.alertFill);
+      setFormError(t.alertFill);
+      (document.getElementById(!name ? 'qf-name' : 'qf-phone') as HTMLInputElement | null)?.focus();
       return;
     }
 
@@ -268,6 +271,9 @@ export default function Orcamento() {
               <textarea id="qf-desc" name="desc" placeholder={t.descPh}></textarea>
             </div>
 
+            {formError && (
+              <p className="text-sm text-red-500 -mt-1" role="alert">{formError}</p>
+            )}
             <button type="submit" className="btn btn--primary qf__submit">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4h.01c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3zM12 21.7h-.01c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 1 1 18.2-5.1c0 5.4-4.4 9.8-9.8 9.8z" /></svg>
               {t.submit}

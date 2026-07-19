@@ -23,8 +23,8 @@ const L = {
     note: 'Portes calculados no checkout. Envio via CTT registado, com seguimento.',
     checkout: 'Avançar com a encomenda',
     checkoutLoading: 'A redirecionar…',
-    errPayment: 'Não foi possível iniciar o pagamento.',
-    errUnknown: 'Erro inesperado.',
+    errPayment: 'Não foi possível iniciar o pagamento. Tenta de novo — se continuar, fala connosco no WhatsApp.',
+    errUnknown: 'Algo correu mal. Tenta de novo ou fala connosco no WhatsApp.',
   },
   en: {
     title: 'Your cart',
@@ -42,8 +42,8 @@ const L = {
     note: 'Shipping calculated at checkout. Sent via registered CTT mail, with tracking.',
     checkout: 'Proceed to checkout',
     checkoutLoading: 'Redirecting…',
-    errPayment: 'We could not start the payment.',
-    errUnknown: 'Unexpected error.',
+    errPayment: 'We couldn\'t start the payment. Please try again — if it persists, message us on WhatsApp.',
+    errUnknown: 'Something went wrong. Please try again or message us on WhatsApp.',
   },
 } as const;
 

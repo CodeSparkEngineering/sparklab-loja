@@ -7,6 +7,7 @@ import { CartProvider } from "@/context/CartContext";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import CartDrawer from "@/components/CartDrawer";
 import BackToTop from "@/components/BackToTop";
+import CheckoutNotice from "@/components/CheckoutNotice";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE_URL, SITE_DESC } from "@/data/site";
 import { Analytics } from "@vercel/analytics/next";
@@ -146,6 +147,7 @@ export default function RootLayout({
             {children}
             <CartDrawer />
             <BackToTop />
+            <CheckoutNotice />
           </CartProvider>
           </LanguageProvider>
         </ThemeProvider>
