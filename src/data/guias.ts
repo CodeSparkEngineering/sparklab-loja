@@ -67,6 +67,19 @@ export const GUIAS: Guia[] = [
     emoji: '🤖',
     image: '/images/ai_cooling_3d.webp',
   },
+  {
+    slug: 'impressao-3d-pecas-funcionais-2026',
+    title: 'Impressão 3D em 2026: já não é só decoração, são peças que se usam',
+    titleEn: '3D printing in 2026: not just decoration — parts you actually use',
+    description:
+      'O grande salto de 2026: a impressão 3D FDM deixou de ser só protótipos e decoração e passou a produzir peças funcionais e de substituição que aguentam o uso real. O que mudou — e o que significa para ti.',
+    descriptionEn:
+      'The big 2026 shift: FDM 3D printing moved beyond prototypes and decoration to make functional, replacement parts that hold up to real use. What changed — and what it means for you.',
+    datePublished: '2026-07-19',
+    minutes: 5,
+    emoji: '🛠️',
+    image: '/images/impressao-3d-pecas-funcionais-2026.webp',
+  },
 ];
 
 export function getGuiaBySlug(slug: string): Guia | undefined {
