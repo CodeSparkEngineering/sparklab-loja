@@ -55,7 +55,7 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
     },
     "category": product.tag,
     "countryOfOrigin": { "@type": "Country", "name": "PT" },
-    "material": "PLA",
+    "material": product.material ?? "PLA",
     "offers": {
       "@type": "Offer",
       "priceCurrency": "EUR",

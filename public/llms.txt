@@ -37,6 +37,14 @@
 - [PLA, PETG, ABS, ASA, TPU or PC — which material to choose](https://www.sparklab3d.pt/guias/pla-petg-abs-asa-tpu-pc-qual-escolher):
   comparison table of all 6 materials (strength, heat, UV/outdoor use, relative price)
   and a rule of thumb: decorative→PLA, functional→PETG, outdoor→ASA, >90 °C or heavy load→ABS/PC, flexible→TPU.
+- [How 3D printing is saving AI data centers](https://www.sparklab3d.pt/guias/impressao-3d-refrigeracao-inteligencia-artificial):
+  the AI boom's massive heat problem and how 3D-printed liquid-cooling copper cold plates
+  with complex internal geometries are solving it — what additive manufacturing brings
+  that traditional machining can't.
+- [3D printing in 2026: not just decoration — parts you actually use](https://www.sparklab3d.pt/guias/impressao-3d-pecas-funcionais-2026):
+  the shift from gadget-phase to tool-phase — FDM now produces functional, replacement
+  parts for cars, home repairs and custom tools. What changed (materials, enclosed
+  printers, fine-tuning) and what it means for ordering custom parts.
 - [All guides](https://www.sparklab3d.pt/guias)
 
 ## Pages

@@ -1,6 +1,7 @@
 import { Children, type ReactNode } from 'react';
 import type { MDXComponents } from 'mdx/types';
 import Link from 'next/link';
+import Image from 'next/image';
 
 /**
  * O compilador mdx-rs (GFM) emite nós de whitespace entre os elementos de
@@ -87,16 +88,19 @@ const components: MDXComponents = {
   ),
   hr: () => <hr className="my-10 border-stone-200 dark:border-white/10" />,
   img: (props) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      {...props}
-      alt={props.alt ?? ''}
-      loading="lazy"
-      decoding="async"
-      // Imagem de capa dos artigos sempre em 16:9 (recorte central) — evita a
-      // imagem quadrada gigante e mantém todos os guias consistentes.
-      className="w-full aspect-[16/9] object-cover rounded-2xl border border-stone-200 dark:border-white/10 my-6 shadow-sm"
-    />
+    // Imagem de capa dos artigos sempre em 16:9 (recorte central) — evita a
+    // imagem quadrada gigante e mantém todos os guias consistentes.
+    // next/image com fill: gera srcset responsivo + WebP/AVIF automático (CWV boost).
+    <span className="relative block w-full aspect-[16/9] rounded-2xl border border-stone-200 dark:border-white/10 my-6 shadow-sm overflow-hidden">
+      <Image
+        src={props.src as string}
+        alt={props.alt ?? ''}
+        fill
+        sizes="(max-width: 768px) 100vw, 768px"
+        className="object-cover"
+        priority={false}
+      />
+    </span>
   ),
 };
 

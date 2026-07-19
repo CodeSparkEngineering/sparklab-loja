@@ -33,6 +33,8 @@ export type Product = {
   customizations?: CustomizationOption[];
   /** true = arquivo digital (STL) entregue por download, sem envio físico. */
   digital?: boolean;
+  /** Material de impressão (default: 'PLA'). Usado no schema Product. */
+  material?: string;
   /**
    * Arquivo STL associado (apenas para produtos digitais).
    * `file` = nome do arquivo dentro da pasta privada `private-stl/`.
