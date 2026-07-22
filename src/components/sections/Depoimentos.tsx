@@ -15,19 +15,22 @@ const L = {
     headingWord: 'pedir',
     quotes: [
       {
-        text: 'Pedi miniaturas para o meu jogo de tabuleiro e a qualidade surpreendeu. Detalhes minúsculos perfeitos e a entrega foi mais rápida do que prometido.',
-        name: 'Mariana Freitas',
-        role: 'Designer de jogos · Lisboa',
+        text: 'Eu recomendo muito este serviço. Pedi o meu com todos esses detalhes e ficou perfeito. Excelente serviço. Parabéns, amei.',
+        name: 'Flavio Rodrigues',
+        role: 'Avaliação no Google',
+        google: true,
       },
       {
-        text: 'Precisava de uma peça de substituição que o fabricante já não vendia. Enviei o desenho e, em dois dias, estava a funcionar como nova.',
-        name: 'Rafael Monteiro',
-        role: 'Engenheiro mecânico · Porto',
+        text: 'Vendedor é atencioso e rápido com a encomenda.',
+        name: 'Alex Souza',
+        role: 'Avaliação no Google',
+        google: true,
       },
       {
         text: 'A luminária com foto da minha filha ficou linda. Atendimento no WhatsApp foi atencioso e ajudaram-me a escolher a melhor imagem.',
         name: 'Camila Duarte',
         role: 'Cliente desde 2024 · Braga',
+        google: false,
       },
     ],
   },
@@ -41,19 +44,22 @@ const L = {
     headingWord: 'again',
     quotes: [
       {
-        text: 'I ordered miniatures for my board game and the quality blew me away. Tiny details came out perfect and delivery was faster than promised.',
-        name: 'Mariana Freitas',
-        role: 'Game designer · Lisbon',
+        text: 'I highly recommend this service. I ordered mine with all those details and it came out perfect. Excellent service. Congratulations, I loved it.',
+        name: 'Flavio Rodrigues',
+        role: 'Google review',
+        google: true,
       },
       {
-        text: 'I needed a replacement part the manufacturer no longer sold. I sent them the drawing and, within two days, it was working like new.',
-        name: 'Rafael Monteiro',
-        role: 'Mechanical engineer · Porto',
+        text: 'The seller is attentive and quick with the order.',
+        name: 'Alex Souza',
+        role: 'Google review',
+        google: true,
       },
       {
         text: "The lamp with my daughter's photo turned out beautiful. The WhatsApp support was attentive and helped me pick the best image.",
         name: 'Camila Duarte',
         role: 'Customer since 2024 · Braga',
+        google: false,
       },
     ],
   },
@@ -91,7 +97,10 @@ export default function Depoimentos() {
               <figcaption>
                 <div>
                   <strong>{quote.name}</strong>
-                  <small>{quote.role}</small>
+                  <small className={quote.google ? 'quote__source' : undefined}>
+                    {quote.google && <GoogleMark size={13} />}
+                    {quote.role}
+                  </small>
                 </div>
               </figcaption>
             </figure>

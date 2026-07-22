@@ -2382,6 +2382,12 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   gap: 6px; font-size: 12px; color: var(--mute);
 }
 
+/* Selo "Avaliação no Google" no depoimento verificado.
+   Precisa de bater a especificidade de `.quote figcaption small` (display:block). */
+.quote figcaption small.quote__source{
+  display: inline-flex; align-items: center; gap: 5px;
+}
+
 /* CTA de avaliações no Google, no fim dos depoimentos. */
 .reviews-cta{
   margin-top: 40px; display: flex; flex-wrap: wrap;
