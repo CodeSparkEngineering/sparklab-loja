@@ -76,7 +76,12 @@ export function GuiaTopo({ slug }: { slug: string }) {
     dateModified: guia.dateModified ?? guia.datePublished,
     inLanguage: 'pt-PT',
     mainEntityOfPage: `${SITE_URL}/guias/${guia.slug}`,
-    author: { '@id': `${SITE_URL}/#business` },
+    author: {
+      '@type': 'Person',
+      name: 'Israel',
+      url: 'https://www.skills.google/public_profiles/19f1e48a-2c56-4997-9529-1f921169eead',
+      jobTitle: 'Especialista em Impressão 3D e Cloud'
+    },
     publisher: { '@id': `${SITE_URL}/#business` },
   };
 
@@ -113,7 +118,7 @@ export function GuiaTopo({ slug }: { slug: string }) {
         <span>{t.minutes(guia.minutes)}</span>
         <span aria-hidden="true">·</span>
         <span className="inline-flex items-center gap-1.5 text-orange-600 dark:text-orange-400 font-medium">
-          SparkLab
+          Por Israel
         </span>
       </div>
     </>
