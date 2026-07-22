@@ -80,6 +80,18 @@ export const GUIAS: Guia[] = [
     emoji: '🛠️',
     image: '/images/impressao-3d-pecas-funcionais-2026.webp',
   },
+  {
+    slug: 'mercado-impressao-3d-2026',
+    title: 'O mercado da impressão 3D em 2026: as máquinas de secretária passaram a mandar',
+    titleEn: 'The 3D printing market in 2026: desktop machines took the lead',
+    description:
+      'Os números do primeiro trimestre de 2026 mostram um mercado a crescer 32% — mas o mais surpreendente é onde: as impressoras acessíveis já valem mais do que todas as outras categorias somadas. O que isso significa para quem quer uma peça impressa.',
+    descriptionEn:
+      'Q1 2026 figures show a market growing 32% — but the surprise is where: affordable desktop printers now out-earn every other price band combined. What that means for anyone who just wants a part printed.',
+    datePublished: '2026-07-22',
+    minutes: 6,
+    emoji: '📈',
+  },
 ];
 
 export function getGuiaBySlug(slug: string): Guia | undefined {

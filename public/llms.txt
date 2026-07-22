@@ -45,6 +45,14 @@
   the shift from gadget-phase to tool-phase — FDM now produces functional, replacement
   parts for cars, home repairs and custom tools. What changed (materials, enclosed
   printers, fine-tuning) and what it means for ordering custom parts.
+- [The 3D printing market in 2026: desktop machines took the lead](https://www.sparklab3d.pt/guias/mercado-impressao-3d-2026):
+  Q1 2026 market data — hardware revenue up 32% YoY, and desktop printers under US$2,500
+  now generate 54% of all global 3D printing system revenue, more than every other price
+  band combined, while the professional band shrank through cannibalisation. Also covers
+  demand drivers (defence, foldable-phone titanium hinges, drones, print farms), healthcare
+  growth (US$3.6B in 2025 to a projected US$23.4B by 2034), corporate moves (Creality IPO,
+  Stratasys–Markforged, EOS, Formlabs) and new hardware (Bambu Lab A2L, Anycubic Kobra S1
+  ACE 2 Pro, FlashForge AD5X).
 - [All guides](https://www.sparklab3d.pt/guias)
 
 ## Pages
