@@ -91,6 +91,7 @@ export const GUIAS: Guia[] = [
     datePublished: '2026-07-22',
     minutes: 6,
     emoji: '📈',
+    image: '/images/mercado-impressao-3d-2026.webp',
   },
 ];
 
