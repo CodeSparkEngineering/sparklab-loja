@@ -2382,6 +2382,13 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   gap: 6px; font-size: 12px; color: var(--mute);
 }
 
+/* CTA de avaliações no Google, no fim dos depoimentos. */
+.reviews-cta{
+  margin-top: 40px; display: flex; flex-wrap: wrap;
+  align-items: center; justify-content: center; gap: 12px;
+}
+.reviews-cta .btn{ display: inline-flex; align-items: center; gap: 8px; }
+
 /* ─────────────────────────────────────────────────────────
    PÁGINA DE SUCESSO / PEDIDO
 ───────────────────────────────────────────────────────── */

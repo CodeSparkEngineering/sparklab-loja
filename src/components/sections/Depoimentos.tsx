@@ -1,11 +1,15 @@
 'use client';
 
 import { useLang } from '@/i18n/LanguageContext';
+import { GoogleMark } from '@/components/brand-marks';
+import { GOOGLE_PROFILE_URL, GOOGLE_REVIEW_URL } from '@/data/site';
 
 const L = {
   pt: {
     stars: '5 estrelas',
     eyebrow: 'o que dizem de nós',
+    seeReviews: 'Ver avaliações no Google',
+    leaveReview: 'Deixa a tua avaliação',
     headingLine1: 'Quem já recebeu,',
     headingPre: 'voltou a ',
     headingWord: 'pedir',
@@ -30,6 +34,8 @@ const L = {
   en: {
     stars: '5 stars',
     eyebrow: 'what people say',
+    seeReviews: 'See our Google reviews',
+    leaveReview: 'Leave your review',
     headingLine1: 'Those who ordered once,',
     headingPre: 'ordered ',
     headingWord: 'again',
@@ -90,6 +96,27 @@ export default function Depoimentos() {
               </figcaption>
             </figure>
           ))}
+        </div>
+
+        {/* Avaliações reais no Perfil de Empresa do Google (SparkLab3D). */}
+        <div className="reviews-cta reveal">
+          <a
+            href={GOOGLE_PROFILE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn--ghost"
+          >
+            <GoogleMark />
+            {t.seeReviews}
+          </a>
+          <a
+            href={GOOGLE_REVIEW_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn--primary"
+          >
+            ⭐ {t.leaveReview}
+          </a>
         </div>
       </div>
     </section>
