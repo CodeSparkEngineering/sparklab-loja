@@ -2,11 +2,15 @@
 
 import Image from 'next/image';
 import { useLang } from '@/i18n/LanguageContext';
+import { GoogleMark } from '@/components/brand-marks';
+import { GOOGLE_SKILLS_URL } from '@/data/site';
 
 const L = {
   pt: {
     altIsrael: 'Israel Vieira, co-fundador da SparkLab',
-    roleIsrael: 'Co-fundador · Dev (certificado Google)',
+    roleIsrael: 'Co-fundador · Dev',
+    certLabel: 'Certificado Google',
+    certTitle: 'Ver perfil público de certificações Google Cloud',
     altPamela: 'Pamela Falk, co-fundadora da SparkLab',
     rolePamela: 'Co-fundadora · 3D Maker',
     caption: 'Produção local e feita à mão, aqui em Portugal',
@@ -23,7 +27,9 @@ const L = {
   },
   en: {
     altIsrael: 'Israel Vieira, SparkLab co-founder',
-    roleIsrael: 'Co-founder · Dev (Google certified)',
+    roleIsrael: 'Co-founder · Dev',
+    certLabel: 'Google certified',
+    certTitle: 'View public Google Cloud certifications profile',
     altPamela: 'Pamela Falk, SparkLab co-founder',
     rolePamela: 'Co-founder · 3D Maker',
     caption: 'Local production, handmade here in Portugal',
@@ -60,6 +66,20 @@ export default function AOficina() {
                 <figcaption className="text-center mt-3">
                   <span className="block font-bold text-stone-900 dark:text-stone-100" style={{ fontFamily: 'var(--f-head)' }}>Israel Vieira</span>
                   <span className="block text-xs text-stone-500 dark:text-stone-400">{t.roleIsrael}</span>
+                  {/* Perfil público Google Skills — torna a certificação verificável. */}
+                  <a
+                    href={GOOGLE_SKILLS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={t.certTitle}
+                    className="mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium text-stone-600 dark:text-stone-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+                  >
+                    <GoogleMark size={12} />
+                    {t.certLabel}
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M7 17 17 7M9 7h8v8" />
+                    </svg>
+                  </a>
                 </figcaption>
               </figure>
             </div>
