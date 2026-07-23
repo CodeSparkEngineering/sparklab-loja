@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useLang, type Lang } from '@/i18n/LanguageContext';
 
@@ -72,6 +73,7 @@ export default function Header() {
   const { count, openCart } = useCart();
   const { lang } = useLang();
   const t = L[lang];
+  const pathname = usePathname();
 
   // Prevent scrolling when mobile menu is open
   useEffect(() => {
@@ -82,6 +84,23 @@ export default function Header() {
     }
     return () => { document.body.style.overflow = ''; };
   }, [mobileMenuOpen]);
+
+  /**
+   * Logo → volta sempre ao topo (a hero).
+   * Já na homepage, um Link para "/" não faz scroll nenhum (mesma rota), por
+   * isso subimos à mão e limpamos o hash — assim um refresh não salta de novo
+   * para a secção anterior. Noutras páginas, deixa o Link navegar (aterra no topo).
+   */
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setMobileMenuOpen(false);
+    if (pathname !== '/') return;
+
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.location.hash) {
+      window.history.replaceState(null, '', '/');
+    }
+  };
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const href = e.currentTarget.getAttribute('href');
@@ -109,7 +128,7 @@ export default function Header() {
       <AnnouncementBar />
       <header className="nav" id="nav">
         <div className="container nav__inner">
-          <Link href="/#" className="logo" aria-label="SparkLab">
+          <Link href="/" className="logo" aria-label="SparkLab" onClick={handleLogoClick}>
           <Image
             src="/logo.jpg"
             alt="SparkLab"

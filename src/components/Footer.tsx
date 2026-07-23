@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { getWhatsAppLink } from '@/utils/whatsapp';
 import { useLang } from '@/i18n/LanguageContext';
 import TrustBadges from '@/components/TrustBadges';
@@ -52,6 +53,17 @@ const L = {
 export default function Footer() {
   const { lang } = useLang();
   const t = L[lang];
+  const pathname = usePathname();
+
+  // Logo → topo da homepage (a hero). Ver a mesma lógica no Header.
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname !== '/') return;
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.location.hash) {
+      window.history.replaceState(null, '', '/');
+    }
+  };
 
   const handleContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -62,7 +74,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <div className="footer__brand">
-          <Link href="/" className="logo">
+          <Link href="/" className="logo" onClick={handleLogoClick}>
             <Image
               src="/logo.jpg"
               alt="SparkLab"
