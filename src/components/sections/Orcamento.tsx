@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { getWhatsAppLink } from '@/utils/whatsapp';
 import { useLang } from '@/i18n/LanguageContext';
 
@@ -92,6 +93,7 @@ export default function Orcamento() {
   const { lang } = useLang();
   const t = L[lang];
   const materials = MATERIALS[lang];
+  const router = useRouter();
 
   const [fileData, setFileData] = useState<{ name: string; size: number } | null>(null);
   const [material, setMaterial] = useState<string>(MATERIALS.pt[0].value);
@@ -167,6 +169,10 @@ export default function Orcamento() {
     else parts.push(``, t.waNoFile);
 
     window.open(getWhatsAppLink(parts.join('\n')), '_blank', 'noopener');
+
+    // Leva o cliente a uma página de confirmação própria. É o URL de destino
+    // da conversão no Google Ads — só se chega aqui submetendo o formulário.
+    router.push('/pedido-recebido');
   };
 
   return (
