@@ -11,6 +11,7 @@ import CheckoutNotice from "@/components/CheckoutNotice";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE_URL, SITE_DESC } from "@/data/site";
 import { Analytics } from "@vercel/analytics/next";
+import GoogleAdsTag from "@/components/GoogleAdsTag";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -153,6 +154,8 @@ export default function RootLayout({
         </ThemeProvider>
         {/* Só em produção — em dev o script /_vercel/insights não existe (404). */}
         {process.env.NODE_ENV === 'production' && <Analytics />}
+        {/* Google Ads: inerte sem NEXT_PUBLIC_GADS_ID definido (ver GoogleAdsTag). */}
+        <GoogleAdsTag />
       </body>
     </html>
   );

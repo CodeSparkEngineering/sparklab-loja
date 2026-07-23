@@ -1,9 +1,11 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { useLang } from '@/i18n/LanguageContext';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
 import { getWhatsAppLink } from '@/utils/whatsapp';
+import { fireQuoteConversion } from '@/components/GoogleAdsTag';
 
 const L = {
   pt: {
@@ -41,6 +43,11 @@ const L = {
 export default function PedidoRecebidoCard() {
   const { lang } = useLang();
   const t = L[lang];
+
+  // Regista a conversão de lead no Google Ads (no-op se a tag não estiver ativa).
+  useEffect(() => {
+    fireQuoteConversion();
+  }, []);
 
   return (
     <div className="mx-auto max-w-xl text-center">
