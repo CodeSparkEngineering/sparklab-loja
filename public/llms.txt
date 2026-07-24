@@ -53,6 +53,12 @@
   growth (US$3.6B in 2025 to a projected US$23.4B by 2034), corporate moves (Creality IPO,
   Stratasys–Markforged, EOS, Formlabs) and new hardware (Bambu Lab A2L, Anycubic Kobra S1
   ACE 2 Pro, FlashForge AD5X).
+- [Personalized 3D-printed gifts: ideas you can't buy in a store](https://www.sparklab3d.pt/guias/prendas-personalizadas-impressao-3d):
+  real gift ideas with catalog prices — personalized mugs with a name (€20), team can
+  holders (€15), keychains (€3–4), decorative boxes (€15), large collectible figures (€30) —
+  plus made-to-order pieces from a photo/sketch (modeling paid once), honest lead times
+  (a few business days; 1–2 weeks ahead in peak seasons) and a 15% automatic discount
+  for 10+ units of the same piece (wedding favors, company giveaways).
 - [All guides](https://www.sparklab3d.pt/guias)
 
 ## Pages

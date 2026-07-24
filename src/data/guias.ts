@@ -93,6 +93,18 @@ export const GUIAS: Guia[] = [
     emoji: '📈',
     image: '/images/mercado-impressao-3d-2026.webp',
   },
+  {
+    slug: 'prendas-personalizadas-impressao-3d',
+    title: 'Prendas personalizadas em impressão 3D: ideias que não se compram em loja',
+    titleEn: "Personalized 3D-printed gifts: ideas you can't buy in a store",
+    description:
+      'Caneca com o nome, porta-latas do clube, figura do hobby preferido: ideias reais de prendas impressas em 3D para aniversários, Natal, Dia do Pai e da Mãe — com preços do nosso catálogo e prazos honestos.',
+    descriptionEn:
+      "A mug with their name, a can holder in their team's colors, a figure of their favorite hobby: real 3D-printed gift ideas for birthdays, Christmas, Father's and Mother's Day — with our catalog prices and honest timelines.",
+    datePublished: '2026-07-24',
+    minutes: 5,
+    emoji: '🎁',
+  },
 ];
 
 export function getGuiaBySlug(slug: string): Guia | undefined {
