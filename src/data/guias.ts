@@ -104,6 +104,7 @@ export const GUIAS: Guia[] = [
     datePublished: '2026-07-24',
     minutes: 5,
     emoji: '🎁',
+    image: '/images/prendas-personalizadas-impressao-3d.webp',
   },
 ];
 
