@@ -15,7 +15,9 @@ export async function generateMetadata({
 
   const img = product.images?.[0] ? `${SITE_URL}${product.images[0]}` : undefined;
   return {
-    title: product.name,
+    // Título enriquecido para pesquisa ("caneca personalizada", "impressão 3D…");
+    // o template do layout acrescenta "· SparkLab" no fim.
+    title: `${product.name} · Impressão 3D personalizada`,
     description: product.desc,
     alternates: { canonical: `/produto/${product.id}` },
     openGraph: {

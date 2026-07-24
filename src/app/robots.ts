@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next';
 import { SITE_URL } from '@/data/site';
 
-// /sucesso é pós-checkout — não deve ser indexada.
-const HIDDEN = ['/api/', '/sucesso'];
+// /sucesso é pós-checkout e /pedido-recebido é a confirmação de orçamento
+// (destino de conversão do Google Ads) — nenhuma deve ser indexada.
+const HIDDEN = ['/api/', '/sucesso', '/pedido-recebido'];
 
 export default function robots(): MetadataRoute.Robots {
   return {

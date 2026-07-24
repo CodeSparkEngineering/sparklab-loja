@@ -9,7 +9,7 @@ import CartDrawer from "@/components/CartDrawer";
 import BackToTop from "@/components/BackToTop";
 import CheckoutNotice from "@/components/CheckoutNotice";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { SITE_URL, SITE_DESC } from "@/data/site";
+import { SITE_URL, SITE_DESC, GOOGLE_PROFILE_URL } from "@/data/site";
 import { Analytics } from "@vercel/analytics/next";
 import GoogleAdsTag from "@/components/GoogleAdsTag";
 
@@ -42,7 +42,8 @@ const schemaMarkup = {
   "currenciesAccepted": "EUR",
   "paymentAccepted": "Visa, Mastercard (Stripe)",
   "sameAs": [
-    "https://www.instagram.com/sparklabs.3d/"
+    "https://www.instagram.com/sparklabs.3d/",
+    GOOGLE_PROFILE_URL
   ],
   "contactPoint": {
     "@type": "ContactPoint",
@@ -55,10 +56,21 @@ const schemaMarkup = {
     { "@type": "Person", "name": "Israel Vieira" },
     { "@type": "Person", "name": "Pamela Falk" }
   ],
+  // Morada e coordenadas iguais às do Perfil de Empresa no Google (SEO local:
+  // a consistência NAP entre o site e o perfil reforça o ranking em pesquisas
+  // locais tipo "impressão 3D perto de mim").
   "address": {
     "@type": "PostalAddress",
-    "addressCountry": "PT",
-    "addressRegion": "Portugal"
+    "streetAddress": "R. Comércio 926",
+    "addressLocality": "Sangalhos",
+    "addressRegion": "Aveiro",
+    "postalCode": "3780-124",
+    "addressCountry": "PT"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 40.4856906,
+    "longitude": -8.4694809
   },
   "areaServed": {
     "@type": "Country",
