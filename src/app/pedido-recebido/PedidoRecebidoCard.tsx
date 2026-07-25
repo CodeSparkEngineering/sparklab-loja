@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useLang } from '@/i18n/LanguageContext';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
@@ -43,10 +43,21 @@ const L = {
 export default function PedidoRecebidoCard() {
   const { lang } = useLang();
   const t = L[lang];
+  const [quoteMsg, setQuoteMsg] = useState<string | null>(null);
 
   // Regista a conversão de lead no Google Ads (no-op se a tag não estiver ativa).
   useEffect(() => {
     fireQuoteConversion();
+    // Recupera a mensagem composta no formulário (com o link do ficheiro, se
+    // houver) — se o popup do WhatsApp tiver sido bloqueado, o botão abaixo
+    // envia a mensagem COMPLETA em vez do texto genérico. Leitura única de
+    // storage na montagem — intencional.
+    try {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setQuoteMsg(sessionStorage.getItem('sparklab-quote-msg'));
+    } catch {
+      // storage indisponível — mantém o texto genérico
+    }
   }, []);
 
   return (
@@ -60,7 +71,7 @@ export default function PedidoRecebidoCard() {
       <p className="mb-8 leading-relaxed text-stone-600 dark:text-stone-400">{t.lead}</p>
 
       <a
-        href={getWhatsAppLink(t.waMsg)}
+        href={getWhatsAppLink(quoteMsg ?? t.waMsg)}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#1fbd5a]"

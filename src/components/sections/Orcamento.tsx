@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { upload } from '@vercel/blob/client';
 import { getWhatsAppLink } from '@/utils/whatsapp';
 import { useLang } from '@/i18n/LanguageContext';
 
@@ -55,7 +56,12 @@ const L = {
     waQty: '*Quantidade:*',
     waDesc: '*Descrição:*',
     waFile: (f: string) => `Vou anexar o ficheiro *${f}* aqui no chat de seguida.`,
+    waFileLink: '*Ficheiro 3D:*',
     waNoFile: 'Ainda não tenho ficheiro 3D — preciso de ajuda com a modelação.',
+    fileUploading: 'a carregar…',
+    fileReady: 'anexado ✓',
+    fileError: 'não foi possível carregar — envia-o depois no WhatsApp',
+    submitUploading: 'A carregar o ficheiro…',
   },
   en: {
     eyebrow: 'Quick quote',
@@ -85,7 +91,12 @@ const L = {
     waQty: '*Quantity:*',
     waDesc: '*Description:*',
     waFile: (f: string) => `I'll attach the file *${f}* here in the chat next.`,
+    waFileLink: '*3D file:*',
     waNoFile: "I don't have a 3D file yet — I need help with the modeling.",
+    fileUploading: 'uploading…',
+    fileReady: 'attached ✓',
+    fileError: "couldn't upload — send it later on WhatsApp",
+    submitUploading: 'Uploading the file…',
   },
 } as const;
 
@@ -95,11 +106,19 @@ export default function Orcamento() {
   const materials = MATERIALS[lang];
   const router = useRouter();
 
-  const [fileData, setFileData] = useState<{ name: string; size: number } | null>(null);
+  const [fileData, setFileData] = useState<{
+    name: string;
+    size: number;
+    status: 'uploading' | 'done' | 'error';
+    url?: string;
+  } | null>(null);
   const [material, setMaterial] = useState<string>(MATERIALS.pt[0].value);
   const [open, setOpen] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
+  // Promessa do upload em curso — o submit espera por ela se ainda não acabou.
+  const uploadRef = useRef<Promise<string | null> | null>(null);
 
   // Se o idioma muda e o material selecionado é o default do outro idioma,
   // acompanha (mantém escolhas explícitas do cliente quando possível).
@@ -131,14 +150,33 @@ export default function Orcamento() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setFileData({ name: file.name, size: file.size });
-    } else {
+    if (!file) {
       setFileData(null);
+      uploadRef.current = null;
+      return;
     }
+
+    // Começa o upload logo aqui (em fundo) — quando o cliente carregar em
+    // "Enviar", o link já está pronto. Client upload do @vercel/blob: o
+    // ficheiro vai do browser direto para o storage (aguenta ficheiros
+    // grandes). Se falhar, cai no fallback: envia-o no próprio WhatsApp.
+    setFileData({ name: file.name, size: file.size, status: 'uploading' });
+    uploadRef.current = upload(
+      `orcamentos/${crypto.randomUUID().slice(0, 8)}-${file.name}`,
+      file,
+      { access: 'public', handleUploadUrl: '/api/upload-orcamento', multipart: true }
+    )
+      .then((blob) => {
+        setFileData((prev) => (prev ? { ...prev, status: 'done', url: blob.url } : prev));
+        return blob.url;
+      })
+      .catch(() => {
+        setFileData((prev) => (prev ? { ...prev, status: 'error' } : prev));
+        return null;
+      });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormError(null);
     const formData = new FormData(e.currentTarget);
@@ -155,6 +193,12 @@ export default function Orcamento() {
     const qty = formData.get('qty') as string;
     const desc = (formData.get('desc') as string || '').trim();
 
+    // Se o upload ainda está a decorrer, espera que termine (ou falhe) — o
+    // botão mostra o estado. null = sem ficheiro ou upload falhado.
+    setSending(true);
+    const fileUrl = uploadRef.current ? await uploadRef.current : null;
+    setSending(false);
+
     const parts = [
       t.waIntro,
       ``,
@@ -165,10 +209,22 @@ export default function Orcamento() {
     ];
 
     if (desc) parts.push(`${t.waDesc} ${desc}`);
-    if (fileData) parts.push(``, t.waFile(fileData.name));
+    if (fileUrl) parts.push(``, `${t.waFileLink} ${fileUrl}`);
+    else if (fileData) parts.push(``, t.waFile(fileData.name));
     else parts.push(``, t.waNoFile);
 
-    window.open(getWhatsAppLink(parts.join('\n')), '_blank', 'noopener');
+    const message = parts.join('\n');
+
+    // Rede de segurança: se o browser bloquear o popup (acontece quando o
+    // await do upload demora e a "ativação do clique" expira), o botão
+    // "Abrir o WhatsApp" da página de confirmação usa esta mesma mensagem.
+    try {
+      sessionStorage.setItem('sparklab-quote-msg', message);
+    } catch {
+      // storage indisponível (modo privado estrito) — o botão usa o texto genérico
+    }
+
+    window.open(getWhatsAppLink(message), '_blank', 'noopener');
 
     // Leva o cliente a uma página de confirmação própria. É o URL de destino
     // da conversão no Google Ads — só se chega aqui submetendo o formulário.
@@ -266,7 +322,15 @@ export default function Orcamento() {
               <label className={`qf__file ${fileData ? 'qf__file--has' : ''}`} id="qf-file-label" htmlFor="qf-file">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                 <span id="qf-file-text">
-                  {fileData ? `✓ ${fileData.name} ${(fileData.size / 1024 / 1024).toFixed(2)} MB` : t.filePick}
+                  {fileData
+                    ? `${fileData.status === 'done' ? '✓' : fileData.status === 'error' ? '⚠' : '⏳'} ${fileData.name} (${(fileData.size / 1024 / 1024).toFixed(2)} MB) — ${
+                        fileData.status === 'done'
+                          ? t.fileReady
+                          : fileData.status === 'error'
+                            ? t.fileError
+                            : t.fileUploading
+                      }`
+                    : t.filePick}
                 </span>
                 <input id="qf-file" name="file" type="file" accept=".stl,.obj,.3mf,.step,.stp" onChange={handleFileChange} />
               </label>
@@ -280,9 +344,9 @@ export default function Orcamento() {
             {formError && (
               <p className="text-sm text-red-500 -mt-1" role="alert">{formError}</p>
             )}
-            <button type="submit" className="btn btn--primary qf__submit">
+            <button type="submit" className="btn btn--primary qf__submit" disabled={sending}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4h.01c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3zM12 21.7h-.01c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 1 1 18.2-5.1c0 5.4-4.4 9.8-9.8 9.8z" /></svg>
-              {t.submit}
+              {sending ? t.submitUploading : t.submit}
             </button>
           </div>
         </form>
