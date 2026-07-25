@@ -2395,6 +2395,17 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 }
 .reviews-cta .btn{ display: inline-flex; align-items: center; gap: 8px; }
 
+/* CTA no fim de "Como funciona" — fecha a secção com uma ação clara. */
+.cf-cta{
+  margin-top: 48px; text-align: center;
+}
+.cf-cta__text{
+  margin: 0 0 18px; font-size: 18px; font-weight: 600; color: var(--ink);
+}
+.cf-cta__actions{
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px;
+}
+
 /* ─────────────────────────────────────────────────────────
    PÁGINA DE SUCESSO / PEDIDO
 ───────────────────────────────────────────────────────── */

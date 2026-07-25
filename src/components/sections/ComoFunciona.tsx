@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import Link from 'next/link';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useLang } from '@/i18n/LanguageContext';
 
 const TEXTS = {
@@ -9,19 +10,25 @@ const TEXTS = {
     eyebrow: 'como funcionamos',
     ariaTabs: 'Etapas do processo',
     steps: [
-      { short: 'Envia a tua ideia', title: 'Mostra-nos a tua ideia (ou o teu modelo 3D)', text: 'Viste algo na nossa montra que gostaste? Ou tens um ficheiro 3D (.stl ou .obj) à espera de ganhar vida? Envia-nos e avaliamos a viabilidade da impressão.' },
-      { short: 'Afinamos contigo', title: 'Afinamos os detalhes contigo', text: 'Cor, tamanho, material e acabamento. Definimos tudo em conjunto, pelo WhatsApp ou e-mail, para que a peça fique exatamente como precisas. Orçamento claro, sem surpresas.' },
-      { short: 'Produzimos e enviamos', title: 'Imprimimos, revemos e enviamos', text: 'Imprimimos a peça na nossa Bambu Lab P1S, fazemos os retoques finais e embalamos com segurança. Segue via CTT registado, com seguimento até à tua morada.' },
+      { short: 'Envia a tua ideia', title: 'Mostra-nos a tua ideia (ou o teu modelo 3D)', text: 'Viste algo na nossa montra que gostaste? Ou tens um ficheiro 3D? Anexa o teu .STL ou .OBJ diretamente no formulário de orçamento — ou descreve só a ideia e nós tratamos da modelação.' },
+      { short: 'Afinamos contigo', title: 'Afinamos os detalhes contigo', text: 'Cor, tamanho, material e acabamento. Definimos tudo em conjunto pelo WhatsApp — respondemos em até 2 horas úteis. Orçamento claro, sem surpresas.' },
+      { short: 'Produzimos e enviamos', title: 'Imprimimos, revemos e enviamos', text: 'Imprimimos a peça na nossa Bambu Lab P1S, fazemos os retoques finais e embalamos com segurança. Normalmente pronta em poucos dias úteis, com envio CTT registado e seguimento até à tua porta.' },
     ],
+    ctaText: 'É simples assim. Tens uma peça em mente?',
+    ctaPrimary: 'Pedir orçamento grátis',
+    ctaSecondary: 'Ver catálogo',
   },
   en: {
     eyebrow: 'how we work',
     ariaTabs: 'Process steps',
     steps: [
-      { short: 'Send your idea', title: 'Show us your idea (or your 3D model)', text: 'Saw something you liked in our shop? Or got a 3D file (.stl or .obj) waiting to come to life? Send it over and we assess print feasibility.' },
-      { short: 'We fine-tune together', title: 'We fine-tune the details with you', text: 'Color, size, material and finish. We define everything together, over WhatsApp or e-mail, so the piece turns out exactly as you need. Clear quote, no surprises.' },
-      { short: 'We produce and ship', title: 'We print, review and ship', text: 'We print your piece on our Bambu Lab P1S, do the final touch-ups and pack it safely. It ships via registered CTT mail, tracked to your door.' },
+      { short: 'Send your idea', title: 'Show us your idea (or your 3D model)', text: 'Saw something you liked in our shop? Or got a 3D file? Attach your .STL or .OBJ right in the quote form — or just describe the idea and we handle the modeling.' },
+      { short: 'We fine-tune together', title: 'We fine-tune the details with you', text: 'Color, size, material and finish. We define everything together over WhatsApp — we reply within 2 business hours. Clear quote, no surprises.' },
+      { short: 'We produce and ship', title: 'We print, review and ship', text: 'We print your piece on our Bambu Lab P1S, do the final touch-ups and pack it safely. Usually ready within a few business days, shipped via registered CTT mail, tracked to your door.' },
     ],
+    ctaText: "It's that simple. Got a piece in mind?",
+    ctaPrimary: 'Get a free quote',
+    ctaSecondary: 'View catalog',
   },
 } as const;
 
@@ -107,21 +114,33 @@ export default function ComoFunciona() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const reduceMotion = useReducedMotion();
 
   // Avanço automático entre passos (pausa ao interagir / fora do ecrã).
+  // Respeita prefers-reduced-motion: quem pede menos movimento controla à mão.
   useEffect(() => {
-    if (paused) return;
+    if (paused || reduceMotion) return;
     timer.current = setInterval(() => {
       setActive((a) => (a + 1) % STEPS.length);
     }, AUTO_MS);
     return () => {
       if (timer.current) clearInterval(timer.current);
     };
-  }, [paused]);
+  }, [paused, reduceMotion]);
 
   const select = (i: number) => {
     setActive(i);
     setPaused(true); // assim que o cliente interage, deixamos de avançar sozinhos
+  };
+
+  // Scroll suave até uma secção da homepage, com o offset do header fixo
+  // (mesmo comportamento dos links do menu).
+  const scrollToId = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
   };
 
   const progress = ((active + 1) / STEPS.length) * 100;
@@ -193,6 +212,19 @@ export default function ComoFunciona() {
                 {STEPS[active].art}
               </motion.div>
             </AnimatePresence>
+          </div>
+        </div>
+
+        {/* CTA — capta a intenção no pico do interesse (fim da explicação). */}
+        <div className="cf-cta reveal">
+          <p className="cf-cta__text">{t.ctaText}</p>
+          <div className="cf-cta__actions">
+            <Link href="/#orcamento" onClick={(e) => scrollToId(e, 'orcamento')} className="btn btn--primary">
+              {t.ctaPrimary}
+            </Link>
+            <Link href="/#catalogo" onClick={(e) => scrollToId(e, 'catalogo')} className="btn btn--ghost">
+              {t.ctaSecondary}
+            </Link>
           </div>
         </div>
       </div>
