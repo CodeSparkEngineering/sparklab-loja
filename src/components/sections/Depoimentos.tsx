@@ -66,9 +66,12 @@ const L = {
 } as const;
 
 const StarsSVG = ({ label }: { label: string }) => (
-  <div className="stars" aria-label={label}>
+  // role="img" torna o aria-label válido (um <div> sem role não pode ter
+  // aria-label). Assim os leitores de ecrã anunciam "5 estrelas" em vez de
+  // ignorarem, e a árvore de acessibilidade fica bem formada.
+  <div className="stars" role="img" aria-label={label}>
     {[...Array(5)].map((_, i) => (
-      <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline-block' }}>
+      <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline-block' }} aria-hidden="true">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
       </svg>
     ))}

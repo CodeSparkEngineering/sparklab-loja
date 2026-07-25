@@ -7,6 +7,13 @@ const nextConfig: NextConfig = {
   // cross-origin, o JS não carrega e a página fica invisível (tela preta).
   allowedDevOrigins: ["10.2.0.2"],
 
+  // Otimização de imagens do next/image: AVIF primeiro (≈30% mais leve que
+  // WebP, com fallback automático), o que ataca diretamente o LCP em todo o
+  // site — catálogo, galerias e capas dos guias — sem mexer nas fontes.
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
+
   // Guias/blog em MDX (páginas .mdx dentro de app/guias/*).
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   experimental: {

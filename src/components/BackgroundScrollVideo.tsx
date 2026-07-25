@@ -128,10 +128,13 @@ export default function BackgroundScrollVideo({
       <video
         ref={videoRef}
         src={src}
-        poster="/videos/hero-poster.jpg"
+        poster="/videos/hero-poster.webp"
         muted
         playsInline
-        preload="auto"
+        // metadata (não "auto"): não descarrega o vídeo inteiro à cabeça, para
+        // não competir com o LCP na rede móvel. O poster cobre até o vídeo
+        // começar; no mobile o play() no efeito acima trata de o carregar.
+        preload="metadata"
       />
       <div
         className="bg-scroll-video__scrim"
