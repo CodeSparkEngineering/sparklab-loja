@@ -4,148 +4,225 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { useLang } from '@/i18n/LanguageContext';
 
+/**
+ * Política de Privacidade — alinhada com o RGPD e com o que o site FAZ hoje:
+ * Stripe (pagamentos), Resend (emails), Vercel (alojamento + Blob para os
+ * ficheiros 3D do orçamento), Google Analytics 4 e Google Ads (ambos atrás
+ * do banner de consentimento / Consent Mode v2).
+ *
+ * TODO (Israel): quando tiveres a denominação legal + NIF + email de
+ * contacto dedicado, acrescenta-os na secção "Responsável pelo tratamento".
+ */
+
+const STORAGE_KEY = 'sparklab-consent';
+
+function ResetCookiesButton({ label }: { label: string }) {
+  const reset = () => {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* indisponível — nada a limpar */
+    }
+    // Recarrega: o consent default volta a "denied" e o banner reaparece.
+    window.location.reload();
+  };
+  return (
+    <button type="button" onClick={reset} className="btn btn--ghost btn--sm">
+      🍪 {label}
+    </button>
+  );
+}
+
 const L = {
   pt: {
     back: 'Voltar ao início',
     title: 'Política de Privacidade',
-    updated: 'Última atualização: junho de 2026',
+    updated: 'Última atualização: julho de 2026',
     intro: (
       <>
-        A <strong>SparkLab</strong> é uma loja de impressão 3D sediada em Portugal. Esta
-        política explica que dados recolhemos quando usas o nosso site e como os tratamos,
-        de acordo com o Regulamento Geral sobre a Proteção de Dados (RGPD).
+        A <strong>SparkLab</strong> é uma loja de impressão 3D sediada em Sangalhos, Portugal
+        (contacto abaixo), e é a responsável pelo tratamento dos dados descritos nesta
+        política, de acordo com o Regulamento Geral sobre a Proteção de Dados (RGPD).
       </>
     ),
     s1Title: '1. Dados que recolhemos',
-    d1: (
+    s1: [
+      <><strong>Encomendas:</strong> nome, email, telefone/WhatsApp e morada de entrega, recolhidos no momento da compra.</>,
+      <><strong>Pagamento:</strong> processado de forma segura pela Stripe. <strong>Nunca</strong> vemos nem guardamos os dados do teu cartão.</>,
+      <><strong>Pedidos de orçamento:</strong> nome, contacto, descrição da peça e, se o enviares, o teu ficheiro 3D (guardado no nosso armazenamento seguro).</>,
+      <><strong>Contacto:</strong> o conteúdo das mensagens que nos envias (ex.: WhatsApp).</>,
+      <><strong>Carrinho e preferências:</strong> guardados localmente no teu navegador (localStorage) — não saem do teu dispositivo.</>,
+      <><strong>Navegação:</strong> estatísticas de utilização via Google Analytics, <em>apenas</em> se aceitares os cookies (ver secção 3).</>,
+    ],
+    s2Title: '2. Porque podemos tratar estes dados (bases legais)',
+    s2: [
+      <><strong>Execução de contrato</strong> — processar, produzir e entregar a tua encomenda ou orçamento.</>,
+      <><strong>Obrigação legal</strong> — faturação e registos fiscais.</>,
+      <><strong>Consentimento</strong> — cookies de análise e publicidade (podes retirá-lo a qualquer momento, ver abaixo).</>,
+      <><strong>Interesse legítimo</strong> — segurança do site e prevenção de fraude.</>,
+    ],
+    s3Title: '3. Cookies',
+    s3a: (
       <>
-        <strong>Encomendas:</strong> nome, email, telefone/WhatsApp e morada de entrega, recolhidos no momento da compra.
+        <strong>Essenciais (sem cookies de rastreio):</strong> o carrinho, o idioma e a tua
+        escolha de consentimento vivem no localStorage do teu navegador. São necessários ao
+        funcionamento do site e não te seguem pela internet.
       </>
     ),
-    d2: (
+    s3b: (
       <>
-        <strong>Pagamento:</strong> processado de forma segura pela Stripe. <strong>Nunca</strong> vemos nem guardamos os dados do teu cartão.
+        <strong>Análise e publicidade (só com o teu consentimento):</strong> usamos o Google
+        Analytics 4 (cookies <code>_ga*</code>) para perceber como o site é usado e, quando
+        ativas campanhas, a medição de conversões do Google Ads. Por omissão estão{' '}
+        <strong>desativados</strong>; só são ligados se carregares em “Aceitar” no aviso de
+        cookies (Google Consent Mode v2).
       </>
     ),
-    d3: (
+    s3c: 'Podes mudar de ideias a qualquer momento:',
+    s3btn: 'Alterar preferências de cookies',
+    s4Title: '4. Com quem partilhamos',
+    s4Intro: 'Só partilhamos o estritamente necessário com prestadores que tornam o serviço possível (subcontratantes):',
+    s4: [
+      <><strong>Stripe</strong> — processamento de pagamentos.</>,
+      <><strong>CTT / transportadora</strong> — entrega das encomendas.</>,
+      <><strong>Resend</strong> — envio de emails transacionais (confirmação de encomenda).</>,
+      <><strong>Vercel</strong> — alojamento do site e armazenamento dos ficheiros 3D que envias no orçamento.</>,
+      <><strong>Google</strong> — estatísticas (Analytics) e medição de anúncios (Ads), apenas com o teu consentimento.</>,
+    ],
+    s4Outro: 'Não vendemos nem alugamos os teus dados a terceiros.',
+    s5Title: '5. Transferências internacionais',
+    s5: (
       <>
-        <strong>Contacto:</strong> o conteúdo das mensagens que nos envias (ex.: WhatsApp, formulário de orçamento).
+        Alguns destes prestadores (Stripe, Google, Resend, Vercel) podem tratar dados nos
+        Estados Unidos. Essas transferências assentam em salvaguardas reconhecidas pela UE,
+        como o <em>EU-U.S. Data Privacy Framework</em> e/ou cláusulas contratuais-tipo.
       </>
     ),
-    d4: (
+    s6Title: '6. Durante quanto tempo guardamos',
+    s6: [
+      <><strong>Dados de encomenda e faturação:</strong> até 10 anos, por obrigação fiscal.</>,
+      <><strong>Ficheiros 3D e mensagens de orçamento:</strong> apenas enquanto necessários para responder e produzir; eliminamos mediante pedido.</>,
+      <><strong>Estatísticas (Analytics):</strong> até 14 meses.</>,
+    ],
+    s7Title: '7. Os teus direitos',
+    s7: (
       <>
-        <strong>Carrinho:</strong> guardado localmente no teu navegador (localStorage) para a tua conveniência.
+        Tens o direito de aceder, retificar, apagar, limitar ou opor-te ao tratamento dos
+        teus dados, o direito à portabilidade e o de retirar o consentimento a qualquer
+        momento. Para os exercer, contacta-nos pelo WhatsApp. Tens ainda o direito de
+        apresentar reclamação à autoridade de controlo portuguesa, a{' '}
+        <a href="https://www.cnpd.pt" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
+          CNPD (cnpd.pt)
+        </a>.
       </>
     ),
-    s2Title: '2. Como usamos os teus dados',
-    s2: (
-      <>
-        Usamos os teus dados apenas para processar e entregar as tuas encomendas, responder
-        a pedidos de orçamento e prestar apoio ao cliente. Não enviamos comunicações de
-        marketing sem o teu consentimento.
-      </>
-    ),
-    s3Title: '3. Com quem partilhamos',
-    s3Intro: 'Só partilhamos o estritamente necessário com parceiros que tornam a compra possível:',
-    p1: (
-      <>
-        <strong>Stripe</strong> — processamento do pagamento.
-      </>
-    ),
-    p2: (
-      <>
-        <strong>CTT / transportadora</strong> — entrega da encomenda.
-      </>
-    ),
-    s3Outro: 'Não vendemos nem alugamos os teus dados a terceiros.',
-    s4Title: '4. Os teus direitos',
-    s4: (
-      <>
-        Tens o direito de aceder, corrigir ou eliminar os teus dados, bem como de retirar
-        o consentimento a qualquer momento. Para o fazer, contacta-nos pelo WhatsApp.
-      </>
-    ),
-    s5Title: '5. Contacto',
+    s8Title: '8. Contacto',
     contactText: 'Para qualquer questão sobre privacidade, fala connosco pelo',
     contactLink: 'WhatsApp (+351 916 853 802)',
     disclaimer: (
       <>
-        Este documento é um resumo informativo. Recomendamos rever com um profissional antes
-        de operar com pagamentos reais.
+        Este documento é um resumo informativo e não constitui aconselhamento jurídico.
+        Recomendamos a revisão por um profissional.
       </>
     ),
   },
   en: {
     back: 'Back to home',
     title: 'Privacy Policy',
-    updated: 'Last updated: June 2026',
+    updated: 'Last updated: July 2026',
     intro: (
       <>
-        <strong>SparkLab</strong> is a 3D printing shop based in Portugal. This policy
-        explains what data we collect when you use our website and how we handle it, in
+        <strong>SparkLab</strong> is a 3D printing shop based in Sangalhos, Portugal
+        (contact below), and is the controller of the data described in this policy, in
         accordance with the General Data Protection Regulation (GDPR).
       </>
     ),
     s1Title: '1. Data we collect',
-    d1: (
+    s1: [
+      <><strong>Orders:</strong> name, email, phone/WhatsApp number and delivery address, collected when you place an order.</>,
+      <><strong>Payment:</strong> handled securely by Stripe. We <strong>never</strong> see or store your card details.</>,
+      <><strong>Quote requests:</strong> name, contact, part description and, if you send one, your 3D file (kept in our secure storage).</>,
+      <><strong>Contact:</strong> the content of the messages you send us (e.g. WhatsApp).</>,
+      <><strong>Cart and preferences:</strong> stored locally in your browser (localStorage) — they never leave your device.</>,
+      <><strong>Browsing:</strong> usage statistics via Google Analytics, <em>only</em> if you accept cookies (see section 3).</>,
+    ],
+    s2Title: '2. Why we may process this data (legal bases)',
+    s2: [
+      <><strong>Contract performance</strong> — processing, producing and delivering your order or quote.</>,
+      <><strong>Legal obligation</strong> — invoicing and tax records.</>,
+      <><strong>Consent</strong> — analytics and advertising cookies (withdrawable at any time, see below).</>,
+      <><strong>Legitimate interest</strong> — site security and fraud prevention.</>,
+    ],
+    s3Title: '3. Cookies',
+    s3a: (
       <>
-        <strong>Orders:</strong> name, email, phone/WhatsApp number and delivery address, collected when you place an order.
+        <strong>Essential (no tracking cookies):</strong> your cart, language and consent
+        choice live in your browser&apos;s localStorage. They are required for the site to work
+        and do not follow you around the internet.
       </>
     ),
-    d2: (
+    s3b: (
       <>
-        <strong>Payment:</strong> handled securely by Stripe. We <strong>never</strong> see or store your card details.
+        <strong>Analytics and advertising (only with your consent):</strong> we use Google
+        Analytics 4 (<code>_ga*</code> cookies) to understand how the site is used and, when
+        campaigns are active, Google Ads conversion measurement. They are{' '}
+        <strong>off by default</strong> and only enabled if you click “Accept” on the cookie
+        notice (Google Consent Mode v2).
       </>
     ),
-    d3: (
+    s3c: 'You can change your mind at any time:',
+    s3btn: 'Change cookie preferences',
+    s4Title: '4. Who we share it with',
+    s4Intro: 'We share only what is strictly necessary with the providers that make the service possible (processors):',
+    s4: [
+      <><strong>Stripe</strong> — payment processing.</>,
+      <><strong>CTT / carrier</strong> — order delivery.</>,
+      <><strong>Resend</strong> — transactional emails (order confirmation).</>,
+      <><strong>Vercel</strong> — website hosting and storage of the 3D files you upload with a quote.</>,
+      <><strong>Google</strong> — statistics (Analytics) and ad measurement (Ads), only with your consent.</>,
+    ],
+    s4Outro: 'We do not sell or rent your data to third parties.',
+    s5Title: '5. International transfers',
+    s5: (
       <>
-        <strong>Contact:</strong> the content of the messages you send us (e.g. WhatsApp, quote request form).
+        Some of these providers (Stripe, Google, Resend, Vercel) may process data in the
+        United States. Such transfers rely on safeguards recognised by the EU, such as the{' '}
+        <em>EU-U.S. Data Privacy Framework</em> and/or standard contractual clauses.
       </>
     ),
-    d4: (
+    s6Title: '6. How long we keep it',
+    s6: [
+      <><strong>Order and invoicing data:</strong> up to 10 years, as required by tax law.</>,
+      <><strong>3D files and quote messages:</strong> only while needed to reply and produce; deleted on request.</>,
+      <><strong>Statistics (Analytics):</strong> up to 14 months.</>,
+    ],
+    s7Title: '7. Your rights',
+    s7: (
       <>
-        <strong>Cart:</strong> stored locally in your browser (localStorage) for your convenience.
+        You have the right to access, rectify, erase, restrict or object to the processing
+        of your data, the right to portability and to withdraw consent at any time. To
+        exercise them, contact us on WhatsApp. You also have the right to lodge a complaint
+        with the Portuguese supervisory authority,{' '}
+        <a href="https://www.cnpd.pt" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
+          CNPD (cnpd.pt)
+        </a>.
       </>
     ),
-    s2Title: '2. How we use your data',
-    s2: (
-      <>
-        We use your data solely to process and deliver your orders, respond to quote
-        requests and provide customer support. We do not send marketing communications
-        without your consent.
-      </>
-    ),
-    s3Title: '3. Who we share it with',
-    s3Intro: 'We share only what is strictly necessary with the partners that make your purchase possible:',
-    p1: (
-      <>
-        <strong>Stripe</strong> — payment processing.
-      </>
-    ),
-    p2: (
-      <>
-        <strong>CTT / carrier</strong> — order delivery.
-      </>
-    ),
-    s3Outro: 'We do not sell or rent your data to third parties.',
-    s4Title: '4. Your rights',
-    s4: (
-      <>
-        You have the right to access, correct or delete your data, and to withdraw your
-        consent at any time. To exercise these rights, contact us on WhatsApp.
-      </>
-    ),
-    s5Title: '5. Contact',
+    s8Title: '8. Contact',
     contactText: 'For any privacy-related questions, message us on',
     contactLink: 'WhatsApp (+351 916 853 802)',
     disclaimer: (
       <>
-        This document is an informative summary. We recommend reviewing it with a
-        professional before operating with real payments.
+        This document is an informative summary and does not constitute legal advice. We
+        recommend having it reviewed by a professional.
       </>
     ),
   },
 } as const;
+
+const H = ({ children }: { children: React.ReactNode }) => (
+  <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{children}</h2>
+);
 
 export default function PrivacidadeContent() {
   const { lang } = useLang();
@@ -168,29 +245,41 @@ export default function PrivacidadeContent() {
         <div className="prose max-w-none text-stone-600 dark:text-stone-300 leading-relaxed space-y-6">
           <p>{t.intro}</p>
 
-          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s1Title}</h2>
+          <H>{t.s1Title}</H>
           <ul className="list-disc pl-6 space-y-1">
-            <li>{t.d1}</li>
-            <li>{t.d2}</li>
-            <li>{t.d3}</li>
-            <li>{t.d4}</li>
+            {t.s1.map((item, i) => <li key={i}>{item}</li>)}
           </ul>
 
-          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s2Title}</h2>
-          <p>{t.s2}</p>
-
-          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s3Title}</h2>
-          <p>{t.s3Intro}</p>
+          <H>{t.s2Title}</H>
           <ul className="list-disc pl-6 space-y-1">
-            <li>{t.p1}</li>
-            <li>{t.p2}</li>
+            {t.s2.map((item, i) => <li key={i}>{item}</li>)}
           </ul>
-          <p>{t.s3Outro}</p>
 
-          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s4Title}</h2>
-          <p>{t.s4}</p>
+          <H>{t.s3Title}</H>
+          <p>{t.s3a}</p>
+          <p>{t.s3b}</p>
+          <p>{t.s3c}</p>
+          <ResetCookiesButton label={t.s3btn} />
 
-          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s5Title}</h2>
+          <H>{t.s4Title}</H>
+          <p>{t.s4Intro}</p>
+          <ul className="list-disc pl-6 space-y-1">
+            {t.s4.map((item, i) => <li key={i}>{item}</li>)}
+          </ul>
+          <p>{t.s4Outro}</p>
+
+          <H>{t.s5Title}</H>
+          <p>{t.s5}</p>
+
+          <H>{t.s6Title}</H>
+          <ul className="list-disc pl-6 space-y-1">
+            {t.s6.map((item, i) => <li key={i}>{item}</li>)}
+          </ul>
+
+          <H>{t.s7Title}</H>
+          <p>{t.s7}</p>
+
+          <H>{t.s8Title}</H>
           <p>
             {t.contactText}{' '}
             <a href="https://wa.me/351916853802" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">

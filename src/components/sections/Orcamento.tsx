@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { upload } from '@vercel/blob/client';
 import { getWhatsAppLink } from '@/utils/whatsapp';
@@ -62,6 +63,8 @@ const L = {
     fileReady: 'anexado ✓',
     fileError: 'não foi possível carregar — envia-o depois no WhatsApp',
     submitUploading: 'A carregar o ficheiro…',
+    privacyPre: 'Ao enviar, concordas com a nossa',
+    privacyLink: 'Política de Privacidade',
   },
   en: {
     eyebrow: 'Quick quote',
@@ -97,6 +100,8 @@ const L = {
     fileReady: 'attached ✓',
     fileError: "couldn't upload — send it later on WhatsApp",
     submitUploading: 'Uploading the file…',
+    privacyPre: 'By submitting, you agree to our',
+    privacyLink: 'Privacy Policy',
   },
 } as const;
 
@@ -348,6 +353,13 @@ export default function Orcamento() {
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4h.01c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3zM12 21.7h-.01c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 1 1 18.2-5.1c0 5.4-4.4 9.8-9.8 9.8z" /></svg>
               {sending ? t.submitUploading : t.submit}
             </button>
+            {/* Aviso de privacidade no ponto de recolha (RGPD, art. 13.º). */}
+            <p className="text-xs text-stone-500 dark:text-stone-400 text-center -mt-1">
+              {t.privacyPre}{' '}
+              <Link href="/privacidade" className="underline underline-offset-2 hover:text-orange-600 dark:hover:text-orange-400">
+                {t.privacyLink}
+              </Link>.
+            </p>
           </div>
         </form>
       </div>
