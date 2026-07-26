@@ -5,20 +5,16 @@ import { CardStack, type CardStackItem } from '@/components/ui/card-stack';
 import { PRODUCTS, formatEUR } from '@/data/products';
 import { useLang, pName, pDesc, tagLabel } from '@/i18n/LanguageContext';
 
-// Produtos em destaque ("Os mais pedidos") = mascotes/bananão + uma seleção
-// manual (porta-latas + os produtos novos). Editar esta lista para mudar.
+// Produtos em destaque ("Os mais pedidos") — seleção manual (só os produtos
+// novos). Editar esta lista para mudar o que aparece no card-stack.
 const DESTAQUE_IDS = [
   'suporte-comando-neon',
   'trofeu-quimono',
   'porta-latas-ratinha-rosa',
   'porta-chaves-tecla-fidget',
   'chaveiro-mini-caneca',
-  'porta-latas-monster',
-  'porta-latas-benfica',
 ];
-const FEATURED = PRODUCTS.filter(
-  (p) => p.images?.[0] && (p.id.startsWith('miniatura') || DESTAQUE_IDS.includes(p.id)),
-);
+const FEATURED = PRODUCTS.filter((p) => p.images?.[0] && DESTAQUE_IDS.includes(p.id));
 
 const L = {
   pt: {
