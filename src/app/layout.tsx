@@ -10,9 +10,11 @@ import BackToTop from "@/components/BackToTop";
 import CheckoutNotice from "@/components/CheckoutNotice";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE_URL, SITE_DESC, GOOGLE_PROFILE_URL } from "@/data/site";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import GoogleAdsTag from "@/components/GoogleAdsTag";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import CookieBanner from "@/components/CookieBanner";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -144,6 +146,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        {/* Google Consent Mode v2 — corre ANTES do gtag.js. Por omissão nega
+            cookies de análise/publicidade (RGPD); o banner concede depois.
+            Se o visitante já aceitou numa visita anterior, arranca "granted". */}
+        <Script id="consent-default" strategy="beforeInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;var g=false;try{g=localStorage.getItem('sparklab-consent')==='granted';}catch(e){}gtag('consent','default',{ad_storage:g?'granted':'denied',analytics_storage:g?'granted':'denied',ad_user_data:g?'granted':'denied',ad_personalization:g?'granted':'denied',functionality_storage:'granted',security_storage:'granted'});`}
+        </Script>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <LanguageProvider>
           <CartProvider>
@@ -162,6 +170,7 @@ export default function RootLayout({
             <CartDrawer />
             <BackToTop />
             <CheckoutNotice />
+            <CookieBanner />
           </CartProvider>
           </LanguageProvider>
         </ThemeProvider>
