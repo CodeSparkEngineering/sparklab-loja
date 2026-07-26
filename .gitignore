@@ -46,3 +46,8 @@ next-env.d.ts
 /.claude/
 
 .vercel
+
+# Fotos de produto em bruto (staging) — as versões finais, otimizadas,
+# ficam em public/images/. As originais aqui não vão para o repo.
+/fotos-novas/*
+!/fotos-novas/README.md
