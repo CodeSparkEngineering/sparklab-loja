@@ -10,7 +10,7 @@ const L = {
     okText: (email: string | null) => (
       <>
         Obrigado pela tua compra. Vamos iniciar a produção da tua encomenda na
-        nossa Bambu Lab P1S e enviá-la com embalagem segura, via CTT registado.{' '}
+        nossas Bambu Lab P1S e enviá-la com embalagem segura, via CTT registado.{' '}
         {email ? <>Enviámos a confirmação para <strong>{email}</strong>.</> : null}
       </>
     ),
@@ -21,7 +21,7 @@ const L = {
     home: 'Página inicial',
     nextTitle: 'O que acontece a seguir',
     steps: [
-      'Começamos a produzir a tua peça na nossa Bambu Lab P1S.',
+      'Começamos a produzir a tua peça nas nossas Bambu Lab P1S.',
       'Avisamos-te no WhatsApp com o prazo e o número de seguimento.',
       'Enviamos via CTT registado para a tua morada, com tracking.',
     ],
@@ -43,7 +43,7 @@ const L = {
     home: 'Home page',
     nextTitle: 'What happens next',
     steps: [
-      'We start producing your piece on our Bambu Lab P1S.',
+      'We start producing your piece on our Bambu Lab P1S printers.',
       'We keep you posted on WhatsApp with the timeline and tracking number.',
       'We ship via registered CTT mail to your address, with tracking.',
     ],

@@ -12,7 +12,7 @@ const TEXTS = {
     steps: [
       { short: 'Envia a tua ideia', title: 'Mostra-nos a tua ideia (ou o teu modelo 3D)', text: 'Viste algo na nossa montra que gostaste? Ou tens um ficheiro 3D? Anexa o teu .STL ou .OBJ diretamente no formulário de orçamento — ou descreve só a ideia e nós tratamos da modelação.' },
       { short: 'Afinamos contigo', title: 'Afinamos os detalhes contigo', text: 'Cor, tamanho, material e acabamento. Definimos tudo em conjunto pelo WhatsApp — respondemos em até 2 horas úteis. Orçamento claro, sem surpresas.' },
-      { short: 'Produzimos e enviamos', title: 'Imprimimos, revemos e enviamos', text: 'Imprimimos a peça na nossa Bambu Lab P1S, fazemos os retoques finais e embalamos com segurança. Normalmente pronta em poucos dias úteis, com envio CTT registado e seguimento até à tua porta.' },
+      { short: 'Produzimos e enviamos', title: 'Imprimimos, revemos e enviamos', text: 'Imprimimos a peça nas nossas Bambu Lab P1S, fazemos os retoques finais e embalamos com segurança. Normalmente pronta em poucos dias úteis, com envio CTT registado e seguimento até à tua porta.' },
     ],
     ctaText: 'É simples assim. Tens uma peça em mente?',
     ctaPrimary: 'Pedir orçamento grátis',
@@ -24,7 +24,7 @@ const TEXTS = {
     steps: [
       { short: 'Send your idea', title: 'Show us your idea (or your 3D model)', text: 'Saw something you liked in our shop? Or got a 3D file? Attach your .STL or .OBJ right in the quote form — or just describe the idea and we handle the modeling.' },
       { short: 'We fine-tune together', title: 'We fine-tune the details with you', text: 'Color, size, material and finish. We define everything together over WhatsApp — we reply within 2 business hours. Clear quote, no surprises.' },
-      { short: 'We produce and ship', title: 'We print, review and ship', text: 'We print your piece on our Bambu Lab P1S, do the final touch-ups and pack it safely. Usually ready within a few business days, shipped via registered CTT mail, tracked to your door.' },
+      { short: 'We produce and ship', title: 'We print, review and ship', text: 'We print your piece on our Bambu Lab P1S printers, do the final touch-ups and pack it safely. Usually ready within a few business days, shipped via registered CTT mail, tracked to your door.' },
     ],
     ctaText: "It's that simple. Got a piece in mind?",
     ctaPrimary: 'Get a free quote',

@@ -25,7 +25,7 @@ const L = {
     specItems: ['PLA Premium (Bambu Lab)', '0.16 mm - 0.20 mm', 'Padrão Texturizado PEI', 'Bambu Lab P1S'],
     production: 'Produção & entrega',
     prodItems: [
-      'Impresso por nós, sob encomenda, na Bambu Lab P1S.',
+      'Impresso por nós, sob encomenda, nas nossas Bambu Lab P1S.',
       'Embalagem segura e envio via CTT registado para todo o Portugal, com seguimento.',
       'Envio grátis em encomendas a partir de 40€.',
     ],
@@ -43,7 +43,7 @@ const L = {
     specItems: ['Premium PLA (Bambu Lab)', '0.16 mm - 0.20 mm', 'Textured PEI finish', 'Bambu Lab P1S'],
     production: 'Production & delivery',
     prodItems: [
-      'Printed by us, made to order, on our Bambu Lab P1S.',
+      'Printed by us, made to order, on our Bambu Lab P1S printers.',
       'Secure packaging and registered CTT shipping anywhere in Portugal, with tracking.',
       'Free shipping on orders over €40.',
     ],

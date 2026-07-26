@@ -8,7 +8,7 @@ const L = {
   pt: {
     back: 'Voltar ao início',
     title: 'Termos e Condições',
-    updated: 'Última atualização: junho de 2026',
+    updated: 'Última atualização: julho de 2026',
     intro: (
       <>
         Ao comprar na <strong>SparkLab</strong>, concordas com as condições abaixo. Os
@@ -27,11 +27,21 @@ const L = {
     s2a: 'Entregamos para todo o Portugal, via CTT.',
     s2b: 'Envio grátis em encomendas a partir de 40€; abaixo disso, portes de 4,90€.',
     s2c: 'Os prazos são estimativas e podem variar conforme a produção e a transportadora.',
-    s3Title: '3. Peças personalizadas',
+    s3Title: '3. Devoluções e peças personalizadas',
+    s3a: (
+      <>
+        <strong>Peças do catálogo sem personalização:</strong> tens o direito de livre
+        resolução no prazo de <strong>14 dias</strong> após a receção, sem necessidade de
+        justificação. Basta contactar-nos (WhatsApp ou email) e devolver a peça no estado em
+        que a recebeste; reembolsamos após a receção. Os custos de devolução ficam a cargo
+        do cliente.
+      </>
+    ),
     s3: (
       <>
-        Peças com personalização (nome, cor ou modelo à medida) são feitas especialmente
-        para ti. Por isso, salvo defeito, não estão sujeitas ao direito de livre devolução.
+        <strong>Peças personalizadas</strong> (nome, cor ou modelo à medida) são feitas
+        especialmente para ti. Por isso, salvo defeito, não estão sujeitas ao direito de
+        livre resolução, conforme previsto na lei para bens personalizados.
       </>
     ),
     s4Title: '4. Ficheiros STL',
@@ -69,7 +79,7 @@ const L = {
   en: {
     back: 'Back to home',
     title: 'Terms and Conditions',
-    updated: 'Last updated: June 2026',
+    updated: 'Last updated: July 2026',
     intro: (
       <>
         By purchasing from <strong>SparkLab</strong>, you agree to the terms below. All
@@ -88,12 +98,21 @@ const L = {
     s2a: 'We deliver anywhere in Portugal via CTT.',
     s2b: 'Free shipping on orders of 40€ or more; below that, a 4,90€ shipping fee applies.',
     s2c: 'Delivery times are estimates and may vary depending on production and the carrier.',
-    s3Title: '3. Personalised pieces',
+    s3Title: '3. Returns and personalised pieces',
+    s3a: (
+      <>
+        <strong>Non-personalised catalog pieces:</strong> you have the right of withdrawal
+        within <strong>14 days</strong> of delivery, no justification needed. Just contact
+        us (WhatsApp or email) and return the piece in the condition you received it; we
+        refund upon receipt. Return shipping costs are borne by the customer.
+      </>
+    ),
     s3: (
       <>
-        Personalised pieces (with a name, a specific colour, or a made-to-measure design) are
-        made especially for you. For that reason, unless defective, they are not covered by
-        the right of free return.
+        <strong>Personalised pieces</strong> (with a name, a specific colour, or a
+        made-to-measure design) are made especially for you. For that reason, unless
+        defective, they are exempt from the right of withdrawal, as provided by law for
+        personalised goods.
       </>
     ),
     s4Title: '4. STL files',
@@ -162,6 +181,7 @@ export default function TermosContent() {
           </ul>
 
           <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s3Title}</h2>
+          <p>{t.s3a}</p>
           <p>{t.s3}</p>
 
           <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s4Title}</h2>

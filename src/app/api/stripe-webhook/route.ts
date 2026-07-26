@@ -215,7 +215,7 @@ async function sendCustomerEmail(session: Stripe.Checkout.Session) {
       totalLabel: 'Total pago',
       nextTitle: 'O que acontece a seguir',
       steps: [
-        'Começamos a produzir a(s) tua(s) peça(s) na nossa Bambu Lab P1S.',
+        'Começamos a produzir a(s) tua(s) peça(s) nas nossas Bambu Lab P1S.',
         'Avisamos-te no WhatsApp com o prazo e o número de seguimento.',
         'Enviamos via CTT registado para a tua morada, com tracking.',
       ],
@@ -230,7 +230,7 @@ async function sendCustomerEmail(session: Stripe.Checkout.Session) {
       totalLabel: 'Total paid',
       nextTitle: 'What happens next',
       steps: [
-        'We start producing your piece(s) on our Bambu Lab P1S.',
+        'We start producing your piece(s) on our Bambu Lab P1S printers.',
         'We keep you posted on WhatsApp with the timeline and tracking number.',
         'We ship via registered CTT mail to your address, with tracking.',
       ],

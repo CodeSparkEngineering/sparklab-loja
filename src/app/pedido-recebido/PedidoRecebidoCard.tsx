@@ -15,7 +15,7 @@ const L = {
     steps: [
       'Confirmamos os detalhes contigo no WhatsApp (material, tamanho, acabamento).',
       'Enviamos o orçamento com preço e prazo — sem compromisso.',
-      'Se aprovares, começamos a produzir na nossa Bambu Lab P1S.',
+      'Se aprovares, começamos a produzir nas nossas Bambu Lab P1S.',
     ],
     reply: 'Respondemos em até 2 horas úteis.',
     waBtn: 'Abrir o WhatsApp',
@@ -30,7 +30,7 @@ const L = {
     steps: [
       'We confirm the details with you on WhatsApp (material, size, finish).',
       'We send the quote with price and timeline — no strings attached.',
-      'If you approve it, we start producing on our Bambu Lab P1S.',
+      'If you approve it, we start producing on our Bambu Lab P1S printers.',
     ],
     reply: 'We reply within 2 business hours.',
     waBtn: 'Open WhatsApp',

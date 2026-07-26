@@ -40,7 +40,7 @@ const howToSchema = {
       "@type": "HowToStep",
       "position": 3,
       "name": "Imprimimos, revemos e enviamos",
-      "text": "A peça é impressa numa Bambu Lab P1S, revista e enviada via CTT registado com seguimento para qualquer ponto de Portugal."
+      "text": "A peça é impressa nas nossas Bambu Lab P1S, revista e enviada via CTT registado com seguimento para qualquer ponto de Portugal."
     }
   ]
 };

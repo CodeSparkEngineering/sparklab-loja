@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useLang } from '@/i18n/LanguageContext';
+import { GOOGLE_PROFILE_URL } from '@/data/site';
 
 const L = {
   pt: {
@@ -13,7 +14,8 @@ const L = {
     ctaPrimary: 'Fala connosco sobre o teu projeto',
     ctaGhost: 'Espreitar a montra',
     statPieces: 'peças criadas',
-    statRating: 'de quem recebeu',
+    statRating: 'no Google',
+    statRatingValue: '5,0',
   },
   en: {
     badge: 'inside our 3D workshop',
@@ -24,7 +26,8 @@ const L = {
     ctaPrimary: 'Talk to us about your project',
     ctaGhost: 'Browse the shop',
     statPieces: 'pieces created',
-    statRating: 'from happy customers',
+    statRating: 'on Google',
+    statRatingValue: '5.0',
   },
 } as const;
 
@@ -80,10 +83,17 @@ export default function Hero() {
               <span className="hero__stat-small">{t.statPieces}</span>
             </div>
             <span className="hero__stat-sep">·</span>
-            <div className="hero__stat-item">
-              <span className="hero__stat-big">4.9<span className="hero__star">★</span></span>
+            {/* Avaliação real do Perfil de Empresa — clicável, verificável. */}
+            <a
+              href={GOOGLE_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero__stat-item"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <span className="hero__stat-big">{t.statRatingValue}<span className="hero__star">★</span></span>
               <span className="hero__stat-small">{t.statRating}</span>
-            </div>
+            </a>
           </div>
         </div>
 
