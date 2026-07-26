@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { getWhatsAppLink } from '@/utils/whatsapp';
+import { CONTACT_EMAIL } from '@/data/site';
 import { useLang } from '@/i18n/LanguageContext';
 import TrustBadges from '@/components/TrustBadges';
 
@@ -102,6 +103,7 @@ export default function Footer() {
             <h4>{t.support}</h4>
             <ul>
               <li><a href="#" onClick={handleContact}>WhatsApp</a></li>
+              <li><a href={`mailto:${CONTACT_EMAIL}`}>Email</a></li>
               <li><Link href="/#orcamento">{t.quote}</Link></li>
               <li><Link href="/#faq">{t.faq}</Link></li>
               <li><Link href="/termos">{t.terms}</Link></li>

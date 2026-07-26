@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { useLang } from '@/i18n/LanguageContext';
+import { CONTACT_EMAIL } from '@/data/site';
 
 /**
  * Política de Privacidade — alinhada com o RGPD e com o que o site FAZ hoje:
@@ -10,8 +11,8 @@ import { useLang } from '@/i18n/LanguageContext';
  * ficheiros 3D do orçamento), Google Analytics 4 e Google Ads (ambos atrás
  * do banner de consentimento / Consent Mode v2).
  *
- * TODO (Israel): quando tiveres a denominação legal + NIF + email de
- * contacto dedicado, acrescenta-os na secção "Responsável pelo tratamento".
+ * TODO (Israel): quando tiveres a denominação legal + NIF, acrescenta-os
+ * na secção "Responsável pelo tratamento". (Email já incluído.)
  */
 
 const STORAGE_KEY = 'sparklab-consent';
@@ -40,9 +41,10 @@ const L = {
     updated: 'Última atualização: julho de 2026',
     intro: (
       <>
-        A <strong>SparkLab</strong> é uma loja de impressão 3D sediada em Sangalhos, Portugal
-        (contacto abaixo), e é a responsável pelo tratamento dos dados descritos nesta
-        política, de acordo com o Regulamento Geral sobre a Proteção de Dados (RGPD).
+        A <strong>SparkLab</strong> é uma loja de impressão 3D sediada em Sangalhos, Portugal,
+        e é a responsável pelo tratamento dos dados descritos nesta política, de acordo com o
+        Regulamento Geral sobre a Proteção de Dados (RGPD). Contacto:{' '}
+        <a href={`mailto:${CONTACT_EMAIL}`} className="text-orange-600 dark:text-orange-400 hover:underline">{CONTACT_EMAIL}</a>.
       </>
     ),
     s1Title: '1. Dados que recolhemos',
@@ -117,7 +119,8 @@ const L = {
       </>
     ),
     s8Title: '8. Contacto',
-    contactText: 'Para qualquer questão sobre privacidade, fala connosco pelo',
+    contactText: 'Para qualquer questão sobre privacidade, escreve-nos para',
+    contactAfter: 'ou fala connosco pelo',
     contactLink: 'WhatsApp (+351 916 853 802)',
     disclaimer: (
       <>
@@ -132,9 +135,10 @@ const L = {
     updated: 'Last updated: July 2026',
     intro: (
       <>
-        <strong>SparkLab</strong> is a 3D printing shop based in Sangalhos, Portugal
-        (contact below), and is the controller of the data described in this policy, in
-        accordance with the General Data Protection Regulation (GDPR).
+        <strong>SparkLab</strong> is a 3D printing shop based in Sangalhos, Portugal, and is
+        the controller of the data described in this policy, in accordance with the General
+        Data Protection Regulation (GDPR). Contact:{' '}
+        <a href={`mailto:${CONTACT_EMAIL}`} className="text-orange-600 dark:text-orange-400 hover:underline">{CONTACT_EMAIL}</a>.
       </>
     ),
     s1Title: '1. Data we collect',
@@ -209,7 +213,8 @@ const L = {
       </>
     ),
     s8Title: '8. Contact',
-    contactText: 'For any privacy-related questions, message us on',
+    contactText: 'For any privacy-related questions, email us at',
+    contactAfter: 'or message us on',
     contactLink: 'WhatsApp (+351 916 853 802)',
     disclaimer: (
       <>
@@ -282,6 +287,10 @@ export default function PrivacidadeContent() {
           <H>{t.s8Title}</H>
           <p>
             {t.contactText}{' '}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-orange-600 dark:text-orange-400 hover:underline">
+              {CONTACT_EMAIL}
+            </a>{' '}
+            {t.contactAfter}{' '}
             <a href="https://wa.me/351916853802" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
               {t.contactLink}
             </a>.

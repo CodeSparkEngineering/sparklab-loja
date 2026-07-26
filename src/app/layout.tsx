@@ -9,7 +9,7 @@ import CartDrawer from "@/components/CartDrawer";
 import BackToTop from "@/components/BackToTop";
 import CheckoutNotice from "@/components/CheckoutNotice";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { SITE_URL, SITE_DESC, GOOGLE_PROFILE_URL } from "@/data/site";
+import { SITE_URL, SITE_DESC, GOOGLE_PROFILE_URL, CONTACT_EMAIL } from "@/data/site";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import GoogleAdsTag from "@/components/GoogleAdsTag";
@@ -41,6 +41,7 @@ const schemaMarkup = {
   "logo": `${SITE_URL}/logo.jpg`,
   "image": `${SITE_URL}/logo.jpg`,
   "telephone": "+351916853802",
+  "email": CONTACT_EMAIL,
   "priceRange": "€-€€",
   "currenciesAccepted": "EUR",
   "paymentAccepted": "Visa, Mastercard (Stripe)",
@@ -52,6 +53,7 @@ const schemaMarkup = {
     "@type": "ContactPoint",
     "contactType": "customer service",
     "telephone": "+351916853802",
+    "email": CONTACT_EMAIL,
     "availableLanguage": ["Portuguese", "English"],
     "url": "https://wa.me/351916853802"
   },

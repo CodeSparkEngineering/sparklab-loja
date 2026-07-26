@@ -13,6 +13,9 @@ export const GOOGLE_PROFILE_URL = 'https://g.page/r/Cbi7jKyWFZtgEBI';
 /** Abre diretamente a caixa de "escrever avaliação". */
 export const GOOGLE_REVIEW_URL = 'https://g.page/r/Cbi7jKyWFZtgEBI/review';
 
+/** Email de contacto do negócio (privacidade, apoio, parcerias). */
+export const CONTACT_EMAIL = 'sparklabimpress3d@outlook.pt';
+
 /** Perfil público Google Skills do Israel — prova as certificações Google Cloud. */
 export const GOOGLE_SKILLS_URL =
   'https://www.skills.google/public_profiles/19f1e48a-2c56-4997-9529-1f921169eead';
