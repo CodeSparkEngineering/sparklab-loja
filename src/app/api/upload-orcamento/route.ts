@@ -45,9 +45,14 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     return NextResponse.json(jsonResponse);
   } catch (err) {
-    console.error('[upload-orcamento] erro:', err instanceof Error ? err.message : err);
+    const msg = err instanceof Error ? err.message : '';
+    console.error('[upload-orcamento] erro:', msg || err);
+    // Só devolvemos ao cliente as NOSSAS mensagens de validação; erros
+    // internos (ex.: token em falta) ficam genéricos — não expõem o estado
+    // da configuração do servidor.
+    const isValidation = msg.startsWith('Formato não suportado') || msg === 'Destino inválido.';
     return NextResponse.json(
-      { error: err instanceof Error ? err.message : 'Erro no upload.' },
+      { error: isValidation ? msg : 'Upload indisponível de momento.' },
       { status: 400 }
     );
   }

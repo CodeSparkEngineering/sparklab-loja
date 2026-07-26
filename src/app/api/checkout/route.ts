@@ -50,6 +50,11 @@ export async function POST(request: NextRequest) {
   if (incoming.length === 0) {
     return NextResponse.json({ error: 'Carrinho vazio.' }, { status: 400 });
   }
+  // Defesa em profundidade: o carrinho real nunca chega perto disto (catálogo
+  // tem ~23 produtos); um array gigante só pode ser um pedido forjado.
+  if (incoming.length > 100) {
+    return NextResponse.json({ error: 'Carrinho inválido.' }, { status: 400 });
+  }
 
   // O header Origin é controlado pelo cliente — valida contra os domínios
   // do site antes de o usar nos redirects do Stripe (evita que alguém crie
