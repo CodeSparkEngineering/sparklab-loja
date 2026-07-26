@@ -5,9 +5,17 @@ import { CardStack, type CardStackItem } from '@/components/ui/card-stack';
 import { PRODUCTS, formatEUR } from '@/data/products';
 import { useLang, pName, pDesc, tagLabel } from '@/i18n/LanguageContext';
 
-// Produtos em destaque ("Os mais pedidos") = mascotes/bananão + Porta-Latas
-// Monster e Benfica.
-const DESTAQUE_IDS = ['porta-latas-monster', 'porta-latas-benfica'];
+// Produtos em destaque ("Os mais pedidos") = mascotes/bananão + uma seleção
+// manual (porta-latas + os produtos novos). Editar esta lista para mudar.
+const DESTAQUE_IDS = [
+  'suporte-comando-neon',
+  'trofeu-quimono',
+  'porta-latas-ratinha-rosa',
+  'porta-chaves-tecla-fidget',
+  'chaveiro-mini-caneca',
+  'porta-latas-monster',
+  'porta-latas-benfica',
+];
 const FEATURED = PRODUCTS.filter(
   (p) => p.images?.[0] && (p.id.startsWith('miniatura') || DESTAQUE_IDS.includes(p.id)),
 );
