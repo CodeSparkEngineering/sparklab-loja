@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useLang } from '@/i18n/LanguageContext';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
 import { getWhatsAppLink } from '@/utils/whatsapp';
-import { fireQuoteConversion } from '@/components/GoogleAdsTag';
 
 const L = {
   pt: {
@@ -45,9 +44,9 @@ export default function PedidoRecebidoCard() {
   const t = L[lang];
   const [quoteMsg, setQuoteMsg] = useState<string | null>(null);
 
-  // Regista a conversão de lead no Google Ads (no-op se a tag não estiver ativa).
+  // A conversão de lead no Google Ads é registada globalmente no submit do
+  // #quote-form (ver GoogleAdsTag), por isso aqui só recuperamos a mensagem.
   useEffect(() => {
-    fireQuoteConversion();
     // Recupera a mensagem composta no formulário (com o link do ficheiro, se
     // houver) — se o popup do WhatsApp tiver sido bloqueado, o botão abaixo
     // envia a mensagem COMPLETA em vez do texto genérico. Leitura única de
