@@ -7,6 +7,7 @@ import { CartProvider } from "@/context/CartContext";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import CartDrawer from "@/components/CartDrawer";
 import BackToTop from "@/components/BackToTop";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 import CheckoutNotice from "@/components/CheckoutNotice";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE_URL, SITE_DESC, GOOGLE_PROFILE_URL, CONTACT_EMAIL } from "@/data/site";
@@ -171,6 +172,7 @@ export default function RootLayout({
             {children}
             <CartDrawer />
             <BackToTop />
+            <WhatsAppFloat />
             <CheckoutNotice />
             <CookieBanner />
           </CartProvider>

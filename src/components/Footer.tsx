@@ -103,6 +103,7 @@ export default function Footer() {
             <h4>{t.support}</h4>
             <ul>
               <li><a href="#" onClick={handleContact}>WhatsApp</a></li>
+              <li><a href="tel:+351916853802">+351 916 853 802</a></li>
               <li><a href={`mailto:${CONTACT_EMAIL}`}>Email</a></li>
               <li><Link href="/#orcamento">{t.quote}</Link></li>
               <li><Link href="/#faq">{t.faq}</Link></li>
