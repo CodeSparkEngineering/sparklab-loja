@@ -106,6 +106,19 @@ export const GUIAS: Guia[] = [
     emoji: '🎁',
     image: '/images/prendas-personalizadas-impressao-3d.webp',
   },
+  {
+    slug: 'impressao-3d-para-empresas',
+    title: 'Impressão 3D para empresas: protótipos, gabaris e pequenas séries',
+    titleEn: '3D printing for businesses: prototypes, jigs and small batches',
+    description:
+      'Como as empresas usam a impressão 3D FDM para validar protótipos, fabricar gabaris e ferramentas de linha, e produzir pequenas séries — sem moldes caros, sem quantidade mínima e com fatura. Inclui um caso real português.',
+    descriptionEn:
+      'How businesses use FDM 3D printing to validate prototypes, make jigs and line tooling, and run small batches — no expensive molds, no minimum order, and with a proper invoice. Includes a real Portuguese case study.',
+    datePublished: '2026-07-30',
+    minutes: 7,
+    emoji: '🏭',
+    image: '/images/impressao-3d-para-empresas.webp',
+  },
 ];
 
 export function getGuiaBySlug(slug: string): Guia | undefined {
