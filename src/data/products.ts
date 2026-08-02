@@ -102,6 +102,33 @@ export const PRODUCTS: Product[] = [
     ]
   },
   {
+    id: 'spinner-bola-espiral',
+    name: 'Spinner Bola Espiral',
+    nameEn: 'Spiral Ball Spinner',
+    desc: 'Bola espiral hipnótica com textura de picos, impressa em 3D peça a peça (print-in-place). Em repouso é uma bola espinhosa; giras e as camadas abrem-se num vórtice em leque. Fidget anti-stress super satisfatório e peça de secretária. Escolhe a tua cor.',
+    descEn: 'A hypnotic spiky-textured spiral ball, 3D-printed in one piece (print-in-place). At rest it is a spiky sphere; spin it and the layers fan open into a vortex. A super-satisfying anti-stress fidget and desk piece. Pick your color.',
+    price: 5.90,
+    tag: 'Articulados',
+    tone: 'orange',
+    icon: '🌀',
+    images: [
+      '/images/spinner-bola-espiral-1.webp',
+      '/images/spinner-bola-espiral-2.webp',
+      '/images/spinner-bola-espiral-3.webp',
+      '/images/spinner-bola-espiral-4.webp',
+      '/images/spinner-bola-espiral-5.webp'
+    ],
+    customizations: [
+      {
+        id: 'cor',
+        label: 'Cor à escolha (ex: rosa, laranja, verde)',
+        labelEn: 'Color of choice (e.g. pink, orange, green)',
+        type: 'text',
+        maxLength: 30
+      }
+    ]
+  },
+  {
     id: 'candeeiro-raposa',
     name: 'Candeeiro Raposa',
     nameEn: 'Fox Lantern Lamp',
