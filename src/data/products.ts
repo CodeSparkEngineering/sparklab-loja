@@ -49,6 +49,32 @@ export const PRODUCTS: Product[] = [
   { id: 'miniatura-mascote-canada', name: 'Mascote do Canadá', nameEn: 'Canada Mascot', desc: 'Mascote oficial impresso em PLA de alta qualidade.', descEn: 'Official mascot printed in high-quality PLA.', price: 30, tag: 'Colecionável', tone: 'orange', icon: '🦌', images: ['/images/mascote-canada-1.jpg', '/images/mascote-canada-2.jpg', '/images/mascote-canada-3.jpg'] },
   { id: 'miniatura-aguia-america', name: 'Águia América', nameEn: 'America Eagle', desc: 'Mascote da Copa impresso em PLA de alta resolução.', descEn: 'World Cup mascot printed in high-resolution PLA.', price: 30, tag: 'Colecionável', tone: 'blue', icon: '🦅', images: ['/images/aguia-america-1.jpg', '/images/aguia-america-2.jpg', '/images/aguia-america-3.jpg'] },
   {
+    id: 'tubarao-articulado',
+    name: 'Tubarão Articulado',
+    nameEn: 'Articulated Shark',
+    desc: 'Tubarão totalmente flexível impresso em 3D — cada segmento mexe e ondula como um tubarão a nadar. Feito peça a peça, sem colas nem montagem. Ótimo como fidget anti-stress, brinquedo ou peça de secretária. Escolhe a tua cor.',
+    descEn: 'A fully flexible 3D-printed shark — every segment moves and ripples like a swimming shark. Made in one piece, no glue or assembly. Great as an anti-stress fidget, a toy or a desk piece. Pick your color.',
+    price: 4.5,
+    tag: 'Articulados',
+    tone: 'indigo',
+    icon: '🦈',
+    images: [
+      '/images/tubarao-articulado-1.webp',
+      '/images/tubarao-articulado-2.webp',
+      '/images/tubarao-articulado-3.webp',
+      '/images/tubarao-articulado-4.webp'
+    ],
+    customizations: [
+      {
+        id: 'cor',
+        label: 'Cor à escolha (verde, vermelho, azul, laranja, roxo/azul)',
+        labelEn: 'Color of choice (green, red, blue, orange, purple/blue)',
+        type: 'text',
+        maxLength: 30
+      }
+    ]
+  },
+  {
     id: 'porta-latas-monster',
     name: 'Porta-Latas Monster',
     nameEn: 'Monster Can Holder',
