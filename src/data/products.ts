@@ -80,7 +80,7 @@ export const PRODUCTS: Product[] = [
     nameEn: 'Spiral Spinner',
     desc: 'Spinner espiral hipnótico impresso em 3D — gira o eixo central e as camadas em estrela cascateiam num vórtice hipnotizante. Print-in-place, sem colas nem montagem. Fidget anti-stress e peça de secretária que prende o olhar. Escolhe a tua cor.',
     descEn: 'A hypnotic 3D-printed spiral spinner — spin the central axis and the star-shaped layers cascade into a mesmerizing vortex. Print-in-place, no glue or assembly. An anti-stress fidget and an eye-catching desk piece. Pick your color.',
-    price: 6,
+    price: 4.95,
     tag: 'Articulados',
     tone: 'purple',
     icon: '🌀',
