@@ -92,6 +92,7 @@ const TAG_LABELS_EN: Record<string, string> = {
   'Porta-Chaves': 'Keychains',
   'Canecas': 'Mugs',
   'Articulados': 'Articulated',
+  'Luminárias': 'Lamps',
 };
 
 export function tagLabel(tag: string, lang: Lang): string {

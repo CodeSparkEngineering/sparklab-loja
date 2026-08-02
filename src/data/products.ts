@@ -102,6 +102,24 @@ export const PRODUCTS: Product[] = [
     ]
   },
   {
+    id: 'candeeiro-raposa',
+    name: 'Candeeiro Raposa',
+    nameEn: 'Fox Lantern Lamp',
+    desc: 'Candeeiro decorativo de uma raposa em estilo de blocos que segura uma lanterna acesa. A luz vem de uma vela LED incluída (chama artificial, sem calor nem fios, a pilhas) e dá um brilho quente e aconchegante — perfeito como luz de presença na mesa de cabeceira, secretária ou quarto das crianças. Impresso a várias cores nas nossas Bambu Lab.',
+    descEn: "A decorative lamp of a blocky-style fox holding a lit lantern. The light comes from an included LED tea light (flameless, no heat, battery-powered) for a warm, cozy glow — perfect as a night light on a bedside table, desk or a kids' room. Printed in multiple colors on our Bambu Lab printers.",
+    price: 35,
+    tag: 'Luminárias',
+    tone: 'orange',
+    icon: '🦊',
+    images: [
+      '/images/candeeiro-raposa-1.webp',
+      '/images/candeeiro-raposa-2.webp',
+      '/images/candeeiro-raposa-3.webp',
+      '/images/candeeiro-raposa-4.webp',
+      '/images/candeeiro-raposa-5.webp'
+    ]
+  },
+  {
     id: 'porta-latas-monster',
     name: 'Porta-Latas Monster',
     nameEn: 'Monster Can Holder',
