@@ -44,6 +44,7 @@ const L = {
     material: 'Material',
     qty: 'Quantidade',
     file: 'Ficheiro 3D (opcional)',
+    fileHint: 'Não tens ficheiro? Sem problema — descreve a ideia e nós desenhamos.',
     filePick: 'Clica para anexar STL, OBJ, 3MF ou STEP',
     desc: 'Descrição da peça',
     descPh: 'Dimensões aproximadas, cor desejada, uso final, prazo ideal…',
@@ -80,6 +81,7 @@ const L = {
     material: 'Material',
     qty: 'Quantity',
     file: '3D file (optional)',
+    fileHint: "No file? No problem — describe your idea and we'll design it for you.",
     filePick: 'Click to attach STL, OBJ, 3MF or STEP',
     desc: 'Part description',
     descPh: 'Approximate dimensions, desired color, final use, ideal deadline…',
@@ -299,6 +301,7 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
 
         <div className="qf__field">
           <label htmlFor="qf-file">{t.file}</label>
+          <p className="text-[13px] leading-snug text-stone-500 dark:text-stone-400 -mt-1 mb-2 normal-case tracking-normal">{t.fileHint}</p>
           <label className={`qf__file ${fileData ? 'qf__file--has' : ''}`} id="qf-file-label" htmlFor="qf-file">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
             <span id="qf-file-text">
