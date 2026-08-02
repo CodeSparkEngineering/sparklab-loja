@@ -13,8 +13,7 @@ const L = {
  * Botão flutuante "voltar ao topo". Aparece depois de ~1 ecrã de scroll e faz
  * scroll suave para o topo (respeita prefers-reduced-motion). Fica em z-90 —
  * por baixo do header (100), da barra sticky do produto (110) e do carrinho
- * (200), para nunca tapar nenhuma acção. À direita, empilha-se ACIMA do botão
- * de telefone flutuante (ver WhatsAppFloat) — daí o bottom elevado.
+ * (200), para nunca tapar nenhuma acção.
  */
 export default function BackToTop() {
   const { lang } = useLang();
@@ -38,7 +37,7 @@ export default function BackToTop() {
       onClick={toTop}
       aria-label={L[lang].label}
       title={L[lang].label}
-      className={`fixed z-[90] right-4 sm:right-6 bottom-[calc(5.25rem+env(safe-area-inset-bottom))] sm:bottom-[5.75rem]
+      className={`fixed z-[90] right-4 sm:right-6 bottom-[calc(1rem+env(safe-area-inset-bottom))] sm:bottom-6
         grid place-items-center w-11 h-11 rounded-full
         bg-white/90 dark:bg-stone-900/90 backdrop-blur
         border border-stone-200 dark:border-white/10 shadow-lg
