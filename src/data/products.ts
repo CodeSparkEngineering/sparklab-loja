@@ -75,6 +75,33 @@ export const PRODUCTS: Product[] = [
     ]
   },
   {
+    id: 'spinner-espiral',
+    name: 'Spinner Espiral',
+    nameEn: 'Spiral Spinner',
+    desc: 'Spinner espiral hipnótico impresso em 3D — gira o eixo central e as camadas em estrela cascateiam num vórtice hipnotizante. Print-in-place, sem colas nem montagem. Fidget anti-stress e peça de secretária que prende o olhar. Escolhe a tua cor.',
+    descEn: 'A hypnotic 3D-printed spiral spinner — spin the central axis and the star-shaped layers cascade into a mesmerizing vortex. Print-in-place, no glue or assembly. An anti-stress fidget and an eye-catching desk piece. Pick your color.',
+    price: 6,
+    tag: 'Articulados',
+    tone: 'purple',
+    icon: '🌀',
+    images: [
+      '/images/spinner-espiral-1.webp',
+      '/images/spinner-espiral-2.webp',
+      '/images/spinner-espiral-3.webp',
+      '/images/spinner-espiral-4.webp',
+      '/images/spinner-espiral-5.webp'
+    ],
+    customizations: [
+      {
+        id: 'cor',
+        label: 'Cor à escolha (verde, amarelo, rosa, azul/roxo)',
+        labelEn: 'Color of choice (green, yellow, pink, blue/purple)',
+        type: 'text',
+        maxLength: 30
+      }
+    ]
+  },
+  {
     id: 'porta-latas-monster',
     name: 'Porta-Latas Monster',
     nameEn: 'Monster Can Holder',
