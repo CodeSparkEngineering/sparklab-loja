@@ -103,6 +103,25 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Personalizações OBRIGATÓRIAS validadas AQUI, no servidor — a UI também
+    // obriga, mas um POST direto à API não passa por ela; sem isto seria
+    // possível pagar uma peça personalizada sem os dados para a produzir.
+    const missingReq = product.customizations?.find(
+      (def) => def.required && !customizations[def.id]
+    );
+    if (missingReq) {
+      const label = lang === 'en' && missingReq.labelEn ? missingReq.labelEn : missingReq.label;
+      return NextResponse.json(
+        {
+          error:
+            lang === 'en'
+              ? `Missing required personalization "${label}" for ${product.nameEn ?? product.name}.`
+              : `Falta a personalização obrigatória "${label}" em ${product.name}.`,
+        },
+        { status: 400 }
+      );
+    }
+
     let customText = '';
     if (Object.keys(customizations).length > 0) {
       customText = '\nPersonalização: ' + Object.entries(customizations)
