@@ -49,23 +49,28 @@ export default function OrcamentoLanding() {
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4h.01c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3zM12 21.7h-.01c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 1 1 18.2-5.1c0 5.4-4.4 9.8-9.8 9.8z" /></svg>
             {t.reply}
           </p>
+
+          {/* Credibilidade logo no primeiro ecrã: avaliação + volume, junto ao badge */}
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-sm text-stone-600 dark:text-stone-300">
+            <a
+              href={GOOGLE_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-medium hover:text-orange-600 dark:hover:text-orange-400"
+            >
+              <GoogleMark size={15} />
+              <span className="text-amber-500">★</span> {t.tRating}
+            </a>
+            <span className="inline-flex items-center gap-1.5 font-medium">🖨️ {t.tPieces}</span>
+          </div>
         </div>
 
         {/* Formulário logo no primeiro ecrã */}
         <QuoteForm aside={false} />
 
-        {/* Selos de confiança por baixo */}
+        {/* Reforço na transação: envio + pagamento seguro (a avaliação e o
+            volume estão lá em cima, no primeiro ecrã, junto ao badge). */}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-stone-600 dark:text-stone-300">
-          <a
-            href={GOOGLE_PROFILE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 font-medium hover:text-orange-600 dark:hover:text-orange-400"
-          >
-            <GoogleMark size={15} />
-            <span className="text-amber-500">★</span> {t.tRating}
-          </a>
-          <span className="inline-flex items-center gap-1.5 font-medium">🖨️ {t.tPieces}</span>
           <span className="inline-flex items-center gap-1.5 font-medium">🚚 {t.tShip}</span>
           <span className="inline-flex items-center gap-1.5 font-medium">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
