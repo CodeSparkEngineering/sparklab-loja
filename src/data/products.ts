@@ -129,6 +129,21 @@ export const PRODUCTS: Product[] = [
     ]
   },
   {
+    id: 'panda-vermelho-articulado',
+    name: 'Panda Vermelho Articulado',
+    nameEn: 'Articulated Red Panda',
+    desc: 'Panda vermelho articulado impresso em 3D, totalmente flexível — a cauda às riscas laranja e castanho ondula segmento a segmento e as patas mexem. Print-in-place, sem colas nem montagem. Fofo, anti-stress e ótimo como prenda ou peça de secretária.',
+    descEn: 'A fully flexible 3D-printed articulated red panda — the orange-and-brown striped tail ripples segment by segment and the paws move. Print-in-place, no glue or assembly. Cute, anti-stress and great as a gift or a desk piece.',
+    price: 7.90,
+    tag: 'Articulados',
+    tone: 'orange',
+    icon: '🐾',
+    images: [
+      '/images/panda-vermelho-articulado-1.webp',
+      '/images/panda-vermelho-articulado-2.webp'
+    ]
+  },
+  {
     id: 'candeeiro-raposa',
     name: 'Candeeiro Raposa',
     nameEn: 'Fox Lantern Lamp',

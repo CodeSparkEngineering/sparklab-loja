@@ -62,6 +62,9 @@ export default async function ProdutoPage({ params }: { params: Promise<{ id: st
       "@type": "Offer",
       "priceCurrency": "EUR",
       "price": product.price,
+      // Recomendado pelo Google para rich results de produto — evita o aviso
+      // "priceValidUntil em falta" na Search Console. Rola para o fim do ano seguinte.
+      "priceValidUntil": `${new Date().getFullYear() + 1}-12-31`,
       "availability": "https://schema.org/InStock",
       "itemCondition": "https://schema.org/NewCondition",
       "url": `${SITE_URL}/produto/${product.id}`,
