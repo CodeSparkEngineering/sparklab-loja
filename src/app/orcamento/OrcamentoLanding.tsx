@@ -27,6 +27,14 @@ const L = {
     quote: 'Excelente trabalho! Ficou muito bem feito, com atenção aos detalhes e um acabamento impecável. Recomendo sem dúvida!',
     quoteName: 'Caroliny Alves',
     quoteSource: 'Avaliação no Google',
+    faqTitle: 'Perguntas frequentes',
+    faq: [
+      { q: 'Quanto custa uma impressão 3D em Portugal?', a: 'Depende do tamanho, do material e do tempo de impressão da peça. Por isso o orçamento é gratuito e sem compromisso — envia a tua ideia ou ficheiro e recebes o preço exato em até 2 horas úteis.' },
+      { q: 'Não tenho um ficheiro 3D. Conseguem ajudar?', a: 'Sim. Se não tens ficheiro STL, descreve a ideia (ou envia uma foto ou desenho) e a nossa equipa trata da modelação 3D por ti.' },
+      { q: 'Que ficheiros posso enviar?', a: 'Aceitamos STL, OBJ, 3MF e STEP. Podes anexá-los diretamente no formulário.' },
+      { q: 'Como posso pagar?', a: 'Depois de aprovares o orçamento, podes pagar por cartão (Stripe) ou MB WAY. Pagamento seguro, sempre.' },
+      { q: 'Fazem envio para todo o país?', a: 'Sim, enviamos para todo o Portugal via CTT registado com seguimento. Envio grátis a partir de 40 €.' },
+    ],
   },
   en: {
     h1: '3D printing quote in Portugal',
@@ -46,6 +54,14 @@ const L = {
     quote: 'Excellent work! It turned out really well, with attention to detail and a flawless finish. I recommend it without a doubt!',
     quoteName: 'Caroliny Alves',
     quoteSource: 'Google review',
+    faqTitle: 'Frequently asked questions',
+    faq: [
+      { q: 'How much does 3D printing cost in Portugal?', a: "It depends on the size, material and print time of the piece. That's why the quote is free and non-binding — send your idea or file and get the exact price within 2 business hours." },
+      { q: "I don't have a 3D file. Can you help?", a: "Yes. If you don't have an STL file, describe the idea (or send a photo or sketch) and our team handles the 3D modeling for you." },
+      { q: 'What files can I send?', a: 'We accept STL, OBJ, 3MF and STEP. You can attach them directly in the form.' },
+      { q: 'How can I pay?', a: 'After you approve the quote, you can pay by card (Stripe) or MB WAY. Secure payment, always.' },
+      { q: 'Do you ship across the country?', a: 'Yes, we ship across Portugal via registered CTT mail with tracking. Free shipping over €40.' },
+    ],
   },
 } as const;
 
@@ -64,6 +80,17 @@ function Stars() {
 export default function OrcamentoLanding() {
   const { lang } = useLang();
   const t = L[lang];
+
+  // FAQPage sempre em PT (canónico do site), emitido no SSR e citável pela IA.
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: L.pt.faq.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
 
   return (
     // `dark` força o aspeto escuro nesta landing (o vídeo é escuro): o
@@ -173,7 +200,27 @@ export default function OrcamentoLanding() {
           </aside>
         </div>
 
-        <div className="mt-10 text-center">
+        {/* FAQ — responde às objeções no momento da decisão + FAQPage schema */}
+        <section className="mx-auto mt-16 max-w-2xl">
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c') }}
+          />
+          <h2 className="mb-6 text-center text-2xl font-bold text-white">{t.faqTitle}</h2>
+          <div className="space-y-3">
+            {t.faq.map((item, i) => (
+              <details key={i} className="group rounded-xl border border-white/10 bg-stone-900/70 px-5 py-4 backdrop-blur-md">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold text-stone-100 [&::-webkit-details-marker]:hidden">
+                  {item.q}
+                  <svg className="h-5 w-5 shrink-0 text-orange-400 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed text-stone-300">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <div className="mt-12 text-center">
           <Link href="/#catalogo" className="text-sm text-stone-300 underline underline-offset-2 hover:text-orange-300">
             {t.home}
           </Link>
