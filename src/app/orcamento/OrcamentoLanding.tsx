@@ -19,11 +19,13 @@ const L = {
     tPay: 'Pagamento seguro',
     home: 'Ver o catálogo',
     nextTitle: 'O que acontece a seguir',
+    stepLabel: 'Passo',
     steps: [
-      'Envias o teu ficheiro 3D — ou só a descrição da ideia. Sem ficheiro? Nós tratamos da modelação.',
-      'Respondemos em até 2 horas úteis no WhatsApp, com o preço e o prazo — sem compromisso.',
-      'Aprovas e produzimos nas nossas Bambu Lab P1S, com envio CTT registado para todo o Portugal.',
+      { title: 'Envia a tua ideia', desc: 'Ficheiro 3D ou só a descrição. Sem ficheiro? Nós tratamos da modelação.' },
+      { title: 'Recebe o orçamento', desc: 'Preço e prazo em até 2 horas úteis, no WhatsApp — sem compromisso.' },
+      { title: 'Produzimos e enviamos', desc: 'Impresso nas nossas Bambu Lab P1S e enviado via CTT registado, para todo o Portugal.' },
     ],
+    nextFoot: 'Orçamento gratuito · Sem compromisso',
     quote: 'Excelente trabalho! Ficou muito bem feito, com atenção aos detalhes e um acabamento impecável. Recomendo sem dúvida!',
     quoteName: 'Caroliny Alves',
     quoteSource: 'Avaliação no Google',
@@ -46,11 +48,13 @@ const L = {
     tPay: 'Secure payment',
     home: 'View the catalog',
     nextTitle: 'What happens next',
+    stepLabel: 'Step',
     steps: [
-      'You send your 3D file — or just describe the idea. No file? We handle the modeling.',
-      'We reply within 2 business hours on WhatsApp with the price and timeline — no strings attached.',
-      'You approve and we produce on our Bambu Lab P1S printers, shipped via registered CTT across Portugal.',
+      { title: 'Send your idea', desc: 'A 3D file or just a description. No file? We handle the modeling.' },
+      { title: 'Get your quote', desc: 'Price and timeline within 2 business hours, on WhatsApp — no strings attached.' },
+      { title: 'We produce and ship', desc: 'Printed on our Bambu Lab P1S machines and shipped via registered CTT, across Portugal.' },
     ],
+    nextFoot: 'Free quote · No strings attached',
     quote: 'Excellent work! It turned out really well, with attention to detail and a flawless finish. I recommend it without a doubt!',
     quoteName: 'Caroliny Alves',
     quoteSource: 'Google review',
@@ -159,21 +163,46 @@ export default function OrcamentoLanding() {
 
           {/* Painel de persuasão */}
           <aside className="space-y-5 lg:sticky lg:top-28">
-            {/* O que acontece a seguir */}
+            {/* O que acontece a seguir — timeline com ícones e ligação entre passos */}
             <div className="rounded-2xl border border-white/10 bg-stone-900/70 p-5 backdrop-blur-md">
-              <h2 className="mb-4 text-xs font-bold uppercase tracking-wide text-stone-400">
+              <h2 className="mb-5 text-xs font-bold uppercase tracking-wide text-stone-400">
                 {t.nextTitle}
               </h2>
-              <ol className="space-y-4">
+              <ol>
                 {t.steps.map((step, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-orange-500 text-sm font-bold text-white">
-                      {i + 1}
+                  <li key={i} className="relative flex gap-4 pb-6 last:pb-0">
+                    {/* Linha que liga os passos (não no último) */}
+                    {i < t.steps.length - 1 && (
+                      <span
+                        aria-hidden
+                        className="absolute left-[19px] top-11 bottom-0 w-px bg-gradient-to-b from-orange-500/60 to-orange-500/10"
+                      />
+                    )}
+                    {/* Ícone do passo, com halo da marca */}
+                    <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-[0_4px_16px_-4px_rgba(249,115,22,.55)] ring-1 ring-white/20">
+                      {i === 0 && (
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
+                      )}
+                      {i === 1 && (
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" /></svg>
+                      )}
+                      {i === 2 && (
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13" rx="1" /><path d="M16 8h4l3 3v5h-7V8z" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></svg>
+                      )}
                     </span>
-                    <p className="mt-0.5 text-sm leading-relaxed text-stone-200">{step}</p>
+                    <div className="min-w-0 pt-0.5">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-orange-400">
+                        {t.stepLabel} {i + 1}
+                      </span>
+                      <h3 className="mt-0.5 text-sm font-bold text-white">{step.title}</h3>
+                      <p className="mt-1 text-[13px] leading-relaxed text-stone-300">{step.desc}</p>
+                    </div>
                   </li>
                 ))}
               </ol>
+              <p className="mt-4 border-t border-white/10 pt-3 text-center text-xs font-medium text-stone-400">
+                ✓ {t.nextFoot}
+              </p>
             </div>
 
             {/* Depoimento real (5★, Google) */}
