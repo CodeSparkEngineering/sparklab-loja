@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useLang } from '@/i18n/LanguageContext';
 import QuoteForm from '@/components/QuoteForm';
+import AuroraBackground from '@/components/AuroraBackground';
 import { StripeMark, GoogleMark } from '@/components/brand-marks';
 import { GOOGLE_PROFILE_URL } from '@/data/site';
 
@@ -65,8 +66,9 @@ export default function OrcamentoLanding() {
   const t = L[lang];
 
   return (
-    <main className="min-h-screen bg-[var(--bg)] pt-28 pb-20">
-      <div className="container mx-auto max-w-5xl px-4">
+    <main className="relative min-h-screen bg-[var(--bg)] pt-28 pb-20">
+      <AuroraBackground />
+      <div className="container relative z-10 mx-auto max-w-5xl px-4">
         {/* Título literal (intent match) + subtítulo + promessa + credibilidade */}
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-stone-900 dark:text-stone-100">
