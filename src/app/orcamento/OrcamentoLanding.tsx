@@ -17,6 +17,15 @@ const L = {
     tShip: 'Envio CTT registado',
     tPay: 'Pagamento seguro',
     home: 'Ver o catálogo',
+    nextTitle: 'O que acontece a seguir',
+    steps: [
+      'Envias o teu ficheiro 3D — ou só a descrição da ideia. Sem ficheiro? Nós tratamos da modelação.',
+      'Respondemos em até 2 horas úteis no WhatsApp, com o preço e o prazo — sem compromisso.',
+      'Aprovas e produzimos nas nossas Bambu Lab P1S, com envio CTT registado para todo o Portugal.',
+    ],
+    quote: 'Excelente trabalho! Ficou muito bem feito, com atenção aos detalhes e um acabamento impecável. Recomendo sem dúvida!',
+    quoteName: 'Caroliny Alves',
+    quoteSource: 'Avaliação no Google',
   },
   en: {
     h1: '3D printing quote in Portugal',
@@ -27,8 +36,29 @@ const L = {
     tShip: 'Registered CTT shipping',
     tPay: 'Secure payment',
     home: 'View the catalog',
+    nextTitle: 'What happens next',
+    steps: [
+      'You send your 3D file — or just describe the idea. No file? We handle the modeling.',
+      'We reply within 2 business hours on WhatsApp with the price and timeline — no strings attached.',
+      'You approve and we produce on our Bambu Lab P1S printers, shipped via registered CTT across Portugal.',
+    ],
+    quote: 'Excellent work! It turned out really well, with attention to detail and a flawless finish. I recommend it without a doubt!',
+    quoteName: 'Caroliny Alves',
+    quoteSource: 'Google review',
   },
 } as const;
+
+function Stars() {
+  return (
+    <div className="flex gap-0.5 text-amber-400" role="img" aria-label="5/5">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <svg key={i} width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      ))}
+    </div>
+  );
+}
 
 export default function OrcamentoLanding() {
   const { lang } = useLang();
@@ -36,9 +66,9 @@ export default function OrcamentoLanding() {
 
   return (
     <main className="min-h-screen bg-[var(--bg)] pt-28 pb-20">
-      <div className="container mx-auto max-w-2xl px-4">
-        {/* Título literal (intent match) + subtítulo + promessa */}
-        <div className="text-center mb-8">
+      <div className="container mx-auto max-w-5xl px-4">
+        {/* Título literal (intent match) + subtítulo + promessa + credibilidade */}
+        <div className="mx-auto mb-10 max-w-2xl text-center">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-stone-900 dark:text-stone-100">
             {t.h1}
           </h1>
@@ -49,8 +79,6 @@ export default function OrcamentoLanding() {
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4h.01c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3zM12 21.7h-.01c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 1 1 18.2-5.1c0 5.4-4.4 9.8-9.8 9.8z" /></svg>
             {t.reply}
           </p>
-
-          {/* Credibilidade logo no primeiro ecrã: avaliação + volume, junto ao badge */}
           <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-sm text-stone-600 dark:text-stone-300">
             <a
               href={GOOGLE_PROFILE_URL}
@@ -65,20 +93,58 @@ export default function OrcamentoLanding() {
           </div>
         </div>
 
-        {/* Formulário logo no primeiro ecrã */}
-        <QuoteForm aside={false} />
+        {/* Desktop: 2 colunas (formulário + persuasão). Mobile: empilha com o
+            formulário PRIMEIRO (form-first para o tráfego dos anúncios). */}
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-10">
+          {/* Formulário */}
+          <div>
+            <QuoteForm aside={false} />
+          </div>
 
-        {/* Reforço na transação: envio + pagamento seguro (a avaliação e o
-            volume estão lá em cima, no primeiro ecrã, junto ao badge). */}
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-stone-600 dark:text-stone-300">
-          <span className="inline-flex items-center gap-1.5 font-medium">🚚 {t.tShip}</span>
-          <span className="inline-flex items-center gap-1.5 font-medium">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
-            {t.tPay} <StripeMark />
-          </span>
+          {/* Painel de persuasão */}
+          <aside className="space-y-5 lg:sticky lg:top-28">
+            {/* O que acontece a seguir */}
+            <div className="rounded-2xl border border-[var(--line-strong)] bg-[var(--bg-card)] p-5">
+              <h2 className="mb-4 text-xs font-bold uppercase tracking-wide text-stone-500 dark:text-stone-400">
+                {t.nextTitle}
+              </h2>
+              <ol className="space-y-4">
+                {t.steps.map((step, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-orange-500 text-sm font-bold text-white">
+                      {i + 1}
+                    </span>
+                    <p className="mt-0.5 text-sm leading-relaxed text-stone-600 dark:text-stone-300">{step}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {/* Depoimento real (5★, Google) */}
+            <figure className="rounded-2xl border border-[var(--line-strong)] bg-[var(--bg-card)] p-5">
+              <Stars />
+              <blockquote className="mt-2 text-sm leading-relaxed text-stone-700 dark:text-stone-200">
+                “{t.quote}”
+              </blockquote>
+              <figcaption className="mt-3 flex items-center gap-1.5 text-xs text-stone-500 dark:text-stone-400">
+                <GoogleMark size={13} />
+                <strong className="font-semibold text-stone-600 dark:text-stone-300">{t.quoteName}</strong>
+                <span aria-hidden="true">·</span> {t.quoteSource}
+              </figcaption>
+            </figure>
+
+            {/* Garantias de transação */}
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 px-1 text-sm text-stone-600 dark:text-stone-300">
+              <span className="inline-flex items-center gap-1.5 font-medium">🚚 {t.tShip}</span>
+              <span className="inline-flex items-center gap-1.5 font-medium">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                {t.tPay} <StripeMark />
+              </span>
+            </div>
+          </aside>
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-10 text-center">
           <Link href="/#catalogo" className="text-sm text-stone-500 dark:text-stone-400 underline underline-offset-2 hover:text-orange-600 dark:hover:text-orange-400">
             {t.home}
           </Link>
