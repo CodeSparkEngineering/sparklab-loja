@@ -2,7 +2,7 @@
 
 import { ShieldCheck, Printer } from 'lucide-react';
 import { useLang } from '@/i18n/LanguageContext';
-import { StripeMark, VisaMark, MastercardMark, BambuMark } from '@/components/brand-marks';
+import { StripeMark, VisaMark, MastercardMark, MBWayMark, BambuMark } from '@/components/brand-marks';
 
 const L = {
   pt: {
@@ -41,6 +41,7 @@ export default function TrustBadges() {
               <span className="mx-0.5 h-3 w-px bg-stone-300 dark:bg-white/15" aria-hidden="true" />
               <VisaMark />
               <MastercardMark />
+              <MBWayMark />
             </span>
           </div>
         </div>

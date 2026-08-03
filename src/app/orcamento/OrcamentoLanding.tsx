@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLang } from '@/i18n/LanguageContext';
 import QuoteForm from '@/components/QuoteForm';
 import AuroraBackground from '@/components/AuroraBackground';
-import { StripeMark, GoogleMark } from '@/components/brand-marks';
+import { StripeMark, GoogleMark, MBWayMark } from '@/components/brand-marks';
 import { GOOGLE_PROFILE_URL } from '@/data/site';
 
 const L = {
@@ -68,6 +69,13 @@ export default function OrcamentoLanding() {
   return (
     <main className="relative min-h-screen bg-[var(--bg)] pt-28 pb-20">
       <AuroraBackground />
+
+      {/* Logo no canto superior esquerdo — marca + regresso à página inicial */}
+      <Link href="/" aria-label="SparkLab — página inicial" className="logo absolute left-4 top-6 z-20 sm:left-6 sm:top-7">
+        <Image src="/logo.jpg" alt="SparkLab" width={32} height={32} className="logo__mark" />
+        <span>Spark<em>Lab</em></span>
+      </Link>
+
       <div className="container relative z-10 mx-auto max-w-5xl px-4">
         {/* Título literal (intent match) + subtítulo + promessa + credibilidade */}
         <div className="mx-auto mb-10 max-w-2xl text-center">
@@ -140,7 +148,7 @@ export default function OrcamentoLanding() {
               <span className="inline-flex items-center gap-1.5 font-medium">🚚 {t.tShip}</span>
               <span className="inline-flex items-center gap-1.5 font-medium">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
-                {t.tPay} <StripeMark />
+                {t.tPay} <StripeMark /> <MBWayMark />
               </span>
             </div>
           </aside>

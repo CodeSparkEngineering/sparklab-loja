@@ -51,6 +51,19 @@ export function GoogleMark({ size = 16 }: { size?: number }) {
   );
 }
 
+/** MB WAY — método de pagamento móvel português (badge de texto na cor da marca). */
+export function MBWayMark() {
+  return (
+    <span
+      aria-label="MB WAY"
+      className="inline-flex items-center rounded-[4px] px-1.5 py-[3px] text-[10px] font-extrabold uppercase leading-none tracking-tight text-white"
+      style={{ background: '#e30613' }}
+    >
+      MB&nbsp;WAY
+    </span>
+  );
+}
+
 /** Bambu Lab — glifo + nome, na cor de marca verde. */
 export function BambuMark() {
   return (
