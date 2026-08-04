@@ -61,7 +61,7 @@ export default function ProductPageContent({ product }: { product: Product }) {
       {/* Breadcrumb / Back button */}
       <Link
         href="/#catalogo"
-        className="inline-flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors mb-8"
+        className="inline-flex items-center gap-2 py-2.5 text-stone-500 hover:text-stone-800 transition-colors mb-6"
       >
         <ArrowLeft className="w-4 h-4" />
         {t.back}

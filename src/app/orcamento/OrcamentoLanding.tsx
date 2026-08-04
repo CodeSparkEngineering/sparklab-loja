@@ -253,7 +253,7 @@ export default function OrcamentoLanding() {
         </section>
 
         <div className="mt-12 text-center">
-          <Link href="/#catalogo" className="text-sm text-stone-300 underline underline-offset-2 hover:text-orange-300">
+          <Link href="/#catalogo" className="inline-block px-4 py-3 text-sm text-stone-300 underline underline-offset-2 hover:text-orange-300">
             {t.home}
           </Link>
         </div>

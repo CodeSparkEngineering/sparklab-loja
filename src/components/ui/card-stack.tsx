@@ -355,26 +355,33 @@ export function CardStack<T extends CardStackItem>({
             type="button"
             onClick={prev}
             aria-label={prevLabel}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-300 dark:border-white/15 text-stone-600 dark:text-stone-300 hover:border-orange-400 hover:text-orange-500 transition-colors text-lg leading-none"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 dark:border-white/15 text-stone-600 dark:text-stone-300 hover:border-orange-400 hover:text-orange-500 transition-colors text-lg leading-none"
           >
             ‹
           </button>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             {items.map((it, idx) => {
               const on = idx === active;
               return (
+                // Caixa de toque 32px (WCAG 2.5.8) com o ponto visual dentro —
+                // o alvo era o próprio ponto de 8px, impossível de acertar.
                 <button
                   key={it.id}
                   onClick={() => setActive(idx)}
-                  className={cn(
-                    "h-2 rounded-full transition-all",
-                    on
-                      ? "w-5 bg-orange-500"
-                      : "w-2 bg-foreground/30 hover:bg-foreground/50",
-                  )}
+                  className="grid h-8 w-8 place-items-center"
                   aria-label={it.title}
                   aria-current={on || undefined}
-                />
+                >
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "h-2 rounded-full transition-all",
+                      on
+                        ? "w-5 bg-orange-500"
+                        : "w-2 bg-foreground/30 hover:bg-foreground/50",
+                    )}
+                  />
+                </button>
               );
             })}
           </div>
@@ -382,7 +389,7 @@ export function CardStack<T extends CardStackItem>({
             type="button"
             onClick={next}
             aria-label={nextLabel}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-300 dark:border-white/15 text-stone-600 dark:text-stone-300 hover:border-orange-400 hover:text-orange-500 transition-colors text-lg leading-none"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 dark:border-white/15 text-stone-600 dark:text-stone-300 hover:border-orange-400 hover:text-orange-500 transition-colors text-lg leading-none"
           >
             ›
           </button>

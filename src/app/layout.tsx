@@ -7,6 +7,7 @@ import { CartProvider } from "@/context/CartContext";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import CartDrawer from "@/components/CartDrawer";
 import BackToTop from "@/components/BackToTop";
+import SkipLink from "@/components/SkipLink";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import CheckoutNotice from "@/components/CheckoutNotice";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -81,6 +82,14 @@ const schemaMarkup = {
   "areaServed": {
     "@type": "Country",
     "name": "Portugal"
+  },
+  // Loja online com atendimento WhatsApp 24h — coerente com o Perfil de
+  // Empresa no Google (a consistência NAP+horário reforça o SEO local).
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "opens": "00:00",
+    "closes": "23:59"
   },
   "knowsAbout": [
     "Impressão 3D FDM",
@@ -158,6 +167,8 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <LanguageProvider>
           <CartProvider>
+            {/* Primeiro elemento focável de todas as páginas (WCAG 2.4.1) */}
+            <SkipLink />
             <BackgroundScrollVideo src="/videos/hero.mp4" />
             <div className="scroll-progress" aria-hidden="true" />
             <ScrollFX />

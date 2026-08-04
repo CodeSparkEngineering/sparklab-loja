@@ -1663,8 +1663,10 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 }
 .footer__tag { margin: 18px 0 0; color: var(--ink-dim); max-width: 300px; font-size: 15px; }
 .footer__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-.footer__cols ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
-.footer__cols a { font-family: var(--f-head); color: var(--ink-dim); font-size: 14px; transition: color .15s ease; }
+.footer__cols ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
+/* inline-block + padding: alvo de toque ≥28px (WCAG 2.5.8) sem mudar o visual
+   — o gap da lista desce de 10px para 2px para compensar. */
+.footer__cols a { font-family: var(--f-head); color: var(--ink-dim); font-size: 14px; transition: color .15s ease; display: inline-block; padding: 7px 0; }
 .footer__cols a:hover { color: var(--ink); }
 .socials a { display: inline-flex; align-items: center; gap: 10px; }
 .footer__base {
@@ -1673,7 +1675,7 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   color: var(--ink-dim);
   font-family: var(--f-head); font-size: 13px;
 }
-.footer__base a { color: var(--ink-dim); transition: color .15s ease; }
+.footer__base a { color: var(--ink-dim); transition: color .15s ease; display: inline-block; padding: 8px 4px; margin: -4px 0; }
 .footer__base a:hover { color: var(--ink); }
 
 /* ─────────────────────────────────────────────────────────
