@@ -103,8 +103,11 @@ export default function OrcamentoLanding() {
       {/* Fundo em vídeo — impressão 3D em grande plano, escurecido para leitura.
           Leve (~160 KB), mudo, em loop; o poster pinta de imediato. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        {/* brightness/saturate avivam o filamento laranja; o overlay é mais
+            leve no telemóvel (o recorte vertical do 16:9 já esconde muito) e
+            mais forte no desktop, onde há mais vídeo à mostra. */}
         <video
-          className="h-full w-full object-cover"
+          className="h-full w-full scale-105 object-cover [filter:brightness(1.35)_saturate(1.25)]"
           autoPlay
           muted
           loop
@@ -113,7 +116,7 @@ export default function OrcamentoLanding() {
         >
           <source src="/videos/orcamento-bg.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/72 to-stone-950/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/50 via-stone-950/40 to-stone-950/85 sm:from-stone-950/75 sm:via-stone-950/65 sm:to-stone-950/90" />
       </div>
 
       {/* Logo no canto superior esquerdo — marca + regresso à página inicial */}
