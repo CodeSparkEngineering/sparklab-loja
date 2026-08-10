@@ -19,6 +19,8 @@ export type Guia = {
   minutes: number;
   emoji: string;
   image?: string;
+  /** Palavras-chave SEO do artigo (meta keywords + reforço temático). */
+  keywords?: string[];
 };
 
 export function gTitle(g: Guia, lang: 'pt' | 'en'): string {
@@ -130,6 +132,17 @@ export const GUIAS: Guia[] = [
     datePublished: '2026-08-04',
     minutes: 6,
     emoji: '🔧',
+    image: '/images/pecas-de-substituicao-impressao-3d.webp',
+    keywords: [
+      'peça de substituição impressão 3D',
+      'reparar em vez de comprar',
+      'peça de plástico partida',
+      'direito à reparação',
+      'peças descontinuadas',
+      'reproduzir peça partida',
+      'impressão 3D Portugal',
+      'reparação eletrodomésticos peças',
+    ],
   },
 ];
 
@@ -158,6 +171,7 @@ export function guiaMetadata(slug: string) {
   return {
     title: g.title,
     description: g.description,
+    ...(g.keywords ? { keywords: g.keywords } : {}),
     alternates: { canonical: `/guias/${g.slug}` },
     openGraph: {
       type: 'article' as const,
