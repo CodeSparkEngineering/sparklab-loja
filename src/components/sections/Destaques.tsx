@@ -8,13 +8,18 @@ import { useLang, pName, pDesc, tagLabel } from '@/i18n/LanguageContext';
 // Produtos em destaque ("Os mais pedidos") — seleção manual (só os produtos
 // novos). Editar esta lista para mudar o que aparece no card-stack.
 const DESTAQUE_IDS = [
+  'candeeiro-dragao',
   'suporte-comando-neon',
   'trofeu-quimono',
   'porta-latas-ratinha-rosa',
   'porta-chaves-tecla-fidget',
   'chaveiro-mini-caneca',
 ];
-const FEATURED = PRODUCTS.filter((p) => p.images?.[0] && DESTAQUE_IDS.includes(p.id));
+// Percorre DESTAQUE_IDS (e não PRODUCTS) para respeitar a ordem escolhida
+// acima — a primeira carta é a que se vê primeiro no card-stack.
+const FEATURED = DESTAQUE_IDS
+  .map((id) => PRODUCTS.find((p) => p.id === id))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p?.images?.[0]));
 
 const L = {
   pt: {
