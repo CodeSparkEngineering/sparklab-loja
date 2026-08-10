@@ -144,6 +144,22 @@ export const PRODUCTS: Product[] = [
     ]
   },
   {
+    id: 'candeeiro-dragao',
+    name: 'Candeeiro Dragão',
+    nameEn: 'Dragon Flame Lamp',
+    desc: 'Candeeiro decorativo de um dragão a cuspir fogo — a chama é o próprio abajur translúcido, que acende com a luz LED incluída (a pilhas, sem calor nem fios) e enche a divisão com um brilho quente alaranjado. Peça de exposição impressa em 3D nas nossas Bambu Lab, com asas abertas e detalhe nas escamas. Perfeita para gamers, fãs de fantasia, mesa de cabeceira ou secretária.',
+    descEn: 'A decorative lamp of a fire-breathing dragon — the flame itself is the translucent shade, lit by the included LED light (battery-powered, no heat, no wires), filling the room with a warm orange glow. A statement piece 3D-printed on our Bambu Lab machines, with spread wings and detailed scales. Perfect for gamers, fantasy fans, a bedside table or a desk.',
+    price: 44.90,
+    tag: 'Luminárias',
+    tone: 'red',
+    icon: '🐉',
+    images: [
+      '/images/candeeiro-dragao-1.webp',
+      '/images/candeeiro-dragao-2.webp',
+      '/images/candeeiro-dragao-3.webp'
+    ]
+  },
+  {
     id: 'candeeiro-raposa',
     name: 'Candeeiro Raposa',
     nameEn: 'Fox Lantern Lamp',
