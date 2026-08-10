@@ -119,6 +119,18 @@ export const GUIAS: Guia[] = [
     emoji: '🏭',
     image: '/images/impressao-3d-para-empresas.webp',
   },
+  {
+    slug: 'pecas-de-substituicao-impressao-3d',
+    title: 'Reparar em vez de comprar: peças de substituição impressas em 3D',
+    titleEn: 'Repair instead of replacing: 3D-printed spare parts',
+    description:
+      'Desde 31 de julho de 2026, o Direito à Reparação é lei em toda a UE. Quando a peça de plástico já não se vende — puxadores, dobradiças, engrenagens, clips — nós reproduzimo-la em impressão 3D a partir de uma foto e das medidas. Como funciona, que materiais usamos e quanto custa.',
+    descriptionEn:
+      "Since 31 July 2026, the Right to Repair is law across the EU. When the plastic part is no longer sold — knobs, hinges, gears, clips — we reproduce it with 3D printing from a photo and measurements. How it works, which materials we use and what it costs.",
+    datePublished: '2026-08-04',
+    minutes: 6,
+    emoji: '🔧',
+  },
 ];
 
 export function getGuiaBySlug(slug: string): Guia | undefined {
