@@ -35,10 +35,15 @@ export default async function SucessoPage({
   const { session_id } = await searchParams;
   const session = session_id ? await getSession(session_id) : null;
   const paid = session?.payment_status === 'paid';
-  const email =
-    session?.customer_details?.email ?? session?.customer_email ?? null;
+  // Só expomos dados do cliente (email/total) quando o pagamento está
+  // confirmado. Assim, mesmo com um session_id válido mas não pago, nada
+  // de pessoal chega ao browser (defesa em profundidade — o ID Stripe já
+  // é impossível de adivinhar, isto é a segunda camada).
+  const email = paid
+    ? session?.customer_details?.email ?? session?.customer_email ?? null
+    : null;
   const total =
-    typeof session?.amount_total === 'number' ? session.amount_total / 100 : null;
+    paid && typeof session?.amount_total === 'number' ? session.amount_total / 100 : null;
 
   return (
     <main className="order">
