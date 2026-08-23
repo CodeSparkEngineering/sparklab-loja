@@ -1,6 +1,32 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
 
+// ── Content-Security-Policy ────────────────────────────────────────────────
+// As páginas são estáticas (SSG) e não usam nonce por request, por isso
+// `script-src`/`style-src` incluem 'unsafe-inline' — necessário para os scripts
+// inline do Next (hidratação) e do gtag/consent-mode. O resto fica trancado:
+// só 'self' + os domínios que o site realmente usa (Google Analytics/Ads/Tag
+// Manager e Vercel Analytics). O Stripe é redirect server-side e o WhatsApp
+// são links de navegação — nenhum precisa de entradas no cliente.
+// Em dev acrescenta-se 'unsafe-eval' (React/HMR) e ws:/wss: (HMR); e omite-se
+// upgrade-insecure-requests (senão o localhost http partiria).
+const isDev = process.env.NODE_ENV === "development";
+const contentSecurityPolicy = [
+  `default-src 'self'`,
+  `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://va.vercel-scripts.com${isDev ? " 'unsafe-eval'" : ""}`,
+  `style-src 'self' 'unsafe-inline'`,
+  `img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://www.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net`,
+  `font-src 'self' data:`,
+  `connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com${isDev ? " ws: wss:" : ""}`,
+  `frame-src 'self' https://www.googletagmanager.com https://td.doubleclick.net`,
+  `worker-src 'self' blob:`,
+  `object-src 'none'`,
+  `base-uri 'self'`,
+  `form-action 'self'`,
+  `frame-ancestors 'self'`,
+  ...(isDev ? [] : [`upgrade-insecure-requests`]),
+].join("; ");
+
 const nextConfig: NextConfig = {
   // Permite acessar o dev server pela URL de rede (não só localhost).
   // Sem isto, o Next 16 bloqueia os recursos de dev (JS/HMR) em acessos
@@ -42,6 +68,9 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         headers: [
+          // Restringe de onde podem vir scripts, estilos, imagens, ligações e
+          // frames — mitiga XSS e injeção de código de fontes não autorizadas.
+          { key: "Content-Security-Policy", value: contentSecurityPolicy },
           // Impede o browser de "adivinhar" MIME types (bloqueia sniffing).
           { key: "X-Content-Type-Options", value: "nosniff" },
           // Impede o site de ser embebido em iframes de terceiros (clickjacking).
