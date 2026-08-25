@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { PRODUCTS } from '@/data/products';
+import { VISIBLE_PRODUCTS } from '@/data/products';
 import { GUIAS } from '@/data/guias';
 import { SITE_URL } from '@/data/site';
 
@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Imagem de capa do guia no sitemap → Google Imagens indexa os artigos.
     ...(g.image ? { images: [`${SITE_URL}${g.image}`] } : {}),
   }));
-  const productEntries = PRODUCTS.map((p) => ({
+  const productEntries = VISIBLE_PRODUCTS.map((p) => ({
     url: `${SITE_URL}/produto/${p.id}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,

@@ -33,6 +33,12 @@ export type Product = {
   customizations?: CustomizationOption[];
   /** true = arquivo digital (STL) entregue por download, sem envio físico. */
   digital?: boolean;
+  /**
+   * true = produto NÃO listado no catálogo/sitemap/destaques (fica "por
+   * publicar"). A página /produto/<id> continua a funcionar por link direto.
+   * Usado para produtos ainda sem foto — remover a flag quando a foto existir.
+   */
+  hidden?: boolean;
   /** Material de impressão (default: 'PLA'). Usado no schema Product. */
   material?: string;
   /**
@@ -43,11 +49,60 @@ export type Product = {
   stl?: { file: string; downloadName: string };
 };
 
+// A ordem das secções na página segue a ordem em que cada `tag` aparece aqui.
+// Regra do catálogo: os articulados/fidgets partilham a secção "Articulados";
+// TODOS os outros produtos têm cada um a SUA própria secção (não agrupar).
 export const PRODUCTS: Product[] = [
-  { id: 'miniatura-bananao', name: 'Bananão', nameEn: 'Big Banana', desc: 'Miniatura colecionável do Bananão — uma banana bem-disposta com atitude, impressa em 3D em PLA nas nossas Bambu Lab. Peça de secretária divertida e conversa garantida, com acabamento liso e cor viva. Feita sob encomenda em Portugal.', descEn: 'A collectible Big Banana miniature — a cheerful banana with attitude, 3D-printed in PLA on our Bambu Lab machines. A fun desk piece and a guaranteed conversation starter, with a smooth finish and vivid color. Made to order in Portugal.', price: 30, tag: 'Colecionável', tone: 'orange', icon: '🍌', images: ['/images/bananao.jpg', '/images/bananao-2.jpg', '/images/bananao-3.jpg'] },
-  { id: 'miniatura-canarinho', name: 'Canarinho Furioso', nameEn: 'Furious Canary', desc: 'Miniatura colecionável do Canarinho, o passarinho nas cores da seleção do Brasil, impressa em 3D em PLA de alta resolução. Perfeita para adeptos de futebol e para dar vida à secretária ou à estante. Impressa sob encomenda nas nossas Bambu Lab, em Portugal.', descEn: 'A collectible Canary miniature — the little bird in the colors of Brazil, 3D-printed in high-resolution PLA. Perfect for football fans and for bringing your desk or shelf to life. Printed to order on our Bambu Lab machines, in Portugal.', price: 30, tag: 'Colecionável', tone: 'olive', icon: '🦜', images: ['/images/canarinho-front.jpg', '/images/canarinho.jpg', '/images/canarinho-2.jpg'] },
-  { id: 'miniatura-mascote-canada', name: 'Mascote do Canadá', nameEn: 'Canada Mascot', desc: 'Miniatura colecionável com o tema do Canadá, impressa em 3D em PLA nas nossas Bambu Lab. Uma lembrança simpática para adeptos e colecionadores, com acabamento cuidado e cores fortes. Feita sob encomenda em Portugal.', descEn: 'A collectible Canada-themed miniature, 3D-printed in PLA on our Bambu Lab printers. A friendly keepsake for fans and collectors, with a careful finish and bold colors. Made to order in Portugal.', price: 30, tag: 'Colecionável', tone: 'orange', icon: '🦌', images: ['/images/mascote-canada-1.jpg', '/images/mascote-canada-2.jpg', '/images/mascote-canada-3.jpg'] },
-  { id: 'miniatura-aguia-america', name: 'Águia América', nameEn: 'America Eagle', desc: 'Miniatura colecionável de uma águia cheia de detalhe, impressa em 3D em PLA de alta resolução nas nossas Bambu Lab. Uma peça temática de futebol para adeptos e colecionadores, ideal para a secretária ou a estante. Impressa sob encomenda em Portugal.', descEn: 'A highly detailed collectible eagle miniature, 3D-printed in high-resolution PLA on our Bambu Lab machines. A football-themed piece for fans and collectors, ideal for the desk or shelf. Printed to order in Portugal.', price: 30, tag: 'Colecionável', tone: 'blue', icon: '🦅', images: ['/images/aguia-america-1.jpg', '/images/aguia-america-2.jpg', '/images/aguia-america-3.jpg'] },
+  // ─────────────────────────── ARTICULADOS ───────────────────────────
+  {
+    id: 'dragao-articulado',
+    name: 'Dragão Articulado',
+    nameEn: 'Articulated Dragon',
+    desc: 'Dragão articulado impresso em 3D, totalmente flexível — o corpo comprido ondula segmento a segmento, como um dragão vivo, com escamas em relevo, espinhos ao longo das costas, chifres e patas com garras. Print-in-place, sem colas nem montagem. Peça de destaque na secretária ou estante e um fidget anti-stress irresistível. Escolhe a tua cor.',
+    descEn: 'A fully flexible 3D-printed articulated dragon — the long body ripples segment by segment, like a living dragon, with raised scales, a spined back, horns and clawed feet. Print-in-place, no glue or assembly. A statement desk or shelf piece and an irresistible anti-stress fidget. Pick your color.',
+    price: 19.90,
+    tag: 'Articulados',
+    tone: 'blue',
+    icon: '🐉',
+    images: [
+      '/images/dragao-articulado-1.webp',
+      '/images/dragao-articulado-2.webp',
+      '/images/dragao-articulado-3.webp'
+    ],
+    customizations: [
+      { id: 'cor', label: 'Cor à escolha (ex: azul, verde, roxo, dourado)', labelEn: 'Color of choice (e.g. blue, green, purple, gold)', type: 'text', maxLength: 30 }
+    ]
+  },
+  {
+    id: 'polvo-articulado',
+    hidden: true, // por publicar — falta foto
+    name: 'Polvo Articulado',
+    nameEn: 'Flexi Octopus (Articulated)',
+    desc: 'Polvo articulado impresso em 3D com oito tentáculos que se enrolam e ondulam. Print-in-place, sem colas nem montagem. Fidget anti-stress super satisfatório, brinquedo ou peça de secretária. Escolhe a tua cor.',
+    descEn: 'A 3D-printed articulated octopus with eight tentacles that curl and ripple. Print-in-place, no glue or assembly. A super-satisfying anti-stress fidget, toy or desk piece. Pick your color.',
+    price: 9.90,
+    tag: 'Articulados',
+    tone: 'red',
+    icon: '🐙',
+    customizations: [
+      { id: 'cor', label: 'Cor à escolha (ex: laranja, roxo, azul)', labelEn: 'Color of choice (e.g. orange, purple, blue)', type: 'text', maxLength: 30 }
+    ]
+  },
+  {
+    id: 'dinossauro-articulado',
+    hidden: true, // por publicar — falta foto
+    name: 'Dinossauro Articulado',
+    nameEn: 'Articulated Dinosaur',
+    desc: 'Dinossauro articulado impresso em 3D, totalmente flexível — o corpo e a cauda mexem segmento a segmento. Print-in-place, sem colas nem montagem. Divertido, anti-stress e ótimo como prenda para miúdos e graúdos. Escolhe a tua cor.',
+    descEn: 'A fully flexible 3D-printed articulated dinosaur — the body and tail move segment by segment. Print-in-place, no glue or assembly. Fun, anti-stress and a great gift for kids and grown-ups alike. Pick your color.',
+    price: 12.90,
+    tag: 'Articulados',
+    tone: 'olive',
+    icon: '🦕',
+    customizations: [
+      { id: 'cor', label: 'Cor à escolha (ex: verde, azul, laranja)', labelEn: 'Color of choice (e.g. green, blue, orange)', type: 'text', maxLength: 30 }
+    ]
+  },
   {
     id: 'tubarao-articulado',
     name: 'Tubarão Articulado',
@@ -72,6 +127,21 @@ export const PRODUCTS: Product[] = [
         type: 'text',
         maxLength: 30
       }
+    ]
+  },
+  {
+    id: 'panda-vermelho-articulado',
+    name: 'Panda Vermelho Articulado',
+    nameEn: 'Articulated Red Panda',
+    desc: 'Panda vermelho articulado impresso em 3D, totalmente flexível — a cauda às riscas laranja e castanho ondula segmento a segmento e as patas mexem. Print-in-place, sem colas nem montagem. Fofo, anti-stress e ótimo como prenda ou peça de secretária.',
+    descEn: 'A fully flexible 3D-printed articulated red panda — the orange-and-brown striped tail ripples segment by segment and the paws move. Print-in-place, no glue or assembly. Cute, anti-stress and great as a gift or a desk piece.',
+    price: 7.90,
+    tag: 'Articulados',
+    tone: 'orange',
+    icon: '🐾',
+    images: [
+      '/images/panda-vermelho-articulado-1.webp',
+      '/images/panda-vermelho-articulado-2.webp'
     ]
   },
   {
@@ -128,21 +198,114 @@ export const PRODUCTS: Product[] = [
       }
     ]
   },
+
+  // ────────────────────────── SUPORTE DE TELEMÓVEL ──────────────────────────
   {
-    id: 'panda-vermelho-articulado',
-    name: 'Panda Vermelho Articulado',
-    nameEn: 'Articulated Red Panda',
-    desc: 'Panda vermelho articulado impresso em 3D, totalmente flexível — a cauda às riscas laranja e castanho ondula segmento a segmento e as patas mexem. Print-in-place, sem colas nem montagem. Fofo, anti-stress e ótimo como prenda ou peça de secretária.',
-    descEn: 'A fully flexible 3D-printed articulated red panda — the orange-and-brown striped tail ripples segment by segment and the paws move. Print-in-place, no glue or assembly. Cute, anti-stress and great as a gift or a desk piece.',
-    price: 7.90,
-    tag: 'Articulados',
-    tone: 'orange',
-    icon: '🐾',
-    images: [
-      '/images/panda-vermelho-articulado-1.webp',
-      '/images/panda-vermelho-articulado-2.webp'
+    id: 'suporte-celular',
+    hidden: true, // por publicar — falta foto
+    name: 'Suporte de Telemóvel',
+    nameEn: '3D Phone Stand',
+    desc: 'Suporte de telemóvel impresso em 3D, estável e com o ângulo perfeito para veres vídeos, chamadas ou receitas na secretária ou na cozinha. Compatível com qualquer telemóvel, com ou sem capa. Escolhe a tua cor.',
+    descEn: 'A 3D-printed phone stand, stable and at the perfect angle to watch videos, take calls or follow recipes on your desk or in the kitchen. Fits any phone, with or without a case. Pick your color.',
+    price: 9.90,
+    tag: 'Suporte de Telemóvel',
+    tone: 'blue',
+    icon: '📱',
+    customizations: [
+      { id: 'cor', label: 'Cor à escolha (opcional)', labelEn: 'Color of choice (optional)', type: 'text', maxLength: 30 }
     ]
   },
+
+  // ──────────────────────────────── DOCK MAGSAFE ────────────────────────────────
+  {
+    id: 'dock-magsafe-organizador',
+    hidden: true, // por publicar — falta foto
+    name: 'Dock MagSafe',
+    nameEn: 'MagSafe Dock',
+    desc: 'Base de carregamento MagSafe impressa em 3D — encaixa o teu carregador MagSafe e carrega o telemóvel na vertical, sempre à vista e no ângulo certo. (Carregador não incluído.) Escolhe a tua cor.',
+    descEn: 'A 3D-printed MagSafe charging dock — slot in your MagSafe charger and charge your phone upright, always in view and at the right angle. (Charger not included.) Pick your color.',
+    price: 24.90,
+    tag: 'Dock MagSafe',
+    tone: 'green',
+    icon: '🔋',
+    customizations: [
+      { id: 'cor', label: 'Cor à escolha (opcional)', labelEn: 'Color of choice (optional)', type: 'text', maxLength: 30 }
+    ]
+  },
+
+  // ─────────────────────────── SUPORTE DE HEADSET ───────────────────────────
+  {
+    id: 'organizador-modular-headset',
+    hidden: true, // por publicar — falta foto
+    name: 'Suporte de Headset',
+    nameEn: 'Headset Stand',
+    desc: 'Suporte de headset impresso em 3D para o teu setup gaming — pendura os auscultadores em destaque e mantém a secretária arrumada e livre de cabos emaranhados. Escolhe a tua cor.',
+    descEn: 'A 3D-printed headset stand for your gaming setup — hang your headphones on display and keep your desk tidy and free of tangled cables. Pick your color.',
+    price: 24.90,
+    tag: 'Suporte de Headset',
+    tone: 'purple',
+    icon: '🎧',
+    customizations: [
+      { id: 'cor', label: 'Cor à escolha (opcional)', labelEn: 'Color of choice (optional)', type: 'text', maxLength: 30 }
+    ]
+  },
+
+  // ─────────────────────────── COMANDO PS5/XBOX ───────────────────────────
+  {
+    id: 'suporte-controle-ps5-xbox',
+    hidden: true, // por publicar — falta foto
+    name: 'Suporte de Comando PS5/Xbox Personalizado',
+    nameEn: 'Personalized PS5/Xbox Controller Stand',
+    desc: 'Suporte de comando impresso em 3D para PS5 ou Xbox, com placa personalizável com o teu nome ou gamertag. Mantém o comando arrumado e em destaque na secretária ou no setup gaming. Escolhe a consola e a cor.',
+    descEn: 'A 3D-printed controller stand for PS5 or Xbox, with a plate you personalize with your name or gamertag. Keeps your controller tidy and on display on your desk or gaming setup. Choose your console and color.',
+    price: 19.90,
+    tag: 'Comando PS5/Xbox',
+    tone: 'blue',
+    icon: '🎮',
+    customizations: [
+      { id: 'consola', label: 'Consola (PS5 ou Xbox)', labelEn: 'Console (PS5 or Xbox)', type: 'text', maxLength: 10, required: true },
+      { id: 'nome', label: 'Nome/gamertag para a placa (opcional)', labelEn: 'Name/gamertag for the plate (optional)', type: 'text', maxLength: 16 }
+    ]
+  },
+
+  // ──────────────────────────── COMANDO NEON VICE ────────────────────────────
+  { id: 'suporte-comando-neon', name: 'Suporte de Comando PS5 — Neon Vice', nameEn: 'PS5 Controller Stand — Neon Vice', desc: 'Suporte de comando PS5 com atitude de cidade neon dos anos 80: palmeiras verdes, base preta com detalhes cor-de-rosa e uma placa "Wanted" que personalizas com a tua gamertag. Uma peça de secretária que dá logo nas vistas. Ideal para gamers.', descEn: 'A PS5 controller stand with full 80s neon-city attitude: green palm trees, a black base with pink accents and a "Wanted" plate you personalize with your gamertag. A desk piece that stands out right away. Perfect for gamers.', price: 40, tag: 'Comando Neon', tone: 'purple', icon: '🎮', images: ['/images/suporte-comando-ps5-1.webp', '/images/suporte-comando-ps5-2.webp', '/images/suporte-comando-ps5-3.webp'], customizations: [ { id: 'gamertag', label: 'Gamertag para a placa (ex: NIGHT_RIDER)', labelEn: 'Gamertag for the plate (e.g. NIGHT_RIDER)', type: 'text', maxLength: 16 } ] },
+
+  // ─────────────────────────── ORGANIZADOR DE MESA ───────────────────────────
+  {
+    id: 'organizador-mesa-suporte-celular',
+    hidden: true, // por publicar — falta foto
+    name: 'Organizador de Mesa',
+    nameEn: 'Desk Organizer',
+    desc: 'Organizador de secretária impresso em 3D — arruma canetas, clips, post-its e pequenos objetos com vários compartimentos. Mesa mais limpa, prática e com estilo. Escolhe a tua cor.',
+    descEn: 'A 3D-printed desk organizer — keep pens, clips, sticky notes and small items tidy across several compartments. A cleaner, more practical desk with style. Pick your color.',
+    price: 19.90,
+    tag: 'Organizador de Mesa',
+    tone: 'slate',
+    icon: '🗂️',
+    customizations: [
+      { id: 'cor', label: 'Cor à escolha (opcional)', labelEn: 'Color of choice (optional)', type: 'text', maxLength: 30 }
+    ]
+  },
+
+  // ─────────────────────────────── PORTA-PINCÉIS ───────────────────────────────
+  {
+    id: 'porta-pinceis-organizador',
+    hidden: true, // por publicar — falta foto
+    name: 'Porta-Pincéis Multifuncional',
+    nameEn: 'Multi-purpose Brush & Pen Holder',
+    desc: 'Organizador multifuncional impresso em 3D — perfeito para pincéis de maquilhagem, canetas, lápis ou ferramentas. Vários compartimentos para manter tudo à mão e a mesa arrumada. Escolhe a tua cor.',
+    descEn: 'A 3D-printed multi-purpose organizer — perfect for makeup brushes, pens, pencils or tools. Several compartments to keep everything at hand and your desk tidy. Pick your color.',
+    price: 12.90,
+    tag: 'Porta-Pincéis',
+    tone: 'red',
+    icon: '🖌️',
+    customizations: [
+      { id: 'cor', label: 'Cor à escolha (opcional)', labelEn: 'Color of choice (optional)', type: 'text', maxLength: 30 }
+    ]
+  },
+
+  // ─────────────────────────── CANDEEIRO DRAGÃO ───────────────────────────
   {
     id: 'candeeiro-dragao',
     name: 'Candeeiro Dragão',
@@ -150,7 +313,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Candeeiro decorativo de um dragão a cuspir fogo — a chama é o próprio abajur translúcido, que acende com a luz LED incluída (a pilhas, sem calor nem fios) e enche a divisão com um brilho quente alaranjado. Peça de exposição impressa em 3D nas nossas Bambu Lab, com asas abertas e detalhe nas escamas. Perfeita para gamers, fãs de fantasia, mesa de cabeceira ou secretária.',
     descEn: 'A decorative lamp of a fire-breathing dragon — the flame itself is the translucent shade, lit by the included LED light (battery-powered, no heat, no wires), filling the room with a warm orange glow. A statement piece 3D-printed on our Bambu Lab machines, with spread wings and detailed scales. Perfect for gamers, fantasy fans, a bedside table or a desk.',
     price: 44.90,
-    tag: 'Luminárias',
+    tag: 'Candeeiro Dragão',
     tone: 'red',
     icon: '🐉',
     images: [
@@ -159,6 +322,8 @@ export const PRODUCTS: Product[] = [
       '/images/candeeiro-dragao-3.webp'
     ]
   },
+
+  // ─────────────────────────── CANDEEIRO RAPOSA ───────────────────────────
   {
     id: 'candeeiro-raposa',
     name: 'Candeeiro Raposa',
@@ -166,7 +331,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Candeeiro decorativo de uma raposa em estilo de blocos que segura uma lanterna acesa. A luz vem de uma vela LED incluída (chama artificial, sem calor nem fios, a pilhas) e dá um brilho quente e aconchegante — perfeito como luz de presença na mesa de cabeceira, secretária ou quarto das crianças. Impresso a várias cores nas nossas Bambu Lab.',
     descEn: "A decorative lamp of a blocky-style fox holding a lit lantern. The light comes from an included LED tea light (flameless, no heat, battery-powered) for a warm, cozy glow — perfect as a night light on a bedside table, desk or a kids' room. Printed in multiple colors on our Bambu Lab printers.",
     price: 49.90,
-    tag: 'Luminárias',
+    tag: 'Candeeiro Raposa',
     tone: 'orange',
     icon: '🦊',
     images: [
@@ -177,89 +342,35 @@ export const PRODUCTS: Product[] = [
       '/images/candeeiro-raposa-5.webp'
     ]
   },
+
+  // ─────────────────────────── VASO GEOMÉTRICO ───────────────────────────
   {
-    id: 'porta-latas-monster',
-    name: 'Porta-Latas Monster',
-    nameEn: 'Monster Can Holder',
-    desc: 'Porta-latas 3D exclusivo Monster Energy. Personalizável com o teu nome! Inclui tampa e porta-chaves.',
-    descEn: 'Exclusive Monster Energy 3D can holder. Customizable with your name! Includes lid and keychain.',
-    price: 15,
-    tag: 'Acessório',
-    tone: 'blue',
-    icon: '🥤',
-    images: [
-      '/images/porta-latas-monster-3.jpg',
-      '/images/porta-latas-monster-2.jpg',
-      '/images/porta-latas-monster-1.jpg',
-      '/images/porta-latas-monster-4.jpg',
-      '/images/porta-latas-monster-5.jpg',
-      '/images/porta-latas-monster-6.jpg'
-    ],
+    id: 'vaso-geometrico',
+    hidden: true, // por publicar — falta foto
+    name: 'Vaso Geométrico',
+    nameEn: 'Geometric Planter',
+    desc: 'Vaso/cachepot geométrico impresso em 3D — linhas facetadas modernas que dão vida a suculentas, plantas pequenas ou até canetas. Peça decorativa para a secretária, prateleira ou parapeito. Escolhe a tua cor.',
+    descEn: 'A 3D-printed geometric planter/pot — modern faceted lines that bring succulents, small plants or even pens to life. A decorative piece for the desk, shelf or windowsill. Pick your color.',
+    price: 14.90,
+    tag: 'Vaso Geométrico',
+    tone: 'green',
+    icon: '🪴',
     customizations: [
-      {
-        id: 'nome',
-        label: 'Nome a gravar (opcional)',
-        labelEn: 'Name to engrave (optional)',
-        type: 'text',
-        maxLength: 12
-      }
+      { id: 'cor', label: 'Cor à escolha (opcional)', labelEn: 'Color of choice (optional)', type: 'text', maxLength: 30 }
     ]
   },
-  { id: 'trofeu-quimono', name: 'Troféu Quimono Personalizado', nameEn: 'Personalized Gi Trophy', desc: 'Troféu de artes marciais com um mini-quimono de aspeto realista sobre pódio, e uma placa com o nome de quem o merece. Escolhes a cor do fato e a cor da faixa (branca, azul, roxa, castanha ou preta). A lembrança perfeita para graduações de jiu-jitsu, judo ou karaté — para o teu atleta ou para a turma toda.', descEn: "A martial-arts trophy with a realistic-looking mini gi on a pedestal, and a nameplate for whoever earned it. You choose the gi color and the belt color (white, blue, purple, brown or black). The perfect keepsake for jiu-jitsu, judo or karate gradings — for your athlete or the whole class.", price: 25, tag: 'Colecionável', tone: 'slate', icon: '🥋', images: ['/images/trofeu-quimono-1.jpg', '/images/trofeu-quimono-2.jpg', '/images/trofeu-quimono-3.jpg'], customizations: [ { id: 'nome', label: 'Nome na placa (ex: JOÃO SILVA)', labelEn: 'Name on the plate (e.g. JOÃO SILVA)', type: 'text', maxLength: 18 }, { id: 'fato', label: 'Cor do fato (ex: branco, preto, azul)', labelEn: 'Gi color (e.g. white, black, blue)', type: 'text', maxLength: 20 }, { id: 'faixa', label: 'Cor da faixa (branca, azul, roxa, castanha, preta)', labelEn: 'Belt color (white, blue, purple, brown, black)', type: 'text', maxLength: 20 } ] },
-  { id: 'suporte-comando-neon', name: 'Suporte de Comando PS5 — Neon Vice', nameEn: 'PS5 Controller Stand — Neon Vice', desc: 'Suporte de comando PS5 com atitude de cidade neon dos anos 80: palmeiras verdes, base preta com detalhes cor-de-rosa e uma placa "Wanted" que personalizas com a tua gamertag. Uma peça de secretária que dá logo nas vistas. Ideal para gamers.', descEn: 'A PS5 controller stand with full 80s neon-city attitude: green palm trees, a black base with pink accents and a "Wanted" plate you personalize with your gamertag. A desk piece that stands out right away. Perfect for gamers.', price: 40, tag: 'Acessório', tone: 'purple', icon: '🎮', images: ['/images/suporte-comando-ps5-1.webp', '/images/suporte-comando-ps5-2.webp', '/images/suporte-comando-ps5-3.webp'], customizations: [ { id: 'gamertag', label: 'Gamertag para a placa (ex: NIGHT_RIDER)', labelEn: 'Gamertag for the plate (e.g. NIGHT_RIDER)', type: 'text', maxLength: 16 } ] },
-  { id: 'porta-latas-ratinha-rosa', name: 'Porta-Latas Ratinha Rosa', nameEn: 'Pink Mouse Can Holder', desc: 'Porta-latas 3D em formato de mini-galão, todo cor-de-rosa e cheio de estilo: laço amovível no topo, pendente e torneira decorativa. Metes a lata dentro e bebes com o visual mais fofo da mesa. Personalizável com o teu nome.', descEn: 'A 3D can holder shaped like a mini cooler jug, all pink and full of style: removable bow on top, charm and a decorative tap. Pop your can inside and sip with the cutest look on the table. Customizable with your name.', price: 20, tag: 'Acessório', tone: 'purple', icon: '🥤', images: ['/images/porta-latas-ratinha-rosa-1.jpg', '/images/porta-latas-ratinha-rosa-2.jpg'], customizations: [ { id: 'nome', label: 'Nome a gravar (opcional)', labelEn: 'Name to engrave (optional)', type: 'text', maxLength: 12 } ] },
-  { id: 'porta-latas-monster-black', name: 'Porta-Latas Monster (Preto)', nameEn: 'Monster Can Holder (Black)', desc: 'Versão em preto e verde. Porta-latas térmico 3D Monster Energy. Inclui tampa e porta-chaves.', descEn: 'Black and green edition. Insulated Monster Energy 3D can holder. Includes lid and keychain.', price: 15, tag: 'Acessório', tone: 'green', icon: '🥤', images: ['/images/porta-latas-monster-black-5.jpg', '/images/porta-latas-monster-black-1.jpg', '/images/porta-latas-monster-black-2.jpg', '/images/porta-latas-monster-black-3.jpg', '/images/porta-latas-monster-black-4.jpg', '/images/porta-latas-monster-black-6.jpg'] },
-  { id: 'caixa-copa-brasil', name: 'Caixa Copa Brasil', nameEn: 'Brazil World Cup Box', desc: 'Caixa organizadora com o tema do Brasil, impressa em 3D nas cores verde e amarelo. Ideal para arrumar chaves, moedas, brincos ou pequenos tesouros com estilo — na secretária ou à entrada de casa. Feita sob encomenda nas nossas Bambu Lab, em Portugal.', descEn: 'A Brazil-themed storage box, 3D-printed in green and yellow. Great for tidying keys, coins, earrings or small treasures in style — on your desk or by the front door. Made to order on our Bambu Lab machines, in Portugal.', price: 15, tag: 'Colecionável', tone: 'olive', icon: '📦', images: ['/images/caixa-copa-brasil-1.jpg', '/images/caixa-copa-brasil-3.jpg', '/images/caixa-copa-brasil-2.jpg'] },
-  { id: 'caixa-copa-rosa', name: 'Caixa Copa Brasil (Rosa)', nameEn: 'Brazil World Cup Box (Pink)', desc: 'Caixa organizadora do Brasil em tons de rosa e roxo, impressa em 3D. A versão mais doce para guardar chaves, brincos, clips ou pequenos tesouros com um toque de cor na secretária. Feita sob encomenda em Portugal.', descEn: 'A Brazil storage box in pink and purple, 3D-printed. The sweeter version to keep keys, earrings, clips or small treasures with a splash of color on your desk. Made to order in Portugal.', price: 15, tag: 'Colecionável', tone: 'purple', icon: '📦', images: ['/images/caixa-copa-rosa-1.jpg', '/images/caixa-copa-rosa-2.jpg', '/images/caixa-copa-rosa-3.jpg'] },
-  { id: 'caixa-copa-eua', name: 'Caixa Copa EUA', nameEn: 'USA World Cup Box', desc: 'Caixa organizadora com o tema dos Estados Unidos, impressa em 3D em vermelho, branco e azul. Perfeita para arrumar chaves, moedas e miudezas com estilo, na secretária ou à entrada de casa. Feita sob encomenda em Portugal.', descEn: 'A USA-themed storage box, 3D-printed in red, white and blue. Perfect for keeping keys, coins and odds and ends tidy in style, on your desk or by the front door. Made to order in Portugal.', price: 15, tag: 'Colecionável', tone: 'red', icon: '📦', images: ['/images/caixa-copa-eua-1.jpg', '/images/caixa-copa-eua-2.jpg', '/images/caixa-copa-eua-3.jpg'] },
-  { id: 'caixa-copa-canada', name: 'Caixa Copa Canadá', nameEn: 'Canada World Cup Box', desc: 'Caixa organizadora com o tema do Canadá e a folha de bordo, impressa em 3D. Ideal para guardar chaves, moedas ou pequenos objetos na secretária ou à entrada, com muito estilo. Feita sob encomenda nas nossas Bambu Lab, em Portugal.', descEn: 'A Canada-themed storage box with the maple leaf, 3D-printed. Great for storing keys, coins or small items on your desk or by the door, with plenty of style. Made to order on our Bambu Lab machines, in Portugal.', price: 15, tag: 'Colecionável', tone: 'orange', icon: '📦', images: ['/images/caixa-copa-canada-1.jpg', '/images/caixa-copa-canada-3.jpg', '/images/caixa-copa-canada-2.jpg'] },
-  { id: 'chaveiro-gym', name: 'Porta-Chaves Peso de Ginásio', nameEn: 'Gym Weight Plate Keychain', desc: 'Porta-chaves em formato de disco de 20kg impresso em 3D. O presente ideal para quem não falta a um treino!', descEn: '3D printed keychain shaped like a 20kg weight plate. The perfect gift for anyone who never skips a workout!', price: 3, tag: 'Porta-Chaves', tone: 'slate', icon: '🏋️', images: ['/images/chaveiro-gym.jpg'] },
-  { id: 'chaveiro-hexagono', name: 'Porta-Chaves Hexágono Fidget', nameEn: 'Fidget Hexagon Keychain', desc: 'Porta-chaves interativo impresso em filamento bicolor metalizado. Divertido para mexer!', descEn: 'Interactive keychain printed in metallic dual-color filament. Fun to fidget with!', price: 3, tag: 'Porta-Chaves', tone: 'indigo', icon: '🔑', images: ['/images/chaveiro-hexagono.jpg'] },
-  { id: 'chaveiro-capivara', name: 'Porta-Chaves Capivara Articulada', nameEn: 'Articulated Capybara Keychain', desc: 'O animal mais adorável da internet, agora em porta-chaves! Impresso com filamento bicolor para um efeito incrível e é totalmente articulado.', descEn: "The internet's most adorable animal, now as a keychain! Printed in dual-color filament for a stunning effect, and fully articulated.", price: 3, tag: 'Porta-Chaves', tone: 'purple', icon: '🐾', images: ['/images/chaveiro-capivara-1.jpg', '/images/chaveiro-capivara-2.jpg', '/images/chaveiro-capivara-3.jpg'] },
-  { id: 'chaveiro-polvo', name: 'Porta-Chaves Polvo Articulado (Brasil)', nameEn: 'Articulated Octopus Keychain (Brazil)', desc: 'Porta-chaves de um polvo verde totalmente articulado com a temática do Brasil. Divertido, mexe os tentáculos e é impresso em 3D!', descEn: 'Fully articulated green octopus keychain with a Brazil theme. Fun, with wiggly tentacles, and 3D printed!', price: 3, tag: 'Porta-Chaves', tone: 'green', icon: '🐙', images: ['/images/chaveiro-polvo-1.jpg', '/images/chaveiro-polvo-2.jpg'] },
-  {
-    id: 'porta-latas-benfica',
-    name: 'Caneca Benfica',
-    nameEn: 'Benfica Mug',
-    desc: 'A caneca perfeita para os verdadeiros adeptos do Glorioso! Com as cores e a mística do Benfica, e totalmente personalizável com o teu nome.',
-    descEn: "The perfect mug for true Benfica supporters! Featuring the club's colors and spirit, fully customizable with your name.",
-    price: 20,
-    tag: 'Canecas',
-    tone: 'red',
-    icon: '🦅',
-    images: ['/images/porta-latas-benfica-1.jpg', '/images/porta-latas-benfica-2.jpg', '/images/porta-latas-benfica-3.jpg'],
-    customizations: [
-      {
-        id: 'nome_frontal',
-        label: 'Nome frontal (ex: ISRAEL)',
-        labelEn: 'Front name (e.g. ISRAEL)',
-        type: 'text',
-        maxLength: 15,
-        required: true
-      },
-      {
-        id: 'nome_pega',
-        label: 'Nome na pega (ex: ISRAEL VIEIRA)',
-        labelEn: 'Handle name (e.g. ISRAEL VIEIRA)',
-        type: 'text',
-        maxLength: 20,
-        required: true
-      }
-    ]
-  },
-  { id: 'chaveiro-menino', name: 'Porta-Chaves Menino Brasil', nameEn: 'Brazil Boy Keychain', desc: 'Porta-chaves de menino com a camisola 10 do Brasil. Impresso em 3D com várias cores!', descEn: "Keychain of a boy wearing Brazil's number 10 shirt. 3D printed in multiple colors!", price: 4, tag: 'Porta-Chaves', tone: 'yellow', icon: '👦', images: ['/images/chaveiro-menino.jpg'] },
-  { id: 'chaveiro-taca', name: 'Porta-Chaves Taça do Mundo', nameEn: 'World Cup Trophy Keychain', desc: 'Porta-chaves em formato de Taça do Mundo impressa em 3D. Leva a glória para todo o lado!', descEn: '3D printed World Cup trophy keychain. Carry the glory everywhere you go!', price: 3, tag: 'Porta-Chaves', tone: 'yellow', icon: '🏆', images: ['/images/chaveiro-taca.jpg'] },
-  { id: 'chaveiro-camisa-ronaldo', name: 'Porta-Chaves Camisola Ronaldo', nameEn: 'Ronaldo Shirt Keychain', desc: 'Porta-chaves com a mítica camisola 7 de Portugal. Para os verdadeiros fãs!', descEn: "Keychain featuring Portugal's legendary number 7 shirt. For true fans!", price: 3, tag: 'Porta-Chaves', tone: 'red', icon: '👕', images: ['/images/chaveiro-camisa-ronaldo.jpg'] },
-  { id: 'chaveiro-spinner-brasil', name: 'Porta-Chaves Spinner Brasil', nameEn: 'Brazil Spinner Keychain', desc: 'Porta-chaves interativo com a bandeira do Brasil que gira! Divertido e perfeito para aliviar o stress.', descEn: 'Interactive keychain with a spinning Brazilian flag! Fun and perfect for stress relief.', price: 3, tag: 'Porta-Chaves', tone: 'green', icon: '🌀', images: ['/images/chaveiro-spinner-brasil.jpg'] },
-  { id: 'porta-chaves-tecla-fidget', name: 'Porta-Chaves Tecla Fidget', nameEn: 'Keycap Fidget Keychain', desc: 'Uma tecla de teclado mecânico em porta-chaves que faz clique — o fidget perfeito para quem vive no código. Escolhe o teu modelo: Claude, Gemini ou Codex. Carrega e clica sempre que precisares de foco (ou de aliviar o stress).', descEn: 'A mechanical-keyboard keycap keychain that clicks — the perfect fidget for anyone who lives in the code. Pick your model: Claude, Gemini or Codex. Press and click whenever you need focus (or to de-stress).', price: 4, tag: 'Porta-Chaves', tone: 'slate', icon: '⌨️', images: ['/images/porta-chaves-tecla-fidget-1.jpg', '/images/porta-chaves-tecla-fidget-2.jpg', '/images/porta-chaves-tecla-fidget-3.jpg', '/images/porta-chaves-tecla-fidget-4.jpg'], customizations: [ { id: 'modelo', label: 'Qual queres? (Claude, Gemini ou Codex)', labelEn: 'Which one? (Claude, Gemini or Codex)', type: 'text', maxLength: 20 } ] },
-  { id: 'chaveiro-mini-caneca', name: 'Porta-Chaves Mini Caneca Fidget', nameEn: 'Mini Mug Fidget Keychain', desc: 'Mini-caneca de café em porta-chaves com clique fidget — carrega no topo e faz aquele clique viciante e anti-stress. Super fofa, com o topo à escolha: marshmallows, coração, coelho, chantilly ou latte art. O detalhe perfeito para mochilas e chaves.', descEn: 'A mini coffee-mug fidget keychain that clicks — press the top for that addictive, stress-busting click. Super cute, with your topping of choice: marshmallows, heart, bunny, whipped cream or latte art. The perfect detail for backpacks and keys.', price: 4, tag: 'Porta-Chaves', tone: 'purple', icon: '☕', images: ['/images/porta-chaves-mini-caneca-1.jpg', '/images/porta-chaves-mini-caneca-2.jpg', '/images/porta-chaves-mini-caneca-3.jpg', '/images/porta-chaves-mini-caneca-4.jpg'], customizations: [ { id: 'topo', label: 'Topo à escolha (ex: marshmallows, coração, coelho, chantilly, latte art)', labelEn: 'Topping of choice (e.g. marshmallows, heart, bunny, whipped cream, latte art)', type: 'text', maxLength: 40 } ] },
-  { id: 'caneca-brasil', name: 'Caneca Seleção Brasil', nameEn: 'Brazil National Team Mug', desc: 'Caneca com a temática da Seleção do Brasil. Perfeita para os fãs da Canarinha.', descEn: 'Brazilian national team themed mug. Perfect for Seleção fans.', price: 20, tag: 'Canecas', tone: 'yellow', icon: '☕', images: ['/images/caneca-brasil-1.jpg', '/images/caneca-brasil-2.jpg', '/images/caneca-brasil-3.jpg'] },
-  { id: 'caneca-palmeiras', name: 'Caneca Palmeiras', nameEn: 'Palmeiras Mug', desc: 'Caneca "Verdão" para os adeptos do Palmeiras, com o escudo e as cores alviverdes. Personalizável com o teu nome.', descEn: '"Verdão" mug for Palmeiras supporters, featuring the club crest and green-and-white colors. Customizable with your name.', price: 20, tag: 'Canecas', tone: 'green', icon: '☕', images: ['/images/caneca-palmeiras-1.jpg'], customizations: [ { id: 'nome', label: 'Nome a gravar (ex: ISRAEL)', labelEn: 'Name to engrave (e.g. ISRAEL)', type: 'text', maxLength: 12 } ] },
-  { id: 'caneca-vasco', name: 'Caneca Vasco', nameEn: 'Vasco Mug', desc: 'Caneca "Gigante da Colina" para os Vascaínos, com o escudo clássico em preto e branco. Personalizável com o teu nome.', descEn: '"Gigante da Colina" mug for Vasco fans, featuring the classic black-and-white crest. Customizable with your name.', price: 20, tag: 'Canecas', tone: 'slate', icon: '☕', images: ['/images/caneca-vasco-1.jpg'], customizations: [ { id: 'nome', label: 'Nome a gravar (ex: ISRAEL)', labelEn: 'Name to engrave (e.g. ISRAEL)', type: 'text', maxLength: 12 } ] },
-  { id: 'caneca-corinthians', name: 'Caneca Corinthians', nameEn: 'Corinthians Mug', desc: 'Caneca "Timão" para a Fiel, com o escudo do Corinthians em preto, branco e vermelho. Personalizável com o teu nome.', descEn: '"Timão" mug for the Corinthians faithful, featuring the crest in black, white and red. Customizable with your name.', price: 20, tag: 'Canecas', tone: 'slate', icon: '☕', images: ['/images/caneca-corinthians-1.jpg'], customizations: [ { id: 'nome', label: 'Nome a gravar (ex: ISRAEL)', labelEn: 'Name to engrave (e.g. ISRAEL)', type: 'text', maxLength: 12 } ] },
 ];
 
-export const PRODUCT_TAGS = ['Todos', ...Array.from(new Set(PRODUCTS.map((p) => p.tag)))];
+/**
+ * Produtos LISTADOS no site (catálogo, destaques, sitemap). Exclui os marcados
+ * `hidden` (ex.: ainda sem foto). A página /produto/<id> continua a funcionar
+ * por link direto mesmo para os escondidos — só não aparecem nas listagens.
+ */
+export const VISIBLE_PRODUCTS = PRODUCTS.filter((p) => !p.hidden);
+
+// Categorias derivadas só dos produtos visíveis (evita pills de categorias
+// que ficariam vazias por só terem produtos escondidos).
+export const PRODUCT_TAGS = ['Todos', ...Array.from(new Set(VISIBLE_PRODUCTS.map((p) => p.tag)))];
 
 export function getProductById(id: string): Product | undefined {
   return PRODUCTS.find((p) => p.id === id);

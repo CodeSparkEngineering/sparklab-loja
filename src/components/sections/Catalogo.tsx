@@ -1,9 +1,9 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { PRODUCTS, PRODUCT_TAGS, formatEUR } from '@/data/products';
+import { VISIBLE_PRODUCTS, PRODUCT_TAGS, formatEUR } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { useLang, pName, pDesc, tagLabel, type Lang } from '@/i18n/LanguageContext';
 
@@ -32,10 +32,36 @@ export default function Catalogo() {
   const { lang } = useLang();
   const t = L[lang];
 
+  // Barra de categorias horizontal: mostra a seta ‹/› só quando há mais
+  // categorias para o lado (padrão das grandes lojas — poupa altura na página).
+  const filtersRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  useEffect(() => {
+    const el = filtersRef.current;
+    if (!el) return;
+    const update = () => {
+      setCanScrollLeft(el.scrollLeft > 4);
+      setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+    };
+    update();
+    el.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      el.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, [lang]);
+
+  const scrollFilters = (dir: number) => {
+    filtersRef.current?.scrollBy({ left: dir * 240, behavior: 'smooth' });
+  };
+
   const filtered =
     activeTag === 'Todos'
-      ? PRODUCTS
-      : PRODUCTS.filter((p) => p.tag === activeTag);
+      ? VISIBLE_PRODUCTS
+      : VISIBLE_PRODUCTS.filter((p) => p.tag === activeTag);
 
   return (
     <section className="section section--alt" id="catalogo">
@@ -54,93 +80,48 @@ export default function Catalogo() {
           </p>
         </div>
 
-        <div className="cat-filters reveal">
-          {PRODUCT_TAGS.map((tag) => (
+        <div className="cat-filterbar reveal">
+          {canScrollLeft && (
             <button
-              key={tag}
               type="button"
-              className={`cat-pill ${activeTag === tag ? 'cat-pill--active' : ''}`}
-              onClick={() => setActiveTag(tag)}
+              className="cat-filterbar__nav cat-filterbar__nav--prev"
+              aria-label={t.prev}
+              onClick={() => scrollFilters(-1)}
             >
-              {tagLabel(tag, lang)}
+              ‹
             </button>
-          ))}
+          )}
+          <div className="cat-filters" ref={filtersRef}>
+            {PRODUCT_TAGS.map((tag) => (
+              <button
+                key={tag}
+                type="button"
+                className={`cat-pill ${activeTag === tag ? 'cat-pill--active' : ''}`}
+                onClick={() => setActiveTag(tag)}
+              >
+                {tagLabel(tag, lang)}
+              </button>
+            ))}
+          </div>
+          {canScrollRight && (
+            <button
+              type="button"
+              className="cat-filterbar__nav cat-filterbar__nav--next"
+              aria-label={t.next}
+              onClick={() => scrollFilters(1)}
+            >
+              ›
+            </button>
+          )}
         </div>
 
-        {activeTag === 'Todos' ? (
-          <div className="flex flex-col gap-10 md:gap-16 mt-6 md:mt-8">
-            {PRODUCT_TAGS.filter((t2) => t2 !== 'Todos').map((tag) => {
-              const groupProducts = PRODUCTS.filter((p) => p.tag === tag);
-              if (groupProducts.length === 0) return null;
-
-              return (
-                <div key={tag} className="reveal">
-                  <div className="flex items-center gap-4 mb-4 md:mb-6">
-                    <h3 className="text-lg md:text-xl font-bold uppercase tracking-wider text-stone-800">{tagLabel(tag, lang)}</h3>
-                    <div className="h-[1px] flex-1 bg-stone-200" />
-                  </div>
-                  <CarouselRow prevLabel={t.prev} nextLabel={t.next}>
-                    {groupProducts.map((p) => (
-                      <ProductCard key={p.id} p={p} add={add} lang={lang} want={t.want} customize={t.customize} />
-                    ))}
-                  </CarouselRow>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <CarouselRow className="mt-8" prevLabel={t.prev} nextLabel={t.next}>
-            {filtered.map((p) => (
-              <ProductCard key={p.id} p={p} add={add} lang={lang} want={t.want} customize={t.customize} />
-            ))}
-          </CarouselRow>
-        )}
+        <div className="cat-grid cat-grid--wrap reveal">
+          {filtered.map((p) => (
+            <ProductCard key={p.id} p={p} add={add} lang={lang} want={t.want} customize={t.customize} />
+          ))}
+        </div>
       </div>
     </section>
-  );
-}
-
-function CarouselRow({
-  children,
-  className = '',
-  prevLabel,
-  nextLabel,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  prevLabel: string;
-  nextLabel: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const scrollByDir = (dir: number) => {
-    const el = ref.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
-  };
-
-  return (
-    <div className={`cat-row ${className}`}>
-      <button
-        type="button"
-        className="cat-row__nav cat-row__nav--prev"
-        aria-label={prevLabel}
-        onClick={() => scrollByDir(-1)}
-      >
-        ‹
-      </button>
-      <div className="cat-grid" ref={ref}>
-        {children}
-      </div>
-      <button
-        type="button"
-        className="cat-row__nav cat-row__nav--next"
-        aria-label={nextLabel}
-        onClick={() => scrollByDir(1)}
-      >
-        ›
-      </button>
-    </div>
   );
 }
 
@@ -151,7 +132,7 @@ function ProductCard({
   want,
   customize,
 }: {
-  p: typeof PRODUCTS[0];
+  p: typeof VISIBLE_PRODUCTS[0];
   add: (id: string) => void;
   lang: Lang;
   want: string;

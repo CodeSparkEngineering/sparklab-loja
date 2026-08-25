@@ -10,10 +10,10 @@ import { useLang, pName, pDesc, tagLabel } from '@/i18n/LanguageContext';
 const DESTAQUE_IDS = [
   'candeeiro-dragao',
   'suporte-comando-neon',
-  'trofeu-quimono',
-  'porta-latas-ratinha-rosa',
-  'porta-chaves-tecla-fidget',
-  'chaveiro-mini-caneca',
+  'tubarao-articulado',
+  'spinner-bola-espiral',
+  'candeeiro-raposa',
+  'panda-vermelho-articulado',
 ];
 // Percorre DESTAQUE_IDS (e não PRODUCTS) para respeitar a ordem escolhida
 // acima — a primeira carta é a que se vê primeiro no card-stack.
