@@ -87,12 +87,17 @@ export function cLabel(opt: CustomizationOption, lang: Lang): string {
 /** Etiquetas das categorias do catálogo (as tags dos dados ficam em PT). */
 const TAG_LABELS_EN: Record<string, string> = {
   'Todos': 'All',
-  'Colecionável': 'Collectibles',
-  'Acessório': 'Accessories',
-  'Porta-Chaves': 'Keychains',
-  'Canecas': 'Mugs',
   'Articulados': 'Articulated',
-  'Luminárias': 'Lamps',
+  'Suporte de Telemóvel': 'Phone Stand',
+  'Dock MagSafe': 'MagSafe Dock',
+  'Suporte de Headset': 'Headset Stand',
+  'Comando PS5/Xbox': 'PS5/Xbox Stand',
+  'Comando Neon': 'Neon Vice Stand',
+  'Organizador de Mesa': 'Desk Organizer',
+  'Porta-Pincéis': 'Brush & Pen Holder',
+  'Candeeiro Dragão': 'Dragon Lamp',
+  'Candeeiro Raposa': 'Fox Lamp',
+  'Vaso Geométrico': 'Geometric Planter',
 };
 
 export function tagLabel(tag: string, lang: Lang): string {

@@ -11,7 +11,7 @@ import { useLang } from '@/i18n/LanguageContext';
  *
  * Bilíngue (usa useLang), por isso coloca-se UMA vez, DEPOIS dos dois
  * <GuiaLang> (como o GuiaFAQ/GuiaFontes) e antes do rodapé:
- *   <GuiaProdutos ids={['trofeu-quimono', 'porta-latas-ratinha-rosa']} />
+ *   <GuiaProdutos ids={['candeeiro-dragao', 'suporte-comando-neon']} />
  *
  * Cada cartão liga a /produto/<id>, onde o cliente personaliza e compra.
  * IDs sem produto ou sem imagem são ignorados em silêncio.

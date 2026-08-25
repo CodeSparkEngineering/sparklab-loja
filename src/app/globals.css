@@ -1235,11 +1235,36 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 /* ─────────────────────────────────────────────────────────
    CATALOGUE
 ───────────────────────────────────────────────────────── */
-.cat-filters {
-  display: flex; gap: 10px; flex-wrap: wrap;
-  margin-bottom: 48px;
+.cat-filterbar {
+  position: relative;
+  margin-bottom: 32px;
 }
+.cat-filters {
+  display: flex; gap: 10px; flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 2px 2px 4px;
+}
+.cat-filters::-webkit-scrollbar { display: none; }
+/* Setas da barra de categorias — só aparecem quando há overflow horizontal */
+.cat-filterbar__nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  z-index: 6; width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; line-height: 1;
+  border-radius: 999px; border: 1px solid var(--line-strong);
+  background: var(--bg-card); color: var(--ink);
+  cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.35);
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .1s ease;
+}
+.cat-filterbar__nav:hover { background: rgba(249,115,22,.9); border-color: var(--orange); color: #fff; }
+.cat-filterbar__nav:active { transform: translateY(-50%) scale(.92); }
+.cat-filterbar__nav--prev { left: -8px; }
+.cat-filterbar__nav--next { right: -8px; }
 .cat-pill {
+  flex: 0 0 auto; white-space: nowrap;
   font-family: var(--f-head);
   font-size: 13px; font-weight: 500;
   padding: 8px 20px;
@@ -1287,6 +1312,28 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 .cat-card {
   flex: 0 0 clamp(220px, 23%, 270px);
   scroll-snap-align: start;
+}
+
+/* Vista em GRELHA (padrão do catálogo): mostra todos os produtos filtrados
+   numa grelha que embrulha, em vez de um carrossel por categoria. Poupa
+   imensa altura na página — o padrão das grandes lojas (grelha + filtros). */
+.cat-grid.cat-grid--wrap {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 24px;
+  overflow: visible;
+  scroll-snap-type: none;
+}
+.cat-grid.cat-grid--wrap .cat-card {
+  flex: initial;
+  width: auto;
+  scroll-snap-align: none;
+}
+@media (max-width: 640px) {
+  .cat-grid.cat-grid--wrap {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
 }
 
 /* Setas de navegação (só desktop / mouse) */
@@ -1788,20 +1835,46 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 }
 .qf__row { display: flex; gap: 24px; margin-bottom: 20px; }
 .qf__field { flex: 1; display: flex; flex-direction: column; margin-bottom: 20px; }
-.qf__field label { font-size: 13px; font-weight: 600; color: var(--ink-dim); margin-bottom: 8px; letter-spacing: .04em; text-transform: uppercase; }
+/* Dentro de uma linha os campos não somam a sua própria margem (a linha já a dá). */
+.qf__row > .qf__field { margin-bottom: 0; }
+.qf__field label { font-size: 13px; font-weight: 600; color: var(--ink-dim); margin-bottom: 8px; letter-spacing: .04em; text-transform: uppercase; transition: color .2s ease; }
+/* O rótulo acende a laranja quando o campo está em foco. */
+.qf__field:focus-within > label { color: var(--orange); }
 .qf__field input, .qf__field select, .qf__field textarea {
   background: rgba(255,255,255,.03);
   border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 12px 16px;
+  border-radius: 10px;
+  padding: 13px 16px;
   color: var(--ink);
   font-family: inherit; font-size: 15px;
-  transition: border-color .2s ease, box-shadow .2s ease;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
 }
+.qf__field input::placeholder, .qf__field textarea::placeholder { color: var(--ink-dim); opacity: .55; }
+.qf__field input:hover, .qf__field textarea:hover { border-color: var(--line-strong); }
 .qf__field input:focus, .qf__field select:focus, .qf__field textarea:focus {
   outline: none;
   border-color: var(--orange);
   box-shadow: 0 0 0 3px rgba(249,115,22,.12);
+}
+
+/* Prazo/urgência — chips (segmented control) */
+.qf__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.qf__chip {
+  flex: 1 1 0; min-width: max-content;
+  padding: 10px 14px; border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.03);
+  color: var(--ink-dim);
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+  transition: border-color .18s ease, background .18s ease, color .18s ease, box-shadow .18s ease;
+}
+.qf__chip:hover { border-color: var(--line-strong); color: var(--ink); }
+.qf__chip.is-active {
+  border-color: var(--orange);
+  background: rgba(249,115,22,.12);
+  color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(249,115,22,.10);
 }
 
 /* Custom select */
@@ -1811,7 +1884,7 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   background: rgba(255,255,255,.03);
   border: 1px solid var(--line);
-  border-radius: 8px; padding: 12px 16px;
+  border-radius: 10px; padding: 13px 16px;
   color: var(--ink); font-family: inherit; font-size: 15px;
   text-align: left;
   transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
@@ -1850,14 +1923,29 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 .qf__select-check { color: var(--orange); flex-shrink: 0; }
 
 .qf__file {
-  display: flex; align-items: center; justify-content: center; gap: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
   border: 2px dashed var(--line-strong);
-  border-radius: 8px; padding: 24px;
-  transition: background .2s ease, border-color .2s ease;
+  border-radius: 10px; padding: 26px 24px;
+  text-align: center; color: var(--ink-dim); font-size: 14px;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
 }
-.qf__file:hover { background: rgba(255,255,255,.02); border-color: var(--orange); }
+.qf__file svg { color: var(--orange); transition: transform .2s ease; }
+.qf__file:hover { background: rgba(249,115,22,.04); border-color: var(--orange); color: var(--ink); }
+.qf__file:hover svg { transform: translateY(-2px); }
+/* Estado "ficheiro anexado" — borda sólida e leve tom da marca. */
+.qf__file--has {
+  border-style: solid; border-color: var(--orange);
+  background: rgba(249,115,22,.06); color: var(--ink);
+}
 .qf__file input { display: none; }
-.qf__submit { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 16px; font-size: 16px; font-weight: 700; }
+.qf__submit {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 16px; border-radius: 10px; font-size: 16px; font-weight: 700;
+  box-shadow: 0 10px 26px -10px rgba(249,115,22,.55);
+}
+.qf__submit:hover { box-shadow: 0 12px 30px -8px rgba(249,115,22,.7); }
+.qf__submit:disabled { opacity: .65; box-shadow: none; cursor: progress; }
 
 .quote-form { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; }
 /* Variante "só formulário" (landing /orcamento): uma coluna centrada. */
@@ -2513,4 +2601,42 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 }
 @media (prefers-reduced-motion: reduce) {
   .aurora-blob { animation: none; }
+}
+
+/* ── Fundo animado por SCROLL (anime.js) — entre o Hero e o Footer ────────
+   `.sbfx` cria um stacking context (z-index:0, SEM transform) para prender a
+   camada `.sbfx__bg`, que é `position: fixed; z-index:-1` — logo fica ACIMA do
+   vídeo de fundo (também -1, mas mais cedo no DOM) e ATRÁS do conteúdo. As
+   transformações/opacidade são conduzidas pelo scroll no ScrollBackgroundFX. */
+.sbfx { position: relative; z-index: 0; }
+
+.sbfx__bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;                 /* revelado pelo scroll (anime.js) */
+  will-change: opacity;
+  /* Desvanece a camada no topo do ecrã para não competir com o vídeo lá em
+     cima; a grelha técnica só se lê mais abaixo. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 26%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 26%);
+}
+
+.sbfx__grid {
+  position: absolute;
+  inset: -8%;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(120% 80% at 50% 45%, #000 28%, transparent 78%);
+  mask-image: radial-gradient(120% 80% at 50% 45%, #000 28%, transparent 78%);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sem parallax; o componente revela a camada estática a ~0.5 de opacidade. */
+  .sbfx__grid { transform: none !important; }
 }

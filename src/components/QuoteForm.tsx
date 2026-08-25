@@ -28,6 +28,26 @@ const MATERIALS = {
   ],
 } as const;
 
+/**
+ * Prazo/urgência — seletor por índice (chips). Guardar o índice em vez do
+ * valor dispensa a sincronização de idioma que o Material precisa: o rótulo e
+ * o texto para o WhatsApp resolvem-se sempre a partir do array do idioma ativo.
+ */
+const PRAZOS = {
+  pt: [
+    { value: 'Sem pressa', label: 'Sem pressa' },
+    { value: 'Este mês', label: 'Este mês' },
+    { value: 'Esta semana', label: 'Esta semana' },
+    { value: 'Urgente', label: 'Urgente' },
+  ],
+  en: [
+    { value: 'No rush', label: 'No rush' },
+    { value: 'This month', label: 'This month' },
+    { value: 'This week', label: 'This week' },
+    { value: 'Urgent', label: 'Urgent' },
+  ],
+} as const;
+
 const L = {
   pt: {
     asideTitle: 'Como funciona',
@@ -43,6 +63,7 @@ const L = {
     phone: 'WhatsApp',
     material: 'Material',
     qty: 'Quantidade',
+    prazo: 'Para quando precisas?',
     file: 'Ficheiro 3D (opcional)',
     fileHint: 'Não tens ficheiro? Sem problema — descreve a ideia e nós desenhamos.',
     filePick: 'Clica para anexar STL, OBJ, 3MF ou STEP',
@@ -55,6 +76,7 @@ const L = {
     waPhone: '*WhatsApp:*',
     waMaterial: '*Material:*',
     waQty: '*Quantidade:*',
+    waPrazo: '*Prazo:*',
     waDesc: '*Descrição:*',
     waFile: (f: string) => `Vou anexar o ficheiro *${f}* aqui no chat de seguida.`,
     waFileLink: '*Ficheiro 3D:*',
@@ -80,6 +102,7 @@ const L = {
     phone: 'WhatsApp',
     material: 'Material',
     qty: 'Quantity',
+    prazo: 'When do you need it?',
     file: '3D file (optional)',
     fileHint: "No file? No problem — describe your idea and we'll design it for you.",
     filePick: 'Click to attach STL, OBJ, 3MF or STEP',
@@ -92,6 +115,7 @@ const L = {
     waPhone: '*WhatsApp:*',
     waMaterial: '*Material:*',
     waQty: '*Quantity:*',
+    waPrazo: '*Timeline:*',
     waDesc: '*Description:*',
     waFile: (f: string) => `I'll attach the file *${f}* here in the chat next.`,
     waFileLink: '*3D file:*',
@@ -116,6 +140,7 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
   const { lang } = useLang();
   const t = L[lang];
   const materials = MATERIALS[lang];
+  const prazos = PRAZOS[lang];
   const router = useRouter();
 
   const [fileData, setFileData] = useState<{
@@ -125,6 +150,7 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
     url?: string;
   } | null>(null);
   const [material, setMaterial] = useState<string>(MATERIALS.pt[0].value);
+  const [prazoIdx, setPrazoIdx] = useState(0);
   const [open, setOpen] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
@@ -193,6 +219,7 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
 
     const materialVal = formData.get('material') as string;
     const qty = formData.get('qty') as string;
+    const prazoVal = prazos[prazoIdx].value;
     const desc = (formData.get('desc') as string || '').trim();
 
     setSending(true);
@@ -206,6 +233,7 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
       `${t.waPhone} ${phone}`,
       `${t.waMaterial} ${materialVal}`,
       `${t.waQty} ${qty}`,
+      `${t.waPrazo} ${prazoVal}`,
     ];
 
     if (desc) parts.push(`${t.waDesc} ${desc}`);
@@ -296,6 +324,23 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
           <div className="qf__field">
             <label htmlFor="qf-qty">{t.qty}</label>
             <input id="qf-qty" name="qty" type="number" min="1" defaultValue="1" />
+          </div>
+        </div>
+
+        <div className="qf__field">
+          <label id="qf-prazo-label">{t.prazo}</label>
+          <div className="qf__chips" role="group" aria-labelledby="qf-prazo-label">
+            {prazos.map((p, i) => (
+              <button
+                key={p.value}
+                type="button"
+                className={`qf__chip ${prazoIdx === i ? 'is-active' : ''}`}
+                aria-pressed={prazoIdx === i}
+                onClick={() => setPrazoIdx(i)}
+              >
+                {p.label}
+              </button>
+            ))}
           </div>
         </div>
 

@@ -29,6 +29,7 @@ const L = {
     quote: 'Excelente trabalho! Ficou muito bem feito, com atenção aos detalhes e um acabamento impecável. Recomendo sem dúvida!',
     quoteName: 'Caroliny Alves',
     quoteSource: 'Avaliação no Google',
+    quoteAria: 'Ver as nossas avaliações no Google',
     faqTitle: 'Perguntas frequentes',
     faq: [
       { q: 'Quanto custa uma impressão 3D em Portugal?', a: 'Depende do tamanho, do material e do tempo de impressão da peça. Por isso o orçamento é gratuito e sem compromisso — envia a tua ideia ou ficheiro e recebes o preço exato em até 2 horas úteis.' },
@@ -58,6 +59,7 @@ const L = {
     quote: 'Excellent work! It turned out really well, with attention to detail and a flawless finish. I recommend it without a doubt!',
     quoteName: 'Caroliny Alves',
     quoteSource: 'Google review',
+    quoteAria: 'See our Google reviews',
     faqTitle: 'Frequently asked questions',
     faq: [
       { q: 'How much does 3D printing cost in Portugal?', a: "It depends on the size, material and print time of the piece. That's why the quote is free and non-binding — send your idea or file and get the exact price within 2 business hours." },
@@ -208,18 +210,28 @@ export default function OrcamentoLanding() {
               </p>
             </div>
 
-            {/* Depoimento real (5★, Google) */}
-            <figure className="rounded-2xl border border-white/10 bg-stone-900/70 p-5 backdrop-blur-md">
-              <Stars />
-              <blockquote className="mt-2 text-sm leading-relaxed text-stone-100">
-                “{t.quote}”
-              </blockquote>
-              <figcaption className="mt-3 flex items-center gap-1.5 text-xs text-stone-400">
-                <GoogleMark size={13} />
-                <strong className="font-semibold text-stone-200">{t.quoteName}</strong>
-                <span aria-hidden="true">·</span> {t.quoteSource}
-              </figcaption>
-            </figure>
+            {/* Depoimento real (5★, Google) — cartão clicável para o perfil Google */}
+            <a
+              href={GOOGLE_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={t.quoteAria}
+              className="group block rounded-2xl border border-white/10 bg-stone-900/70 p-5 backdrop-blur-md transition hover:border-orange-400/40 hover:bg-stone-900/80"
+            >
+              <figure>
+                <Stars />
+                <blockquote className="mt-2 text-sm leading-relaxed text-stone-100">
+                  “{t.quote}”
+                </blockquote>
+                <figcaption className="mt-3 flex items-center gap-1.5 text-xs text-stone-400">
+                  <GoogleMark size={13} />
+                  <strong className="font-semibold text-stone-200">{t.quoteName}</strong>
+                  <span aria-hidden="true">·</span>
+                  <span className="transition-colors group-hover:text-orange-300">{t.quoteSource}</span>
+                  <svg className="ml-auto h-3.5 w-3.5 shrink-0 text-stone-500 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-orange-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M7 7h10v10" /></svg>
+                </figcaption>
+              </figure>
+            </a>
 
             {/* Garantias de transação */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 px-1 text-sm text-stone-200">

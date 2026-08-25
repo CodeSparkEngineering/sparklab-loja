@@ -13,6 +13,7 @@ import Comunidade from '@/components/sections/Comunidade';
 import GuiasTeaser from '@/components/sections/GuiasTeaser';
 import FAQ from '@/components/sections/FAQ';
 import CtaFinal from '@/components/sections/CtaFinal';
+import ScrollBackgroundFX from '@/components/ScrollBackgroundFX';
 import Footer from '@/components/Footer';
 
 // AEO: processo de encomenda em passos estruturados — permite a motores de
@@ -75,18 +76,21 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <FaixaConfianca />
-        <Destaques />
-        <Diferenciais />
-        <Catalogo />
-        <ComoFunciona />
-        <Orcamento />
-        <AOficina />
-        <Depoimentos />
-        <Comunidade />
-        <GuiasTeaser />
-        <FAQ />
-        <CtaFinal />
+        {/* Fundo animado por scroll (anime.js) — vive entre o Hero e o Footer */}
+        <ScrollBackgroundFX>
+          <FaixaConfianca />
+          <Destaques />
+          <Diferenciais />
+          <Catalogo />
+          <ComoFunciona />
+          <Orcamento />
+          <AOficina />
+          <Depoimentos />
+          <Comunidade />
+          <GuiasTeaser />
+          <FAQ />
+          <CtaFinal />
+        </ScrollBackgroundFX>
       </main>
       <Footer />
     </>
