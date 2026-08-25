@@ -84,20 +84,18 @@ export function cLabel(opt: CustomizationOption, lang: Lang): string {
   return lang === 'en' && opt.labelEn ? opt.labelEn : opt.label;
 }
 
-/** Etiquetas das categorias do catálogo (as tags dos dados ficam em PT). */
+/**
+ * Etiquetas dos NICHOS do catálogo (as tags dos dados ficam em PT).
+ * Tem de acompanhar os `label` de NICHES em @/data/products.
+ */
 const TAG_LABELS_EN: Record<string, string> = {
   'Todos': 'All',
   'Articulados': 'Articulated',
-  'Suporte de Telemóvel': 'Phone Stand',
-  'Dock MagSafe': 'MagSafe Dock',
-  'Suporte de Headset': 'Headset Stand',
-  'Comando PS5/Xbox': 'PS5/Xbox Stand',
-  'Comando Neon': 'Neon Vice Stand',
-  'Organizador de Mesa': 'Desk Organizer',
-  'Porta-Pincéis': 'Brush & Pen Holder',
-  'Candeeiro Dragão': 'Dragon Lamp',
-  'Candeeiro Raposa': 'Fox Lamp',
-  'Vaso Geométrico': 'Geometric Planter',
+  'Fidgets': 'Fidgets',
+  'Luminárias': 'Lamps',
+  'Decoração': 'Decor',
+  'Setup Gamer': 'Gaming Setup',
+  'Secretária': 'Desk',
 };
 
 export function tagLabel(tag: string, lang: Lang): string {

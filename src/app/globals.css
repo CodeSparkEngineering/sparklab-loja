@@ -1080,6 +1080,45 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 .section--alt { background: var(--bg-alt); }
 .section--dark { background: var(--bg); }
 
+/* ── Secções alternadas: painel de vidro sobre o vídeo ─────────────────────
+   O problema: `--bg-alt` é opaco e tapava o vídeo fixo que corre por trás do
+   site inteiro. Como as secções vizinhas NÃO têm fundo (deixam o vídeo
+   passar), estas liam-se como lajes mortas por contraste.
+
+   A solução: o painel passa a translúcido com desfoque — o vídeo atravessa e
+   ganha movimento real, mas desfocado e escurecido o suficiente para o texto
+   e as fotos dos produtos continuarem a mandar. */
+.section--alt {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+/* Sem backdrop-filter o vidro cairia em texto sobre vídeo cru e ilegível —
+   nesse caso volta ao painel opaco de antes. */
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  .section--alt { background: var(--bg-alt); }
+}
+
+:root {
+  --glass: linear-gradient(180deg,
+    rgba(242, 239, 233, .88) 0%,
+    rgba(242, 239, 233, .80) 45%,
+    rgba(250, 249, 246, .92) 100%);
+  --glass-blur: blur(24px) saturate(.92);
+  --rail-fade: rgba(242, 239, 233, .94);
+}
+.dark {
+  --glass: linear-gradient(180deg,
+    rgba(28, 26, 23, .90) 0%,
+    rgba(28, 26, 23, .82) 45%,
+    rgba(19, 17, 16, .94) 100%);
+  --rail-fade: rgba(19, 17, 16, .92);
+}
+/* Telemóvel: desfoque grande sobre uma área alta custa caro a rolar. */
+@media (max-width: 640px) {
+  :root { --glass-blur: blur(14px) saturate(.92); }
+}
+
 .section__head { max-width: 760px; margin-bottom: 64px; }
 .section__head--center {
   text-align: center;
@@ -1235,57 +1274,246 @@ h4 { font-size: 13px; font-weight: 600; margin: 0 0 14px; text-transform: upperc
 /* ─────────────────────────────────────────────────────────
    CATALOGUE
 ───────────────────────────────────────────────────────── */
-.cat-filterbar {
-  position: relative;
-  margin-bottom: 32px;
-}
-.cat-filters {
-  display: flex; gap: 10px; flex-wrap: nowrap;
+/* ── CATÁLOGO — grelha minimalista por nicho ───────────────────────────────
+   Sem moldura, sem cor decorativa, sem descrição na grelha: a fotografia
+   segura a peça e a hierarquia faz-se com espaço e tipografia. O laranja da
+   marca fica só para o estado ativo e o hover. */
+
+/* Navegação: texto simples, não pills. Salta para a secção (âncora real). */
+.nichenav {
+  position: sticky;
+  top: 68px;                    /* encosta por baixo do header sticky */
+  z-index: 20;
+  display: flex;
+  gap: 30px;
   overflow-x: auto;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   scrollbar-width: none;
-  padding: 2px 2px 4px;
+  padding: 15px 0;
+  margin-bottom: 64px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
 }
-.cat-filters::-webkit-scrollbar { display: none; }
-/* Setas da barra de categorias — só aparecem quando há overflow horizontal */
-.cat-filterbar__nav {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  z-index: 6; width: 38px; height: 38px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; line-height: 1;
-  border-radius: 999px; border: 1px solid var(--line-strong);
-  background: var(--bg-card); color: var(--ink);
-  cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.35);
-  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .1s ease;
-}
-.cat-filterbar__nav:hover { background: rgba(249,115,22,.9); border-color: var(--orange); color: #fff; }
-.cat-filterbar__nav:active { transform: translateY(-50%) scale(.92); }
-.cat-filterbar__nav--prev { left: -8px; }
-.cat-filterbar__nav--next { right: -8px; }
-.cat-pill {
-  flex: 0 0 auto; white-space: nowrap;
+.nichenav::-webkit-scrollbar { display: none; }
+
+.nichenav__link {
+  flex: 0 0 auto;
+  white-space: nowrap;
   font-family: var(--f-head);
-  font-size: 13px; font-weight: 500;
-  padding: 8px 20px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  text-decoration: none;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  transition: color .2s var(--ease-out), border-color .2s var(--ease-out);
+}
+.nichenav__link:hover { color: var(--ink); }
+/* Nicho em leitura (scroll-spy) */
+.nichenav__link[aria-current='true'] {
+  color: var(--ink);
+  border-bottom-color: var(--orange);
+}
+
+/* ── Secção de um nicho ──
+   `section.niche` (e não `.niche`) para ganhar ao `section[id]` global, que
+   tem specificity maior e fixava o scroll-margin em 80px. */
+section.niche { scroll-margin-top: 130px; }
+.niche + .niche { margin-top: 96px; }
+
+/* Cabeçalho: rótulo à esquerda; contagem e setas à direita; filete a fechar. */
+.niche__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 16px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+}
+.niche__tools {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.niche__title {
+  margin: 0;
+  font-family: var(--f-head);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.niche__desc {
+  margin: 7px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+.niche__count {
+  flex: 0 0 auto;
+  font-family: var(--f-head);
+  font-size: 12px;
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Faixa horizontal (uma por nicho) ── */
+.rail { position: relative; }
+
+.rail__track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-left: 2px;
+  padding: 2px 2px 6px;
+  scrollbar-width: none;
+}
+.rail__track::-webkit-scrollbar { display: none; }
+.rail__track > .ptile {
+  flex: 0 0 clamp(180px, 21vw, 250px);
+  scroll-snap-align: start;
+}
+
+/* Desvanece a margem direita enquanto houver mais peças — diz "arrasta"
+   sem precisar de texto. Não intercepta cliques.
+   Usa --rail-fade (a cor do painel de vidro), não --bg-alt: sobre um fundo
+   translúcido, desvanecer para uma cor opaca deixava uma barra visível. */
+.rail--more::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 6px; right: 0;
+  width: 72px;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--rail-fade));
+}
+
+/* Setas: vivem no cabeçalho, não sobrepostas às fotos. */
+.rail__nav { display: none; gap: 8px; }
+@media (hover: hover) and (min-width: 900px) {
+  .rail__nav { display: flex; }
+}
+.rail__btn {
+  width: 34px; height: 34px;
+  display: inline-flex; align-items: center; justify-content: center;
   border-radius: 999px;
   border: 1px solid var(--line-strong);
-  background: rgba(255,255,255,.02);
+  background: none;
   color: var(--ink-dim);
-  transition: all .3s var(--ease-out);
-  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: color .2s var(--ease-out), border-color .2s var(--ease-out),
+              opacity .2s var(--ease-out);
 }
-.cat-pill:hover {
-  border-color: rgba(249,115,22,.4);
+.rail__btn:hover:not(:disabled) { color: var(--orange); border-color: var(--orange); }
+.rail__btn:disabled { opacity: .3; cursor: default; }
+
+/* ── Peça: imagem + nome + preço. Nada mais. ── */
+.ptile { display: flex; flex-direction: column; align-items: flex-start; }
+
+.ptile__media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 12px;
+  /* superfície quase impercetível — só para conter fotos de fundos díspares */
+  background: rgba(255,255,255,.04);
+}
+.ptile__img {
+  object-fit: cover;
+  transition: transform .8s cubic-bezier(.22,1,.36,1);
+}
+.ptile__media:hover .ptile__img { transform: scale(1.045); }
+.ptile__icon {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 44px;
+}
+
+.ptile__name {
+  margin-top: 16px;
+  font-family: var(--f-head);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
   color: var(--ink);
-  background: rgba(249,115,22,.08);
-  box-shadow: 0 4px 12px rgba(249,115,22,.15);
+  text-decoration: none;
+  transition: color .2s var(--ease-out);
 }
-.cat-pill--active {
-  background: linear-gradient(135deg, var(--orange), #ea580c);
-  border-color: transparent;
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(249,115,22,.4), inset 0 1px 0 rgba(255,255,255,.2);
+.ptile__name:hover { color: var(--orange); }
+
+.ptile__price {
+  margin-top: 5px;
+  font-size: 14px;
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+/* CTA discreto: texto sublinhado, não um botão cheio de cor. */
+.ptile__cta {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 0;
+  font-family: var(--f-head);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-dim);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color .2s var(--ease-out), border-color .2s var(--ease-out);
+}
+.ptile__cta:hover { color: var(--orange); border-bottom-color: var(--orange); }
+/* Ecrãs de toque: alvo de 44px sem engordar o desenho no rato. */
+@media (pointer: coarse) {
+  .ptile__cta { min-height: 44px; }
+}
+
+/* Rascunho (só em desenvolvimento): peça do roteiro ainda sem foto. Fica
+   apagada e com moldura tracejada para não se confundir com o que está no ar. */
+.ptile--draft { opacity: .5; }
+.ptile--draft .ptile__media {
+  background: transparent;
+  border: 1px dashed var(--line-strong);
+}
+.ptile__draft {
+  margin-top: 12px;
+  padding: 6px 0;
+  font-family: var(--f-head);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+@media (max-width: 640px) {
+  .nichenav { top: 60px; gap: 22px; margin-bottom: 36px; }
+  .niche + .niche { margin-top: 52px; }
+  .niche__head { margin-bottom: 20px; }
+  .ptile__name { margin-top: 12px; font-size: 14px; }
+  /* Sangra a faixa até às margens do ecrã: a peça seguinte espreita na borda
+     e convida a arrastar, em vez de ficar cortada dentro do container.
+     Os 20px são o padding do .container neste breakpoint. */
+  .rail { margin-inline: -20px; }
+  .rail__track {
+    gap: 14px;
+    padding-inline: 20px;
+    scroll-padding-left: 20px;
+  }
+  .rail--more::after { width: 40px; }
 }
 
 /* Linha de produtos: carrossel horizontal (desktop + mobile) */

@@ -84,11 +84,11 @@ export default function ScrollFX() {
       const removeHover = () => cursor!.classList.remove('cursor--hover');
 
       const onDocMouseOver = (e: MouseEvent) => {
-        const el = (e.target as HTMLElement).closest('a, button, [role="button"], input, textarea, select, label, .cat-pill, .faq__q');
+        const el = (e.target as HTMLElement).closest('a, button, [role="button"], input, textarea, select, label, .nichenav__link, .faq__q');
         if (el) addHover();
       };
       const onDocMouseOut = (e: MouseEvent) => {
-        const el = (e.target as HTMLElement).closest('a, button, [role="button"], input, textarea, select, label, .cat-pill, .faq__q');
+        const el = (e.target as HTMLElement).closest('a, button, [role="button"], input, textarea, select, label, .nichenav__link, .faq__q');
         if (el) removeHover();
       };
 

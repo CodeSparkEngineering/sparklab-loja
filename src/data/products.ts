@@ -49,9 +49,73 @@ export type Product = {
   stl?: { file: string; downloadName: string };
 };
 
-// A ordem das secções na página segue a ordem em que cada `tag` aparece aqui.
-// Regra do catálogo: os articulados/fidgets partilham a secção "Articulados";
-// TODOS os outros produtos têm cada um a SUA própria secção (não agrupar).
+/**
+ * NICHOS do catálogo — a separação por que o cliente navega ("isto é para
+ * mim?"), NÃO uma etiqueta por produto. Cada produto aponta para o seu nicho
+ * através de `tag`, que TEM de coincidir com o `label` de um nicho aqui.
+ *
+ * Porquê: antes cada produto tinha a sua própria "categoria" (Candeeiro
+ * Dragão, Comando Neon, …), o que dava filtros de 1 produto — inútil para
+ * navegar e mau para o SEO. Agora agrupam-se por intenção de compra.
+ *
+ * A ordem desta lista é a ordem das secções no catálogo.
+ */
+export type Niche = {
+  /** slug estável — âncora #catalogo-<slug> e scroll-spy da navegação */
+  slug: string;
+  /** rótulo PT — tem de bater certo com o `tag` dos produtos do nicho */
+  label: string;
+  labelEn: string;
+  /** uma linha curta, por baixo do título da secção */
+  desc: string;
+  descEn: string;
+};
+
+export const NICHES: Niche[] = [
+  {
+    slug: 'articulados',
+    label: 'Articulados',
+    labelEn: 'Articulated',
+    desc: 'Cada segmento mexe. Impressos numa peça só, sem colas.',
+    descEn: 'Every segment moves. Printed in one piece, no glue.',
+  },
+  {
+    slug: 'fidgets',
+    label: 'Fidgets',
+    labelEn: 'Fidgets',
+    desc: 'Giram, clicam, acalmam.',
+    descEn: 'They spin, they click, they calm.',
+  },
+  {
+    slug: 'luminarias',
+    label: 'Luminárias',
+    labelEn: 'Lamps',
+    desc: 'Luz LED quente, a pilhas. Sem calor nem fios à vista.',
+    descEn: 'Warm LED light, battery-powered. No heat, no visible wires.',
+  },
+  {
+    slug: 'secretaria',
+    label: 'Secretária',
+    labelEn: 'Desk',
+    desc: 'Suportes e organizadores. Menos desarrumação, mais espaço para trabalhar.',
+    descEn: 'Stands and organizers. Less clutter, more room to work.',
+  },
+  {
+    slug: 'setup-gamer',
+    label: 'Setup Gamer',
+    labelEn: 'Gaming Setup',
+    desc: 'O teu canto de jogo, arrumado e com o teu nome.',
+    descEn: 'Your gaming corner, tidy and with your name on it.',
+  },
+  {
+    slug: 'decoracao',
+    label: 'Decoração',
+    labelEn: 'Decor',
+    desc: 'Peças que dão carácter à divisão.',
+    descEn: 'Pieces that give the room character.',
+  },
+];
+
 export const PRODUCTS: Product[] = [
   // ─────────────────────────── ARTICULADOS ───────────────────────────
   {
@@ -151,7 +215,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Spinner espiral hipnótico impresso em 3D — gira o eixo central e as camadas em estrela cascateiam num vórtice hipnotizante. Print-in-place, sem colas nem montagem. Fidget anti-stress e peça de secretária que prende o olhar. Escolhe a tua cor.',
     descEn: 'A hypnotic 3D-printed spiral spinner — spin the central axis and the star-shaped layers cascade into a mesmerizing vortex. Print-in-place, no glue or assembly. An anti-stress fidget and an eye-catching desk piece. Pick your color.',
     price: 4.95,
-    tag: 'Articulados',
+    tag: 'Fidgets',
     tone: 'purple',
     icon: '🌀',
     images: [
@@ -178,7 +242,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Bola espiral hipnótica com textura de picos, impressa em 3D peça a peça (print-in-place). Em repouso é uma bola espinhosa; giras e as camadas abrem-se num vórtice em leque. Fidget anti-stress super satisfatório e peça de secretária. Escolhe a tua cor.',
     descEn: 'A hypnotic spiky-textured spiral ball, 3D-printed in one piece (print-in-place). At rest it is a spiky sphere; spin it and the layers fan open into a vortex. A super-satisfying anti-stress fidget and desk piece. Pick your color.',
     price: 5.90,
-    tag: 'Articulados',
+    tag: 'Fidgets',
     tone: 'orange',
     icon: '🌀',
     images: [
@@ -208,7 +272,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Suporte de telemóvel impresso em 3D, estável e com o ângulo perfeito para veres vídeos, chamadas ou receitas na secretária ou na cozinha. Compatível com qualquer telemóvel, com ou sem capa. Escolhe a tua cor.',
     descEn: 'A 3D-printed phone stand, stable and at the perfect angle to watch videos, take calls or follow recipes on your desk or in the kitchen. Fits any phone, with or without a case. Pick your color.',
     price: 9.90,
-    tag: 'Suporte de Telemóvel',
+    tag: 'Secretária',
     tone: 'blue',
     icon: '📱',
     customizations: [
@@ -225,7 +289,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Base de carregamento MagSafe impressa em 3D — encaixa o teu carregador MagSafe e carrega o telemóvel na vertical, sempre à vista e no ângulo certo. (Carregador não incluído.) Escolhe a tua cor.',
     descEn: 'A 3D-printed MagSafe charging dock — slot in your MagSafe charger and charge your phone upright, always in view and at the right angle. (Charger not included.) Pick your color.',
     price: 24.90,
-    tag: 'Dock MagSafe',
+    tag: 'Secretária',
     tone: 'green',
     icon: '🔋',
     customizations: [
@@ -242,7 +306,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Suporte de headset impresso em 3D para o teu setup gaming — pendura os auscultadores em destaque e mantém a secretária arrumada e livre de cabos emaranhados. Escolhe a tua cor.',
     descEn: 'A 3D-printed headset stand for your gaming setup — hang your headphones on display and keep your desk tidy and free of tangled cables. Pick your color.',
     price: 24.90,
-    tag: 'Suporte de Headset',
+    tag: 'Setup Gamer',
     tone: 'purple',
     icon: '🎧',
     customizations: [
@@ -259,7 +323,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Suporte de comando impresso em 3D para PS5 ou Xbox, com placa personalizável com o teu nome ou gamertag. Mantém o comando arrumado e em destaque na secretária ou no setup gaming. Escolhe a consola e a cor.',
     descEn: 'A 3D-printed controller stand for PS5 or Xbox, with a plate you personalize with your name or gamertag. Keeps your controller tidy and on display on your desk or gaming setup. Choose your console and color.',
     price: 19.90,
-    tag: 'Comando PS5/Xbox',
+    tag: 'Setup Gamer',
     tone: 'blue',
     icon: '🎮',
     customizations: [
@@ -269,7 +333,7 @@ export const PRODUCTS: Product[] = [
   },
 
   // ──────────────────────────── COMANDO NEON VICE ────────────────────────────
-  { id: 'suporte-comando-neon', name: 'Suporte de Comando PS5 — Neon Vice', nameEn: 'PS5 Controller Stand — Neon Vice', desc: 'Suporte de comando PS5 com atitude de cidade neon dos anos 80: palmeiras verdes, base preta com detalhes cor-de-rosa e uma placa "Wanted" que personalizas com a tua gamertag. Uma peça de secretária que dá logo nas vistas. Ideal para gamers.', descEn: 'A PS5 controller stand with full 80s neon-city attitude: green palm trees, a black base with pink accents and a "Wanted" plate you personalize with your gamertag. A desk piece that stands out right away. Perfect for gamers.', price: 40, tag: 'Comando Neon', tone: 'purple', icon: '🎮', images: ['/images/suporte-comando-ps5-1.webp', '/images/suporte-comando-ps5-2.webp', '/images/suporte-comando-ps5-3.webp'], customizations: [ { id: 'gamertag', label: 'Gamertag para a placa (ex: NIGHT_RIDER)', labelEn: 'Gamertag for the plate (e.g. NIGHT_RIDER)', type: 'text', maxLength: 16 } ] },
+  { id: 'suporte-comando-neon', name: 'Suporte de Comando PS5 — Neon Vice', nameEn: 'PS5 Controller Stand — Neon Vice', desc: 'Suporte de comando PS5 com atitude de cidade neon dos anos 80: palmeiras verdes, base preta com detalhes cor-de-rosa e uma placa "Wanted" que personalizas com a tua gamertag. Uma peça de secretária que dá logo nas vistas. Ideal para gamers.', descEn: 'A PS5 controller stand with full 80s neon-city attitude: green palm trees, a black base with pink accents and a "Wanted" plate you personalize with your gamertag. A desk piece that stands out right away. Perfect for gamers.', price: 40, tag: 'Setup Gamer', tone: 'purple', icon: '🎮', images: ['/images/suporte-comando-ps5-1.webp', '/images/suporte-comando-ps5-2.webp', '/images/suporte-comando-ps5-3.webp'], customizations: [ { id: 'gamertag', label: 'Gamertag para a placa (ex: NIGHT_RIDER)', labelEn: 'Gamertag for the plate (e.g. NIGHT_RIDER)', type: 'text', maxLength: 16 } ] },
 
   // ─────────────────────────── ORGANIZADOR DE MESA ───────────────────────────
   {
@@ -280,7 +344,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Organizador de secretária impresso em 3D — arruma canetas, clips, post-its e pequenos objetos com vários compartimentos. Mesa mais limpa, prática e com estilo. Escolhe a tua cor.',
     descEn: 'A 3D-printed desk organizer — keep pens, clips, sticky notes and small items tidy across several compartments. A cleaner, more practical desk with style. Pick your color.',
     price: 19.90,
-    tag: 'Organizador de Mesa',
+    tag: 'Secretária',
     tone: 'slate',
     icon: '🗂️',
     customizations: [
@@ -297,7 +361,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Organizador multifuncional impresso em 3D — perfeito para pincéis de maquilhagem, canetas, lápis ou ferramentas. Vários compartimentos para manter tudo à mão e a mesa arrumada. Escolhe a tua cor.',
     descEn: 'A 3D-printed multi-purpose organizer — perfect for makeup brushes, pens, pencils or tools. Several compartments to keep everything at hand and your desk tidy. Pick your color.',
     price: 12.90,
-    tag: 'Porta-Pincéis',
+    tag: 'Secretária',
     tone: 'red',
     icon: '🖌️',
     customizations: [
@@ -313,7 +377,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Candeeiro decorativo de um dragão a cuspir fogo — a chama é o próprio abajur translúcido, que acende com a luz LED incluída (a pilhas, sem calor nem fios) e enche a divisão com um brilho quente alaranjado. Peça de exposição impressa em 3D nas nossas Bambu Lab, com asas abertas e detalhe nas escamas. Perfeita para gamers, fãs de fantasia, mesa de cabeceira ou secretária.',
     descEn: 'A decorative lamp of a fire-breathing dragon — the flame itself is the translucent shade, lit by the included LED light (battery-powered, no heat, no wires), filling the room with a warm orange glow. A statement piece 3D-printed on our Bambu Lab machines, with spread wings and detailed scales. Perfect for gamers, fantasy fans, a bedside table or a desk.',
     price: 44.90,
-    tag: 'Candeeiro Dragão',
+    tag: 'Luminárias',
     tone: 'red',
     icon: '🐉',
     images: [
@@ -331,7 +395,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Candeeiro decorativo de uma raposa em estilo de blocos que segura uma lanterna acesa. A luz vem de uma vela LED incluída (chama artificial, sem calor nem fios, a pilhas) e dá um brilho quente e aconchegante — perfeito como luz de presença na mesa de cabeceira, secretária ou quarto das crianças. Impresso a várias cores nas nossas Bambu Lab.',
     descEn: "A decorative lamp of a blocky-style fox holding a lit lantern. The light comes from an included LED tea light (flameless, no heat, battery-powered) for a warm, cozy glow — perfect as a night light on a bedside table, desk or a kids' room. Printed in multiple colors on our Bambu Lab printers.",
     price: 49.90,
-    tag: 'Candeeiro Raposa',
+    tag: 'Luminárias',
     tone: 'orange',
     icon: '🦊',
     images: [
@@ -352,7 +416,7 @@ export const PRODUCTS: Product[] = [
     desc: 'Vaso/cachepot geométrico impresso em 3D — linhas facetadas modernas que dão vida a suculentas, plantas pequenas ou até canetas. Peça decorativa para a secretária, prateleira ou parapeito. Escolhe a tua cor.',
     descEn: 'A 3D-printed geometric planter/pot — modern faceted lines that bring succulents, small plants or even pens to life. A decorative piece for the desk, shelf or windowsill. Pick your color.',
     price: 14.90,
-    tag: 'Vaso Geométrico',
+    tag: 'Decoração',
     tone: 'green',
     icon: '🪴',
     customizations: [
@@ -368,9 +432,32 @@ export const PRODUCTS: Product[] = [
  */
 export const VISIBLE_PRODUCTS = PRODUCTS.filter((p) => !p.hidden);
 
-// Categorias derivadas só dos produtos visíveis (evita pills de categorias
-// que ficariam vazias por só terem produtos escondidos).
-export const PRODUCT_TAGS = ['Todos', ...Array.from(new Set(VISIBLE_PRODUCTS.map((p) => p.tag)))];
+/**
+ * Secções do catálogo: cada nicho com os seus produtos, na ordem de NICHES.
+ * Nichos sem produtos ficam de fora — nunca se renderiza uma secção vazia.
+ *
+ * EM DESENVOLVIMENTO mostra também os produtos `hidden` (ainda sem foto),
+ * marcados como rascunho, para se acompanhar o roteiro enquanto se adicionam
+ * peças. EM PRODUÇÃO só entram os publicáveis — o site ao vivo nunca mostra
+ * cartões por acabar.
+ */
+const PRODUTOS_CATALOGO =
+  process.env.NODE_ENV === 'production' ? VISIBLE_PRODUCTS : PRODUCTS;
+
+export const CATALOGO_SECOES = NICHES.map((n) => ({
+  ...n,
+  products: PRODUTOS_CATALOGO.filter((p) => p.tag === n.label),
+})).filter((n) => n.products.length > 0);
+
+// Aviso em dev se algum produto apontar para um nicho que não existe — sem
+// isto, um typo no `tag` fazia o produto desaparecer do catálogo em silêncio.
+if (process.env.NODE_ENV !== 'production') {
+  const labels = new Set(NICHES.map((n) => n.label));
+  const orfaos = PRODUCTS.filter((p) => !labels.has(p.tag)).map((p) => `${p.id} → "${p.tag}"`);
+  if (orfaos.length) {
+    console.warn(`[products] tag sem nicho correspondente:\n  ${orfaos.join('\n  ')}`);
+  }
+}
 
 export function getProductById(id: string): Product | undefined {
   return PRODUCTS.find((p) => p.id === id);

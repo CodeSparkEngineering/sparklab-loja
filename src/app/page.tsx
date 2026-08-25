@@ -2,7 +2,6 @@ import Header from '@/components/Header';
 import Hero from '@/components/sections/Hero';
 import { SITE_URL } from '@/data/site';
 import FaixaConfianca from '@/components/sections/FaixaConfianca';
-import Destaques from '@/components/sections/Destaques';
 import Diferenciais from '@/components/sections/Diferenciais';
 import Catalogo from '@/components/sections/Catalogo';
 import ComoFunciona from '@/components/sections/ComoFunciona';
@@ -79,7 +78,10 @@ export default function Home() {
         {/* Fundo animado por scroll (anime.js) — vive entre o Hero e o Footer */}
         <ScrollBackgroundFX>
           <FaixaConfianca />
-          <Destaques />
+          {/* <Destaques /> — fora enquanto o catálogo for pequeno: mostrava 6
+              peças que reapareciam logo a seguir no catálogo (6 das 8 à venda),
+              o que fazia a loja parecer menor. Voltar a ligar quando houver
+              peças que cheguem para o destaque não repetir a grelha (~20). */}
           <Diferenciais />
           <Catalogo />
           <ComoFunciona />
