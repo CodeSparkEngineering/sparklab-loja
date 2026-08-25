@@ -60,7 +60,7 @@ export const PRODUCTS: Product[] = [
     nameEn: 'Articulated Dragon',
     desc: 'Dragão articulado impresso em 3D, totalmente flexível — o corpo comprido ondula segmento a segmento, como um dragão vivo, com escamas em relevo, espinhos ao longo das costas, chifres e patas com garras. Print-in-place, sem colas nem montagem. Peça de destaque na secretária ou estante e um fidget anti-stress irresistível. Escolhe a tua cor.',
     descEn: 'A fully flexible 3D-printed articulated dragon — the long body ripples segment by segment, like a living dragon, with raised scales, a spined back, horns and clawed feet. Print-in-place, no glue or assembly. A statement desk or shelf piece and an irresistible anti-stress fidget. Pick your color.',
-    price: 29.90,
+    price: 10.00,
     tag: 'Articulados',
     tone: 'blue',
     icon: '🐉',
