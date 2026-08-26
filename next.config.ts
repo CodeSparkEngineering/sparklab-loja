@@ -8,17 +8,20 @@ import createMDX from "@next/mdx";
 // só 'self' + os domínios que o site realmente usa (Google Analytics/Ads/Tag
 // Manager e Vercel Analytics). O Stripe é redirect server-side e o WhatsApp
 // são links de navegação — nenhum precisa de entradas no cliente.
+// `news.google.com` (+ gstatic para os ícones) é o botão "fonte preferida"
+// nos guias: precisa de script-src, img-src, connect-src E frame-src — só
+// com script-src o botão desenhava-se mas o clique não abria o diálogo.
 // Em dev acrescenta-se 'unsafe-eval' (React/HMR) e ws:/wss: (HMR); e omite-se
 // upgrade-insecure-requests (senão o localhost http partiria).
 const isDev = process.env.NODE_ENV === "development";
 const contentSecurityPolicy = [
   `default-src 'self'`,
-  `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://va.vercel-scripts.com${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://news.google.com https://va.vercel-scripts.com${isDev ? " 'unsafe-eval'" : ""}`,
   `style-src 'self' 'unsafe-inline'`,
-  `img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://www.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net`,
+  `img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://www.google.com https://news.google.com https://www.gstatic.com https://www.googleadservices.com https://googleads.g.doubleclick.net`,
   `font-src 'self' data:`,
-  `connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com${isDev ? " ws: wss:" : ""}`,
-  `frame-src 'self' https://www.googletagmanager.com https://td.doubleclick.net`,
+  `connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://news.google.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com${isDev ? " ws: wss:" : ""}`,
+  `frame-src 'self' https://www.googletagmanager.com https://td.doubleclick.net https://news.google.com`,
   `worker-src 'self' blob:`,
   `object-src 'none'`,
   `base-uri 'self'`,

@@ -18,6 +18,7 @@ import { ArrowLeft } from 'lucide-react';
 import { getGuiaBySlug, guiasRecentes, gTitle } from '@/data/guias';
 import { SITE_URL } from '@/data/site';
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon';
+import BotaoFontePreferida from '@/components/guias/BotaoFontePreferida';
 import { useLang, type Lang } from '@/i18n/LanguageContext';
 
 const L = {
@@ -157,6 +158,10 @@ export function GuiaRodape({ slug }: { slug: string }) {
           {t.shareBtn}
         </a>
       </div>
+
+      {/* Fonte preferida do Google — só se desenha se o script não for
+          bloqueado; caso contrário não ocupa espaço nenhum. */}
+      <BotaoFontePreferida />
 
       <GuiaCta />
 
