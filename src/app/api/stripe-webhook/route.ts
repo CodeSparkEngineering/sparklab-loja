@@ -30,9 +30,26 @@ export async function POST(request: NextRequest) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!key || !webhookSecret) {
-    // Ainda não configurado — responde 200 para a Stripe não ficar a repetir.
-    console.warn('[stripe-webhook] STRIPE_SECRET_KEY ou STRIPE_WEBHOOK_SECRET em falta.');
-    return NextResponse.json({ received: true, configured: false });
+    // 500 de propósito, NÃO 200.
+    //
+    // Isto já custou uma encomenda: em agosto de 2026 faltava o
+    // STRIPE_WEBHOOK_SECRET e esta função respondia 200 { configured: false }.
+    // A Stripe lia "entregue com sucesso", nunca reportava erro nem repetia, e
+    // a venda passou despercebida — não saiu email nem para nós nem para o
+    // cliente. A falha era invisível dos dois lados.
+    //
+    // Com 500 a entrega aparece a vermelho no painel da Stripe, ela repete
+    // com backoff (e avisa por email ao fim de várias falhas), e nós damos por
+    // isso no próprio dia. Repetir aqui não faz mal nenhum: sem segredo não
+    // chegámos a processar nada, portanto não há trabalho duplicado.
+    console.error(
+      '[stripe-webhook] NÃO CONFIGURADO: falta STRIPE_SECRET_KEY ou STRIPE_WEBHOOK_SECRET. ' +
+        'Nenhuma encomenda será notificada até isto estar resolvido na Vercel.'
+    );
+    return NextResponse.json(
+      { received: false, configured: false },
+      { status: 500 }
+    );
   }
 
   const stripe = new Stripe(key);
@@ -64,7 +81,25 @@ export async function POST(request: NextRequest) {
 
     // Um email para nós (aviso de encomenda) e outro para o cliente (obrigado).
     // allSettled: se um falhar, o outro segue à mesma; a venda já aconteceu.
-    await Promise.allSettled([sendOrderEmail(session), sendCustomerEmail(session)]);
+    const [aviso] = await Promise.allSettled([
+      sendOrderEmail(session),
+      sendCustomerEmail(session),
+    ]);
+
+    // Se o AVISO não saiu, devolvemos 500 para a Stripe repetir — ficaríamos
+    // sem saber da encomenda, que é exatamente a falha que já nos escapou uma
+    // vez. Repetir é seguro: como não saiu email nenhum, não há duplicados.
+    //
+    // Reparar que a decisão depende SÓ do aviso, nunca do email do cliente: se
+    // o aviso saiu e só o do cliente falhou, respondemos 200. Caso contrário a
+    // repetição da Stripe mandava-nos o mesmo aviso vezes sem conta.
+    const avisoSaiu = aviso.status === 'fulfilled' && aviso.value === true;
+    if (!avisoSaiu) {
+      return NextResponse.json(
+        { received: false, reason: 'order-email-failed' },
+        { status: 500 }
+      );
+    }
   } catch (err) {
     console.error('[stripe-webhook] erro ao processar encomenda:', err);
     // Devolve 200 na mesma: a venda já aconteceu, não queremos repetições infinitas.
@@ -73,14 +108,21 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ received: true });
 }
 
-async function sendOrderEmail(session: Stripe.Checkout.Session) {
+/**
+ * Aviso de encomenda para NÓS. Devolve `true` só quando o email saiu mesmo —
+ * o chamador usa isso para decidir se deixa a Stripe repetir (ver POST).
+ */
+async function sendOrderEmail(session: Stripe.Checkout.Session): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.ORDER_EMAIL_TO;
   const from = process.env.ORDER_EMAIL_FROM || 'SparkLab <onboarding@resend.dev>';
 
   if (!apiKey || !to) {
-    console.warn('[stripe-webhook] RESEND_API_KEY ou ORDER_EMAIL_TO em falta — email não enviado.');
-    return;
+    console.error(
+      '[stripe-webhook] RESEND_API_KEY ou ORDER_EMAIL_TO em falta — o aviso de ' +
+        'encomenda NÃO foi enviado. A venda está feita e paga na Stripe.'
+    );
+    return false;
   }
 
   const total = typeof session.amount_total === 'number' ? session.amount_total / 100 : 0;
@@ -156,7 +198,9 @@ async function sendOrderEmail(session: Stripe.Checkout.Session) {
   if (!res.ok) {
     const body = await res.text();
     console.error('[stripe-webhook] Resend falhou:', res.status, body);
+    return false;
   }
+  return true;
 }
 
 // Linhas da encomenda (produto + personalização + subtotal) — partilhado pelos
