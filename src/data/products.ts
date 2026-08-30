@@ -209,6 +209,38 @@ export const PRODUCTS: Product[] = [
     ]
   },
   {
+    id: 'gelado-caixa',
+    name: 'Gelado Caixinha',
+    nameEn: 'Ice Cream Trinket Box',
+    desc: 'Um gelado de cone que afinal abre: a bola é a tampa e o cone é um pote com espaço lá dentro para anéis, brincos, moedas ou aquele parafuso que não podes perder. As pétalas encaixam com um estalido satisfatório — dá gosto abrir e fechar. Impresso em 3D em duas cores à tua escolha (bola e cone), com a textura do wafer em relevo. Fica bem na mesa de cabeceira, na secretária ou como prenda pequena e diferente.',
+    descEn: 'An ice cream cone that actually opens: the scoop is the lid and the cone is a little pot with room inside for rings, earrings, coins or that screw you must not lose. The petals close with a satisfying click — opening and shutting it is half the fun. 3D-printed in two colors of your choice (scoop and cone), with the waffle texture in relief. Great on a bedside table, a desk, or as a small, different gift.',
+    price: 9.90,
+    tag: 'Fidgets',
+    tone: 'red',
+    icon: '🍦',
+    images: [
+      '/images/gelado-caixa-1.webp',
+      '/images/gelado-caixa-2.webp',
+      '/images/gelado-caixa-3.webp'
+    ],
+    customizations: [
+      {
+        id: 'cor_bola',
+        label: 'Cor da bola (ex: morango, chocolate, menta, baunilha)',
+        labelEn: 'Scoop color (e.g. strawberry, chocolate, mint, vanilla)',
+        type: 'text',
+        maxLength: 30
+      },
+      {
+        id: 'cor_cone',
+        label: 'Cor do cone (ex: creme, amarelo, rosa, verde, azul)',
+        labelEn: 'Cone color (e.g. cream, yellow, pink, green, blue)',
+        type: 'text',
+        maxLength: 30
+      }
+    ]
+  },
+  {
     id: 'spinner-espiral',
     name: 'Spinner Espiral',
     nameEn: 'Spiral Spinner',
