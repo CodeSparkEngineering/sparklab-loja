@@ -107,13 +107,6 @@ export const NICHES: Niche[] = [
     desc: 'O teu canto de jogo, arrumado e com o teu nome.',
     descEn: 'Your gaming corner, tidy and with your name on it.',
   },
-  {
-    slug: 'decoracao',
-    label: 'Decoração',
-    labelEn: 'Decor',
-    desc: 'Peças que dão carácter à divisão.',
-    descEn: 'Pieces that give the room character.',
-  },
 ];
 
 export const PRODUCTS: Product[] = [
@@ -135,36 +128,6 @@ export const PRODUCTS: Product[] = [
     ],
     customizations: [
       { id: 'cor', label: 'Cor à escolha (ex: azul, verde, roxo, dourado)', labelEn: 'Color of choice (e.g. blue, green, purple, gold)', type: 'text', maxLength: 30 }
-    ]
-  },
-  {
-    id: 'polvo-articulado',
-    hidden: true, // por publicar — falta foto
-    name: 'Polvo Articulado',
-    nameEn: 'Flexi Octopus (Articulated)',
-    desc: 'Polvo articulado impresso em 3D com oito tentáculos que se enrolam e ondulam. Print-in-place, sem colas nem montagem. Fidget anti-stress super satisfatório, brinquedo ou peça de secretária. Escolhe a tua cor.',
-    descEn: 'A 3D-printed articulated octopus with eight tentacles that curl and ripple. Print-in-place, no glue or assembly. A super-satisfying anti-stress fidget, toy or desk piece. Pick your color.',
-    price: 9.90,
-    tag: 'Articulados',
-    tone: 'red',
-    icon: '🐙',
-    customizations: [
-      { id: 'cor', label: 'Cor à escolha (ex: laranja, roxo, azul)', labelEn: 'Color of choice (e.g. orange, purple, blue)', type: 'text', maxLength: 30 }
-    ]
-  },
-  {
-    id: 'dinossauro-articulado',
-    hidden: true, // por publicar — falta foto
-    name: 'Dinossauro Articulado',
-    nameEn: 'Articulated Dinosaur',
-    desc: 'Dinossauro articulado impresso em 3D, totalmente flexível — o corpo e a cauda mexem segmento a segmento. Print-in-place, sem colas nem montagem. Divertido, anti-stress e ótimo como prenda para miúdos e graúdos. Escolhe a tua cor.',
-    descEn: 'A fully flexible 3D-printed articulated dinosaur — the body and tail move segment by segment. Print-in-place, no glue or assembly. Fun, anti-stress and a great gift for kids and grown-ups alike. Pick your color.',
-    price: 12.90,
-    tag: 'Articulados',
-    tone: 'olive',
-    icon: '🦕',
-    customizations: [
-      { id: 'cor', label: 'Cor à escolha (ex: verde, azul, laranja)', labelEn: 'Color of choice (e.g. green, blue, orange)', type: 'text', maxLength: 30 }
     ]
   },
   {
@@ -295,74 +258,9 @@ export const PRODUCTS: Product[] = [
     ]
   },
 
-  // ────────────────────────── SUPORTE DE TELEMÓVEL ──────────────────────────
-  {
-    id: 'suporte-celular',
-    hidden: true, // por publicar — falta foto
-    name: 'Suporte de Telemóvel',
-    nameEn: '3D Phone Stand',
-    desc: 'Suporte de telemóvel impresso em 3D, estável e com o ângulo perfeito para veres vídeos, chamadas ou receitas na secretária ou na cozinha. Compatível com qualquer telemóvel, com ou sem capa. Escolhe a tua cor.',
-    descEn: 'A 3D-printed phone stand, stable and at the perfect angle to watch videos, take calls or follow recipes on your desk or in the kitchen. Fits any phone, with or without a case. Pick your color.',
-    price: 9.90,
-    tag: 'Secretária',
-    tone: 'blue',
-    icon: '📱',
-    customizations: [
-      { id: 'cor', label: 'Cor à escolha (opcional)', labelEn: 'Color of choice (optional)', type: 'text', maxLength: 30 }
-    ]
-  },
 
-  // ──────────────────────────────── DOCK MAGSAFE ────────────────────────────────
-  {
-    id: 'dock-magsafe-organizador',
-    hidden: true, // por publicar — falta foto
-    name: 'Dock MagSafe',
-    nameEn: 'MagSafe Dock',
-    desc: 'Base de carregamento MagSafe impressa em 3D — encaixa o teu carregador MagSafe e carrega o telemóvel na vertical, sempre à vista e no ângulo certo. (Carregador não incluído.) Escolhe a tua cor.',
-    descEn: 'A 3D-printed MagSafe charging dock — slot in your MagSafe charger and charge your phone upright, always in view and at the right angle. (Charger not included.) Pick your color.',
-    price: 24.90,
-    tag: 'Secretária',
-    tone: 'green',
-    icon: '🔋',
-    customizations: [
-      { id: 'cor', label: 'Cor à escolha (opcional)', labelEn: 'Color of choice (optional)', type: 'text', maxLength: 30 }
-    ]
-  },
 
-  // ─────────────────────────── SUPORTE DE HEADSET ───────────────────────────
-  {
-    id: 'organizador-modular-headset',
-    hidden: true, // por publicar — falta foto
-    name: 'Suporte de Headset',
-    nameEn: 'Headset Stand',
-    desc: 'Suporte de headset impresso em 3D para o teu setup gaming — pendura os auscultadores em destaque e mantém a secretária arrumada e livre de cabos emaranhados. Escolhe a tua cor.',
-    descEn: 'A 3D-printed headset stand for your gaming setup — hang your headphones on display and keep your desk tidy and free of tangled cables. Pick your color.',
-    price: 24.90,
-    tag: 'Setup Gamer',
-    tone: 'purple',
-    icon: '🎧',
-    customizations: [
-      { id: 'cor', label: 'Cor à escolha (opcional)', labelEn: 'Color of choice (optional)', type: 'text', maxLength: 30 }
-    ]
-  },
 
-  // ─────────────────────────── COMANDO PS5/XBOX ───────────────────────────
-  {
-    id: 'suporte-controle-ps5-xbox',
-    hidden: true, // por publicar — falta foto
-    name: 'Suporte de Comando PS5/Xbox Personalizado',
-    nameEn: 'Personalized PS5/Xbox Controller Stand',
-    desc: 'Suporte de comando impresso em 3D para PS5 ou Xbox, com placa personalizável com o teu nome ou gamertag. Mantém o comando arrumado e em destaque na secretária ou no setup gaming. Escolhe a consola e a cor.',
-    descEn: 'A 3D-printed controller stand for PS5 or Xbox, with a plate you personalize with your name or gamertag. Keeps your controller tidy and on display on your desk or gaming setup. Choose your console and color.',
-    price: 19.90,
-    tag: 'Setup Gamer',
-    tone: 'blue',
-    icon: '🎮',
-    customizations: [
-      { id: 'consola', label: 'Consola (PS5 ou Xbox)', labelEn: 'Console (PS5 or Xbox)', type: 'text', maxLength: 10, required: true },
-      { id: 'nome', label: 'Nome/gamertag para a placa (opcional)', labelEn: 'Name/gamertag for the plate (optional)', type: 'text', maxLength: 16 }
-    ]
-  },
 
   // ──────────────────────────── COMANDO NEON VICE ────────────────────────────
   { id: 'suporte-comando-neon', name: 'Suporte de Comando PS5 — Neon Vice', nameEn: 'PS5 Controller Stand — Neon Vice', desc: 'Suporte de comando PS5 com atitude de cidade neon dos anos 80: palmeiras verdes, base preta com detalhes cor-de-rosa e uma placa "Wanted" que personalizas com a tua gamertag. Uma peça de secretária que dá logo nas vistas. Ideal para gamers.', descEn: 'A PS5 controller stand with full 80s neon-city attitude: green palm trees, a black base with pink accents and a "Wanted" plate you personalize with your gamertag. A desk piece that stands out right away. Perfect for gamers.', price: 40, tag: 'Setup Gamer', tone: 'purple', icon: '🎮', images: ['/images/suporte-comando-ps5-1.webp', '/images/suporte-comando-ps5-2.webp', '/images/suporte-comando-ps5-3.webp'], customizations: [ { id: 'gamertag', label: 'Gamertag para a placa (ex: NIGHT_RIDER)', labelEn: 'Gamertag for the plate (e.g. NIGHT_RIDER)', type: 'text', maxLength: 16 } ] },
@@ -402,22 +300,6 @@ export const PRODUCTS: Product[] = [
     ]
   },
 
-  // ─────────────────────────────── PORTA-PINCÉIS ───────────────────────────────
-  {
-    id: 'porta-pinceis-organizador',
-    hidden: true, // por publicar — falta foto
-    name: 'Porta-Pincéis Multifuncional',
-    nameEn: 'Multi-purpose Brush & Pen Holder',
-    desc: 'Organizador multifuncional impresso em 3D — perfeito para pincéis de maquilhagem, canetas, lápis ou ferramentas. Vários compartimentos para manter tudo à mão e a mesa arrumada. Escolhe a tua cor.',
-    descEn: 'A 3D-printed multi-purpose organizer — perfect for makeup brushes, pens, pencils or tools. Several compartments to keep everything at hand and your desk tidy. Pick your color.',
-    price: 12.90,
-    tag: 'Secretária',
-    tone: 'red',
-    icon: '🖌️',
-    customizations: [
-      { id: 'cor', label: 'Cor à escolha (opcional)', labelEn: 'Color of choice (optional)', type: 'text', maxLength: 30 }
-    ]
-  },
 
   // ─────────────────────────── CANDEEIRO DRAGÃO ───────────────────────────
   {
@@ -518,22 +400,6 @@ export const PRODUCTS: Product[] = [
     ]
   },
 
-  // ─────────────────────────── VASO GEOMÉTRICO ───────────────────────────
-  {
-    id: 'vaso-geometrico',
-    hidden: true, // por publicar — falta foto
-    name: 'Vaso Geométrico',
-    nameEn: 'Geometric Planter',
-    desc: 'Vaso/cachepot geométrico impresso em 3D — linhas facetadas modernas que dão vida a suculentas, plantas pequenas ou até canetas. Peça decorativa para a secretária, prateleira ou parapeito. Escolhe a tua cor.',
-    descEn: 'A 3D-printed geometric planter/pot — modern faceted lines that bring succulents, small plants or even pens to life. A decorative piece for the desk, shelf or windowsill. Pick your color.',
-    price: 14.90,
-    tag: 'Decoração',
-    tone: 'green',
-    icon: '🪴',
-    customizations: [
-      { id: 'cor', label: 'Cor à escolha (opcional)', labelEn: 'Color of choice (optional)', type: 'text', maxLength: 30 }
-    ]
-  },
 ];
 
 /**
