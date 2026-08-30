@@ -87,7 +87,7 @@ const L = {
     s4: [
       <><strong>Stripe</strong> — processamento de pagamentos.</>,
       <><strong>CTT / transportadora</strong> — entrega das encomendas.</>,
-      <><strong>Resend</strong> — envio de emails transacionais (confirmação de encomenda).</>,
+      <><strong>Resend</strong> — envio de emails transacionais (confirmação de encomenda e receção dos pedidos de orçamento).</>,
       <><strong>Vercel</strong> — alojamento do site e armazenamento dos ficheiros 3D que envias no orçamento.</>,
       <><strong>Google</strong> — estatísticas (Analytics) e medição de anúncios (Ads), apenas com o teu consentimento. Nas páginas dos guias carregamos ainda um botão do Google (&ldquo;fonte preferida&rdquo;) que só é acionado se clicares nele.</>,
     ],
@@ -181,7 +181,7 @@ const L = {
     s4: [
       <><strong>Stripe</strong> — payment processing.</>,
       <><strong>CTT / carrier</strong> — order delivery.</>,
-      <><strong>Resend</strong> — transactional emails (order confirmation).</>,
+      <><strong>Resend</strong> — transactional emails (order confirmation and receiving quote requests).</>,
       <><strong>Vercel</strong> — website hosting and storage of the 3D files you upload with a quote.</>,
       <><strong>Google</strong> — statistics (Analytics) and ad measurement (Ads), only with your consent. On the guide pages we also load a Google &ldquo;preferred source&rdquo; button, which only acts if you click it.</>,
     ],

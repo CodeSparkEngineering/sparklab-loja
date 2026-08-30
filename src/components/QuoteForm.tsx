@@ -226,6 +226,34 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
     const fileUrl = uploadRef.current ? await uploadRef.current : null;
     setSending(false);
 
+    // Rede de segurança do lead: envia-nos uma cópia do pedido por email
+    // (rota /api/orcamento → Resend). Fire-and-forget com keepalive — não
+    // atrasa nem bloqueia o salto para o WhatsApp, e sobrevive à navegação
+    // para /pedido-recebido. Sem isto, quem desistisse no QR code do
+    // WhatsApp Web (desktop) desaparecia sem deixar rasto.
+    try {
+      fetch('/api/orcamento', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
+        body: JSON.stringify({
+          name,
+          phone,
+          material: materialVal ?? '',
+          qty,
+          prazo: prazoVal,
+          desc,
+          fileUrl,
+          lang,
+          empresa: (formData.get('empresa') as string) || '', // honeypot
+        }),
+      }).catch(() => {
+        // Falhou? O WhatsApp continua a ser o canal principal — nada a fazer.
+      });
+    } catch {
+      // fetch indisponível — segue o fluxo normal
+    }
+
     const parts = [
       t.waIntro,
       ``,
@@ -271,6 +299,14 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
       )}
 
       <div className="qf">
+        {/* Honeypot anti-spam: invisível e fora do tab para humanos; bots que
+            preenchem tudo denunciam-se e a rota /api/orcamento descarta-os.
+            Fora do ecrã (não display:none — alguns bots saltam campos
+            escondidos assim). */}
+        <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
+          <label htmlFor="qf-empresa">Empresa</label>
+          <input id="qf-empresa" name="empresa" type="text" tabIndex={-1} autoComplete="off" />
+        </div>
         <div className="qf__row">
           <div className="qf__field">
             <label htmlFor="qf-name">{t.name}</label>
