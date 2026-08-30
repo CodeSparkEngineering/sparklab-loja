@@ -174,7 +174,7 @@ export default function OrcamentoLanding() {
               href={GOOGLE_PROFILE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-medium hover:text-orange-300"
+              className="-my-2 inline-flex items-center gap-1.5 py-2 font-medium hover:text-orange-300"
             >
               <GoogleMark size={15} />
               <span className="text-amber-400">★</span> {t.tRating}
@@ -278,12 +278,12 @@ export default function OrcamentoLanding() {
           <h2 className="mb-6 text-center text-2xl font-bold text-white">{t.faqTitle}</h2>
           <div className="space-y-3">
             {t.faq.map((item, i) => (
-              <details key={i} className="group rounded-xl border border-white/10 bg-stone-900/70 px-5 py-4 backdrop-blur-md">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold text-stone-100 [&::-webkit-details-marker]:hidden">
+              <details key={i} className="group overflow-hidden rounded-xl border border-white/10 bg-stone-900/70 backdrop-blur-md">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-semibold text-stone-100 [&::-webkit-details-marker]:hidden">
                   {item.q}
                   <svg className="h-5 w-5 shrink-0 text-orange-400 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
                 </summary>
-                <p className="mt-3 text-sm leading-relaxed text-stone-300">{item.a}</p>
+                <p className="px-5 pb-4 text-sm leading-relaxed text-stone-300">{item.a}</p>
               </details>
             ))}
           </div>

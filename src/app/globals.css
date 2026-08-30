@@ -2097,7 +2097,9 @@ section.niche { scroll-margin-top: 130px; }
   border-radius: 10px;
   padding: 13px 16px;
   color: var(--ink);
-  font-family: inherit; font-size: 15px;
+  /* 16px de propósito: com menos, o Safari iOS faz zoom automático ao focar
+     o campo e a página fica ampliada — 16px é o limiar que o desativa. */
+  font-family: inherit; font-size: 16px;
   transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
 }
 .qf__field input::placeholder, .qf__field textarea::placeholder { color: var(--ink-dim); opacity: .55; }
@@ -2154,7 +2156,7 @@ section.niche { scroll-margin-top: 130px; }
   border: 1px solid var(--line-strong);
   border-radius: 10px;
   box-shadow: 0 24px 48px -16px rgba(0,0,0,.7), 0 4px 12px -4px rgba(0,0,0,.4);
-  max-height: 240px; overflow-y: auto;
+  max-height: min(320px, 50vh); overflow-y: auto;
   animation: qfSelectIn .15s ease-out;
 }
 @keyframes qfSelectIn {
