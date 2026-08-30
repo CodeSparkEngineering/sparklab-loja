@@ -90,8 +90,8 @@ export const NICHES: Niche[] = [
     slug: 'luminarias',
     label: 'Luminárias',
     labelEn: 'Lamps',
-    desc: 'Luz LED quente, a pilhas. Sem calor nem fios à vista.',
-    descEn: 'Warm LED light, battery-powered. No heat, no visible wires.',
+    desc: 'Luz LED quente. Peças de exposição que acendem.',
+    descEn: 'Warm LED light. Statement pieces that light up.',
   },
   {
     slug: 'secretaria',
@@ -384,6 +384,40 @@ export const PRODUCTS: Product[] = [
       '/images/candeeiro-dragao-1.webp',
       '/images/candeeiro-dragao-2.webp',
       '/images/candeeiro-dragao-3.webp'
+    ]
+  },
+
+  // ─────────────────────────── CANDEEIRO COGUMELO ───────────────────────────
+  {
+    id: 'candeeiro-cogumelo',
+    name: 'Candeeiro Cogumelo',
+    nameEn: 'Mushroom Lamp',
+    desc: 'Candeeiro de mesa em forma de cogumelo, com chapéu translúcido e base em espiral canelada — quando acende, a luz atravessa as nervuras e desenha um brilho quente e suave na parede. Impresso em 3D nas nossas Bambu Lab, em duas cores à tua escolha (chapéu e base). Liga-se à tomada e traz lâmpada LED incluída. Perfeito na mesa de cabeceira, na secretária ou numa prateleira.',
+    descEn: 'A mushroom-shaped table lamp with a translucent cap and a fluted spiral base — when lit, the light passes through the ribs and casts a warm, soft glow on the wall. 3D-printed on our Bambu Lab machines, in two colors of your choice (cap and base). Plugs into the wall and includes an LED bulb. Perfect on a bedside table, a desk or a shelf.',
+    price: 35.00,
+    tag: 'Luminárias',
+    tone: 'purple',
+    icon: '🍄',
+    images: [
+      '/images/candeeiro-cogumelo-1.webp',
+      '/images/candeeiro-cogumelo-2.webp',
+      '/images/candeeiro-cogumelo-3.webp'
+    ],
+    customizations: [
+      {
+        id: 'cor_chapeu',
+        label: 'Cor do chapéu (ex: laranja, roxo, verde-água)',
+        labelEn: 'Cap color (e.g. orange, purple, teal)',
+        type: 'text',
+        maxLength: 30
+      },
+      {
+        id: 'cor_base',
+        label: 'Cor da base (ex: creme, roxo, amarelo)',
+        labelEn: 'Base color (e.g. cream, purple, yellow)',
+        type: 'text',
+        maxLength: 30
+      }
     ]
   },
 
