@@ -370,17 +370,35 @@ export const PRODUCTS: Product[] = [
   // ─────────────────────────── ORGANIZADOR DE MESA ───────────────────────────
   {
     id: 'organizador-mesa-suporte-celular',
-    hidden: true, // por publicar — falta foto
-    name: 'Organizador de Mesa',
-    nameEn: 'Desk Organizer',
-    desc: 'Organizador de secretária impresso em 3D — arruma canetas, clips, post-its e pequenos objetos com vários compartimentos. Mesa mais limpa, prática e com estilo. Escolhe a tua cor.',
-    descEn: 'A 3D-printed desk organizer — keep pens, clips, sticky notes and small items tidy across several compartments. A cleaner, more practical desk with style. Pick your color.',
-    price: 19.90,
+    name: 'Organizador de Gavetas',
+    nameEn: 'Drawer Organizer',
+    desc: 'Organizador modular com bandeja de cinco compartimentos no topo e quatro gavetas que deslizam por baixo — uma larga e três pequenas. Em cima ficam à mão os pincéis, canetas e frascos altos; nas gavetas desaparecem os batons, brincos, clips e tudo o que suja a mesa. Impresso em 3D nas nossas Bambu Lab em duas cores à tua escolha (estrutura e gavetas), com puxadores integrados. Serve na casa de banho, na secretária ou na mesa de cabeceira.',
+    descEn: 'A modular organizer with a five-compartment tray on top and four sliding drawers below — one wide, three small. Brushes, pens and tall bottles stay within reach up top; lipsticks, earrings, clips and everything that clutters the desk disappear into the drawers. 3D-printed on our Bambu Lab machines in two colors of your choice (body and drawers), with built-in handles. Works in the bathroom, on a desk or a bedside table.',
+    price: 29.90,
     tag: 'Secretária',
-    tone: 'slate',
-    icon: '🗂️',
+    tone: 'blue',
+    icon: '🗄️',
+    images: [
+      '/images/organizador-gavetas-1.webp',
+      '/images/organizador-gavetas-2.webp',
+      '/images/organizador-gavetas-3.webp',
+      '/images/organizador-gavetas-4.webp'
+    ],
     customizations: [
-      { id: 'cor', label: 'Cor à escolha (opcional)', labelEn: 'Color of choice (optional)', type: 'text', maxLength: 30 }
+      {
+        id: 'cor_estrutura',
+        label: 'Cor da estrutura (ex: azul, castanho, branco)',
+        labelEn: 'Body color (e.g. blue, brown, white)',
+        type: 'text',
+        maxLength: 30
+      },
+      {
+        id: 'cor_gavetas',
+        label: 'Cor das gavetas (ex: branco, rosa, creme)',
+        labelEn: 'Drawer color (e.g. white, pink, cream)',
+        type: 'text',
+        maxLength: 30
+      }
     ]
   },
 
