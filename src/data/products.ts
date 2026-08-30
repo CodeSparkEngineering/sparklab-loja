@@ -387,6 +387,33 @@ export const PRODUCTS: Product[] = [
     ]
   },
 
+  // ─────────────────────────── CANDEEIRO MONTANHA ───────────────────────────
+  {
+    id: 'candeeiro-montanha',
+    name: 'Candeeiro Montanha',
+    nameEn: 'Mountain Lamp',
+    desc: 'Candeeiro de mesa com uma cordilheira translúcida e dois barquinhos num lago aos pés dela — acesa, a luz atravessa a rocha e as encostas ganham profundidade, como um vale ao entardecer. Impresso em 3D nas nossas Bambu Lab, com base à escolha em cinzento ou preto. Peça de exposição para a mesa de cabeceira, a entrada ou uma prateleira.',
+    descEn: 'A table lamp with a translucent mountain range and two little boats on the lake at its feet — lit, the light passes through the rock and the slopes gain depth, like a valley at dusk. 3D-printed on our Bambu Lab machines, with your choice of grey or black base. A statement piece for a bedside table, a hallway or a shelf.',
+    price: 33.00,
+    tag: 'Luminárias',
+    tone: 'slate',
+    icon: '🏔️',
+    images: [
+      '/images/candeeiro-montanha-1.webp',
+      '/images/candeeiro-montanha-2.webp',
+      '/images/candeeiro-montanha-3.webp'
+    ],
+    customizations: [
+      {
+        id: 'cor_base',
+        label: 'Cor da base (cinzento ou preto)',
+        labelEn: 'Base color (grey or black)',
+        type: 'text',
+        maxLength: 20
+      }
+    ]
+  },
+
   // ─────────────────────────── CANDEEIRO COGUMELO ───────────────────────────
   {
     id: 'candeeiro-cogumelo',
