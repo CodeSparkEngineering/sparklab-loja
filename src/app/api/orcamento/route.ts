@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
       ${row('Quantidade', String(qty))}
       ${row('Prazo', esc(prazo || '—'))}
       ${row('Descrição', desc ? esc(desc).replace(/\n/g, '<br/>') : '<em style="font-weight:normal">—</em>')}
-      ${row('Ficheiro 3D', fileUrl
+      ${row('Ficheiro', fileUrl
         ? `<a href="${fileUrl}" style="color:#ea580c">${esc(fileUrl.split('/').pop() ?? 'descarregar')}</a>`
         : '<em style="font-weight:normal">sem ficheiro — precisa de modelação</em>')}
     </table>

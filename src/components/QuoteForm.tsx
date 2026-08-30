@@ -53,7 +53,7 @@ const L = {
     asideTitle: 'Como funciona',
     asideText: 'Preenche o formulário e anexa o teu ficheiro. Respondemos em até 2 horas úteis no WhatsApp com o prazo e o valor.',
     points: [
-      'Formatos aceitos: STL, OBJ, 3MF, STEP',
+      'Formatos: STL, OBJ, 3MF, STEP — ou foto/desenho (JPG, PNG, PDF)',
       'Sem ficheiro? Descreve a ideia — a nossa equipa trata da modelação.',
       'Orçamento e dúvidas sem compromisso.',
       'Entrega para todo Portugal.',
@@ -64,9 +64,9 @@ const L = {
     material: 'Material',
     qty: 'Quantidade',
     prazo: 'Para quando precisas?',
-    file: 'Ficheiro 3D (opcional)',
-    fileHint: 'Não tens ficheiro? Sem problema — descreve a ideia e nós desenhamos.',
-    filePick: 'Clica para anexar STL, OBJ, 3MF ou STEP',
+    file: 'Ficheiro 3D ou foto (opcional)',
+    fileHint: 'Não tens ficheiro 3D? Anexa uma foto ou desenho da ideia — nós tratamos da modelação.',
+    filePick: 'Clica para anexar STL, OBJ, 3MF, STEP — ou foto/PDF',
     desc: 'Descrição da peça',
     descPh: 'Dimensões aproximadas, cor desejada, uso final, prazo ideal…',
     submit: 'Enviar pelo WhatsApp',
@@ -79,11 +79,12 @@ const L = {
     waPrazo: '*Prazo:*',
     waDesc: '*Descrição:*',
     waFile: (f: string) => `Vou anexar o ficheiro *${f}* aqui no chat de seguida.`,
-    waFileLink: '*Ficheiro 3D:*',
+    waFileLink: '*Ficheiro:*',
     waNoFile: 'Ainda não tenho ficheiro 3D — preciso de ajuda com a modelação.',
     fileUploading: 'a carregar…',
     fileReady: 'anexado ✓',
     fileError: 'não foi possível carregar — envia-o depois no WhatsApp',
+    fileTooBig: 'acima de 100 MB — envia-o depois no WhatsApp',
     submitUploading: 'A carregar o ficheiro…',
     privacyPre: 'Ao enviar, concordas com a nossa',
     privacyLink: 'Política de Privacidade',
@@ -92,7 +93,7 @@ const L = {
     asideTitle: 'How it works',
     asideText: "Fill in the form and attach your file. We reply within 2 business hours on WhatsApp with timeline and price.",
     points: [
-      'Accepted formats: STL, OBJ, 3MF, STEP',
+      'Formats: STL, OBJ, 3MF, STEP — or a photo/sketch (JPG, PNG, PDF)',
       "No file? Describe the idea — our team handles the modeling.",
       'Quotes and questions, no strings attached.',
       'Delivery all over Portugal.',
@@ -103,9 +104,9 @@ const L = {
     material: 'Material',
     qty: 'Quantity',
     prazo: 'When do you need it?',
-    file: '3D file (optional)',
-    fileHint: "No file? No problem — describe your idea and we'll design it for you.",
-    filePick: 'Click to attach STL, OBJ, 3MF or STEP',
+    file: '3D file or photo (optional)',
+    fileHint: "No 3D file? Attach a photo or sketch of the idea — we handle the modeling.",
+    filePick: 'Click to attach STL, OBJ, 3MF, STEP — or a photo/PDF',
     desc: 'Part description',
     descPh: 'Approximate dimensions, desired color, final use, ideal deadline…',
     submit: 'Send via WhatsApp',
@@ -118,11 +119,12 @@ const L = {
     waPrazo: '*Timeline:*',
     waDesc: '*Description:*',
     waFile: (f: string) => `I'll attach the file *${f}* here in the chat next.`,
-    waFileLink: '*3D file:*',
+    waFileLink: '*File:*',
     waNoFile: "I don't have a 3D file yet — I need help with the modeling.",
     fileUploading: 'uploading…',
     fileReady: 'attached ✓',
     fileError: "couldn't upload — send it later on WhatsApp",
+    fileTooBig: 'over 100 MB — send it later on WhatsApp',
     submitUploading: 'Uploading the file…',
     privacyPre: 'By submitting, you agree to our',
     privacyLink: 'Privacy Policy',
@@ -148,10 +150,13 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
     size: number;
     status: 'uploading' | 'done' | 'error';
     url?: string;
+    /** Motivo do erro a mostrar (ex.: demasiado grande); sem ele usa-se o genérico. */
+    reason?: string;
   } | null>(null);
   const [material, setMaterial] = useState<string>(MATERIALS.pt[0].value);
   const [prazoIdx, setPrazoIdx] = useState(0);
   const [open, setOpen] = useState(false);
+  const [activeIdx, setActiveIdx] = useState(0);
   const [formError, setFormError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -188,6 +193,13 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
       uploadRef.current = null;
       return;
     }
+    if (file.size > 100 * 1024 * 1024) {
+      // O limite real é do servidor (MAX_BYTES na rota de upload); verificar
+      // aqui poupa o cliente a esperar por um multipart inteiro condenado.
+      setFileData({ name: file.name, size: file.size, status: 'error', reason: t.fileTooBig });
+      uploadRef.current = null;
+      return;
+    }
     setFileData({ name: file.name, size: file.size, status: 'uploading' });
     uploadRef.current = upload(
       `orcamentos/${crypto.randomUUID().slice(0, 8)}-${file.name}`,
@@ -202,6 +214,37 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
         setFileData((prev) => (prev ? { ...prev, status: 'error' } : prev));
         return null;
       });
+  };
+
+  const selectMaterial = (idx: number) => {
+    setMaterial(materials[idx].value);
+    setOpen(false);
+  };
+
+  // Teclado no seletor de material (o foco nunca sai do botão): setas movem
+  // o realce, Enter/Espaço escolhe, Home/End saltam, Escape fecha (já
+  // tratado no listener global acima). Sem isto o dropdown só respondia ao
+  // rato — quem navega por teclado ficava preso.
+  const onTriggerKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    const last = materials.length - 1;
+    if (!open) {
+      if (['ArrowDown', 'ArrowUp', 'Enter', ' ', 'Home', 'End'].includes(e.key)) {
+        e.preventDefault();
+        const cur = materials.findIndex((m) => m.value === material);
+        setActiveIdx(e.key === 'Home' ? 0 : e.key === 'End' ? last : Math.max(0, cur));
+        setOpen(true);
+      }
+      return;
+    }
+    switch (e.key) {
+      case 'ArrowDown': e.preventDefault(); setActiveIdx((i) => Math.min(last, i + 1)); break;
+      case 'ArrowUp':   e.preventDefault(); setActiveIdx((i) => Math.max(0, i - 1)); break;
+      case 'Home':      e.preventDefault(); setActiveIdx(0); break;
+      case 'End':       e.preventDefault(); setActiveIdx(last); break;
+      case 'Enter':
+      case ' ':         e.preventDefault(); selectMaterial(activeIdx); break;
+      case 'Tab':       setOpen(false); break;
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -328,6 +371,9 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
                 className="qf__select-trigger"
                 aria-haspopup="listbox"
                 aria-expanded={open}
+                aria-controls="qf-material-list"
+                aria-activedescendant={open ? `qf-material-opt-${activeIdx}` : undefined}
+                onKeyDown={onTriggerKeyDown}
                 onClick={() => setOpen(v => !v)}
               >
                 <span className="qf__select-value">
@@ -336,14 +382,16 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
                 <svg className="qf__select-caret" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
               </button>
               {open && (
-                <ul className="qf__select-list" role="listbox">
-                  {materials.map(m => (
+                <ul className="qf__select-list" id="qf-material-list" role="listbox">
+                  {materials.map((m, i) => (
                     <li
                       key={m.value}
+                      id={`qf-material-opt-${i}`}
                       role="option"
                       aria-selected={material === m.value}
-                      className={`qf__select-option ${material === m.value ? 'is-selected' : ''}`}
-                      onClick={() => { setMaterial(m.value); setOpen(false); }}
+                      className={`qf__select-option ${material === m.value ? 'is-selected' : ''} ${activeIdx === i ? 'is-kb' : ''}`}
+                      onMouseEnter={() => setActiveIdx(i)}
+                      onClick={() => selectMaterial(i)}
                     >
                       <span className="qf__select-option-label">{m.label}</span>
                       <span className="qf__select-option-hint">{m.hint}</span>
@@ -359,7 +407,7 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
           </div>
           <div className="qf__field">
             <label htmlFor="qf-qty">{t.qty}</label>
-            <input id="qf-qty" name="qty" type="number" min="1" defaultValue="1" />
+            <input id="qf-qty" name="qty" type="number" min="1" max="999" defaultValue="1" />
           </div>
         </div>
 
@@ -391,18 +439,18 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
                     fileData.status === 'done'
                       ? t.fileReady
                       : fileData.status === 'error'
-                        ? t.fileError
+                        ? (fileData.reason ?? t.fileError)
                         : t.fileUploading
                   }`
                 : t.filePick}
             </span>
-            <input id="qf-file" name="file" type="file" accept=".stl,.obj,.3mf,.step,.stp" onChange={handleFileChange} />
+            <input id="qf-file" name="file" type="file" accept=".stl,.obj,.3mf,.step,.stp,.jpg,.jpeg,.png,.webp,.heic,.pdf" onChange={handleFileChange} />
           </label>
         </div>
 
         <div className="qf__field">
           <label htmlFor="qf-desc">{t.desc}</label>
-          <textarea id="qf-desc" name="desc" placeholder={t.descPh}></textarea>
+          <textarea id="qf-desc" name="desc" maxLength={1000} placeholder={t.descPh}></textarea>
         </div>
 
         {formError && (

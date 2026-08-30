@@ -14,7 +14,12 @@ export const runtime = 'nodejs';
  * envia o ficheiro no próprio WhatsApp, como antes).
  */
 
-const ALLOWED_EXT = ['.stl', '.obj', '.3mf', '.step', '.stp'];
+const ALLOWED_EXT = [
+  '.stl', '.obj', '.3mf', '.step', '.stp',
+  // Sem ficheiro 3D, o cliente pode anexar uma foto/desenho da ideia
+  // (o FAQ promete-o). HEIC: fotos tiradas no iPhone.
+  '.jpg', '.jpeg', '.png', '.webp', '.heic', '.pdf',
+];
 const MAX_BYTES = 100 * 1024 * 1024; // 100 MB — STL grandes cabem à vontade
 
 export async function POST(request: Request): Promise<NextResponse> {
@@ -30,7 +35,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           throw new Error('Destino inválido.');
         }
         if (!ALLOWED_EXT.some((ext) => lower.endsWith(ext))) {
-          throw new Error('Formato não suportado (aceites: STL, OBJ, 3MF, STEP).');
+          throw new Error('Formato não suportado (aceites: STL, OBJ, 3MF, STEP, JPG, PNG, WebP, HEIC, PDF).');
         }
         return {
           maximumSizeInBytes: MAX_BYTES,

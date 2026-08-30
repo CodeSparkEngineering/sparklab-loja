@@ -2168,6 +2168,8 @@ section.niche { scroll-margin-top: 130px; }
   transition: background .15s ease;
 }
 .qf__select-option:hover { background: rgba(255,255,255,.05); }
+/* Realce da navegação por teclado (aria-activedescendant) — igual ao hover. */
+.qf__select-option.is-kb { background: rgba(255,255,255,.05); }
 .qf__select-option.is-selected { background: rgba(249,115,22,.1); }
 .qf__select-option-label { font-weight: 500; }
 .qf__select-option-hint { color: var(--ink-dim); font-size: 13px; margin-left: auto; }

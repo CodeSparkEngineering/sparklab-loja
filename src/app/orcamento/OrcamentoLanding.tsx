@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { useLang } from '@/i18n/LanguageContext';
 import QuoteForm from '@/components/QuoteForm';
 import { StripeMark, GoogleMark, MBWayMark } from '@/components/brand-marks';
@@ -34,7 +35,7 @@ const L = {
     faq: [
       { q: 'Quanto custa uma impressão 3D em Portugal?', a: 'Depende do tamanho, do material e do tempo de impressão da peça. Por isso o orçamento é gratuito e sem compromisso — envia a tua ideia ou ficheiro e recebes o preço exato em até 2 horas úteis.' },
       { q: 'Não tenho um ficheiro 3D. Conseguem ajudar?', a: 'Sim. Se não tens ficheiro STL, descreve a ideia (ou envia uma foto ou desenho) e a nossa equipa trata da modelação 3D por ti.' },
-      { q: 'Que ficheiros posso enviar?', a: 'Aceitamos STL, OBJ, 3MF e STEP. Podes anexá-los diretamente no formulário.' },
+      { q: 'Que ficheiros posso enviar?', a: 'Aceitamos STL, OBJ, 3MF e STEP. Não tens ficheiro 3D? Anexa uma foto ou desenho da ideia (JPG, PNG, PDF) diretamente no formulário.' },
       { q: 'Como posso pagar?', a: 'Depois de aprovares o orçamento, podes pagar por cartão (Stripe) ou MB WAY. Pagamento seguro, sempre.' },
       { q: 'Fazem envio para todo o país?', a: 'Sim, enviamos para todo o Portugal via CTT registado com seguimento. Envio grátis a partir de 40 €.' },
     ],
@@ -64,7 +65,7 @@ const L = {
     faq: [
       { q: 'How much does 3D printing cost in Portugal?', a: "It depends on the size, material and print time of the piece. That's why the quote is free and non-binding — send your idea or file and get the exact price within 2 business hours." },
       { q: "I don't have a 3D file. Can you help?", a: "Yes. If you don't have an STL file, describe the idea (or send a photo or sketch) and our team handles the 3D modeling for you." },
-      { q: 'What files can I send?', a: 'We accept STL, OBJ, 3MF and STEP. You can attach them directly in the form.' },
+      { q: 'What files can I send?', a: 'We accept STL, OBJ, 3MF and STEP. No 3D file? Attach a photo or sketch of the idea (JPG, PNG, PDF) directly in the form.' },
       { q: 'How can I pay?', a: 'After you approve the quote, you can pay by card (Stripe) or MB WAY. Secure payment, always.' },
       { q: 'Do you ship across the country?', a: 'Yes, we ship across Portugal via registered CTT mail with tracking. Free shipping over €40.' },
     ],
@@ -87,6 +88,19 @@ export default function OrcamentoLanding() {
   const { lang } = useLang();
   const t = L[lang];
 
+  // prefers-reduced-motion: troca o vídeo de fundo pelo poster estático.
+  // Estado (e não só CSS) porque um <video autoplay> descarrega e reproduz
+  // na mesma mesmo escondido — aqui nem chega a ser montado.
+  const [reduceMotion, setReduceMotion] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setReduceMotion(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setReduceMotion(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
   // FAQPage sempre em PT (canónico do site), emitido no SSR e citável pela IA.
   const faqSchema = {
     '@context': 'https://schema.org',
@@ -102,24 +116,33 @@ export default function OrcamentoLanding() {
     // `dark` força o aspeto escuro nesta landing (o vídeo é escuro): o
     // formulário partilhado e os cartões seguem, independentemente do tema.
     <main className="dark relative min-h-screen bg-stone-950 pt-28 pb-20">
-      {/* Fundo em vídeo — impressão 3D em grande plano, escurecido para leitura.
-          Leve (~160 KB), mudo, em loop; o poster pinta de imediato. */}
+      {/* Fundo em vídeo — macro do bico a imprimir, escurecido para leitura.
+          Leve (~110 KB), mudo, loop com crossfade; o poster pinta de imediato. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         {/* O vídeo novo (macro do bico a depositar filamento) já vem bem
             exposto — realce leve apenas; 1.35 (do vídeo antigo, mais baço)
             estourava os brilhos do bico metálico. O overlay é mais leve no
             telemóvel (o recorte vertical do 16:9 já esconde muito) e mais
             forte no desktop, onde há mais vídeo à mostra. */}
-        <video
-          className="h-full w-full scale-105 object-cover [filter:brightness(1.1)_saturate(1.15)]"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/videos/orcamento-bg-poster.webp"
-        >
-          <source src="/videos/orcamento-bg.mp4" type="video/mp4" />
-        </video>
+        {reduceMotion ? (
+          // eslint-disable-next-line @next/next/no-img-element -- fundo decorativo, sem otimização
+          <img
+            src="/videos/orcamento-bg-poster.webp"
+            alt=""
+            className="h-full w-full scale-105 object-cover [filter:brightness(1.1)_saturate(1.15)]"
+          />
+        ) : (
+          <video
+            className="h-full w-full scale-105 object-cover [filter:brightness(1.1)_saturate(1.15)]"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/videos/orcamento-bg-poster.webp"
+          >
+            <source src="/videos/orcamento-bg.mp4" type="video/mp4" />
+          </video>
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-stone-950/50 via-stone-950/40 to-stone-950/85 sm:from-stone-950/75 sm:via-stone-950/65 sm:to-stone-950/90" />
       </div>
 
