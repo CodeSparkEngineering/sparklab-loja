@@ -105,11 +105,13 @@ export default function OrcamentoLanding() {
       {/* Fundo em vídeo — impressão 3D em grande plano, escurecido para leitura.
           Leve (~160 KB), mudo, em loop; o poster pinta de imediato. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        {/* brightness/saturate avivam o filamento laranja; o overlay é mais
-            leve no telemóvel (o recorte vertical do 16:9 já esconde muito) e
-            mais forte no desktop, onde há mais vídeo à mostra. */}
+        {/* O vídeo novo (macro do bico a depositar filamento) já vem bem
+            exposto — realce leve apenas; 1.35 (do vídeo antigo, mais baço)
+            estourava os brilhos do bico metálico. O overlay é mais leve no
+            telemóvel (o recorte vertical do 16:9 já esconde muito) e mais
+            forte no desktop, onde há mais vídeo à mostra. */}
         <video
-          className="h-full w-full scale-105 object-cover [filter:brightness(1.35)_saturate(1.25)]"
+          className="h-full w-full scale-105 object-cover [filter:brightness(1.1)_saturate(1.15)]"
           autoPlay
           muted
           loop
