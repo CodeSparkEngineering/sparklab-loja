@@ -51,3 +51,6 @@ next-env.d.ts
 # ficam em public/images/. As originais aqui não vão para o repo.
 /fotos-novas/*
 !/fotos-novas/README.md
+
+# Kit de identidade em bruto — as peças usadas já vivem em public/ e src/.
+files.sparklab.icons/

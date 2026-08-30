@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useLang } from '@/i18n/LanguageContext';
 import { GOOGLE_PROFILE_URL } from '@/data/site';
+import Icone from '@/components/Icone';
 
 const L = {
   pt: {
@@ -107,7 +108,7 @@ export default function Hero() {
         <div className="container flex flex-wrap items-center justify-center sm:justify-between gap-x-7 gap-y-3">
           {['PLA', 'PETG', 'ABS', 'ASA', 'TPU', 'PC'].map((m) => (
             <span key={m} className="flex items-center gap-2.5 text-sm font-medium tracking-wider text-stone-600 dark:text-stone-300 uppercase whitespace-nowrap">
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-500/80" /> {m}
+              <Icone nome="filamento" tamanho={18} className="shrink-0 opacity-70" /> {m}
             </span>
           ))}
         </div>
