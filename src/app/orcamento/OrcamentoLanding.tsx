@@ -116,8 +116,9 @@ export default function OrcamentoLanding() {
     // `dark` força o aspeto escuro nesta landing (o vídeo é escuro): o
     // formulário partilhado e os cartões seguem, independentemente do tema.
     <main className="dark relative min-h-screen bg-stone-950 pt-28 pb-20">
-      {/* Fundo em vídeo — macro do bico a imprimir, escurecido para leitura.
-          Leve (~110 KB), mudo, loop com crossfade; o poster pinta de imediato. */}
+      {/* Fundo em vídeo — dragão low-poly acabado de imprimir na mesa escura
+          (a família do nosso best-seller). ~290 KB, mudo, loop palíndromo de
+          16 s (aproxima e recua — sem costura); o poster pinta de imediato. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         {/* O vídeo novo (macro do bico a depositar filamento) já vem bem
             exposto — realce leve apenas; 1.35 (do vídeo antigo, mais baço)
@@ -129,11 +130,11 @@ export default function OrcamentoLanding() {
           <img
             src="/videos/orcamento-bg-poster.webp"
             alt=""
-            className="h-full w-full scale-105 object-cover [filter:brightness(1.1)_saturate(1.15)]"
+            className="h-full w-full scale-105 object-cover [filter:saturate(1.1)]"
           />
         ) : (
           <video
-            className="h-full w-full scale-105 object-cover [filter:brightness(1.1)_saturate(1.15)]"
+            className="h-full w-full scale-105 object-cover [filter:saturate(1.1)]"
             autoPlay
             muted
             loop
