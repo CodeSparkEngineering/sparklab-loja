@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { useLang } from '@/i18n/LanguageContext';
 import QuoteForm from '@/components/QuoteForm';
 import { StripeMark, GoogleMark, MBWayMark } from '@/components/brand-marks';
@@ -88,19 +87,6 @@ export default function OrcamentoLanding() {
   const { lang } = useLang();
   const t = L[lang];
 
-  // prefers-reduced-motion: troca o vídeo de fundo pelo poster estático.
-  // Estado (e não só CSS) porque um <video autoplay> descarrega e reproduz
-  // na mesma mesmo escondido — aqui nem chega a ser montado.
-  const [reduceMotion, setReduceMotion] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setReduceMotion(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setReduceMotion(e.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
-
   // FAQPage sempre em PT (canónico do site), emitido no SSR e citável pela IA.
   const faqSchema = {
     '@context': 'https://schema.org',
@@ -115,37 +101,12 @@ export default function OrcamentoLanding() {
   return (
     // `dark` força o aspeto escuro nesta landing (o vídeo é escuro): o
     // formulário partilhado e os cartões seguem, independentemente do tema.
-    <main className="dark relative min-h-screen bg-stone-950 pt-28 pb-20">
-      {/* Fundo em vídeo — dragão low-poly acabado de imprimir na mesa escura
-          (a família do nosso best-seller). ~290 KB, mudo, loop palíndromo de
-          16 s (aproxima e recua — sem costura); o poster pinta de imediato. */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        {/* O vídeo novo (macro do bico a depositar filamento) já vem bem
-            exposto — realce leve apenas; 1.35 (do vídeo antigo, mais baço)
-            estourava os brilhos do bico metálico. O overlay é mais leve no
-            telemóvel (o recorte vertical do 16:9 já esconde muito) e mais
-            forte no desktop, onde há mais vídeo à mostra. */}
-        {reduceMotion ? (
-          // eslint-disable-next-line @next/next/no-img-element -- fundo decorativo, sem otimização
-          <img
-            src="/videos/orcamento-bg-poster.webp"
-            alt=""
-            className="h-full w-full scale-105 object-cover [filter:saturate(1.1)]"
-          />
-        ) : (
-          <video
-            className="h-full w-full scale-105 object-cover [filter:saturate(1.1)]"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster="/videos/orcamento-bg-poster.webp"
-          >
-            <source src="/videos/orcamento-bg.mp4" type="video/mp4" />
-          </video>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/50 via-stone-950/40 to-stone-950/85 sm:from-stone-950/75 sm:via-stone-950/65 sm:to-stone-950/90" />
-      </div>
+    <main className="dark relative min-h-screen pt-28 pb-20">
+      {/* Véu por cima do vídeo GLOBAL do site (BackgroundScrollVideo, no
+          layout) — o main é transparente de propósito para o deixar ver; o
+          gradiente garante a leitura do texto branco. O vídeo já chega
+          pré-escurecido pelo scrim do próprio componente. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-stone-950/50 via-stone-950/40 to-stone-950/85 sm:from-stone-950/75 sm:via-stone-950/65 sm:to-stone-950/90" />
 
       {/* Logo no canto superior esquerdo — marca + regresso à página inicial */}
       <Link
