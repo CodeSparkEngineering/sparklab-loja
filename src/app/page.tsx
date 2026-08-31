@@ -82,8 +82,11 @@ export default function Home() {
               peças que reapareciam logo a seguir no catálogo (6 das 8 à venda),
               o que fazia a loja parecer menor. Voltar a ligar quando houver
               peças que cheguem para o destaque não repetir a grelha (~20). */}
-          <Diferenciais />
+          {/* Catálogo antes dos Diferenciais: numa loja, quem passa o hero
+              quer ver o que vendemos — o primeiro produto estava a 3,7 ecrãs
+              de profundidade no telemóvel. */}
           <Catalogo />
+          <Diferenciais />
           <ComoFunciona />
           <Orcamento />
           <AOficina />

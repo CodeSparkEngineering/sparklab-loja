@@ -47,10 +47,10 @@ export default function GuiasTeaser() {
             <Link
               key={g.slug}
               href={`/guias/${g.slug}`}
-              className="group card p-6 flex gap-5 items-center hover:border-orange-300 dark:hover:border-orange-500/40 transition-colors"
+              className="group card p-6 flex flex-col sm:flex-row gap-5 sm:items-center hover:border-orange-300 dark:hover:border-orange-500/40 transition-colors"
             >
               {g.image ? (
-                <div className="relative w-24 h-24 sm:w-28 sm:h-28 shrink-0 rounded-xl overflow-hidden border border-stone-200 dark:border-stone-800">
+                <div className="relative h-40 w-full sm:w-28 sm:h-28 shrink-0 rounded-xl overflow-hidden border border-stone-200 dark:border-stone-800">
                   <Image
                     src={g.image}
                     alt=""

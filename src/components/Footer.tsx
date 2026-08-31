@@ -23,7 +23,6 @@ const L = {
     terms: 'Termos e condições',
     social: 'Redes',
     copyright: '© 2026 SparkLab. Feito com cuidado, camada por camada.',
-    updated: 'Última atualização: julho de 2026',
     privacy: 'Privacidade',
     termsShort: 'Termos',
     devBy: 'Site desenvolvido por',
@@ -43,7 +42,6 @@ const L = {
     terms: 'Terms & conditions',
     social: 'Social',
     copyright: '© 2026 SparkLab. Made with care, layer by layer.',
-    updated: 'Last updated: July 2026',
     privacy: 'Privacy',
     termsShort: 'Terms',
     devBy: 'Website developed by',
@@ -141,7 +139,6 @@ export default function Footer() {
       <div className="container footer__base" style={{ flexDirection: 'column', gap: '8px', textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
           <small>{t.copyright}</small>
-          <small style={{ opacity: 0.7 }}>{t.updated}</small>
           <small><Link href="/privacidade">{t.privacy}</Link> · <Link href="/termos">{t.termsShort}</Link></small>
         </div>
         <small style={{ opacity: 0.7 }}>
