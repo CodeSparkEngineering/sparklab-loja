@@ -8,6 +8,13 @@ import createMDX from "@next/mdx";
 // só 'self' + os domínios que o site realmente usa (Google Analytics/Ads/Tag
 // Manager e Vercel Analytics). O Stripe é redirect server-side e o WhatsApp
 // são links de navegação — nenhum precisa de entradas no cliente.
+// `vercel.com` + `*.blob.vercel-storage.com` em connect-src: o upload do
+// ficheiro no formulário de orçamento é CLIENT-side (@vercel/blob/client) —
+// o browser fala diretamente com a Vercel Blob (vercel.com/api/blob/mpu para
+// o multipart e o host do store para as partes). Sem estas entradas o
+// browser recusava a ligação e o upload ficava eternamente "a carregar…",
+// sem erro visível para o cliente. A rota /api/upload-orcamento (só autoriza)
+// é 'self' e nunca chegou a ser o problema.
 // `news.google.com` (+ gstatic para os ícones) é o botão "fonte preferida"
 // nos guias: precisa de script-src, img-src, connect-src E frame-src — só
 // com script-src o botão desenhava-se mas o clique não abria o diálogo.
@@ -20,7 +27,7 @@ const contentSecurityPolicy = [
   `style-src 'self' 'unsafe-inline'`,
   `img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://www.google.com https://news.google.com https://www.gstatic.com https://www.googleadservices.com https://googleads.g.doubleclick.net`,
   `font-src 'self' data:`,
-  `connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://news.google.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com${isDev ? " ws: wss:" : ""}`,
+  `connect-src 'self' https://vercel.com https://blob.vercel-storage.com https://*.public.blob.vercel-storage.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://news.google.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com${isDev ? " ws: wss:" : ""}`,
   `frame-src 'self' https://www.googletagmanager.com https://td.doubleclick.net https://news.google.com`,
   `worker-src 'self' blob:`,
   `object-src 'none'`,

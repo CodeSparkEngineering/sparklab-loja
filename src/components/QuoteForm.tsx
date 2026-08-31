@@ -201,7 +201,15 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
       return;
     }
     setFileData({ name: file.name, size: file.size, status: 'uploading' });
-    uploadRef.current = upload(
+    // Corrida contra um limite de tempo: se o upload não terminar em 90s
+    // (rede má, CSP a bloquear o pedido, store indisponível), desistimos e
+    // seguimos pelo caminho alternativo — o cliente envia o ficheiro no
+    // WhatsApp. Sem isto a promessa ficava pendente para sempre e o botão
+    // de envio ficava presa em "A carregar o ficheiro…", sem erro nenhum.
+    const comLimite = <T,>(p: Promise<T>, ms: number): Promise<T | null> =>
+      Promise.race([p, new Promise<null>((res) => setTimeout(() => res(null), ms))]);
+
+    uploadRef.current = comLimite(upload(
       `orcamentos/${crypto.randomUUID().slice(0, 8)}-${file.name}`,
       file,
       { access: 'public', handleUploadUrl: '/api/upload-orcamento', multipart: true }
@@ -210,9 +218,20 @@ export default function QuoteForm({ aside = true }: { aside?: boolean }) {
         setFileData((prev) => (prev ? { ...prev, status: 'done', url: blob.url } : prev));
         return blob.url;
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error('[quote-form] upload falhou:', err);
         setFileData((prev) => (prev ? { ...prev, status: 'error' } : prev));
         return null;
+      }), 90_000)
+      .then((url) => {
+        if (url === null) {
+          // Ou falhou (já marcado acima) ou estourou o tempo — em ambos os
+          // casos o estado tem de sair de "a carregar".
+          setFileData((prev) =>
+            prev && prev.status === 'uploading' ? { ...prev, status: 'error' } : prev
+          );
+        }
+        return url;
       });
   };
 
