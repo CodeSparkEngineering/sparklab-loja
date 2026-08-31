@@ -51,13 +51,13 @@ export default function AOficina() {
   const t = L[lang];
 
   return (
-    <section id="a-oficina" className="py-24 bg-stone-50 dark:bg-transparent relative overflow-hidden">
+    <section id="a-oficina" className="py-16 md:py-24 bg-stone-50 dark:bg-transparent relative overflow-hidden">
       <div className="container relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-24">
 
           {/* Coluna da Foto — Israel (a foto da Pamela foi removida "pra já") */}
           <div className="w-full lg:w-1/2">
-            <div className="max-w-xs mx-auto">
+            <div className="max-w-[250px] lg:max-w-xs mx-auto">
               {/* Israel */}
               <figure className="bg-white dark:bg-[#1a1816] p-3 pb-4 shadow-2xl rounded-sm border border-stone-100 dark:border-white/5 rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
                 <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-stone-200 dark:bg-stone-800">
@@ -83,7 +83,7 @@ export default function AOficina() {
                 </figcaption>
               </figure>
             </div>
-            <p className="text-center mt-6 text-xl text-stone-600 dark:text-stone-400" style={{ fontFamily: 'var(--f-accent)' }}>
+            <p className="text-center mt-4 lg:mt-6 text-lg lg:text-xl text-stone-600 dark:text-stone-400" style={{ fontFamily: 'var(--f-accent)' }}>
               {t.caption}
             </p>
           </div>
@@ -93,7 +93,7 @@ export default function AOficina() {
             <h2 className="text-3xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-6 tracking-tight" style={{ fontFamily: 'var(--f-head)' }}>
               {t.title}
             </h2>
-            <div className="space-y-6 text-lg text-stone-600 dark:text-stone-400 leading-relaxed">
+            <div className="space-y-4 md:space-y-6 text-base md:text-lg text-stone-600 dark:text-stone-400 leading-relaxed">
               <p>{t.p1}</p>
               <p>{t.p2}</p>
               <p>{t.p3}</p>

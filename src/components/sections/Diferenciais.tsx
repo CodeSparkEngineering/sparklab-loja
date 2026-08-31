@@ -68,9 +68,12 @@ export default function Diferenciais() {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Mobile: carrossel horizontal com snap (a pilha vertical media
+            1839px — quase 2 ecrãs antes de chegar a mais nada). Desktop: a
+            grelha de 3 colunas de sempre. */}
+        <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:pb-0">
           {t.cards.map((card, i) => (
-            <article key={card.title} className="card reveal p-8 flex flex-col gap-4" style={i > 0 ? { transitionDelay: `${i * 0.1}s` } : undefined}>
+            <article key={card.title} className="card reveal p-6 md:p-8 flex flex-col gap-4 w-[82vw] max-w-[340px] shrink-0 snap-center md:w-auto md:max-w-none" style={i > 0 ? { transitionDelay: `${i * 0.1}s` } : undefined}>
               <div className="relative w-full h-44 rounded-2xl overflow-hidden shadow-sm">
                 <Image src={card.img} alt={card.alt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>

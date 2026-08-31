@@ -1845,6 +1845,20 @@ section.niche { scroll-margin-top: 130px; }
    TESTIMONIALS
 ───────────────────────────────────────────────────────── */
 .testimonials { margin-top: 8px; }
+/* Mobile: depoimentos em carrossel com snap — a pilha vertical media 1565px.
+   Um cartão de cada vez, com a beirinha do seguinte a convidar ao swipe. */
+@media (max-width: 640px) {
+  .testimonials {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 14px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+  .testimonials::-webkit-scrollbar { display: none; }
+  .testimonials .quote { flex: 0 0 84%; scroll-snap-align: center; }
+}
 .quote {
   background: var(--bg-card);
   border: 1px solid var(--line);
