@@ -257,7 +257,7 @@ async function sendCustomerEmail(session: Stripe.Checkout.Session) {
   const total = typeof session.amount_total === 'number' ? session.amount_total / 100 : 0;
   const firstName = session.customer_details?.name?.trim().split(/\s+/)[0];
   const rows = orderRowsHtml(session);
-  const wa = 'https://wa.me/351916853802';
+  const wa = 'https://wa.me/351913323056';
 
   const T = {
     pt: {

@@ -13,7 +13,7 @@ import { SITE_URL, CONTACT_EMAIL } from '@/data/site';
  */
 
 const INSTAGRAM_URL = 'https://www.instagram.com/sparklabs.3d';
-const WHATSAPP_URL = 'https://wa.me/351916853802';
+const WHATSAPP_URL = 'https://wa.me/351913323056';
 
 /** Escapa HTML para evitar problemas com nomes que tenham < > &. */
 export function esc(s: string): string {

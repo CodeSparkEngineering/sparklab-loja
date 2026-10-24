@@ -121,7 +121,7 @@ const L = {
     s8Title: '8. Contacto',
     contactText: 'Para qualquer questão sobre privacidade, escreve-nos para',
     contactAfter: 'ou fala connosco pelo',
-    contactLink: 'WhatsApp (+351 916 853 802)',
+    contactLink: 'WhatsApp (+351 913 323 056)',
     disclaimer: (
       <>
         Este documento é um resumo informativo e não constitui aconselhamento jurídico.
@@ -215,7 +215,7 @@ const L = {
     s8Title: '8. Contact',
     contactText: 'For any privacy-related questions, email us at',
     contactAfter: 'or message us on',
-    contactLink: 'WhatsApp (+351 916 853 802)',
+    contactLink: 'WhatsApp (+351 913 323 056)',
     disclaimer: (
       <>
         This document is an informative summary and does not constitute legal advice. We
@@ -291,7 +291,7 @@ export default function PrivacidadeContent() {
               {CONTACT_EMAIL}
             </a>{' '}
             {t.contactAfter}{' '}
-            <a href="https://wa.me/351916853802" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
+            <a href="https://wa.me/351913323056" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
               {t.contactLink}
             </a>.
           </p>

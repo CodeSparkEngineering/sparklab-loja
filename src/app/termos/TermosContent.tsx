@@ -68,7 +68,7 @@ const L = {
     ),
     s7Title: '7. Contacto',
     contactText: 'Dúvidas sobre uma encomenda? Fala connosco pelo',
-    contactLink: 'WhatsApp (+351 916 853 802)',
+    contactLink: 'WhatsApp (+351 913 323 056)',
     disclaimer: (
       <>
         Este documento é um resumo informativo. Recomendamos rever com um profissional antes
@@ -139,7 +139,7 @@ const L = {
     ),
     s7Title: '7. Contact',
     contactText: 'Questions about an order? Message us on',
-    contactLink: 'WhatsApp (+351 916 853 802)',
+    contactLink: 'WhatsApp (+351 913 323 056)',
     disclaimer: (
       <>
         This document is an informative summary. We recommend reviewing it with a
@@ -196,7 +196,7 @@ export default function TermosContent() {
           <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s7Title}</h2>
           <p>
             {t.contactText}{' '}
-            <a href="https://wa.me/351916853802" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
+            <a href="https://wa.me/351913323056" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
               {t.contactLink}
             </a>.
           </p>

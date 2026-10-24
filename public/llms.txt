@@ -20,7 +20,7 @@
 - Payments: Visa and Mastercard via Stripe (secure checkout, card data never touches our servers).
 - Custom quotes: send an STL/OBJ/3MF/STEP file (or just an idea — we also do 3D modeling) via the quote form; reply within ~2 business hours on WhatsApp.
 - STL files of our original designs can be purchased for personal use (delivered via WhatsApp).
-- Contact: WhatsApp +351 916 853 802 · https://wa.me/351916853802
+- Contact: WhatsApp +351 913 323 056 · https://wa.me/351913323056
 - Instagram: https://www.instagram.com/sparklabs.3d/
 
 ## How ordering works

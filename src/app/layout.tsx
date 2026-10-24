@@ -42,7 +42,7 @@ const schemaMarkup = {
   "url": SITE_URL,
   "logo": `${SITE_URL}/logo.jpg`,
   "image": `${SITE_URL}/logo.jpg`,
-  "telephone": "+351916853802",
+  "telephone": "+351913323056",
   "email": CONTACT_EMAIL,
   "priceRange": "€-€€",
   "currenciesAccepted": "EUR",
@@ -54,10 +54,10 @@ const schemaMarkup = {
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "customer service",
-    "telephone": "+351916853802",
+    "telephone": "+351913323056",
     "email": CONTACT_EMAIL,
     "availableLanguage": ["Portuguese", "English"],
-    "url": "https://wa.me/351916853802"
+    "url": "https://wa.me/351913323056"
   },
   "founder": [
     { "@type": "Person", "name": "Israel Vieira" },

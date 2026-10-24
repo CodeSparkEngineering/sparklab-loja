@@ -13,13 +13,13 @@ type IncomingLine = { id: string; qty: number; customizations?: Record<string, s
 const CHECKOUT_TEXT = {
   pt: {
     submit:
-      'Peças personalizadas e por encomenda são produzidas após o pagamento — confirmamos o prazo contigo no WhatsApp (+351 916 853 802).',
+      'Peças personalizadas e por encomenda são produzidas após o pagamento — confirmamos o prazo contigo no WhatsApp (+351 913 323 056).',
     shipping:
       'Enviamos para todo o Portugal via CTT registado, com seguimento. Grátis a partir de 40€.',
   },
   en: {
     submit:
-      'Personalized and made-to-order pieces are produced after payment — we confirm the timeline with you on WhatsApp (+351 916 853 802).',
+      'Personalized and made-to-order pieces are produced after payment — we confirm the timeline with you on WhatsApp (+351 913 323 056).',
     shipping:
       'We ship anywhere in Portugal via registered CTT mail, with tracking. Free over €40.',
   },

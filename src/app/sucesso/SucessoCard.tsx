@@ -62,7 +62,7 @@ export default function SucessoCard({
 }) {
   const { lang } = useLang();
   const t = L[lang];
-  const wa = 'https://wa.me/351916853802';
+  const wa = 'https://wa.me/351913323056';
 
   return (
     <div className="order__card">
