@@ -16,6 +16,8 @@ const L = {
     qtyPlus: 'Aumentar quantidade',
     wholesaleApplied: (unit: string) => `${unit}/un. · −15% atacado aplicado 🎉`,
     wholesaleHint: (n: number) => `Faltam ${n} un. para −15% de atacado`,
+    packHint: (n: number, total: string) => `Leva ${n} por ${total}`,
+    packApplied: (unit: string) => `${unit}/un. · preço de conjunto aplicado 🎉`,
     add: 'Adicionar ao meu carrinho 🛒',
     addedLong: '✓ Adicionado ao carrinho!',
     addShort: 'Adicionar ao carrinho',
@@ -32,6 +34,8 @@ const L = {
     qtyPlus: 'Increase quantity',
     wholesaleApplied: (unit: string) => `${unit}/unit · −15% wholesale applied 🎉`,
     wholesaleHint: (n: number) => `${n} more unit${n > 1 ? 's' : ''} for the −15% wholesale discount`,
+    packHint: (n: number, total: string) => `Get ${n} for ${total}`,
+    packApplied: (unit: string) => `${unit}/unit · bundle price applied 🎉`,
     add: 'Add to my cart 🛒',
     addedLong: '✓ Added to cart!',
     addShort: 'Add to cart',
@@ -163,7 +167,15 @@ export default function AddToCartForm({ product }: { product: Product }) {
         <span className="text-sm font-medium" aria-live="polite">
           {quantity >= WHOLESALE_MIN_QTY ? (
             <span className="text-green-600 dark:text-green-400">
-              {t.wholesaleApplied(formatEUR(unitPriceFor(product.price, quantity)))}
+              {t.wholesaleApplied(formatEUR(unitPriceFor(product.price, quantity, product.pack)))}
+            </span>
+          ) : product.pack && quantity >= product.pack.qty ? (
+            <span className="text-green-600 dark:text-green-400">
+              {t.packApplied(formatEUR(product.pack.unitPrice))}
+            </span>
+          ) : product.pack ? (
+            <span className="text-amber-600 dark:text-amber-400">
+              {t.packHint(product.pack.qty, formatEUR(product.pack.qty * product.pack.unitPrice))}
             </span>
           ) : quantity >= 7 ? (
             <span className="text-amber-600 dark:text-amber-400">
@@ -197,7 +209,7 @@ export default function AddToCartForm({ product }: { product: Product }) {
         <div className="bg-white/95 dark:bg-stone-900/95 backdrop-blur border-t border-stone-200 dark:border-white/10 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] flex items-center gap-3">
           <div className="flex flex-col leading-tight min-w-0 shrink">
             <span className="text-[11px] uppercase tracking-wider text-stone-500 dark:text-zinc-400 truncate">{pName(product, lang)}</span>
-            <span className="text-lg font-bold text-stone-900 dark:text-stone-100 whitespace-nowrap">{formatEUR(unitPriceFor(product.price, quantity))}</span>
+            <span className="text-lg font-bold text-stone-900 dark:text-stone-100 whitespace-nowrap">{formatEUR(unitPriceFor(product.price, quantity, product.pack))}</span>
           </div>
           <button
             type="button"

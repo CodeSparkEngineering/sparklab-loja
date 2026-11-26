@@ -96,6 +96,7 @@ const TAG_LABELS_EN: Record<string, string> = {
   'Decoração': 'Decor',
   'Setup Gamer': 'Gaming Setup',
   'Secretária': 'Desk',
+  'Natal': 'Christmas',
 };
 
 export function tagLabel(tag: string, lang: Lang): string {

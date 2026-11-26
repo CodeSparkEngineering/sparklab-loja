@@ -3,6 +3,7 @@ import Hero from '@/components/sections/Hero';
 import { SITE_URL } from '@/data/site';
 import FaixaConfianca from '@/components/sections/FaixaConfianca';
 import Diferenciais from '@/components/sections/Diferenciais';
+import Natal from '@/components/sections/Natal';
 import Catalogo from '@/components/sections/Catalogo';
 import ComoFunciona from '@/components/sections/ComoFunciona';
 import Orcamento from '@/components/sections/Orcamento';
@@ -85,6 +86,9 @@ export default function Home() {
           {/* Catálogo antes dos Diferenciais: numa loja, quem passa o hero
               quer ver o que vendemos — o primeiro produto estava a 3,7 ecrãs
               de profundidade no telemóvel. */}
+          {/* Sazonal: esconde-se sozinha depois do Natal (datas em data/natal.ts).
+              É baixa de propósito para não afastar o catálogo do topo. */}
+          <Natal />
           <Catalogo />
           <Diferenciais />
           <ComoFunciona />

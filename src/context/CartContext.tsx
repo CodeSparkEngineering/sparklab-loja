@@ -141,7 +141,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           product,
           qty: l.qty,
           customizations: l.customizations,
-          unitPrice: unitPriceFor(product.price, totalOfProduct),
+          unitPrice: unitPriceFor(product.price, totalOfProduct, product.pack),
           wholesale: totalOfProduct >= WHOLESALE_MIN_QTY,
         });
       }

@@ -134,7 +134,7 @@ export async function POST(request: NextRequest) {
     // 15% de atacado quando o total do MESMO produto (todas as variantes)
     // atinge as 10 unidades — preço calculado sempre no servidor.
     const totalOfProduct = qtyByProduct[product.id] ?? qty;
-    const unit = unitPriceFor(product.price, totalOfProduct);
+    const unit = unitPriceFor(product.price, totalOfProduct, product.pack);
     const wholesaleText =
       totalOfProduct >= WHOLESALE_MIN_QTY
         ? `\nAtacado (${WHOLESALE_MIN_QTY}+ un.): −${Math.round(WHOLESALE_DISCOUNT * 100)}%`

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useLang } from '@/i18n/LanguageContext';
 import { GOOGLE_PROFILE_URL } from '@/data/site';
 import Icone from '@/components/Icone';
+import NatalSelo from '@/components/natal/NatalSelo';
 
 const L = {
   pt: {
@@ -43,6 +44,8 @@ export default function Hero() {
       <div className="hero__layout">
         {/* ── LEFT: editorial content ── */}
         <div className="hero__left hero__text-block">
+          {/* Sazonal: some sozinho depois do Natal. */}
+          <NatalSelo />
           <div className="hero__eyebrow">
             <span className="hero__badge-handwritten">
               {t.badge}

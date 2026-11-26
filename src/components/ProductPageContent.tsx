@@ -43,6 +43,8 @@ const L = {
     ],
     wholesaleLine: <><strong>−15% automático</strong> em 10 ou mais unidades da mesma peça (aplicado no carrinho).</>,
     doubts: 'Dúvidas? Confirmamos prazo e detalhes no WhatsApp.',
+    credit: 'Design do modelo',
+    creditVia: 'via MakerWorld, licença',
   },
   en: {
     back: 'Back to Catalog',
@@ -68,6 +70,8 @@ const L = {
     ],
     wholesaleLine: <><strong>Automatic −15%</strong> on 10 or more units of the same piece (applied in the cart).</>,
     doubts: 'Questions? We confirm timelines and details on WhatsApp.',
+    credit: 'Model design',
+    creditVia: 'via MakerWorld, license',
   },
 } as const;
 
@@ -140,6 +144,22 @@ export default function ProductPageContent({ product }: { product: Product }) {
           <div className="prose prose-lg text-stone-600 dark:text-zinc-400 mb-8">
             <p>{pDesc(product, lang)}</p>
           </div>
+
+          {/* Crédito ao autor do modelo: obrigatório nas licenças CC BY / BY-SA. */}
+          {product.credit && (
+            <p className="text-xs text-stone-500 dark:text-zinc-400 -mt-4 mb-8">
+              {t.credit}:{' '}
+              <a
+                href={product.credit.fonte}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-stone-800 dark:hover:text-stone-200"
+              >
+                {product.credit.autor}
+              </a>{' '}
+              {t.creditVia} {product.credit.licenca}.
+            </p>
+          )}
 
           {/* Detalhes recolhidos: quem quer o pormenor abre; quem já decidiu
               não tem de percorrer duas caixas de texto. */}

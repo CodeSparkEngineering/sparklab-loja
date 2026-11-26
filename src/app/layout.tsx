@@ -17,6 +17,7 @@ import { Analytics } from "@vercel/analytics/next";
 import GoogleAdsTag from "@/components/GoogleAdsTag";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CookieBanner from "@/components/CookieBanner";
+import TemaNatal from "@/components/natal/TemaNatal";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -154,6 +155,9 @@ export default function RootLayout({
   return (
     <html
       lang="pt-PT"
+      // Tema de Natal (cores em globals.css). <TemaNatal /> tira o atributo
+      // sozinho depois do Natal; para desligar antes, apagar esta linha.
+      data-season="natal"
       className={`${quicksand.variable} ${caveat.variable} h-full antialiased`}
       suppressHydrationWarning
     >
@@ -172,6 +176,7 @@ export default function RootLayout({
             <BackgroundScrollVideo src="/videos/hero.mp4" />
             <div className="scroll-progress" aria-hidden="true" />
             <ScrollFX />
+            <TemaNatal />
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup).replace(/</g, '\\u003c') }}

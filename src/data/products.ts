@@ -47,6 +47,24 @@ export type Product = {
    * `downloadName` = nome que o cliente verá ao baixar.
    */
   stl?: { file: string; downloadName: string };
+  /**
+   * Autor do modelo, quando a licença obriga a dar crédito (CC BY / CC BY-SA).
+   * Mostrado na página do produto — NÃO remover enquanto a peça estiver à venda.
+   */
+  credit?: { autor: string; licenca: 'CC BY' | 'CC BY-SA'; fonte: string };
+  /**
+   * Modelo cuja licença NÃO permite vender impressões (falta autorização
+   * escrita do autor). Só existe em desenvolvimento, para testar: em produção
+   * o produto é retirado de PRODUCTS — sem cartão, sem página, sem checkout.
+   * Apagar a flag só depois de ter a autorização.
+   */
+  semLicencaVenda?: boolean;
+  /**
+   * Preço de conjunto: a partir de `qty` unidades do mesmo produto (somando
+   * todas as variantes — ex.: nomes diferentes), cada uma passa a `unitPrice`.
+   * Ex.: 3,50 € cada, 3 por 9 € → { qty: 3, unitPrice: 3 }.
+   */
+  pack?: { qty: number; unitPrice: number };
 };
 
 /**
@@ -107,9 +125,16 @@ export const NICHES: Niche[] = [
     desc: 'O teu canto de jogo, arrumado e com o teu nome.',
     descEn: 'Your gaming corner, tidy and with your name on it.',
   },
+  {
+    slug: 'natal',
+    label: 'Natal',
+    labelEn: 'Christmas',
+    desc: 'Enfeites com nome, decoração e mimos para a mesa da consoada.',
+    descEn: 'Name ornaments, decorations and treats for the Christmas table.',
+  },
 ];
 
-export const PRODUCTS: Product[] = [
+const TODOS_OS_PRODUTOS: Product[] = [
   // ─────────────────────────── ARTICULADOS ───────────────────────────
   {
     id: 'dragao-articulado',
@@ -400,7 +425,191 @@ export const PRODUCTS: Product[] = [
     ]
   },
 
+  // ─────────────────────────── NATAL ───────────────────────────
+  // Modelos do MakerWorld. `credit` é OBRIGATÓRIO nas licenças CC BY e
+  // CC BY-SA (aparece na página do produto e nos destaques de Natal).
+  // Preços definidos pelo dono a 26/11/2026.
+  {
+    id: 'enfeite-patinha-pet',
+    name: 'Enfeite Patinha com o Nome do Pet',
+    nameEn: 'Paw Ornament with Your Pet’s Name',
+    desc: 'Enfeite de Natal em forma de patinha, com o nome do teu cão ou gato em relevo, a silhueta dele e dois flocos de neve. Impresso em 3D a duas cores, com fita para pendurar na árvore. Para quem tem um patudo que também é da família — e uma prenda certeira para qualquer dono babado.',
+    descEn: 'A paw-shaped Christmas ornament with your dog’s or cat’s name in relief, their silhouette and two snowflakes. 3D-printed in two colors, with a ribbon to hang it on the tree. For anyone whose pet is part of the family — and a sure-fire gift for any proud owner.',
+    price: 3.50,
+    pack: { qty: 3, unitPrice: 3 }, // 3 por 9 €
+    tag: 'Natal',
+    tone: 'red',
+    icon: '🐾',
+    images: [
+      '/images/enfeite-patinha-pet-1.webp',
+      '/images/enfeite-patinha-pet-2.webp'
+    ],
+    customizations: [
+      { id: 'nome', label: 'Nome do pet', labelEn: 'Pet’s name', type: 'text', maxLength: 12, required: true },
+      { id: 'cor', label: 'Cor do fundo (ex: vermelho, verde, azul)', labelEn: 'Background color (e.g. red, green, blue)', type: 'text', maxLength: 30 }
+    ],
+  },
+  {
+    id: 'letreiro-feliz-natal',
+    name: 'Letreiro Feliz Natal',
+    nameEn: '"Feliz Natal" Sign',
+    desc: 'Letreiro "Feliz Natal" de pousar, com dois pinheirinhos e letras desenhadas — fica de pé sozinho na prateleira, na lareira, no aparador ou na montra. Impresso em 3D numa só peça, na cor que escolheres. Decoração de Natal em português, que não se encontra nas lojas.',
+    descEn: 'A freestanding "Feliz Natal" (Merry Christmas in Portuguese) sign with two little pine trees and hand-drawn lettering — it stands on its own on a shelf, a mantelpiece, a sideboard or a shop window. 3D-printed in one piece, in the color you choose.',
+    price: 9.90,
+    tag: 'Natal',
+    tone: 'red',
+    icon: '🎅',
+    images: [
+      '/images/letreiro-feliz-natal-1.webp',
+      '/images/letreiro-feliz-natal-2.webp'
+    ],
+    customizations: [
+      { id: 'cor', label: 'Cor à escolha (ex: vermelho, verde, branco, dourado)', labelEn: 'Color of choice (e.g. red, green, white, gold)', type: 'text', maxLength: 30 }
+    ],
+    credit: { autor: 'Wilson', licenca: 'CC BY', fonte: 'https://makerworld.com/en/models/3234939' },
+  },
+
+  // ───────────── NATAL — SÓ TESTE, SEM LICENÇA DE VENDA ─────────────
+  // Licenças MakerWorld "Standard Digital File" / "Exclusive": não permitem
+  // vender impressões e as fotos são dos autores. `semLicencaVenda` tira-os
+  // de produção. Para publicar um: autorização escrita do autor → apagar a
+  // flag → trocar as fotos pelas nossas. Preços definidos a 26/11/2026.
+  {
+    // Aleksandra's models — https://makerworld.com/en/models/3500858
+    id: 'enfeite-camisola-rena-nome',
+    name: 'Enfeite Camisola de Natal com Nome',
+    nameEn: 'Christmas Sweater Ornament with Name',
+    desc: 'Enfeite de Natal em forma de camisola de malha, com renas, flocos de neve e o nome em relevo a branco. Impresso em 3D a duas cores, com fio para pendurar na árvore. Um por cada pessoa lá de casa — e serve de etiqueta de prenda que não vai para o lixo.',
+    descEn: 'A Christmas ornament shaped like a knitted sweater, with reindeer, snowflakes and the name in white relief. 3D-printed in two colors, with a string to hang it on the tree. One for each person in the house — and it doubles as a gift tag that never gets thrown away.',
+    price: 3.50,
+    pack: { qty: 3, unitPrice: 3 }, // 3 por 9 €
+    tag: 'Natal',
+    tone: 'red',
+    icon: '🧶',
+    images: [
+      '/images/enfeite-camisola-rena-nome-1.webp',
+      '/images/enfeite-camisola-rena-nome-2.webp'
+    ],
+    customizations: [
+      { id: 'nome', label: 'Nome', labelEn: 'Name', type: 'text', maxLength: 10, required: true },
+      { id: 'cor', label: 'Cor da camisola (ex: vermelho, verde, azul)', labelEn: 'Sweater color (e.g. red, green, blue)', type: 'text', maxLength: 30 }
+    ],
+    semLicencaVenda: true,
+  },
+  {
+    // MeshBeeLab 3d — https://makerworld.com/en/models/3500578
+    id: 'porta-panetone-pai-natal',
+    name: 'Porta-Panetone Pai Natal',
+    nameEn: 'Santa Panettone Holder',
+    desc: 'Base para panetone com o fato do Pai Natal: casaco vermelho, cinto preto com fivela dourada e gola branca. Pousas o panetone embrulhado lá dentro e a prenda fica pronta a oferecer ou a ir para a mesa. Impresso em 3D a várias cores. Depois do Natal guarda-se e volta a servir.',
+    descEn: 'A panettone holder dressed as Santa: red coat, black belt with a gold buckle and white trim. Drop the wrapped panettone inside and the gift is ready to give or to go on the table. 3D-printed in several colors. After Christmas, store it and use it again.',
+    price: 12.00,
+    tag: 'Natal',
+    tone: 'red',
+    icon: '🎅',
+    images: [
+      '/images/porta-panetone-pai-natal-1.webp',
+      '/images/porta-panetone-pai-natal-2.webp'
+    ],
+    semLicencaVenda: true,
+  },
+  {
+    // MeshBeeLab 3d — https://makerworld.com/en/models/3297350
+    id: 'enfeite-feliz-natal-laco',
+    name: 'Enfeite Feliz Natal com Laço',
+    nameEn: '"Feliz Natal" Bow Ornament',
+    desc: 'Enfeite redondo com "Feliz Natal" em letras brancas, azevinho, estrelas e um laço verde no topo. Impresso em 3D a várias cores. Pendura-se na árvore, num embrulho ou no porta-chaves — e é um mimo barato para juntar a qualquer prenda.',
+    descEn: 'A round ornament with "Feliz Natal" (Merry Christmas in Portuguese) in white lettering, holly, stars and a green bow on top. 3D-printed in several colors. Hang it on the tree, on a wrapped gift or on a keyring — a small extra to add to any present.',
+    price: 2.50,
+    pack: { qty: 5, unitPrice: 2 }, // 5 por 10 €
+    tag: 'Natal',
+    tone: 'red',
+    icon: '🎀',
+    images: [
+      '/images/enfeite-feliz-natal-laco-1.webp',
+      '/images/enfeite-feliz-natal-laco-2.webp'
+    ],
+    semLicencaVenda: true,
+  },
+  {
+    // Clean Studio — https://makerworld.com/en/models/3535506
+    id: 'ursinho-tricotado-natal',
+    name: 'Ursinho Tricotado de Natal',
+    nameEn: 'Knitted Christmas Teddy Bear',
+    desc: 'Ursinho de pé com barrete de Pai Natal e textura de malha — parece tricotado à mão, mas é impresso em 3D. Mãos juntas e olhar de quem pede uma bolacha. Para a prateleira, o quarto dos miúdos ou para acompanhar uma prenda.',
+    descEn: 'A standing teddy bear in a Santa hat with a knitted texture — it looks hand-knitted, but it is 3D-printed. Paws together and the look of someone asking for a cookie. For a shelf, a kids’ room or to go along with a gift.',
+    price: 18.00,
+    tag: 'Natal',
+    tone: 'red',
+    icon: '🧸',
+    images: [
+      '/images/ursinho-tricotado-natal-1.webp',
+      '/images/ursinho-tricotado-natal-2.webp'
+    ],
+    semLicencaVenda: true,
+  },
+  {
+    // Smoggy3D — https://makerworld.com/en/models/2103225
+    id: 'pai-natal-tricotado',
+    name: 'Pai Natal Tricotado',
+    nameEn: 'Knitted Santa',
+    desc: 'Pai Natal sentado com textura de malha — parece tricotado à mão, mas é impresso em 3D a várias cores. Barrete, barba e botas com o ponto bem marcado. Para a prateleira, a secretária ou o centro da mesa da consoada.',
+    descEn: 'A sitting Santa with a knitted texture — it looks hand-knitted, but it is 3D-printed in several colors. Hat, beard and boots with crisp stitches. For a shelf, a desk or the centre of the Christmas table.',
+    price: 18.00,
+    tag: 'Natal',
+    tone: 'red',
+    icon: '🎅',
+    images: [
+      '/images/pai-natal-tricotado-1.webp',
+      '/images/pai-natal-tricotado-2.webp'
+    ],
+    semLicencaVenda: true,
+  },
+  {
+    // Razec Lab — https://makerworld.com/en/models/3548244
+    id: 'suporte-doces-pai-natal',
+    name: 'Suporte de Doces Pai Natal',
+    nameEn: 'Santa Dessert Stand',
+    desc: 'Um Pai Natal bem-disposto a segurar o tabuleiro dos doces por cima da cabeça — centro de mesa para a consoada, o lanche de Natal ou a montra. Impresso em 3D, com prato redondo de rebordo para nada escorregar. Em PLA: usa com doces embrulhados, forminhas ou um naperon de papel por baixo.',
+    descEn: 'A cheerful Santa holding the dessert tray above his head — a centerpiece for Christmas Eve, a festive tea or a shop window. 3D-printed, with a round rimmed plate so nothing slides off. Made of PLA: use it with wrapped sweets, cupcake cases or a paper doily underneath.',
+    price: 20.00,
+    tag: 'Natal',
+    tone: 'red',
+    icon: '🍬',
+    images: [
+      '/images/suporte-doces-pai-natal-1.webp',
+      '/images/suporte-doces-pai-natal-2.webp'
+    ],
+    semLicencaVenda: true,
+  },
+  {
+    // Razec Lab — https://makerworld.com/en/models/3462716
+    id: 'bota-pai-natal-porta-talheres',
+    name: 'Bota do Pai Natal Porta-Talheres',
+    nameEn: 'Santa Boot Cutlery Holder',
+    desc: 'A bota do Pai Natal para pôr na mesa: vermelha, com pelo branco, cinto preto e fivela dourada. Leva os talheres da consoada — e também serve para guardanapos, bengalas doces, canetas ou um raminho de azevinho. Impressa em 3D a várias cores.',
+    descEn: 'Santa’s boot for the table: red, with white fur trim, a black belt and a gold buckle. It holds the cutlery for Christmas dinner — and also napkins, candy canes, pens or a sprig of holly. 3D-printed in several colors.',
+    price: 13.00,
+    tag: 'Natal',
+    tone: 'red',
+    icon: '🥾',
+    images: [
+      '/images/bota-pai-natal-porta-talheres-1.webp',
+      '/images/bota-pai-natal-porta-talheres-2.webp'
+    ],
+    semLicencaVenda: true,
+  },
 ];
+
+/**
+ * Catálogo efetivo. Em produção saem os modelos sem licença de venda (ver
+ * `semLicencaVenda`): não aparecem, não têm página e o checkout recusa-os,
+ * porque tudo o resto parte daqui.
+ */
+export const PRODUCTS: Product[] =
+  process.env.NODE_ENV === 'production'
+    ? TODOS_OS_PRODUTOS.filter((p) => !p.semLicencaVenda)
+    : TODOS_OS_PRODUTOS;
 
 /**
  * Produtos LISTADOS no site (catálogo, destaques, sitemap). Exclui os marcados
@@ -453,9 +662,17 @@ export function formatEUR(value: number): string {
 export const WHOLESALE_MIN_QTY = 10;
 export const WHOLESALE_DISCOUNT = 0.15;
 
-/** Preço unitário efetivo dado o total de unidades do mesmo produto. */
-export function unitPriceFor(price: number, qtyOfSameProduct: number): number {
-  return qtyOfSameProduct >= WHOLESALE_MIN_QTY
-    ? price * (1 - WHOLESALE_DISCOUNT)
-    : price;
+/**
+ * Preço unitário efetivo dado o total de unidades do mesmo produto: o mais
+ * baixo entre o preço normal, o de conjunto (`pack`) e o de atacado.
+ */
+export function unitPriceFor(
+  price: number,
+  qtyOfSameProduct: number,
+  pack?: Product['pack']
+): number {
+  let unit = price;
+  if (pack && qtyOfSameProduct >= pack.qty) unit = Math.min(unit, pack.unitPrice);
+  if (qtyOfSameProduct >= WHOLESALE_MIN_QTY) unit = Math.min(unit, price * (1 - WHOLESALE_DISCOUNT));
+  return unit;
 }
