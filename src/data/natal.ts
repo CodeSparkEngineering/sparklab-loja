@@ -51,7 +51,6 @@ export const GRUPOS_NATAL: GrupoNatal[] = ['arvore', 'decoracao', 'mesa', 'ofere
 const DESTAQUES_NATAL: Record<string, GrupoNatal> = {
   'enfeite-patinha-pet': 'arvore',
   'letreiro-feliz-natal': 'decoracao',
-  // Só teste (sem licença de venda) — em produção não existem e saem sozinhos.
   'enfeite-camisola-rena-nome': 'arvore',
   'porta-panetone-pai-natal': 'mesa',
   'enfeite-feliz-natal-laco': 'arvore',

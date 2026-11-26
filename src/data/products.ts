@@ -469,11 +469,11 @@ const TODOS_OS_PRODUTOS: Product[] = [
     credit: { autor: 'Wilson', licenca: 'CC BY', fonte: 'https://makerworld.com/en/models/3234939' },
   },
 
-  // ───────────── NATAL — SÓ TESTE, SEM LICENÇA DE VENDA ─────────────
-  // Licenças MakerWorld "Standard Digital File" / "Exclusive": não permitem
-  // vender impressões e as fotos são dos autores. `semLicencaVenda` tira-os
-  // de produção. Para publicar um: autorização escrita do autor → apagar a
-  // flag → trocar as fotos pelas nossas. Preços definidos a 26/11/2026.
+  // ───────────── NATAL — MODELOS DE CLIENTES ─────────────
+  // Licença pública no MakerWorld: "Standard Digital File" / "Exclusive" (não
+  // permite vender impressões). Publicados a 26/11/2026 porque o dono confirmou
+  // que os autores são clientes dele e que tem autorização para vender.
+  // Se alguma autorização cair: `semLicencaVenda: true` tira o produto de produção.
   {
     // Aleksandra's models — https://makerworld.com/en/models/3500858
     id: 'enfeite-camisola-rena-nome',
@@ -494,7 +494,6 @@ const TODOS_OS_PRODUTOS: Product[] = [
       { id: 'nome', label: 'Nome', labelEn: 'Name', type: 'text', maxLength: 10, required: true },
       { id: 'cor', label: 'Cor da camisola (ex: vermelho, verde, azul)', labelEn: 'Sweater color (e.g. red, green, blue)', type: 'text', maxLength: 30 }
     ],
-    semLicencaVenda: true,
   },
   {
     // MeshBeeLab 3d — https://makerworld.com/en/models/3500578
@@ -511,7 +510,6 @@ const TODOS_OS_PRODUTOS: Product[] = [
       '/images/porta-panetone-pai-natal-1.webp',
       '/images/porta-panetone-pai-natal-2.webp'
     ],
-    semLicencaVenda: true,
   },
   {
     // MeshBeeLab 3d — https://makerworld.com/en/models/3297350
@@ -529,7 +527,6 @@ const TODOS_OS_PRODUTOS: Product[] = [
       '/images/enfeite-feliz-natal-laco-1.webp',
       '/images/enfeite-feliz-natal-laco-2.webp'
     ],
-    semLicencaVenda: true,
   },
   {
     // Clean Studio — https://makerworld.com/en/models/3535506
@@ -546,7 +543,6 @@ const TODOS_OS_PRODUTOS: Product[] = [
       '/images/ursinho-tricotado-natal-1.webp',
       '/images/ursinho-tricotado-natal-2.webp'
     ],
-    semLicencaVenda: true,
   },
   {
     // Smoggy3D — https://makerworld.com/en/models/2103225
@@ -563,7 +559,6 @@ const TODOS_OS_PRODUTOS: Product[] = [
       '/images/pai-natal-tricotado-1.webp',
       '/images/pai-natal-tricotado-2.webp'
     ],
-    semLicencaVenda: true,
   },
   {
     // Razec Lab — https://makerworld.com/en/models/3548244
@@ -580,7 +575,6 @@ const TODOS_OS_PRODUTOS: Product[] = [
       '/images/suporte-doces-pai-natal-1.webp',
       '/images/suporte-doces-pai-natal-2.webp'
     ],
-    semLicencaVenda: true,
   },
   {
     // Razec Lab — https://makerworld.com/en/models/3462716
@@ -597,7 +591,6 @@ const TODOS_OS_PRODUTOS: Product[] = [
       '/images/bota-pai-natal-porta-talheres-1.webp',
       '/images/bota-pai-natal-porta-talheres-2.webp'
     ],
-    semLicencaVenda: true,
   },
 ];
 
