@@ -12,7 +12,9 @@
  */
 
 import Link from 'next/link';
-import { ArrowLeft, ChevronDown, Truck, RotateCcw, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ChevronDown, Truck, RotateCcw, ShieldCheck, Gift } from 'lucide-react';
+import { NATAL, faseNatal } from '@/data/natal';
+import { useAgora } from '@/components/natal/useAgora';
 import { formatEUR, type Product } from '@/data/products';
 import ProductGallery from '@/components/ProductGallery';
 import AddToCartForm from '@/components/AddToCartForm';
@@ -47,6 +49,7 @@ const L = {
     assureReturn: <><strong>14 dias para devolver</strong> · se chegar com defeito, substituímos ou devolvemos o dinheiro</>,
     assureCustom: <><strong>Feita só para ti</strong> · se chegar com defeito, substituímos ou devolvemos o dinheiro</>,
     assurePay: <><strong>Pagamento seguro</strong> · Visa, Mastercard ou MB WAY, pela Stripe</>,
+    assureNatal: (data: string) => <><strong>Chega antes do Natal</strong> · encomenda até {data}</>,
     assureMore: 'Devoluções e garantia',
     credit: 'Design do modelo',
     creditVia: 'via MakerWorld, licença',
@@ -79,6 +82,7 @@ const L = {
     assureReturn: <><strong>14 days to return</strong> · if it arrives defective, we replace it or refund you</>,
     assureCustom: <><strong>Made just for you</strong> · if it arrives defective, we replace it or refund you</>,
     assurePay: <><strong>Secure payment</strong> · Visa, Mastercard or MB WAY, via Stripe</>,
+    assureNatal: (data: string) => <><strong>Arrives before Christmas</strong> · order by {data}</>,
     assureMore: 'Returns & warranty',
     credit: 'Model design',
     creditVia: 'via MakerWorld, license',
@@ -91,6 +95,14 @@ const BADGE =
 export default function ProductPageContent({ product }: { product: Product }) {
   const { lang } = useLang();
   const t = L[lang];
+  // Prazo de Natal junto ao botão de compra: é a dúvida que trava a compra em
+  // dezembro. Some sozinho depois do último dia (src/data/natal.ts).
+  const agora = useAgora();
+  const natalATempo = agora ? faseNatal(agora) === 'a-tempo' : false;
+  const dataNatal = new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'pt-PT', {
+    day: 'numeric',
+    month: 'long',
+  }).format(NATAL.ultimoDia);
 
   // O material vem da peça — os dados já o guardam (e o JSON-LD já o usava),
   // só a página é que dizia "PLA" a toda a gente.
@@ -137,6 +149,12 @@ export default function ProductPageContent({ product }: { product: Product }) {
 
           {/* O que o cliente quer saber antes de pagar: portes, devolução, pagamento. */}
           <ul className="mt-6 max-w-md space-y-2.5 text-sm text-stone-600 dark:text-zinc-400 [&_strong]:font-semibold [&_strong]:text-stone-800 dark:[&_strong]:text-stone-200">
+            {natalATempo && (
+              <li className="flex gap-2.5">
+                <Gift className="w-4 h-4 mt-0.5 shrink-0 text-red-600 dark:text-red-400" aria-hidden="true" />
+                <span>{t.assureNatal(dataNatal)}</span>
+              </li>
+            )}
             <li className="flex gap-2.5">
               <Truck className="w-4 h-4 mt-0.5 shrink-0 text-orange-500" aria-hidden="true" />
               <span>{t.assureShip}</span>

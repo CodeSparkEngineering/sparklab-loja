@@ -63,6 +63,12 @@ const nextConfig: NextConfig = {
   // da Stripe está registado no URL antigo e a Stripe não segue redirects.
   async redirects() {
     return [
+      // Caminho visível do anúncio de Natal no Google Ads (só cosmético, o
+      // clique vai para /#natal) — quem o escrever à mão não pode dar 404.
+      { source: "/natal", destination: "/#natal", permanent: false },
+      { source: "/natal/prendas", destination: "/#natal", permanent: false },
+      { source: "/Natal", destination: "/#natal", permanent: false },
+      { source: "/Natal/Prendas", destination: "/#natal", permanent: false },
       {
         source: "/:path((?!api/).*)",
         has: [{ type: "host", value: "sparklab-loja.vercel.app" }],
