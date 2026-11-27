@@ -21,10 +21,12 @@ const L = {
     shipDone: <>🎉 Boa! Tens <strong>envio grátis</strong>.</>,
     subtotal: 'Subtotal',
     wholesale: '−15% atacado',
-    note: 'Portes calculados no checkout. Envio via CTT registado, com seguimento.',
+    note: (free: boolean) => free
+      ? 'Envio grátis via CTT registado, com seguimento.'
+      : 'Portes: 4,90 € (grátis a partir de 40 €). Envio via CTT registado, com seguimento.',
     checkout: 'Avançar com a encomenda',
     checkoutLoading: 'A redirecionar…',
-    securePay: 'Pagamento seguro via',
+    securePay: 'Cartão ou MB WAY · pagamento seguro via',
     errPayment: 'Não foi possível iniciar o pagamento. Tenta de novo — se continuar, fala connosco no WhatsApp.',
     errUnknown: 'Algo correu mal. Tenta de novo ou fala connosco no WhatsApp.',
   },
@@ -41,10 +43,12 @@ const L = {
     shipDone: <>🎉 Nice! You&apos;ve got <strong>free shipping</strong>.</>,
     subtotal: 'Subtotal',
     wholesale: '−15% wholesale',
-    note: 'Shipping calculated at checkout. Sent via registered CTT mail, with tracking.',
+    note: (free: boolean) => free
+      ? 'Free shipping via registered CTT mail, with tracking.'
+      : 'Shipping: €4.90 (free from €40). Sent via registered CTT mail, with tracking.',
     checkout: 'Proceed to checkout',
     checkoutLoading: 'Redirecting…',
-    securePay: 'Secure payment via',
+    securePay: 'Card or MB WAY · secure payment via',
     errPayment: 'We couldn\'t start the payment. Please try again — if it persists, message us on WhatsApp.',
     errUnknown: 'Something went wrong. Please try again or message us on WhatsApp.',
   },
@@ -244,7 +248,7 @@ export default function CartDrawer() {
                 <span>{t.subtotal}</span>
                 <strong>{formatEUR(subtotal)}</strong>
               </div>
-              <p className="cart__note">{t.note}</p>
+              <p className="cart__note">{t.note(shipRemaining <= 0)}</p>
               <button
                 type="button"
                 className="btn btn--primary cart__checkout"

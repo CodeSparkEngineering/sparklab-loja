@@ -9,7 +9,7 @@ const L = {
     okTitle: 'Pagamento confirmado',
     okText: (email: string | null) => (
       <>
-        Obrigado pela tua compra. Vamos iniciar a produção da tua encomenda na
+        Obrigado pela tua compra. Vamos iniciar a produção da tua encomenda nas
         nossas Bambu Lab P1S e enviá-la com embalagem segura, via CTT registado.{' '}
         {email ? <>Enviámos a confirmação para <strong>{email}</strong>.</> : null}
       </>

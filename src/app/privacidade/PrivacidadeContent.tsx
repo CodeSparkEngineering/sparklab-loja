@@ -50,7 +50,7 @@ const L = {
     s1Title: '1. Dados que recolhemos',
     s1: [
       <><strong>Encomendas:</strong> nome, email, telefone/WhatsApp e morada de entrega, recolhidos no momento da compra.</>,
-      <><strong>Pagamento:</strong> processado de forma segura pela Stripe. <strong>Nunca</strong> vemos nem guardamos os dados do teu cartão.</>,
+      <><strong>Pagamento:</strong> processado de forma segura pela Stripe (cartão ou MB WAY). <strong>Nunca</strong> vemos nem guardamos os dados do teu cartão.</>,
       <><strong>Pedidos de orçamento:</strong> nome, contacto, descrição da peça e, se o enviares, o teu ficheiro 3D (guardado no nosso armazenamento seguro).</>,
       <><strong>Contacto:</strong> o conteúdo das mensagens que nos envias (ex.: WhatsApp).</>,
       <><strong>Carrinho e preferências:</strong> guardados localmente no teu navegador (localStorage) — não saem do teu dispositivo.</>,
@@ -122,12 +122,6 @@ const L = {
     contactText: 'Para qualquer questão sobre privacidade, escreve-nos para',
     contactAfter: 'ou fala connosco pelo',
     contactLink: 'WhatsApp (+351 913 323 056)',
-    disclaimer: (
-      <>
-        Este documento é um resumo informativo e não constitui aconselhamento jurídico.
-        Recomendamos a revisão por um profissional.
-      </>
-    ),
   },
   en: {
     back: 'Back to home',
@@ -216,12 +210,6 @@ const L = {
     contactText: 'For any privacy-related questions, email us at',
     contactAfter: 'or message us on',
     contactLink: 'WhatsApp (+351 913 323 056)',
-    disclaimer: (
-      <>
-        This document is an informative summary and does not constitute legal advice. We
-        recommend having it reviewed by a professional.
-      </>
-    ),
   },
 } as const;
 
@@ -294,10 +282,6 @@ export default function PrivacidadeContent() {
             <a href="https://wa.me/351913323056" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
               {t.contactLink}
             </a>.
-          </p>
-
-          <p className="text-sm text-stone-500 dark:text-zinc-500 mt-10 border-t border-stone-200 dark:border-white/10 pt-6">
-            {t.disclaimer}
           </p>
 
           {lang === 'en' && (

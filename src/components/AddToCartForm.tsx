@@ -9,6 +9,8 @@ const L = {
   pt: {
     chooseColor: 'Escolhe uma cor…',
     placeholder: (max?: number) => `Ex: O teu nome${max ? ` (máx. ${max} letras)` : ''}`,
+    spelling: 'Imprimimos exatamente como escreveres — confirma a ortografia.',
+    colorPlaceholder: 'Escreve a cor que queres',
     errColor: 'Escolhe uma cor para continuar.',
     errText: 'Preenche este campo para continuar.',
     qty: 'Quantidade:',
@@ -27,6 +29,8 @@ const L = {
   en: {
     chooseColor: 'Pick a color…',
     placeholder: (max?: number) => `E.g. your name${max ? ` (max ${max} letters)` : ''}`,
+    spelling: 'We print it exactly as you type it — please check the spelling.',
+    colorPlaceholder: 'Type the color you want',
     errColor: 'Pick a color to continue.',
     errText: 'Fill in this field to continue.',
     qty: 'Quantity:',
@@ -141,10 +145,13 @@ export default function AddToCartForm({ product }: { product: Product }) {
                   aria-invalid={errors[opt.id] ? true : undefined}
                   aria-describedby={errors[opt.id] ? `${opt.id}-erro` : undefined}
                   className={`bg-white dark:bg-stone-900 border rounded-lg px-4 py-3 text-stone-800 dark:text-stone-200 focus:outline-none focus:ring-1 placeholder-stone-400 dark:placeholder-stone-500 ${errors[opt.id] ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : 'border-stone-200 dark:border-stone-800 focus:border-orange-400 dark:focus:border-orange-500 focus:ring-orange-400 dark:focus:ring-orange-500'}`}
-                  placeholder={t.placeholder(opt.maxLength)}
+                  placeholder={opt.id.startsWith('cor') ? t.colorPlaceholder : t.placeholder(opt.maxLength)}
                   value={customizations[opt.id] || ''}
                   onChange={(e) => handleCustomizationChange(opt.id, e.target.value)}
                 />
+              )}
+              {opt.type !== 'color' && !opt.id.startsWith('cor') && !errors[opt.id] && (
+                <p className="text-xs font-medium text-stone-600 dark:text-zinc-300">{t.spelling}</p>
               )}
               {errors[opt.id] && (
                 <p id={`${opt.id}-erro`} className="text-sm text-red-500" role="alert">

@@ -53,7 +53,7 @@ const L = {
   pt: {
     aria: 'As nossas garantias',
     items: [
-      { title: 'Pagamento seguro', desc: 'Visa, Mastercard via Stripe' },
+      { title: 'Pagamento seguro', desc: 'Visa, Mastercard e MB WAY via Stripe' },
       { title: 'Envio CTT registado', desc: 'Para todo o Portugal' },
       { title: 'Feito em Portugal', desc: 'Impresso à mão' },
       { title: 'Apoio direto', desc: 'Resposta rápida no WhatsApp' },
@@ -62,7 +62,7 @@ const L = {
   en: {
     aria: 'Our guarantees',
     items: [
-      { title: 'Secure payment', desc: 'Visa, Mastercard via Stripe' },
+      { title: 'Secure payment', desc: 'Visa, Mastercard and MB WAY via Stripe' },
       { title: 'Registered CTT shipping', desc: 'Anywhere in Portugal' },
       { title: 'Made in Portugal', desc: 'Printed by hand' },
       { title: 'Direct support', desc: 'Fast replies on WhatsApp' },

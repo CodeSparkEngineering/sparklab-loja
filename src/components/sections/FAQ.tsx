@@ -28,7 +28,15 @@ const FAQS = {
     },
     {
       q: "Como funciona o pagamento?",
-      a: "O pagamento é feito de forma segura por cartão (Visa, Mastercard) através da Stripe, no momento da encomenda. Para encomendas de maior volume, podemos combinar 50% no início e 50% antes do envio.",
+      a: "O pagamento é feito de forma segura por cartão (Visa, Mastercard) ou MB WAY, através da Stripe, no momento da encomenda. Nunca vemos os dados do teu cartão. Para encomendas de maior volume, podemos combinar 50% no início e 50% antes do envio.",
+    },
+    {
+      q: "E se a peça chegar com defeito ou eu quiser devolver?",
+      a: "Se chegar com defeito ou partida, manda-nos uma foto pelo WhatsApp até 14 dias depois de a receberes: substituímos a peça ou devolvemos o dinheiro. Peças do catálogo sem personalização podem ser devolvidas em 14 dias, sem justificação. As personalizadas (com nome ou feitas à medida) são feitas só para ti e por isso só têm troca em caso de defeito. Todas têm a garantia legal de 3 anos.",
+    },
+    {
+      q: "Quanto custam os portes?",
+      a: "4,90 € por encomenda, para todo o Portugal, via CTT registado com número de seguimento. A partir de 40 € o envio é grátis. O valor aparece sempre antes de pagares.",
     },
     {
       q: "Fazem acabamento (lixagem, pintura, montagem)?",
@@ -62,7 +70,15 @@ const FAQS = {
     },
     {
       q: "How does payment work?",
-      a: "Payment is made securely by card (Visa, Mastercard) through Stripe when you place your order. For larger orders, we can arrange 50% upfront and 50% before shipping.",
+      a: "Payment is made securely by card (Visa, Mastercard) or MB WAY, through Stripe, when you place your order. We never see your card details. For larger orders, we can arrange 50% upfront and 50% before shipping.",
+    },
+    {
+      q: "What if my piece arrives defective, or I want to return it?",
+      a: "If it arrives defective or broken, send us a photo on WhatsApp within 14 days of delivery: we replace the piece or refund you. Non-personalised catalog pieces can be returned within 14 days, no questions asked. Personalised pieces (with a name or made to measure) are made just for you, so they are only exchanged if defective. All pieces carry the 3-year legal guarantee.",
+    },
+    {
+      q: "How much is shipping?",
+      a: "€4.90 per order, anywhere in Portugal, via registered CTT mail with a tracking number. Shipping is free from €40. The amount is always shown before you pay.",
     },
     {
       q: "Do you offer finishing (sanding, painting, assembly)?",

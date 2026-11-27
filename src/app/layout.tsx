@@ -47,7 +47,7 @@ const schemaMarkup = {
   "email": CONTACT_EMAIL,
   "priceRange": "€-€€",
   "currenciesAccepted": "EUR",
-  "paymentAccepted": "Visa, Mastercard (Stripe)",
+  "paymentAccepted": "Visa, Mastercard, MB WAY (Stripe)",
   "sameAs": [
     "https://www.instagram.com/sparklabs.3d/",
     GOOGLE_PROFILE_URL

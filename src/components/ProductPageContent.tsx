@@ -12,7 +12,7 @@
  */
 
 import Link from 'next/link';
-import { ArrowLeft, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ChevronDown, Truck, RotateCcw, ShieldCheck } from 'lucide-react';
 import { formatEUR, type Product } from '@/data/products';
 import ProductGallery from '@/components/ProductGallery';
 import AddToCartForm from '@/components/AddToCartForm';
@@ -43,6 +43,11 @@ const L = {
     ],
     wholesaleLine: <><strong>−15% automático</strong> em 10 ou mais unidades da mesma peça (aplicado no carrinho).</>,
     doubts: 'Dúvidas? Confirmamos prazo e detalhes no WhatsApp.',
+    assureShip: <><strong>Portes 4,90 €</strong> · grátis a partir de 40 € · CTT registado com seguimento</>,
+    assureReturn: <><strong>14 dias para devolver</strong> · se chegar com defeito, substituímos ou devolvemos o dinheiro</>,
+    assureCustom: <><strong>Feita só para ti</strong> · se chegar com defeito, substituímos ou devolvemos o dinheiro</>,
+    assurePay: <><strong>Pagamento seguro</strong> · Visa, Mastercard ou MB WAY, pela Stripe</>,
+    assureMore: 'Devoluções e garantia',
     credit: 'Design do modelo',
     creditVia: 'via MakerWorld, licença',
   },
@@ -70,6 +75,11 @@ const L = {
     ],
     wholesaleLine: <><strong>Automatic −15%</strong> on 10 or more units of the same piece (applied in the cart).</>,
     doubts: 'Questions? We confirm timelines and details on WhatsApp.',
+    assureShip: <><strong>Shipping €4.90</strong> · free from €40 · registered CTT mail with tracking</>,
+    assureReturn: <><strong>14 days to return</strong> · if it arrives defective, we replace it or refund you</>,
+    assureCustom: <><strong>Made just for you</strong> · if it arrives defective, we replace it or refund you</>,
+    assurePay: <><strong>Secure payment</strong> · Visa, Mastercard or MB WAY, via Stripe</>,
+    assureMore: 'Returns & warranty',
     credit: 'Model design',
     creditVia: 'via MakerWorld, license',
   },
@@ -125,8 +135,29 @@ export default function ProductPageContent({ product }: { product: Product }) {
           {/* Personalização + quantidade + comprar, logo a seguir ao preço. */}
           <AddToCartForm product={product} />
 
+          {/* O que o cliente quer saber antes de pagar: portes, devolução, pagamento. */}
+          <ul className="mt-6 max-w-md space-y-2.5 text-sm text-stone-600 dark:text-zinc-400 [&_strong]:font-semibold [&_strong]:text-stone-800 dark:[&_strong]:text-stone-200">
+            <li className="flex gap-2.5">
+              <Truck className="w-4 h-4 mt-0.5 shrink-0 text-orange-500" aria-hidden="true" />
+              <span>{t.assureShip}</span>
+            </li>
+            <li className="flex gap-2.5">
+              <RotateCcw className="w-4 h-4 mt-0.5 shrink-0 text-orange-500" aria-hidden="true" />
+              <span>
+                {product.customizations && product.customizations.length > 0 ? t.assureCustom : t.assureReturn}{' '}
+                <Link href="/termos#devolucoes" className="underline hover:text-stone-800 dark:hover:text-stone-200 whitespace-nowrap">
+                  {t.assureMore}
+                </Link>
+              </span>
+            </li>
+            <li className="flex gap-2.5">
+              <ShieldCheck className="w-4 h-4 mt-0.5 shrink-0 text-green-600 dark:text-green-500" aria-hidden="true" />
+              <span>{t.assurePay}</span>
+            </li>
+          </ul>
+
           {/* Selos: por baixo da compra para não a empurrarem para baixo. */}
-          <div className="flex flex-wrap gap-2 mt-8 mb-7">
+          <div className="flex flex-wrap gap-2 mt-7 mb-7">
             <span className={BADGE}>{t.madeIn}</span>
             <span className={BADGE}>{t.shipping}</span>
             <span className="inline-flex items-center text-xs font-medium text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-700/50 rounded-full px-3 py-1.5">

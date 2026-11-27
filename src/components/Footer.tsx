@@ -21,6 +21,8 @@ const L = {
     quote: 'Orçamento',
     faq: 'Perguntas frequentes',
     terms: 'Termos e condições',
+    returns: 'Devoluções e garantia',
+    complaints: 'Livro de Reclamações',
     social: 'Redes',
     copyright: '© 2026 SparkLab. Feito com cuidado, camada por camada.',
     privacy: 'Privacidade',
@@ -40,6 +42,8 @@ const L = {
     quote: 'Get a quote',
     faq: 'FAQ',
     terms: 'Terms & conditions',
+    returns: 'Returns & warranty',
+    complaints: 'Complaints Book',
     social: 'Social',
     copyright: '© 2026 SparkLab. Made with care, layer by layer.',
     privacy: 'Privacy',
@@ -104,7 +108,9 @@ export default function Footer() {
               <li><a href={`mailto:${CONTACT_EMAIL}`}>Email</a></li>
               <li><Link href="/#orcamento">{t.quote}</Link></li>
               <li><Link href="/#faq">{t.faq}</Link></li>
+              <li><Link href="/termos#devolucoes">{t.returns}</Link></li>
               <li><Link href="/termos">{t.terms}</Link></li>
+              <li><a href="https://www.livroreclamacoes.pt" target="_blank" rel="noopener noreferrer">{t.complaints}</a></li>
             </ul>
           </div>
           <div>

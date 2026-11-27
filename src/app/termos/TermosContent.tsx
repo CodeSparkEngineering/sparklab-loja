@@ -8,7 +8,7 @@ const L = {
   pt: {
     back: 'Voltar ao início',
     title: 'Termos e Condições',
-    updated: 'Última atualização: julho de 2026',
+    updated: 'Última atualização: novembro de 2026',
     intro: (
       <>
         Ao comprar na <strong>SparkLab</strong>, concordas com as condições abaixo. Os
@@ -18,7 +18,8 @@ const L = {
     s1Title: '1. Encomendas e pagamento',
     s1: (
       <>
-        Os pagamentos são processados de forma segura pela Stripe. A encomenda é confirmada
+        Os pagamentos são processados de forma segura pela Stripe — cartão (Visa,
+        Mastercard) ou MB WAY. Nunca vemos os dados do teu cartão. A encomenda é confirmada
         após a aprovação do pagamento. Os produtos podem ser <strong>prontos a enviar</strong> ou
         <strong> sob encomenda</strong> (produzidos após a compra).
       </>
@@ -52,11 +53,13 @@ const L = {
         nem partilhar o ficheiro com terceiros.
       </>
     ),
-    s5Title: '5. Defeitos e trocas',
+    s5Title: '5. Defeitos, trocas e garantia',
     s5: (
       <>
         Se a tua peça chegar com defeito, fala connosco pelo WhatsApp até 14 dias após a
-        receção e resolvemos — com substituição ou reembolso, conforme o caso.
+        receção e resolvemos — com substituição ou reembolso, conforme o caso. Para além
+        disso, todas as peças têm a <strong>garantia legal de 3 anos</strong> prevista na
+        lei portuguesa para falta de conformidade (Decreto-Lei n.º 84/2021).
       </>
     ),
     s6Title: '6. Propriedade intelectual',
@@ -66,20 +69,36 @@ const L = {
         reproduzidos sem autorização.
       </>
     ),
-    s7Title: '7. Contacto',
-    contactText: 'Dúvidas sobre uma encomenda? Fala connosco pelo',
-    contactLink: 'WhatsApp (+351 913 323 056)',
-    disclaimer: (
+    s7Title: '7. Reclamações e resolução de litígios',
+    s7a: (
       <>
-        Este documento é um resumo informativo. Recomendamos rever com um profissional antes
-        de operar com pagamentos reais.
+        Se algo não correr bem, fala primeiro connosco — queremos resolver. Tens também ao
+        dispor o{' '}
+        <a href="https://www.livroreclamacoes.pt" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
+          Livro de Reclamações Eletrónico
+        </a>.
       </>
     ),
+    s7b: (
+      <>
+        Em caso de litígio de consumo, podes recorrer a uma entidade de resolução alternativa
+        de litígios, como o{' '}
+        <a href="https://www.cniacc.pt" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
+          CNIACC — Centro Nacional de Informação e Arbitragem de Conflitos de Consumo
+        </a>. A lista completa de entidades está no{' '}
+        <a href="https://www.consumidor.gov.pt" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
+          Portal do Consumidor
+        </a>.
+      </>
+    ),
+    s8Title: '8. Contacto',
+    contactText: 'Dúvidas sobre uma encomenda? Fala connosco pelo',
+    contactLink: 'WhatsApp (+351 913 323 056)',
   },
   en: {
     back: 'Back to home',
     title: 'Terms and Conditions',
-    updated: 'Last updated: July 2026',
+    updated: 'Last updated: November 2026',
     intro: (
       <>
         By purchasing from <strong>SparkLab</strong>, you agree to the terms below. All
@@ -89,7 +108,8 @@ const L = {
     s1Title: '1. Orders and payment',
     s1: (
       <>
-        Payments are processed securely by Stripe. Your order is confirmed once payment has
+        Payments are processed securely by Stripe — card (Visa, Mastercard) or MB WAY. We
+        never see your card details. Your order is confirmed once payment has
         been approved. Products may be <strong>ready to ship</strong> or
         <strong> made to order</strong> (produced after purchase).
       </>
@@ -123,11 +143,13 @@ const L = {
         third parties is not permitted.
       </>
     ),
-    s5Title: '5. Defects and exchanges',
+    s5Title: '5. Defects, exchanges and warranty',
     s5: (
       <>
         If your piece arrives defective, contact us on WhatsApp within 14 days of delivery
-        and we will make it right — with a replacement or a refund, as appropriate.
+        and we will make it right — with a replacement or a refund, as appropriate. In
+        addition, every piece is covered by the <strong>3-year legal guarantee</strong> of
+        conformity provided by Portuguese law (Decree-Law 84/2021).
       </>
     ),
     s6Title: '6. Intellectual property',
@@ -137,15 +159,31 @@ const L = {
         be reproduced without permission.
       </>
     ),
-    s7Title: '7. Contact',
-    contactText: 'Questions about an order? Message us on',
-    contactLink: 'WhatsApp (+351 913 323 056)',
-    disclaimer: (
+    s7Title: '7. Complaints and dispute resolution',
+    s7a: (
       <>
-        This document is an informative summary. We recommend reviewing it with a
-        professional before operating with real payments.
+        If something goes wrong, talk to us first — we want to fix it. You can also use the
+        Portuguese{' '}
+        <a href="https://www.livroreclamacoes.pt" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
+          Electronic Complaints Book
+        </a>.
       </>
     ),
+    s7b: (
+      <>
+        For consumer disputes you may turn to an alternative dispute resolution body, such
+        as{' '}
+        <a href="https://www.cniacc.pt" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
+          CNIACC — the National Centre for Information and Arbitration of Consumer Disputes
+        </a>. The full list of bodies is on the{' '}
+        <a href="https://www.consumidor.gov.pt" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
+          Consumer Portal
+        </a>.
+      </>
+    ),
+    s8Title: '8. Contact',
+    contactText: 'Questions about an order? Message us on',
+    contactLink: 'WhatsApp (+351 913 323 056)',
   },
 } as const;
 
@@ -180,7 +218,7 @@ export default function TermosContent() {
             <li>{t.s2c}</li>
           </ul>
 
-          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s3Title}</h2>
+          <h2 id="devolucoes" className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8 scroll-mt-28">{t.s3Title}</h2>
           <p>{t.s3a}</p>
           <p>{t.s3}</p>
 
@@ -194,15 +232,15 @@ export default function TermosContent() {
           <p>{t.s6}</p>
 
           <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s7Title}</h2>
+          <p>{t.s7a}</p>
+          <p>{t.s7b}</p>
+
+          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-8">{t.s8Title}</h2>
           <p>
             {t.contactText}{' '}
             <a href="https://wa.me/351913323056" target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">
               {t.contactLink}
             </a>.
-          </p>
-
-          <p className="text-sm text-stone-500 dark:text-zinc-500 mt-10 border-t border-stone-200 dark:border-white/10 pt-6">
-            {t.disclaimer}
           </p>
 
           {lang === 'en' && (
