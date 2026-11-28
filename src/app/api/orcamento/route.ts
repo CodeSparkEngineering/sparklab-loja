@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { SITE_URL } from '@/data/site';
 import { esc, emailShell, sendViaResend } from '@/lib/email';
+import { isAllowedOrigin, rateLimit } from '@/lib/request-guard';
 
 export const runtime = 'nodejs';
 
@@ -36,15 +36,19 @@ function waLinkFor(phone: string): string | null {
 
 export async function POST(request: NextRequest) {
   // Mesma validação de origem do checkout: só os nossos domínios.
-  const ALLOWED_ORIGINS = new Set([
-    SITE_URL,
-    'https://sparklab3d.pt',
-    'https://sparklab-loja.vercel.app',
-    ...(process.env.NODE_ENV !== 'production' ? [new URL(request.url).origin] : []),
-  ]);
-  const origin = request.headers.get('origin');
-  if (!origin || !ALLOWED_ORIGINS.has(origin)) {
+  if (!isAllowedOrigin(request)) {
     return NextResponse.json({ error: 'Origem não permitida.' }, { status: 403 });
+  }
+
+  // O Origin só trava browsers — um script forja-o. O limite por IP impede
+  // que nos encham a caixa de email e esgotem a quota do Resend (que é a
+  // mesma dos emails de encomenda).
+  const limite = rateLimit(request, 'orcamento', 5, 10 * 60_000);
+  if (!limite.ok) {
+    return NextResponse.json(
+      { error: 'Demasiados pedidos. Tenta novamente daqui a pouco.' },
+      { status: 429, headers: { 'Retry-After': String(limite.retryAfter) } }
+    );
   }
 
   let body: Record<string, unknown>;
