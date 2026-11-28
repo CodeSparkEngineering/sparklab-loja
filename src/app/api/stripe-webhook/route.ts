@@ -370,7 +370,6 @@ async function sendAbandonedEmail(stripe: Stripe, session: Stripe.Checkout.Sessi
   const email = c?.email ?? session.customer_email ?? null;
   const phone = c?.phone ?? null;
   const recoveryUrl = session.after_expiration?.recovery?.url ?? null;
-  const consent = session.consent?.promotions === 'opt_in';
 
   const contacto =
     email || phone
@@ -384,7 +383,6 @@ async function sendAbandonedEmail(stripe: Stripe, session: Stripe.Checkout.Sessi
     <table style="width:100%;border-collapse:collapse;margin-bottom:20px">${rows}</table>
     <h3 style="margin:0 0 6px">👤 Contacto</h3>
     <p style="margin:0 0 16px;color:#44403c">${contacto}</p>
-    <p style="margin:0 0 16px;color:#44403c">Aceitou emails promocionais: <strong>${consent ? 'sim (a Stripe envia o lembrete)' : 'não'}</strong></p>
     ${
       recoveryUrl
         ? `<p style="margin:0 0 8px;color:#44403c">Link para o cliente retomar a compra (válido 30 dias):</p>
