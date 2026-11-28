@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
+import { isAllowedOrigin, rateLimit } from '@/lib/request-guard';
 
 export const runtime = 'nodejs';
 
@@ -23,7 +24,31 @@ const ALLOWED_EXT = [
 const MAX_BYTES = 100 * 1024 * 1024; // 100 MB — STL grandes cabem à vontade
 
 export async function POST(request: Request): Promise<NextResponse> {
-  const body = (await request.json()) as HandleUploadBody;
+  let body: HandleUploadBody;
+  try {
+    body = (await request.json()) as HandleUploadBody;
+  } catch {
+    return NextResponse.json({ error: 'Corpo inválido.' }, { status: 400 });
+  }
+
+  // Pedido de token = vem do browser do visitante: só dos nossos domínios e
+  // com limite por IP. Sem isto, qualquer script pedia tokens e enchia o Blob
+  // store (100 MB por ficheiro, com link público no nosso domínio de Blob).
+  // O outro tipo de pedido ("blob.upload-completed") é o aviso da própria
+  // Vercel, servidor-a-servidor e assinado — o handleUpload valida a
+  // assinatura; não traz Origin, por isso não passa por estas guardas.
+  if (body?.type !== 'blob.upload-completed') {
+    if (!isAllowedOrigin(request)) {
+      return NextResponse.json({ error: 'Origem não permitida.' }, { status: 403 });
+    }
+    const limite = rateLimit(request, 'upload', 10, 10 * 60_000);
+    if (!limite.ok) {
+      return NextResponse.json(
+        { error: 'Demasiados pedidos. Tenta novamente daqui a pouco.' },
+        { status: 429, headers: { 'Retry-After': String(limite.retryAfter) } }
+      );
+    }
+  }
 
   try {
     const jsonResponse = await handleUpload({

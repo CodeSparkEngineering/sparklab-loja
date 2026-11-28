@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import Stripe from 'stripe';
 import { getProductById, unitPriceFor, WHOLESALE_MIN_QTY, WHOLESALE_DISCOUNT } from '@/data/products';
 import { SITE_URL } from '@/data/site';
+import { rateLimit } from '@/lib/request-guard';
 
 // Stripe usa APIs de Node (crypto), então força o runtime Node.
 export const runtime = 'nodejs';
@@ -42,6 +43,15 @@ const SHIPPING_COUNTRIES: Stripe.Checkout.SessionCreateParams.ShippingAddressCol
   ['PT'];
 
 export async function POST(request: NextRequest) {
+  // Cada pedido cria uma sessão na Stripe — limite por IP contra abuso.
+  const limite = rateLimit(request, 'checkout', 20, 10 * 60_000);
+  if (!limite.ok) {
+    return NextResponse.json(
+      { error: 'Demasiados pedidos. Tenta novamente daqui a pouco.' },
+      { status: 429, headers: { 'Retry-After': String(limite.retryAfter) } }
+    );
+  }
+
   let body: { items?: IncomingLine[]; lang?: string };
   try {
     body = await request.json();
