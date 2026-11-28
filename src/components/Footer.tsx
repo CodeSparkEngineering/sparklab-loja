@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { getWhatsAppLink } from '@/utils/whatsapp';
 import { CONTACT_EMAIL } from '@/data/site';
 import { useLang } from '@/i18n/LanguageContext';
+import { BookOpen, ExternalLink } from 'lucide-react';
 import TrustBadges from '@/components/TrustBadges';
 
 const L = {
@@ -23,6 +24,8 @@ const L = {
     terms: 'Termos e condições',
     returns: 'Devoluções e garantia',
     complaints: 'Livro de Reclamações',
+    complaintsBig: 'Livro de Reclamações',
+    complaintsSub: 'Reclamação eletrónica · livroreclamacoes.pt',
     social: 'Redes',
     copyright: '© 2026 SparkLab. Feito com cuidado, camada por camada.',
     privacy: 'Privacidade',
@@ -44,6 +47,8 @@ const L = {
     terms: 'Terms & conditions',
     returns: 'Returns & warranty',
     complaints: 'Complaints Book',
+    complaintsBig: 'Livro de Reclamações',
+    complaintsSub: 'Electronic complaints book · livroreclamacoes.pt',
     social: 'Social',
     copyright: '© 2026 SparkLab. Made with care, layer by layer.',
     privacy: 'Privacy',
@@ -143,6 +148,22 @@ export default function Footer() {
       <TrustBadges />
 
       <div className="container footer__base" style={{ flexDirection: 'column', gap: '8px', textAlign: 'center' }}>
+        {/* Livro de Reclamações em destaque: é o que o cliente (e a lei) procura no fundo da página. */}
+        <a
+          href="https://www.livroreclamacoes.pt"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer__livro"
+        >
+          <span className="footer__livro-icone" aria-hidden="true">
+            <BookOpen className="h-5 w-5" />
+          </span>
+          <span className="footer__livro-texto">
+            <strong>{t.complaintsBig}</strong>
+            <span>{t.complaintsSub}</span>
+          </span>
+          <ExternalLink className="h-4 w-4 shrink-0 opacity-60" aria-hidden="true" />
+        </a>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
           <small>{t.copyright}</small>
           <small><Link href="/privacidade">{t.privacy}</Link> · <Link href="/termos">{t.termsShort}</Link></small>

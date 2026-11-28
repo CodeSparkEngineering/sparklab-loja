@@ -16,12 +16,16 @@ const CHECKOUT_TEXT = {
       'Peças personalizadas e por encomenda são produzidas após o pagamento — confirmamos o prazo contigo no WhatsApp (+351 913 323 056).',
     shipping:
       'Enviamos para todo o Portugal via CTT registado, com seguimento. Grátis a partir de 40€.',
+    arrange:
+      'A tua encomenda tem uma peça grande, que não segue por CTT normal: depois do pagamento contactamos-te para combinar a entrega ou o levantamento.',
   },
   en: {
     submit:
       'Personalized and made-to-order pieces are produced after payment — we confirm the timeline with you on WhatsApp (+351 913 323 056).',
     shipping:
       'We ship anywhere in Portugal via registered CTT mail, with tracking. Free over €40.',
+    arrange:
+      'Your order includes a large piece that does not ship by regular CTT mail: after payment we contact you to arrange delivery or pickup.',
   },
 } as const;
 
@@ -82,6 +86,7 @@ export async function POST(request: NextRequest) {
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
   let hasPhysical = false;
   let hasDigital = false;
+  let aCombinar = false; // peça grande: entrega combinada, sem portes de CTT
   for (const line of incoming) {
     const product = getProductById(String(line?.id));
     const qty = Math.max(1, Math.min(99, Math.floor(Number(line?.qty) || 0)));
@@ -89,6 +94,7 @@ export async function POST(request: NextRequest) {
 
     if (product.digital) hasDigital = true;
     else hasPhysical = true;
+    if (product.entregaACombinar) aCombinar = true;
 
     // Só aceita chaves de personalização DEFINIDAS no produto (whitelist) e
     // limita o tamanho dos valores — evita metadados arbitrários (que podiam
@@ -189,13 +195,21 @@ export async function POST(request: NextRequest) {
       custom_text: customText,
       success_url: `${origin}/sucesso?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/?checkout=cancelado#catalogo`,
-      metadata: { has_digital: String(hasDigital), has_physical: String(hasPhysical), lang },
+      metadata: { has_digital: String(hasDigital), has_physical: String(hasPhysical), entrega_a_combinar: String(aCombinar), lang },
     };
 
     if (hasPhysical) {
-      customText.shipping_address = { message: CHECKOUT_TEXT[lang].shipping };
+      customText.shipping_address = { message: aCombinar ? CHECKOUT_TEXT[lang].arrange : CHECKOUT_TEXT[lang].shipping };
       params.shipping_address_collection = { allowed_countries: SHIPPING_COUNTRIES };
-      params.shipping_options = [
+      params.shipping_options = aCombinar ? [
+        {
+          shipping_rate_data: {
+            type: 'fixed_amount',
+            fixed_amount: { amount: 0, currency: 'eur' },
+            display_name: lang === 'en' ? 'Delivery by arrangement (we contact you)' : 'Entrega a combinar (contactamos-te)',
+          },
+        },
+      ] : [
         {
           shipping_rate_data: {
             type: 'fixed_amount',

@@ -21,6 +21,7 @@ const L = {
     shipDone: <>🎉 Boa! Tens <strong>envio grátis</strong>.</>,
     subtotal: 'Subtotal',
     wholesale: '−15% atacado',
+    noteArrange: 'Entrega a combinar: tens uma peça grande no carrinho, que não segue por CTT normal. Contactamos-te depois da compra.',
     note: (free: boolean) => free
       ? 'Envio grátis via CTT registado, com seguimento.'
       : 'Portes: 4,90 € (grátis a partir de 40 €). Envio via CTT registado, com seguimento.',
@@ -43,6 +44,7 @@ const L = {
     shipDone: <>🎉 Nice! You&apos;ve got <strong>free shipping</strong>.</>,
     subtotal: 'Subtotal',
     wholesale: '−15% wholesale',
+    noteArrange: 'Delivery by arrangement: you have a large piece in your cart, which does not ship by regular CTT mail. We contact you after purchase.',
     note: (free: boolean) => free
       ? 'Free shipping via registered CTT mail, with tracking.'
       : 'Shipping: €4.90 (free from €40). Sent via registered CTT mail, with tracking.',
@@ -65,6 +67,8 @@ export default function CartDrawer() {
   const FREE_SHIP = 40;
   const shipRemaining = Math.max(0, FREE_SHIP - subtotal);
   const shipProgress = Math.min(1, subtotal / FREE_SHIP);
+  // Peças grandes: a entrega é combinada, não se promete CTT nem envio grátis.
+  const aCombinar = items.some((it) => it.product.entregaACombinar);
 
   // Fecha com ESC e trava o scroll do body quando aberto.
   useEffect(() => {
@@ -228,7 +232,7 @@ export default function CartDrawer() {
             </ul>
 
             <footer className="cart__foot">
-              <div className="cart__ship">
+              {!aCombinar && <div className="cart__ship">
                 {shipRemaining > 0 ? (
                   <p className="cart__ship-text">
                     {t.shipRemaining(formatEUR(shipRemaining))}
@@ -241,14 +245,14 @@ export default function CartDrawer() {
                 <div className="cart__ship-bar">
                   <span style={{ width: `${shipProgress * 100}%` }} />
                 </div>
-              </div>
+              </div>}
 
               {error && <p className="cart__error" role="alert">{error}</p>}
               <div className="cart__subtotal">
                 <span>{t.subtotal}</span>
                 <strong>{formatEUR(subtotal)}</strong>
               </div>
-              <p className="cart__note">{t.note(shipRemaining <= 0)}</p>
+              <p className="cart__note">{aCombinar ? t.noteArrange : t.note(shipRemaining <= 0)}</p>
               <button
                 type="button"
                 className="btn btn--primary cart__checkout"

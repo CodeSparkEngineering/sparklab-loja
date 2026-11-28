@@ -2585,6 +2585,35 @@ section.niche { scroll-margin-top: 130px; }
 .footer__base a { color: var(--ink-dim); transition: color .15s ease; display: inline-block; padding: 8px 4px; margin: -4px 0; }
 .footer__base a:hover { color: var(--ink); }
 
+/* Livro de Reclamações em destaque no fundo do rodapé */
+.footer__base a.footer__livro {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 auto 14px;
+  padding: 10px 16px 10px 10px;
+  border: 1.5px solid #c8102e;
+  border-radius: 12px;
+  background: #fff;
+  color: #1c1917;
+  text-align: left;
+  transition: box-shadow .15s ease, transform .15s ease;
+}
+.footer__base a.footer__livro:hover { color: #1c1917; box-shadow: 0 6px 18px rgba(200, 16, 46, .18); transform: translateY(-1px); }
+.footer__livro-icone {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: #c8102e;
+  color: #fff;
+  flex: none;
+}
+.footer__livro-texto { display: flex; flex-direction: column; line-height: 1.25; }
+.footer__livro-texto strong { font-family: var(--f-head); font-size: 15px; font-weight: 700; color: #1c1917; }
+.footer__livro-texto span { font-size: 12px; color: #57534e; }
+
 /* ─────────────────────────────────────────────────────────
    REVEAL ANIMATIONS
 ───────────────────────────────────────────────────────── */

@@ -65,6 +65,12 @@ export type Product = {
    * Ex.: 3,50 € cada, 3 por 9 € → { qty: 3, unitPrice: 3 }.
    */
   pack?: { qty: number; unitPrice: number };
+  /**
+   * Peça grande que não segue por CTT normal: a entrega (ou levantamento) é
+   * combinada com o cliente depois da compra. A página do produto, o carrinho
+   * e o checkout deixam de prometer portes/prazo de CTT para esta peça.
+   */
+  entregaACombinar?: boolean;
 };
 
 /**
@@ -124,6 +130,15 @@ export const NICHES: Niche[] = [
     labelEn: 'Gaming Setup',
     desc: 'O teu canto de jogo, arrumado e com o teu nome.',
     descEn: 'Your gaming corner, tidy and with your name on it.',
+  },
+  {
+    // Ainda sem produtos: a secção aparece sozinha no catálogo assim que
+    // houver uma peça com `tag: 'Porta-vinhos'`.
+    slug: 'porta-vinhos',
+    label: 'Porta-vinhos',
+    labelEn: 'Wine Holders',
+    desc: 'Suportes para garrafas. Para a mesa, a garrafeira ou para oferecer com o vinho.',
+    descEn: 'Bottle holders. For the table, the wine rack or to give along with the wine.',
   },
   {
     slug: 'natal',
@@ -425,6 +440,28 @@ const TODOS_OS_PRODUTOS: Product[] = [
     ]
   },
 
+  {
+    // Kien Designs — https://makerworld.com/en/models/3152818 ("4 Slot Version")
+    // Licença pública: Standard Digital File License — vender impressões exige
+    // a subscrição comercial do autor. O dono confirmou a 28/11/2026 que a tem.
+    id: 'porta-comandos-japandi-4',
+    name: 'Porta-Comandos Japandi (4 lugares)',
+    nameEn: 'Japandi Remote Control Holder (4 slots)',
+    desc: 'Quatro divisórias inclinadas para arrumar os comandos da televisão, da box e do ar condicionado — e deixar de os procurar no sofá. Linhas simples, lateral com ranhuras verticais, ao estilo japandi. Também serve na secretária para canetas, óculos e telemóvel. Impresso em 3D numa só peça, na cor que escolheres.',
+    descEn: 'Four slanted slots to keep the TV, set-top box and air-conditioning remotes in one place — and stop hunting for them on the sofa. Clean lines with vertical ribbed sides, in japandi style. It also works on a desk for pens, glasses and a phone. 3D-printed in one piece, in the color you choose.',
+    price: 5.00,
+    tag: 'Secretária',
+    tone: 'blue',
+    icon: '📺',
+    images: [
+      '/images/porta-comandos-japandi-4-estudio-1.webp',
+      '/images/porta-comandos-japandi-4-2.webp'
+    ],
+    customizations: [
+      { id: 'cor', label: 'Cor à escolha (ex: preto, branco, cinzento)', labelEn: 'Color of choice (e.g. black, white, grey)', type: 'text', maxLength: 30 }
+    ],
+  },
+
   // ─────────────────────────── NATAL ───────────────────────────
   // Modelos do MakerWorld. `credit` é OBRIGATÓRIO nas licenças CC BY e
   // CC BY-SA (aparece na página do produto e nos destaques de Natal).
@@ -441,8 +478,8 @@ const TODOS_OS_PRODUTOS: Product[] = [
     tone: 'red',
     icon: '🐾',
     images: [
-      '/images/enfeite-patinha-pet-1.webp',
-      '/images/enfeite-patinha-pet-2.webp'
+      '/images/enfeite-patinha-pet-estudio-1.webp',
+      '/images/enfeite-patinha-pet-estudio-2.webp'
     ],
     customizations: [
       { id: 'nome', label: 'Nome do pet', labelEn: 'Pet’s name', type: 'text', maxLength: 12, required: true },
@@ -460,8 +497,8 @@ const TODOS_OS_PRODUTOS: Product[] = [
     tone: 'red',
     icon: '🎅',
     images: [
-      '/images/letreiro-feliz-natal-1.webp',
-      '/images/letreiro-feliz-natal-2.webp'
+      '/images/letreiro-feliz-natal-estudio-1.webp',
+      '/images/letreiro-feliz-natal-estudio-2.webp'
     ],
     customizations: [
       { id: 'cor', label: 'Cor à escolha (ex: vermelho, verde, branco, dourado)', labelEn: 'Color of choice (e.g. red, green, white, gold)', type: 'text', maxLength: 30 }
@@ -487,8 +524,8 @@ const TODOS_OS_PRODUTOS: Product[] = [
     tone: 'red',
     icon: '🧶',
     images: [
-      '/images/enfeite-camisola-rena-nome-1.webp',
-      '/images/enfeite-camisola-rena-nome-2.webp'
+      '/images/enfeite-camisola-rena-nome-estudio-1.webp',
+      '/images/enfeite-camisola-rena-nome-estudio-2.webp'
     ],
     customizations: [
       { id: 'nome', label: 'Nome', labelEn: 'Name', type: 'text', maxLength: 10, required: true },
@@ -507,8 +544,8 @@ const TODOS_OS_PRODUTOS: Product[] = [
     tone: 'red',
     icon: '🎅',
     images: [
-      '/images/porta-panetone-pai-natal-1.webp',
-      '/images/porta-panetone-pai-natal-2.webp'
+      '/images/porta-panetone-pai-natal-estudio-1.webp',
+      '/images/porta-panetone-pai-natal-estudio-2.webp'
     ],
   },
   {
@@ -524,8 +561,8 @@ const TODOS_OS_PRODUTOS: Product[] = [
     tone: 'red',
     icon: '🎀',
     images: [
-      '/images/enfeite-feliz-natal-laco-1.webp',
-      '/images/enfeite-feliz-natal-laco-2.webp'
+      '/images/enfeite-feliz-natal-laco-estudio-1.webp',
+      '/images/enfeite-feliz-natal-laco-1.webp'
     ],
   },
   {
@@ -540,8 +577,8 @@ const TODOS_OS_PRODUTOS: Product[] = [
     tone: 'red',
     icon: '🧸',
     images: [
-      '/images/ursinho-tricotado-natal-1.webp',
-      '/images/ursinho-tricotado-natal-2.webp'
+      '/images/ursinho-tricotado-natal-estudio-1.webp',
+      '/images/ursinho-tricotado-natal-estudio-2.webp'
     ],
   },
   {
@@ -556,8 +593,8 @@ const TODOS_OS_PRODUTOS: Product[] = [
     tone: 'red',
     icon: '🎅',
     images: [
-      '/images/pai-natal-tricotado-1.webp',
-      '/images/pai-natal-tricotado-2.webp'
+      '/images/pai-natal-tricotado-estudio-1.webp',
+      '/images/pai-natal-tricotado-estudio-2.webp'
     ],
   },
   {
@@ -572,8 +609,8 @@ const TODOS_OS_PRODUTOS: Product[] = [
     tone: 'red',
     icon: '🍬',
     images: [
-      '/images/suporte-doces-pai-natal-1.webp',
-      '/images/suporte-doces-pai-natal-2.webp'
+      '/images/suporte-doces-pai-natal-estudio-1.webp',
+      '/images/suporte-doces-pai-natal-estudio-2.webp'
     ],
   },
   {
@@ -588,9 +625,65 @@ const TODOS_OS_PRODUTOS: Product[] = [
     tone: 'red',
     icon: '🥾',
     images: [
-      '/images/bota-pai-natal-porta-talheres-1.webp',
-      '/images/bota-pai-natal-porta-talheres-2.webp'
+      '/images/bota-pai-natal-porta-talheres-estudio-1.webp',
+      '/images/bota-pai-natal-porta-talheres-1.webp'
     ],
+  },
+  {
+    // Fotos da nossa própria impressão (28/11/2026).
+    id: 'capivara-tricotada-natal',
+    name: 'Capivara Tricotada de Natal',
+    nameEn: 'Knitted Christmas Capybara',
+    desc: 'Capivara sentada, de barrete de Pai Natal e cachecol vermelho, a segurar uma prenda verde com laço amarelo. A textura de malha faz parecer tricotada à mão, mas é impressa em 3D a várias cores. Para a prateleira, a secretária ou para oferecer a quem não resiste a uma capivara.',
+    descEn: 'A sitting capybara in a Santa hat and red scarf, holding a green gift with a yellow bow. The knitted texture makes it look hand-knitted, but it is 3D-printed in several colors. For a shelf, a desk, or as a gift for anyone who can’t resist a capybara.',
+    price: 22.00,
+    tag: 'Natal',
+    tone: 'red',
+    icon: '🎁',
+    images: [
+      '/images/capivara-tricotada-natal-estudio-1.webp',
+      '/images/capivara-tricotada-natal-estudio-2.webp',
+      '/images/capivara-tricotada-natal-estudio-3.webp',
+      '/images/capivara-tricotada-natal-4.webp'
+    ],
+  },
+  {
+    // O.HA 3D — https://makerworld.com/en/models/3373859 ("Rentier 75cm NoAMS")
+    // Licença pública: uso comercial só com a subscrição do autor — o dono
+    // confirmou a 28/11/2026 que a tem. ~2,1 kg de PLA, 15 placas, ~58 h.
+    id: 'rena-natal-75cm',
+    name: 'Rena de Natal Gigante (75 cm)',
+    nameEn: 'Giant Christmas Reindeer (75 cm)',
+    desc: 'Uma rena sentada com 75 cm de altura, nariz vermelho, hastes douradas e coleira verde com guizo. Impressa em 3D em várias peças e cores, montada por nós. Para a entrada de casa, ao lado da árvore ou para a montra de uma loja — é a peça que toda a gente quer fotografar. Feita por encomenda: fala connosco para combinar prazo e entrega.',
+    descEn: 'A sitting reindeer 75 cm tall, with a red nose, golden antlers and a green collar with a bell. 3D-printed in several parts and colors, assembled by us. For the hallway, next to the tree or a shop window — the piece everyone wants a photo with. Made to order: talk to us to arrange timing and delivery.',
+    price: 150.00,
+    tag: 'Natal',
+    tone: 'red',
+    icon: '🦌',
+    images: [
+      '/images/rena-natal-75cm-estudio-1.webp',
+      '/images/rena-natal-75cm-2.webp'
+    ],
+    entregaACombinar: true,
+  },
+  {
+    // O.HA 3D — https://makerworld.com/en/models/3538206 ("Santa Claus 90cm | No AMS")
+    // Licença pública: uso comercial só com a subscrição do autor — o dono
+    // confirmou a 28/11/2026 que a tem. ~5 kg de PLA, 21 placas, ~143 h.
+    id: 'pai-natal-90cm',
+    name: 'Pai Natal Gigante (90 cm)',
+    nameEn: 'Giant Santa Claus (90 cm)',
+    desc: 'Um Pai Natal de pé com 90 cm de altura, de saco às costas, barba branca, cinto com fivela dourada e botas castanhas. Impresso em 3D em várias peças e cores, montado por nós e entregue com o saco de serapilheira. Para a entrada de casa, a receção de uma empresa ou a montra de uma loja. Feito por encomenda: fala connosco para combinar prazo e entrega.',
+    descEn: 'A standing Santa Claus 90 cm tall, with a sack over his shoulder, white beard, a belt with a golden buckle and brown boots. 3D-printed in several parts and colors, assembled by us and delivered with the burlap sack. For a hallway, a company reception or a shop window. Made to order: talk to us to arrange timing and delivery.',
+    price: 380.00,
+    tag: 'Natal',
+    tone: 'red',
+    icon: '🎅',
+    images: [
+      '/images/pai-natal-90cm-estudio-1.webp',
+      '/images/pai-natal-90cm-estudio-2.webp'
+    ],
+    entregaACombinar: true,
   },
 ];
 

@@ -45,6 +45,13 @@ const L = {
     ],
     wholesaleLine: <><strong>−15% automático</strong> em 10 ou mais unidades da mesma peça (aplicado no carrinho).</>,
     doubts: 'Dúvidas? Confirmamos prazo e detalhes no WhatsApp.',
+    shippingArrange: 'Entrega a combinar',
+    prodItemsArrange: [
+      'Impresso por nós, sob encomenda, em várias peças, e montado antes de sair.',
+      'Peça grande: não segue por CTT normal. Depois da compra contactamos-te para combinar a entrega ou o levantamento.',
+      'O prazo de produção é confirmado contigo antes de começarmos.',
+    ],
+    assureArrange: <><strong>Entrega a combinar</strong> · peça grande, não segue por CTT normal — contactamos-te depois da compra para acertar entrega ou levantamento</>,
     assureShip: <><strong>Portes 4,90 €</strong> · grátis a partir de 40 € · CTT registado com seguimento</>,
     assureReturn: <><strong>14 dias para devolver</strong> · se chegar com defeito, substituímos ou devolvemos o dinheiro</>,
     assureCustom: <><strong>Feita só para ti</strong> · se chegar com defeito, substituímos ou devolvemos o dinheiro</>,
@@ -78,6 +85,13 @@ const L = {
     ],
     wholesaleLine: <><strong>Automatic −15%</strong> on 10 or more units of the same piece (applied in the cart).</>,
     doubts: 'Questions? We confirm timelines and details on WhatsApp.',
+    shippingArrange: 'Delivery by arrangement',
+    prodItemsArrange: [
+      'Printed by us, made to order, in several parts, and assembled before it leaves.',
+      'Large piece: it does not ship by regular CTT mail. After your purchase we contact you to arrange delivery or pickup.',
+      'The production time is confirmed with you before we start.',
+    ],
+    assureArrange: <><strong>Delivery by arrangement</strong> · large piece, not shipped by regular CTT mail — we contact you after purchase to arrange delivery or pickup</>,
     assureShip: <><strong>Shipping €4.90</strong> · free from €40 · registered CTT mail with tracking</>,
     assureReturn: <><strong>14 days to return</strong> · if it arrives defective, we replace it or refund you</>,
     assureCustom: <><strong>Made just for you</strong> · if it arrives defective, we replace it or refund you</>,
@@ -149,7 +163,7 @@ export default function ProductPageContent({ product }: { product: Product }) {
 
           {/* O que o cliente quer saber antes de pagar: portes, devolução, pagamento. */}
           <ul className="mt-6 max-w-md space-y-2.5 text-sm text-stone-600 dark:text-zinc-400 [&_strong]:font-semibold [&_strong]:text-stone-800 dark:[&_strong]:text-stone-200">
-            {natalATempo && (
+            {natalATempo && !product.entregaACombinar && (
               <li className="flex gap-2.5">
                 <Gift className="w-4 h-4 mt-0.5 shrink-0 text-red-600 dark:text-red-400" aria-hidden="true" />
                 <span>{t.assureNatal(dataNatal)}</span>
@@ -157,7 +171,7 @@ export default function ProductPageContent({ product }: { product: Product }) {
             )}
             <li className="flex gap-2.5">
               <Truck className="w-4 h-4 mt-0.5 shrink-0 text-orange-500" aria-hidden="true" />
-              <span>{t.assureShip}</span>
+              <span>{product.entregaACombinar ? t.assureArrange : t.assureShip}</span>
             </li>
             <li className="flex gap-2.5">
               <RotateCcw className="w-4 h-4 mt-0.5 shrink-0 text-orange-500" aria-hidden="true" />
@@ -177,7 +191,7 @@ export default function ProductPageContent({ product }: { product: Product }) {
           {/* Selos: por baixo da compra para não a empurrarem para baixo. */}
           <div className="flex flex-wrap gap-2 mt-7 mb-7">
             <span className={BADGE}>{t.madeIn}</span>
-            <span className={BADGE}>{t.shipping}</span>
+            <span className={BADGE}>{product.entregaACombinar ? t.shippingArrange : t.shipping}</span>
             <span className="inline-flex items-center text-xs font-medium text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-700/50 rounded-full px-3 py-1.5">
               {t.wholesale}
             </span>
@@ -236,7 +250,7 @@ export default function ProductPageContent({ product }: { product: Product }) {
               <ChevronDown className="w-5 h-5 shrink-0 text-stone-500 transition-transform group-open:rotate-180" />
             </summary>
             <ul className="px-6 pb-6 space-y-3 text-sm text-stone-600 dark:text-zinc-400">
-              {t.prodItems.map((item) => (
+              {(product.entregaACombinar ? t.prodItemsArrange : t.prodItems).map((item) => (
                 <li key={item} className="flex gap-2.5"><span className="text-orange-500 mt-0.5">•</span> {item}</li>
               ))}
               <li className="flex gap-2.5"><span className="text-amber-500 mt-0.5">•</span> <span>{t.wholesaleLine}</span></li>

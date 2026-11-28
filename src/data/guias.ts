@@ -144,6 +144,28 @@ export const GUIAS: Guia[] = [
       'reparação eletrodomésticos peças',
     ],
   },
+  {
+    slug: 'decoracao-natal-impressao-3d',
+    title: 'Decoração de Natal impressa em 3D: enfeites com nome, peças de mesa e figuras gigantes',
+    titleEn: '3D-printed Christmas decorations: name ornaments, table pieces and giant figures',
+    description:
+      'Enfeites com o nome de cada um, peças para a mesa da consoada e figuras de 75 e 90 cm para a entrada ou a montra: o que imprimimos para o Natal de 2026, quanto custa e até quando encomendar.',
+    descriptionEn:
+      'Ornaments with everyone’s name, pieces for the Christmas table and 75 and 90 cm figures for the hallway or shop window: what we print for Christmas 2026, what it costs and when to order by.',
+    datePublished: '2026-11-28',
+    minutes: 5,
+    emoji: '🎄',
+    image: '/images/capivara-tricotada-natal-4.webp',
+    keywords: [
+      'decoração de Natal impressão 3D',
+      'enfeites de Natal com nome',
+      'enfeite de Natal personalizado',
+      'prendas de Natal personalizadas',
+      'Pai Natal gigante impresso em 3D',
+      'decoração de Natal para montra',
+      'impressão 3D Portugal',
+    ],
+  },
 ];
 
 export function getGuiaBySlug(slug: string): Guia | undefined {
