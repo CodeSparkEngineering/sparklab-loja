@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from 'framer-motion';
 import { useLang } from '@/i18n/LanguageContext';
 import { GOOGLE_PROFILE_URL } from '@/data/site';
 import Icone from '@/components/Icone';
@@ -52,15 +51,14 @@ export default function Hero() {
             </span>
           </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="hero__h1"
-          >
+          {/* h1 simples, sem framer-motion: é o elemento de LCP. Com
+              `initial={{ opacity: 0 }}` o HTML do servidor chegava invisível e
+              o título só pintava depois da hidratação (LCP de ~7 s no
+              telemóvel). A entrada é agora CSS, só com transform (.hero__h1). */}
+          <h1 className="hero__h1">
             {t.h1a}<br />
             {t.h1b}<span className="hero__accent">{t.h1accent}</span>.
-          </motion.h1>
+          </h1>
 
           <p className="hero__desc">
             {t.desc}
