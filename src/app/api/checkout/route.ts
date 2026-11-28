@@ -196,6 +196,14 @@ export async function POST(request: NextRequest) {
       success_url: `${origin}/sucesso?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/?checkout=cancelado#catalogo`,
       metadata: { has_digital: String(hasDigital), has_physical: String(hasPhysical), entrega_a_combinar: String(aCombinar), lang },
+      // Carrinho abandonado: mostra a caixa de consentimento de emails
+      // promocionais e, quando a sessão expira (24h), a Stripe gera um link de
+      // recuperação. Com consentimento + email, a própria Stripe envia o
+      // lembrete ao cliente (ativar em Definições → Checkout → "Recuperação
+      // de carrinhos abandonados"). O webhook checkout.session.expired também
+      // nos avisa a nós, com o link para mandar por WhatsApp.
+      consent_collection: { promotions: 'auto' },
+      after_expiration: { recovery: { enabled: true, allow_promotion_codes: true } },
     };
 
     if (hasPhysical) {

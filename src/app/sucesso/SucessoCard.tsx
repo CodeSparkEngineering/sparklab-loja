@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
+import { trackEvent } from '@/lib/analytics';
 import { formatEUR } from '@/data/products';
 import { useLang } from '@/i18n/LanguageContext';
 
@@ -55,12 +57,25 @@ export default function SucessoCard({
   paid,
   email,
   total,
+  transactionId,
 }: {
   paid: boolean;
   email: string | null;
   total: number | null;
+  transactionId?: string | null;
 }) {
   const { lang } = useLang();
+
+  // GA4 purchase — uma vez por sessão Stripe (recarregar a página não duplica).
+  useEffect(() => {
+    if (!paid || !transactionId) return;
+    const k = `ga-purchase-${transactionId}`;
+    try {
+      if (sessionStorage.getItem(k)) return;
+      sessionStorage.setItem(k, '1');
+    } catch {}
+    trackEvent('purchase', { transaction_id: transactionId, value: total ?? 0 });
+  }, [paid, transactionId, total]);
   const t = L[lang];
   const wa = 'https://wa.me/351913323056';
 

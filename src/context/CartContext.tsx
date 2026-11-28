@@ -8,6 +8,7 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { trackEvent } from '@/lib/analytics';
 import { PRODUCTS, getProductById, unitPriceFor, WHOLESALE_MIN_QTY, type Product } from '@/data/products';
 
 export type CartLine = { 
@@ -91,7 +92,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [lines, hydrated]);
 
   const add = useCallback((productId: string, qty = 1, customizations?: Record<string, string>) => {
-    if (!getProductById(productId)) return;
+    const product = getProductById(productId);
+    if (!product) return;
+    trackEvent('add_to_cart', {
+      value: product.price * qty,
+      items: [{ item_id: product.id, item_name: product.name, price: product.price, quantity: qty }],
+    });
     
     // Create a deterministic ID for this specific variation
     const lineId = customizations && Object.keys(customizations).length > 0

@@ -49,7 +49,7 @@ export default async function SucessoPage({
     <main className="order">
       {/* Limpa o carrinho só se o pagamento foi confirmado */}
       {paid && <ClearCartOnMount />}
-      <SucessoCard paid={paid} email={email} total={total} />
+      <SucessoCard paid={paid} email={email} total={total} transactionId={paid ? session?.id : null} />
     </main>
   );
 }
