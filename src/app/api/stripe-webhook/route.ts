@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { getProductById, formatEUR } from '@/data/products';
-import { esc, emailShell } from '@/lib/email';
+import { esc, emailShell, sendViaResend } from '@/lib/email';
 
 // Precisa do runtime Node (crypto para verificar a assinatura da Stripe).
 export const runtime = 'nodejs';
@@ -64,6 +64,18 @@ export async function POST(request: NextRequest) {
     const msg = err instanceof Error ? err.message : 'assinatura inválida';
     console.error('[stripe-webhook] assinatura inválida:', msg);
     return NextResponse.json({ error: `Webhook Error: ${msg}` }, { status: 400 });
+  }
+
+  if (event.type === 'checkout.session.expired') {
+    // Carrinho abandonado: aviso para nós com o que ficou no carrinho, o
+    // contacto (se o cliente chegou a escrever) e o link de recuperação.
+    // Sempre 200: é só informativo, não queremos repetições da Stripe.
+    try {
+      await sendAbandonedEmail(stripe, event.data.object as Stripe.Checkout.Session);
+    } catch (err) {
+      console.error('[stripe-webhook] erro no aviso de carrinho abandonado:', err);
+    }
+    return NextResponse.json({ received: true });
   }
 
   if (event.type !== 'checkout.session.completed') {
@@ -327,4 +339,63 @@ async function sendCustomerEmail(session: Stripe.Checkout.Session) {
     const body = await res.text();
     console.error('[stripe-webhook] Resend (cliente) falhou:', res.status, body);
   }
+}
+
+/**
+ * Aviso de CARRINHO ABANDONADO para nós (evento checkout.session.expired).
+ * Mostra o que ficou por pagar, o contacto que o cliente chegou a preencher
+ * e o link de recuperação da Stripe (válido 30 dias) para mandar por WhatsApp.
+ */
+async function sendAbandonedEmail(stripe: Stripe, session: Stripe.Checkout.Session) {
+  const to = process.env.ORDER_EMAIL_TO;
+  if (!to) {
+    console.error('[stripe-webhook] ORDER_EMAIL_TO em falta — aviso de carrinho abandonado não enviado.');
+    return;
+  }
+  if (session.payment_status === 'paid') return;
+
+  const items = await stripe.checkout.sessions.listLineItems(session.id, { limit: 100 });
+  const rows = items.data
+    .map(
+      (it) => `
+        <tr>
+          <td style="padding:8px 0;border-bottom:1px solid #eee">${esc(it.description ?? 'Produto')} × ${it.quantity ?? 1}</td>
+          <td style="padding:8px 0;border-bottom:1px solid #eee;text-align:right;white-space:nowrap">${formatEUR((it.amount_total ?? 0) / 100)}</td>
+        </tr>`
+    )
+    .join('');
+
+  const total = typeof session.amount_total === 'number' ? session.amount_total / 100 : 0;
+  const c = session.customer_details;
+  const email = c?.email ?? session.customer_email ?? null;
+  const phone = c?.phone ?? null;
+  const recoveryUrl = session.after_expiration?.recovery?.url ?? null;
+
+  const contacto =
+    email || phone
+      ? `${esc(c?.name ?? '')}${c?.name ? '<br/>' : ''}${email ? esc(email) + '<br/>' : ''}${phone ? esc(phone) : ''}`
+      : '<em>O cliente saiu antes de preencher o contacto.</em>';
+
+  const html = `
+  <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#1c1917">
+    <h2 style="color:#b45309;margin:0 0 4px">🛒 Carrinho abandonado — SparkLab</h2>
+    <p style="color:#57534e;margin:0 0 18px">Ficou por pagar: <strong>${formatEUR(total)}</strong></p>
+    <table style="width:100%;border-collapse:collapse;margin-bottom:20px">${rows}</table>
+    <h3 style="margin:0 0 6px">👤 Contacto</h3>
+    <p style="margin:0 0 16px;color:#44403c">${contacto}</p>
+    ${
+      recoveryUrl
+        ? `<p style="margin:0 0 8px;color:#44403c">Link para o cliente retomar a compra (válido 30 dias):</p>
+           <p style="margin:0 0 18px;word-break:break-all"><a href="${esc(recoveryUrl)}">${esc(recoveryUrl)}</a></p>`
+        : ''
+    }
+    <p style="color:#a8a29e;font-size:12px;margin:0">SparkLab · aviso automático de carrinho abandonado</p>
+  </div>`;
+
+  await sendViaResend({
+    to,
+    subject: `🛒 Carrinho abandonado — ${formatEUR(total)}`,
+    html,
+    replyTo: email ?? undefined,
+  });
 }

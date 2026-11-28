@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { formatEUR } from '@/data/products';
+import { trackEvent } from '@/lib/analytics';
 import { useLang, pName, cLabel } from '@/i18n/LanguageContext';
 import { StripeMark } from '@/components/brand-marks';
 
@@ -88,6 +89,15 @@ export default function CartDrawer() {
   const handleCheckout = async () => {
     setLoading(true);
     setError(null);
+    trackEvent('begin_checkout', {
+      value: items.reduce((acc, it) => acc + it.product.price * it.qty, 0),
+      items: items.map((it) => ({
+        item_id: it.product.id,
+        item_name: it.product.name,
+        price: it.product.price,
+        quantity: it.qty,
+      })),
+    });
     try {
       const res = await fetch('/api/checkout', {
         method: 'POST',

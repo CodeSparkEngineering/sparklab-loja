@@ -206,6 +206,13 @@ export async function POST(request: NextRequest) {
       success_url: `${origin}/sucesso?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/?checkout=cancelado#catalogo`,
       metadata: { has_digital: String(hasDigital), has_physical: String(hasPhysical), entrega_a_combinar: String(aCombinar), lang },
+      // Carrinho abandonado: quando a sessão expira (24h), a Stripe gera um
+      // link de recuperação e o webhook checkout.session.expired avisa-nos,
+      // com esse link para mandar ao cliente por WhatsApp.
+      // NÃO usar consent_collection.promotions: a Stripe só o permite em
+      // contas dos EUA — numa conta PT a criação da sessão falha
+      // ("not available in your country") e o checkout deixa de funcionar.
+      after_expiration: { recovery: { enabled: true, allow_promotion_codes: true } },
     };
 
     if (hasPhysical) {
