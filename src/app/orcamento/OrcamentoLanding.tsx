@@ -6,6 +6,7 @@ import { useLang } from '@/i18n/LanguageContext';
 import QuoteForm from '@/components/QuoteForm';
 import { StripeMark, GoogleMark, MBWayMark } from '@/components/brand-marks';
 import { GOOGLE_PROFILE_URL } from '@/data/site';
+import { getWhatsAppLink, WHATSAPP_DISPLAY } from '@/utils/whatsapp';
 
 const L = {
   pt: {
@@ -13,6 +14,8 @@ const L = {
     h1: 'Orçamento de impressão 3D em Portugal',
     sub: 'Envia o teu ficheiro 3D — ou só a ideia — e recebe o preço e o prazo, sem compromisso.',
     reply: 'Resposta em até 2 horas úteis no WhatsApp',
+    direct: 'Preferes falar já? WhatsApp',
+    waMsg: 'Olá SparkLab! Queria pedir um orçamento de impressão 3D.',
     tRating: '5,0 no Google',
     tPieces: '+150 peças criadas',
     tShip: 'Envio CTT registado',
@@ -43,6 +46,8 @@ const L = {
     h1: '3D printing quote in Portugal',
     sub: 'Send us your 3D file — or just the idea — and get the price and timeline, no strings attached.',
     reply: 'We reply within 2 business hours on WhatsApp',
+    direct: 'Rather talk now? WhatsApp',
+    waMsg: "Hi SparkLab! I'd like a 3D printing quote.",
     tRating: '5.0 on Google',
     tPieces: '+150 pieces made',
     tShip: 'Registered CTT shipping',
@@ -130,6 +135,21 @@ export default function OrcamentoLanding() {
           <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-green-500/20 px-4 py-1.5 text-sm font-semibold text-green-200 ring-1 ring-green-400/30 backdrop-blur-sm">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4h.01c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3zM12 21.7h-.01c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 1 1 18.2-5.1c0 5.4-4.4 9.8-9.8 9.8z" /></svg>
             {t.reply}
+          </p>
+          {/* Contacto direto: número visível e clicável (conta como lead no
+              GoogleAdsTag, por ser um link wa.me). */}
+          <p className="mt-3 text-sm text-stone-200">
+            <a
+              href={getWhatsAppLink(t.waMsg)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="-my-2 inline-flex items-center gap-1.5 py-2 hover:text-green-300"
+            >
+              {t.direct}
+              <strong className="font-semibold text-white underline decoration-green-400/60 underline-offset-4">
+                {WHATSAPP_DISPLAY}
+              </strong>
+            </a>
           </p>
           <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-sm text-stone-200">
             <a
